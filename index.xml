@@ -1,0 +1,892 @@
+<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://cwleo.github.io/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2024 嘉树.</copyright><lastBuildDate>Sun, 25 Aug 2024 23:08:09 +0800</lastBuildDate><atom:link href="https://cwleo.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>半日杂记</title><link>https://cwleo.github.io/posts/half-day-diary/</link><pubDate>Sun, 25 Aug 2024 23:08:09 +0800</pubDate><guid>https://cwleo.github.io/posts/half-day-diary/</guid><description>嘉树的世界 https://cwleo.github.io/posts/half-day-diary/ -&lt;p>师弟在我提出要去理发时向我强烈推荐了一家，我狐疑，追问之下原来是：他在此店被忽悠办了会员充了值，害怕店长哪天卷钱跑路了，希望尽快消费完。啊哈，那这个忙我当然要帮。&lt;/p>
+&lt;p>去了之后发现，这哪像会倒闭的样子！生意红火好嘛。当然也不排除有周日的加持。托尼老师很热情地向我推销卷烫染套餐，被我热情地回绝了。&lt;/p>
+&lt;p>剪完之后就在商场里闲逛，溜进一家「西西弗书店」，随意翻看能引起我兴趣的书，还真是颇有收获。试举几例：&lt;/p>
+&lt;ul>
+&lt;li>原来鲁迅真的写过「在我的后园，可以看见墙外有两株树，一株是枣树，还有一株也是枣树」，这出自《野草》中《秋夜》的第一句，我一直以为这是一个梗来着。&lt;/li>
+&lt;li>曾国藩也有写日记的习惯，他是真写，真反思，真改变。&lt;/li>
+&lt;li>《冬牧场》这本书似乎去年大热，看了几页，哇塞，这个作者怎么可以写出这么可爱幽默俏皮温暖的文字！&lt;/li>
+&lt;/ul>
+&lt;p>感悟就是，文字真的可以带来力量，内心的力量。愈加决定了！要多运动，多读书。&lt;/p>
+&lt;p>回去的时候顺便买了点水果，着实买贵了，以后还是去盒马买吧😥&lt;/p>
+- https://cwleo.github.io/posts/half-day-diary/ - 2023–2024 嘉树.</description></item><item><title>专注力的流失</title><link>https://cwleo.github.io/posts/losing-concentration/</link><pubDate>Wed, 21 Aug 2024 12:43:47 +0800</pubDate><guid>https://cwleo.github.io/posts/losing-concentration/</guid><description>嘉树的世界 https://cwleo.github.io/posts/losing-concentration/ -&lt;p>现在经常学着学着就很容易开小差，然后打开手机漫无目的地刷一刷，或者开始想些别的东西，这真的是一件很恐怖的事情。我的专注力在不断流失。&lt;/p>
+&lt;p>我幻想从清晨学到黄昏，心无旁骛地专注，因为时间在不知觉中的流动会给人一种高级的愉悦。我用了「幻想」，因为这种体验现在全无，但记忆中本科那会儿，是常能在图书馆坐上一天的。我的注意力为什么无法集中了呢？我在努力尝试思考的时候，大脑总会传出一个声音：这么复杂的问题，先歇会吧，反正时间有的是，也不差这一时半会儿。结果就是，我在每一个想要专注的节点都转移注意力去做了其他事，消磨的时间难以估量。我没法用劳逸结合来安慰自己，因为大部分时间我确实是处在「逸」的状态。这样做似乎很节省能量，但代价更严重──累积的畏难情绪和逐渐懒散的思维，学习节奏也全被打乱。&lt;/p>
+&lt;p>趁还有这样的意识的时候，是该刻意做点什么了吧。&lt;/p>
+- https://cwleo.github.io/posts/losing-concentration/ - 2023–2024 嘉树.</description></item><item><title>集中不等式 (I)：Hoeffding 不等式</title><link>https://cwleo.github.io/posts/conctr-ineq-hoeffding/</link><pubDate>Sun, 11 Aug 2024 15:30:25 +0800</pubDate><guid>https://cwleo.github.io/posts/conctr-ineq-hoeffding/</guid><description>嘉树的世界 https://cwleo.github.io/posts/conctr-ineq-hoeffding/ -&lt;h2 id="内容提要">内容提要&lt;/h2>
+&lt;p>介绍了集中不等式的概念，引入了 Chernoff 界方法，并以此证明了 Hoeffding 不等式。&lt;/p>
+&lt;h2 id="什么是集中不等式">什么是集中不等式？&lt;/h2>
+&lt;p>Concentration inequalities，中文译作「集中不等式」，是概率论中的一类不等式，描述了一个随机变量的取值是否集中在某个特定的值附近，换句话说，相对于这个特定值偏离了多少，从概率上讲这个偏离的可能性又如何量化。这个特定的值通常取的是总体均值。数学上，这类不等式的形式可写作&lt;/p>
+&lt;p>$$
+\mathbb{P}\{|X-\mu|&amp;gt;t\} \leq \text{something small}
+$$&lt;/p>
+&lt;p>这个不等式表明了，我们希望随机变量 $X$ 以很高的概率围绕在其均值附近波动。最简单、也最为我们熟悉的集中不等式当属 Chebyshev 不等式：如果 $X$ 的均值是 $\mu$，方差是 $\sigma^2$，那么&lt;/p>
+&lt;p>$$
+\mathbb{P}\{|X-\mu|&amp;gt;t\} \leq \frac{\sigma^2}{t^2}
+$$&lt;/p>
+&lt;p>这个不等式当然是很一般的──我们只要求方差有限，除此之外并没有对 $X$ 的分布做更多要求。但是，在很多应用场景中，它还是太弱了，弱在不等式右边的东西不够小，或者更具体地说，当 $t\to\infty$ 时收敛到 0 的速度不够快。我们希望能有指数级别的收敛。&lt;/p>
+&lt;p>从渐进的观点看，当样本量足够大时，我们可以使用中心极限定理近似地得到样本均值偏离总体均值的概率，而正态分布的尾概率是指数衰减的。&lt;/p>
+&lt;div class="thm">
+&lt;p id="prop:normal" class="thm-title thm-proposition">Proposition 1.&lt;/p>
+&lt;div class="thm-inner thm-proposition">
+&lt;p>若 $Z\sim\mathcal{N}(0,1)$，则对任意 $t&amp;gt;0$，都有&lt;/p>
+&lt;p>$$
+\biggl(\frac1t-\frac{1}{t^3}\biggr)\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2} \leq \mathbb{P}\{Z\geq t\} \leq \frac{1}{t}\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2}
+$$&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;div class="thm">
+&lt;button type="button" class="collapsible">&lt;div id="thm-proof-1" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
+&lt;div class="proof-content">
+&lt;div class="thm-inner-proof">
+&lt;p>对于上界，有&lt;/p>
+&lt;p>$$
+\begin{align*}
+\mathbb{P}\{Z\geq t\} &amp;amp;= \frac{1}{\sqrt{2\pi}}\int_t^\infty e^{-x^2/2}\,dx \\
+&amp;amp;\leq \frac{1}{\sqrt{2\pi}}\int_t^\infty \frac{x}{t}e^{-x^2/2}\,dx \\
+&amp;amp;= \frac{1}{t\sqrt{2\pi}} \int_t^\infty -\frac{\partial}{\partial x}e^{-x^2/2}\,dx \\
+&amp;amp;= \frac{1}{t}\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2}
+\end{align*}
+$$&lt;/p>
+&lt;p>对于下界，利用等式&lt;/p>
+&lt;p>$$
+\int_t^\infty (1-3x^{-4})e^{-x^2/2}\,dx = \biggl(\frac1t-\frac1{t^3}\biggr)e^{-t^2/2}
+$$&lt;/p>
+&lt;/div>
+&lt;div class="thm-end-proof">
+&lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-1">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;p>不过，我们还需考虑到渐进误差的存在，也就是说，用正态分布的尾概率去近似样本均值的尾概率不是一种严格的做法。事实上，渐进误差并不必然是指数衰减的，因此我们必须从&lt;em>非渐进&lt;/em>的角度入手，而集中不等式正是这样的角色。&lt;/p>
+&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
+&lt;div>&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/>&lt;/symbol>&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>&lt;/symbol>&lt;/svg>&lt;/div>&lt;div class="notice note" >
+&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>&lt;a href="https://en.wikipedia.org/wiki/Berry%E2%80%93Esseen_theorem">Berry-Esseen 定理&lt;/a> 表明，中心极限定理中概率分布的收敛速率至少是 $O(1/\sqrt{n})$，不必然是指数级别的收敛。&lt;/p>&lt;/div>
+&lt;h2 id="chernoff-界方法">Chernoff 界方法&lt;/h2>
+&lt;p>在开始介绍一系列集中不等式之前，我们先讲一个很具有普适性的方法：Chernoff bound，它被广泛用于各种集中不等式的证明。&lt;/p>
+&lt;p>利用 Markov 不等式，对 $s&amp;gt;0$, 我们有&lt;/p>
+&lt;p>$$
+\mathbb{P}\{X\geq t\} = \mathbb{P}\{e^{sX}\geq e^{st}\} \leq \frac{\mathbb{E}(e^{sX})}{e^{st}}
+$$&lt;/p>
+&lt;p>不等式右边的 $m_X(s) := \mathbb{E}(e^{sX})$ 即随机变量的矩生成函数 (moment generating function, MGF)。更使我们喜闻乐见的是，分母是一个指数函数。这意味着，只要我们能控制 MGF 不要增长的太快，我们就能保证指数级收敛。&lt;/p>
+&lt;p>后文的各种集中不等式反复展示了这一技巧。&lt;/p>
+&lt;h2 id="hoeffding-不等式">Hoeffding 不等式&lt;/h2>
+&lt;p>首先介绍一个分布：对称 Bernoulli 分布，也叫 Rademacher 分布。如果随机变量 $X$ 均以 1/2 概率取值 &amp;ndash;1 和 1，则称它服从对称 Bernoulli 分布。显然，$Z$ 服从（普通的）Berinoulli 分布当且仅当 $2Z-1$ 服从对称 Bernoulli 分布。&lt;/p>
+&lt;p>Hoeffding 不等式即是关于对称 Bernoulli 随机变量的。&lt;/p>
+&lt;div class="thm">
+&lt;p id="thm:hoeffding" class="thm-title thm-theorem">Theorem 2 (Hoeffding’s Inequality).&lt;/p>
+&lt;div class="thm-inner thm-theorem">
+&lt;p>设 $X_1,\dots,X_n$ 是独立的对称 Bernoulli 随机变量序列，$\bm{a}=(a_1,\dots,a_n)\in\mathbb{R}^n$ 是实值常向量。对任意 $t\geq0$，都有&lt;/p>
+&lt;p>$$
+\mathbb{P}\Biggl\{\sum_{i=1}^n a_iX_i\geq t\Biggr\} \leq \exp\biggl(-\frac{t^2}{2\|\bm{a}\|_2^2}\biggr)
+$$&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;div class="thm">
+&lt;button type="button" class="collapsible">&lt;div id="thm-proof-2" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
+&lt;div class="proof-content">
+&lt;div class="thm-inner-proof">
+&lt;p>不失一般性，设 $\|\bm{a}\|_2 = 1$。利用 Chernoff 界方法，对 $s&amp;gt;0$ 有&lt;/p>
+&lt;p>$$
+\begin{align*}
+\mathbb{P}\Biggl\{\sum_{i=1}^n a_iX_i\geq t\Biggr\} &amp;amp;= \mathbb{P}\Biggl\{\exp\Biggl(s\sum_{i=1}^n a_iX_i\Biggr)\geq \exp(st)\Biggr\} \\
+&amp;amp;\leq e^{-st}\mathbb{E}\Biggl[\exp\Biggl(\sum_{i=1}^n a_iX_i\Biggr)\Biggr] \\
+&amp;amp;= e^{-st}\prod_{i=1}^n\mathbb{E}[\exp(sa_iX_i)]
+\end{align*}
+$$&lt;/p>
+&lt;p>最后一个等式使用了独立性。计算 $\mathbb{E}[\exp(sa_iX_i)]$：&lt;/p>
+&lt;p>$$
+\mathbb{E}[\exp(sa_iX_i)] = \frac12[\exp(sa_i)+\exp(-sa_i)] = \cosh(sa_i) \leq \exp(s^2a_i^2/2)
+$$&lt;/p>
+&lt;p>其中的不等号来自：$\cosh(x)\leq\exp(x^2/2)$ 对 $x\in\mathbb{R}$ 成立，可通过 Taylor 展开证明。于是，我们得到&lt;/p>
+&lt;p>$$
+\begin{align*}
+\mathbb{P}\Biggl\{\sum_{i=1}^n a_iX_i\geq t\Biggr\} &amp;amp;\leq e^{-st}\prod_{i=1}^n\mathbb{E}[\exp(sa_iX_i)] \\
+&amp;amp;\leq e^{-st}\prod_{i=1}^n \exp(s^2a_i^2/2) \\
+&amp;amp;= \exp\Biggl(-st+\frac{s^2}{2}\sum_{i=1}^na_i\Biggr) \\
+&amp;amp;= \exp\biggl(-st+\frac{s^2}{2}\biggr)
+\end{align*}
+$$&lt;/p>
+&lt;p>最后一个等式利用了 $\sum_ia_i^2=1$。现在，选择最优的 $s$ 让右边的值最小，显然，这个最优的 $s=t$，这样就得到了想要的结果。&lt;/p>
+&lt;/div>
+&lt;div class="thm-end-proof">
+&lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-2">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;p>我们可以轻松加愉快地得到双边版本的 Hoeffding 不等式：&lt;/p>
+&lt;div class="thm">
+&lt;p id="cor:hoeffding" class="thm-title thm-corollary">Corollary 3 (Hoeffding’s Inequality, two-sided).&lt;/p>
+&lt;div class="thm-inner thm-corollary">
+&lt;p>设 $X_1,\dots,X_n$ 是独立的对称 Bernoulli 随机变量序列，$\bm{a}=(a_1,\dots,a_n)\in\mathbb{R}^n$ 是实值常向量。对任意 $t\geq0$，都有&lt;/p>
+&lt;p>$$
+\mathbb{P}\Biggl\{\left|\sum_{i=1}^n a_iX_i\right|\geq t\Biggr\} \leq 2\exp\biggl(-\frac{t^2}{2\|\bm{a}\|_2^2}\biggr)
+$$&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;div class="thm">
+&lt;button type="button" class="collapsible">&lt;div id="thm-proof-3" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
+&lt;div class="proof-content">
+&lt;div class="thm-inner-proof">
+对 $\sum_ia_iX_i$ 和 $-\sum_ia_iX_i$ 各应用一遍 &lt;a href="https://cwleo.github.io/#thm:hoeffding">Hoeffding&lt;/a> 然后把概率相加。
+&lt;/div>
+&lt;div class="thm-end-proof">
+&lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-3">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;p>更一般地，对有界随机变量，我们也有 Hoeffding 不等式：&lt;/p>
+&lt;div class="thm">
+&lt;p id="thm:hoeffdingbounded" class="thm-title thm-theorem">Theorem 4 (Hoeffding’s Inequality for Bounded Random Variables).&lt;/p>
+&lt;div class="thm-inner thm-theorem">
+&lt;p>设 $X_1,\dots,X_n$ 是独立的随机变量序列，$\mathbb{E}(X_i) = \mu_i$ 且 $X_i\in[a_i,b_i]$。则对任意 $t\geq0$，都有&lt;/p>
+&lt;p>$$
+\mathbb{P}\Biggl\{\sum_{i=1}^n (X_i-\mu_i)\geq t\Biggr\} \leq \exp\biggl(-\frac{2t^2}{\sum_{i=1}^n(b_i-a_i)^2}\biggr)
+$$&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;div class="thm">
+&lt;button type="button" class="collapsible">&lt;div id="thm-proof-4" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
+&lt;div class="proof-content">
+&lt;div class="thm-inner-proof">
+&lt;p>不失一般性，设 $\mu_i=0$，即所有 $X_i$ 均值为 0，这也同时意味着 $a_i\leq0\leq b_i$。&lt;/p>
+&lt;hr>
+&lt;p>我们首先证明 &lt;a href="https://en.wikipedia.org/wiki/Hoeffding%27s_lemma">Hoeffding 引理&lt;/a>，它是说，如果有界随机变量 $X\in[a,b]$ 且均值为 0，则对 $s\in\mathbb{R}$ 恒有&lt;/p>
+&lt;p>$$
+\mathbb{E}(e^{sX}) \leq \exp\biggl(\frac{s^2(b-a)^2}{8}\biggr)
+$$&lt;/p>
+&lt;p>因 $e^{sx}$ 是关于 $x$ 的凸函数，故对任意 $x\in[a,b]$，我们有&lt;/p>
+&lt;p>$$
+e^{sx} \leq \frac{b-x}{b-a}e^{sa} + \frac{x-a}{b-a}e^{sb}
+$$&lt;/p>
+&lt;p>将 $x$ 替换为 $X$，并两边取期望，注意我们已经假设 $X$ 均值为 0，因此&lt;/p>
+&lt;p>$$
+\begin{align*}
+\mathbb{E}(e^{sX}) &amp;amp;\leq \frac{b-\mathbb{E}(X)}{b-a}e^{sa} + \frac{\mathbb{E}(X)-a}{b-a}e^{sb} \\
+&amp;amp;= \frac{b}{b-a}e^{sa} + \frac{-a}{b-a}e^{sb}
+\end{align*}
+$$&lt;/p>
+&lt;p>现在，我们需要证明&lt;/p>
+&lt;p>$$
+\frac{b}{b-a}e^{sa} + \frac{-a}{b-a}e^{sb} \leq \exp\biggl(\frac{s^2(b-a)^2}{8}\biggr)
+$$&lt;/p>
+&lt;p>不妨进行换元 $h = s(b-a)$，上式便等价于&lt;/p>
+&lt;p>$$
+\exp\biggl(\frac{ha}{b-a}\biggr)\biggl(\frac{b}{b-a}+\frac{-a}{b-a}e^h\biggr) \leq \exp\biggl(\frac{h^2}{8}\biggr)
+$$&lt;/p>
+&lt;p>取对数，我们需证明&lt;/p>
+&lt;p>$$
+f(h) := \frac{ha}{b-a} + \log\biggl(\frac{b-e^ha}{b-a}\biggr) \leq \frac{h^2}{8}
+$$&lt;/p>
+&lt;p>将 $f(h)$ 在 $h=0$ 处 Taylor 展开：&lt;/p>
+&lt;p>$$
+f(h) = f(0) + f&amp;rsquo;(0)h + \frac12f&amp;rsquo;&amp;rsquo;(\xi)h^2 \quad\text{for some $\xi$ between 0 and $h$}
+$$&lt;/p>
+&lt;p>注意到 $f(0) = f^\prime(0) = 0$，而对 $\xi\in\mathbb{R}$ 我们恒有&lt;/p>
+&lt;p>$$
+f&amp;rsquo;&amp;rsquo;(\xi) = -\frac{e^\xi ab}{(b-e^\xi a)^2} \leq \frac14
+$$&lt;/p>
+&lt;p>这里我们使用了均值不等式得到 $-e^\xi ab \leq \frac14(-e^\xi a+b)^2$。这就证明了 $f(h)\leq\frac18h^2$，进而证明了 Hoeffding 引理。&lt;/p>
+&lt;hr>
+&lt;p>回到定理的证明。仍然利用 Chernoff 界方法：&lt;/p>
+&lt;p>$$
+\begin{align*}
+\mathbb{P}\Biggl\{\sum_{i=1}^n X_i\geq t\Biggr\} &amp;amp;= \mathbb{P}\Biggl\{\exp\Biggl(s\sum_{i=1}^n X_i\Biggr)\geq \exp(st)\Biggr\} \\
+&amp;amp;\leq e^{-st}\mathbb{E}\Biggl[\exp\Biggl(\sum_{i=1}^n X_i\Biggr)\Biggr] \\
+&amp;amp;= e^{-st}\prod_{i=1}^n\mathbb{E}[\exp(sX_i)] \\
+&amp;amp;\leq e^{-st}\prod_{i=1}^n\exp\biggl(\frac{s^2(b_i-a_i)^2}{8}\biggr) \\
+&amp;amp;= \exp\biggl(-st+\frac{s^2\sum_{i=1}^n(b_i-a_i)^2}{8}\biggr) \\
+&amp;amp;\leq \exp\biggl(-\frac{2t^2}{\sum_{i=1}^n(b_i-a_i)^2}\biggr)
+\end{align*}
+$$&lt;/p>
+&lt;p>倒数第三行调用了 Hoeffding 引理，最后一行通过取 $s=4t/\sum_{i=1}^n(b_i-a_i)^2$ 得到。&lt;/p>
+&lt;/div>
+&lt;div class="thm-end-proof">
+&lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-4">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;p>（未完待续～）&lt;/p>
+&lt;h2 id="参考">参考&lt;/h2>
+&lt;ol>
+&lt;li>&lt;em>Wikipedia&lt;/em>. &amp;ldquo;&lt;a href="https://en.wikipedia.org/wiki/Concentration_inequality">Concentration inequality&lt;/a>.&amp;rdquo;&lt;/li>
+&lt;li>Rigollet, Philippe, and Jan-Christian Hütter. 2023. &amp;ldquo;High-Dimensional Statistics.&amp;rdquo; &lt;em>arXiv preprint&lt;/em>. &lt;a href="https://arxiv.org/pdf/2310.19244.pdf">arXiv:2310.19244&lt;/a>.&lt;/li>
+&lt;li>Vershynin, Roman. 2018. &lt;em>High-Dimensional Probability: An Introduction with Applications in Data Science&lt;/em>. Cambridge University Press.&lt;/li>
+&lt;/ol>
+- https://cwleo.github.io/posts/conctr-ineq-hoeffding/ - 2023–2024 嘉树.</description></item><item><title>来个任意门吧</title><link>https://cwleo.github.io/posts/anywhere-door/</link><pubDate>Fri, 09 Aug 2024 10:31:47 +0800</pubDate><guid>https://cwleo.github.io/posts/anywhere-door/</guid><description>嘉树的世界 https://cwleo.github.io/posts/anywhere-door/ -&lt;p>这几天实在太热了🥵🥵，每次往返学校都流一身汗，不想去学校了，但是呆家里就容易躺。两难呐😑&lt;/p>
+&lt;p>要是有个任意门就好了，可以舒心往返，两难自解🥹&lt;/p>
+- https://cwleo.github.io/posts/anywhere-door/ - 2023–2024 嘉树.</description></item><item><title>拒绝完美主义</title><link>https://cwleo.github.io/posts/noperfect/</link><pubDate>Thu, 08 Aug 2024 22:20:20 +0800</pubDate><guid>https://cwleo.github.io/posts/noperfect/</guid><description>嘉树的世界 https://cwleo.github.io/posts/noperfect/ -&lt;p>很多时候我都很难开始做一件事，总是觉得没准备好就不能开始，一来二去就浪费了很多时间。作为J人就这点不好，虽然每次都要搞个计划，但着实难以实施──总是在完善计划。其实我也知道，这是完美主义在作祟，拖延只是其导致的现象。&lt;/p>
+&lt;p>这种心理偏执是一种相当的阻碍。以前我一直以为，要开始做研究，那必然是先要尽可能把「所有」相关的基础知识都吃透，然后才能游刃有余。且不说是不是真的吃透了就一定能融会贯通，但就说吃透这些知识的时间成本就很巨大，那么要开始一个项目，得准备多少光阴？现在我意识到，在具备必要的基础知识之后，就可以边学边做了，这是「干中学」。这个方法不仅杜绝了前期漫长准备带来的时间上的不确定性，而且效率其实是很高的。另外也不要追求一次成功，第一次尝试能有一个还不错的结果能证明可行性就足够了。&lt;/p>
+&lt;p>说到底完美主义背后可能还是缺了自信，因为如果足够自信，就不会怀疑对过程的把控能力，同时对于结果也有一个理性的认知，那么就不会停留于准备阶段。大胆地开始，小心地推进，追求一个可接受的初步结果，然后逐步完善，这种态度才是不伤身心的。&lt;/p>
+- https://cwleo.github.io/posts/noperfect/ - 2023–2024 嘉树.</description></item><item><title>Macro QE 备考 (II): 新古典增长和世代交叠模型</title><link>https://cwleo.github.io/posts/macro-qe-preparation-ngm-olg/</link><pubDate>Tue, 27 Jun 2023 15:08:53 +0800</pubDate><guid>https://cwleo.github.io/posts/macro-qe-preparation-ngm-olg/</guid><description>嘉树的世界 https://cwleo.github.io/posts/macro-qe-preparation-ngm-olg/ -&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
+&lt;div>&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/>&lt;/symbol>&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>&lt;/symbol>&lt;/svg>&lt;/div>&lt;div class="notice info" >
+&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#info-notice">&lt;/use>&lt;/svg>&lt;/span>Info&lt;/p>&lt;p>本系列未能完成，只出了两期，因为复习进度太慢，最终换成手写笔记了。且作留恋。&lt;/p>&lt;/div>
+&lt;h2 id="overlapping-generations">Overlapping Generations&lt;/h2>
+&lt;h3 id="资本过度积累和动态无效率">资本过度积累和动态无效率&lt;/h3>
+&lt;p>我们对 OLG 模型的竞争均衡同一个社会计划者的中心化决策进行对比，考察竞争均衡是否是 Pareto 最优的。社会计划者意图最大化所有代际的加权平均效用：&lt;/p>
+&lt;p>$$
+\sum_{t=0}^\infty \xi_t[u(c_{1,t})+\beta u(c_{2,t+1})]
+$$&lt;/p>
+&lt;p>其中 $\xi_t$ 是社会计划者赋予代际 $t$ 的权重。同时，还要服从总的资源约束：&lt;/p>
+&lt;p>$$
+F(K_t,L_t) = K_{t+1} + L_tc_{1,t} + L_{t-1}c_{2,t}
+$$&lt;/p>
+&lt;p>两边同除以 $L_t$，得到&lt;/p>
+&lt;p>$$
+f(k_t) = (1+n)k_{t+1} + c_{1,t} + \frac{c_{2,t}}{1+n}
+$$&lt;/p>
+&lt;p>对于同一个体青年期和老年期的消费分配，一阶条件为&lt;/p>
+&lt;p>$$
+\frac{u&amp;rsquo;(c_{1,t})}{\beta u&amp;rsquo;(c_{2,t+1})} = \frac{1}{1+n}\frac{dc_{2,t+1}}{dk_{t+1}} = f&amp;rsquo;(k_{t+1})
+$$&lt;/p>
+&lt;p>回忆在竞争均衡中，一阶条件是&lt;/p>
+&lt;p>$$
+u&amp;rsquo;(c_{1,t}) = \beta R_{t+1} u&amp;rsquo;(c_{2,t+1})
+$$&lt;/p>
+&lt;p>而 $R_{t+1} = f'(k_{t+1})$，因此社会计划者对一个个体青年期和老年期的消费配置同该个体自身的最大化决策是一致的，在这一点上市场配置是有效率的。&lt;/p>
+&lt;p>然而，由于社会计划者给每一代个体分配了不同的权重（$\xi_t$ 随 $t$ 变化），可以想见代际之间资源配置不会相同，这是区别于竞争均衡的。&lt;/p>
+&lt;p>考虑一个具体的权重设定：$\xi_t = \xi^t$。我们使用 Lagrange 函数：&lt;/p>
+&lt;p>$$
+\mathcal{L} = \sum_{t=0}^\infty \left(\xi^t[u(c_{1,t})+\beta u(c_{2,t+1})]-\lambda_t\left[(1+n)k_{t+1}+c_{1,t}+\frac{c_{2,t}}{1+n}-f(k_t)\right]\right)
+$$&lt;/p>
+&lt;p>一阶条件：&lt;/p>
+&lt;p>$$
+\begin{align*}
+[c_{1,t}]&amp;amp;\colon\quad \xi^tu&amp;rsquo;(c_{1,t}) - \lambda_t = 0 \\
+[c_{2,t+1}]&amp;amp;\colon\quad \xi^t\beta u&amp;rsquo;(c_{2,t+1}) - \frac{\lambda_{t+1}}{1+n} = 0 \\
+[k_t]&amp;amp;\colon\quad \lambda_t f&amp;rsquo;(k_t) - \lambda_{t-1}(1+n) = 0
+\end{align*}
+$$&lt;/p>
+&lt;p>前两个条件可推出同期年轻人和老年人消费的欧拉方程&lt;/p>
+&lt;p>$$
+\frac{u&amp;rsquo;(c_{1,t})}{u&amp;rsquo;(c_{2,t})} = \frac{\beta(1+n)}{\xi}
+$$&lt;/p>
+&lt;p>这表明 $c_{1,t}$ 和 $c_{2,t}$ 可以互相确定。因此我们只需考虑 $c_{1,t}$ 和 $c_{1,t+1}$ 的欧拉方程（由上述第一和第三个一阶条件得到）：&lt;/p>
+&lt;p>$$
+u&amp;rsquo;(c_{1,t}) = \frac{\xi}{1+n}f&amp;rsquo;(k_{t+1})u&amp;rsquo;(c_{1,t+1})
+$$&lt;/p>
+&lt;p>由此可知在稳态中我们有&lt;/p>
+&lt;p>$$
+\frac{\xi}{1+n}f&amp;rsquo;(k^s) = 1 \quad\Rightarrow\quad f&amp;rsquo;(k^s) = (1+n)(1+\rho) &amp;gt; 1+n
+$$&lt;/p>
+&lt;p>其中 $1+\rho = 1/\xi$，$\rho$ 相当于贴现率。根据资源约束可确定稳态中的消费。&lt;/p>
+&lt;div class="notice note" >
+&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>可以证明社会计划者的配置会收敛到上述稳态，证明方式见 &lt;em>DA&lt;/em> 课本 6.8 节。&lt;/p>&lt;/div>
+&lt;p>在离散时间 Ramsey 模型中（课本 6.8 节，但设定折旧率 $\delta=1$ 以及人口增长率 $n$），稳态人均资本存量满足&lt;/p>
+&lt;p>$$
+\beta f&amp;rsquo;(k^*) = 1+n \quad\Rightarrow\quad f&amp;rsquo;(k^*) = (1+n)(1+\varrho) &amp;gt; 1+n
+$$&lt;/p>
+&lt;p>可以看到，社会计划者在 OLG 中的稳态配置和 Ramsey 模型的稳态高度相似（我们知道，根据第一福利定理，Ramsey 模型中的竞争均衡是 Pareto 有效率的），它们都有一个共同点，那就是稳态的利率 $r = f'(k) - 1$ 大于人口增长率 $n$，这说明资本不是过度积累的，而它事实上是 Pareto 最优的一个必要条件。&lt;/p>
+&lt;p>下面我们说明 OLG 的竞争均衡有可能不是 Pareto 最优的。记 $k_{\textit{gold}}$ 为最大化稳态消费的人均资本存量。在 OLG 的稳态中，由总资源约束，有&lt;/p>
+&lt;p>$$
+f(k^*) - (1+n)k^* = c_1^* + \frac{1}{1+n}c_2^* \equiv c^*
+$$&lt;/p>
+&lt;p>于是，$k_{\textit{gold}}$ 满足&lt;/p>
+&lt;p>$$
+f&amp;rsquo;(k_{\textit{gold}}) = 1+n
+$$&lt;/p>
+&lt;p>若 $k^* &amp;gt; k_{\textit{gold}}$，则 $\partial c^*/\partial k^* &amp;lt; 0$，表明减少储蓄可以增加总的消费。此时，我们说经济是动态无效率的：资本过度积累了。$k^* &amp;gt; k_{\textit{gold}}$ 也意味着稳态利率小于人口增长率：$r^* &amp;lt; n$。&lt;/p>
+&lt;p>以上竞争均衡的稳态可获得 Pareto 改进。假设在某一时间 $T$ 处经济处于稳态且 $k^* &amp;gt; k_{\textit{gold}}$，在 $T+1$ 期，减少人均资本存量至 $k^*-\Delta k\geq k_{\textit{gold}}$，之后便一直维持此水平。那么，根据总资源约束，第 $T$ 期总消费的变化量&lt;/p>
+&lt;p>$$
+\Delta c_T = (1+n)\Delta k &amp;gt; 0
+$$&lt;/p>
+&lt;p>此后每一期的消费变化量&lt;/p>
+&lt;p>$$
+\Delta c_t = f(k^*-\Delta k) - f(k^*) + (1+n)\Delta k = -[f&amp;rsquo;(\hat{k})-(1+n)]\Delta k
+$$&lt;/p>
+&lt;p>其中 $\hat{k}\in(k^*-\Delta k,k^*)$，因此 $f'(\hat{k})-(1+n) &amp;lt; 0$，$\Delta c_t &amp;gt; 0$。社会计划者可将每一期增加的总消费在年轻人和老年人之间分配，于是每一代人在其年轻和年老时期都都获得了增益。&lt;/p>
+&lt;p>那么，为什么在市场是完全的且没有外部性的情况下，竞争均衡却不是 Pareto 有效率的呢？原因在于，在 OLG 模型中我们不一定能应用第一福利定理，因为有无穷多个新生的个体不断地加入经济，这意味着总的收入流可能是无穷大的，这事实上就发生在经济动态无效率时（即 $r^* &amp;lt; n$ 时，可参见课本习题 9.11 的证明）。于是，这给予我们进行 Pareto 改进的机会：通过减少过度的储蓄增加每一代人的消费；这种调整不像竞争市场中通过价格（工资、利率）配置资源，从而能合理利用无限的收入流实现改进。&lt;/p>
+&lt;h3 id="社会保障">社会保障&lt;/h3>
+&lt;p>资本过度积累导致动态无效率，除了前述直接对储蓄进行调整的方法，直觉上也可以通过向老年人提供消费来消除或缓解资本过度积累，这便向模型中引入了社会保障体系。有两种社保体系可供考虑：fully-funded 和 unfunded (or pay-as-you-go)。前者从年轻人手中筹资，然后在他们年老时返还；后者直接将年轻人的部分收入转移到同期的老年人手中。我们考察它们是否能缓解资本过度积累的问题。&lt;/p>
+&lt;h4 id="fully-funded-social-security">Fully funded social security&lt;/h4>
+&lt;p>在此社保体系下，个体的最大化问题是&lt;/p>
+&lt;p>$$
+\begin{align*}
+\max_{c_{1,t},c_{2,t+1},s_t}&amp;amp;\quad u(c_{1,t})+\beta u(c_{2,t+1}) \\
+\text{s.t.}&amp;amp;\quad c_{1,t} + s_t + d_t \leq w_t \\
+&amp;amp;\quad c_{2,t+1} \leq R_{t+1}(s_t+d_t)
+\end{align*}
+$$&lt;/p>
+&lt;p>其中 $d_t$ 是由政府外生决定的筹资额度。&lt;/p>
+&lt;p>如果我们不对 $s_t$ 施加任何限制（可正可负），很显然，对任意给定的 $d_t$，原 OLG 的竞争均衡仍是上述问题的解，因为我们可将 $s_t+d_t$ 视作一体，那么任意 $d_t$ 的变动都会被 $s_t$ 的变动抵消而不会导致一个新的均衡。&lt;/p>
+&lt;p>即便我们要求 $s_t\geq 0$，且最优解中某些时期 $s_t = 0$，此新的均衡也不会比原竞争均衡更有效率，因为紧约束必然意味着 $d_t$ 不小于原均衡中的储蓄，也就是说，该社保体系下的资本积累不会低于原竞争均衡中的资本积累。&lt;/p>
+&lt;p>综上，完全融资的社保体系不会带来 Pareto 改进。&lt;/p>
+&lt;h4 id="unfunded-social-security">Unfunded social security&lt;/h4>
+&lt;p>个体的效用最大化问题&lt;/p>
+&lt;p>$$
+\begin{align*}
+\max_{c_{1,t},c_{2,t+1},s_t}&amp;amp;\quad u(c_{1,t})+\beta u(c_{2,t+1}) \\
+\text{s.t.}&amp;amp;\quad c_{1,t} + s_t + d_t \leq w_t \\
+&amp;amp;\quad c_{2,t+1} \leq R_{t+1}s_t + (1+n)d_{t+1}
+\end{align*}
+$$&lt;/p>
+&lt;p>注意只有 $s_t$ 进入资本积累而 $d_t$ 是纯粹的转移支付。当无社保体系的竞争均衡存在动态无效率时，即 $r^* &amp;lt; n$，此社保体系能够缓解资本过度积累。为说明这一点，假设个体也可以自由选择缴纳的社保额度 $d_t$，那么很显然，只要 $r_{t+1} &amp;lt; n$，则 $R_{t+1} &amp;lt; 1+n$，即投资的回报率小于社保的回报率，于是不会有任何投资，但这违背了均衡条件 $R_{t+1} = f'(k_{t+1})$，由此可知均衡时一定有 $r_{t+1} \geq n$。这个分析表明，在纯转移的社保体系下，政府可以选择合适的缴纳额度让经济的竞争均衡不再是动态无效率的。事实上，还可以证明，通过选择合适的 $\{d_t\}$，所得到的竞争均衡可以 Pareto 占优于无社保体系的竞争均衡（见课本命题 9.8）。&lt;/p>
+- https://cwleo.github.io/posts/macro-qe-preparation-ngm-olg/ - 2023–2024 嘉树.</description></item><item><title>Macro QE 备考 (I): 动态规划</title><link>https://cwleo.github.io/posts/macro-qe-preparation-dynamic-programming/</link><pubDate>Fri, 23 Jun 2023 22:35:19 +0800</pubDate><guid>https://cwleo.github.io/posts/macro-qe-preparation-dynamic-programming/</guid><description>嘉树的世界 https://cwleo.github.io/posts/macro-qe-preparation-dynamic-programming/ -&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
+&lt;div>&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/>&lt;/symbol>&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>&lt;/symbol>&lt;/svg>&lt;/div>&lt;div class="notice info" >
+&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#info-notice">&lt;/use>&lt;/svg>&lt;/span>Info&lt;/p>&lt;p>本系列未能完成，只出了两期，因为复习进度太慢，最终换成手写笔记了。且作留恋。&lt;/p>&lt;/div>
+&lt;h2 id="sequential-form-and-recursive-form">Sequential form and recursive form&lt;/h2>
+&lt;p>我们只考虑平稳的动态规划问题，「平稳」是说即时收益函数 $u$ 和状态变量的演化约束 $G$ 不显式地依赖于时间 $t$。&lt;/p>
+&lt;p>有两种表述形式：序列式和递归式，递归式也就是 Bellman 方程。序列式如下：&lt;/p>
+&lt;p>$$
+\begin{align*}
+V^*(x_0) = \max_{\{x_t\}_{t=0}^\infty} &amp;amp;\quad\sum_{t=0}^\infty\beta^tu(x_t,x_{t+1}), \\
+\text{s.t.}&amp;amp;\quad x_{t+1}\in G(x_t), \\
+&amp;amp;\quad x_0 \text{ is given.}
+\end{align*}
+$$&lt;/p>
+&lt;p>递归式如下：&lt;/p>
+&lt;p>$$
+V(x) = \max_{y\in G(x)} u(x,y) + \beta V(y).
+$$&lt;/p>
+&lt;p>两种形式所确立的值函数是等价的。&lt;/p>
+&lt;h2 id="欧拉方程">欧拉方程&lt;/h2>
+&lt;p>在以上递归式中，一阶条件为&lt;/p>
+&lt;p>$$
+u_2(x,y) + \beta V&amp;rsquo;(y) = 0.
+$$&lt;/p>
+&lt;p>此外，由包络定理，有&lt;/p>
+&lt;p>$$
+V&amp;rsquo;(x) = u_1(x,y).
+$$&lt;/p>
+&lt;p>假设最优 policy 的函数（因为是平稳的，故不显式依赖于 $t$）：$y = \pi(x)$，便有欧拉方程&lt;/p>
+&lt;p>$$
+u_2(x,\pi(x)) + \beta u_1\bigl(\pi(x),\pi(\pi(x))\bigr) = 0.
+$$&lt;/p>
+&lt;p>对欧拉方程的直觉解释：增加 $y$ 的边际成本（通常 $u_2 \leq 0$）等于边际收益（未来收益的贴现）。&lt;/p>
+&lt;h2 id="横截性条件">横截性条件&lt;/h2>
+&lt;p>&lt;em>横截性条件 (transversality condition)&lt;/em> 是动态优化的 &lt;em>必要&lt;/em> 条件，它是对满足欧拉方程的候选路径的进一步筛选。具体而言，欧拉方程要求最优路径必定满足：任意边际的偏离（偏离后又回到路径上）都无法获得改进。如果路径终末值是不受限制的，那么可能有很多满足欧拉方程的候选路径，此时，横截性条件的作用就是从这些候选路径中排除（部分）非最优的路径，它要求最优路径满足：任意永久的偏离（偏离后不再回到原路径上）都无法获得改进。&lt;/p>
+&lt;p>一个形象的例子：从一点到一条直线 $L$ 的最短路径是什么？显然是从该点到直线的垂线段。欧拉方程相当于是说最短的路径必定是直线段，而从一点到直线 $L$ 可作无数条直线。横截性条件则是说在所有这些直线段中，最短路径必定垂直于直线 $L$。&lt;/p>
+&lt;h3 id="the-finite-horizon-case">The finite horizon case&lt;/h3>
+&lt;p>为更好地理解横截性条件，我们首先考虑有限期的动态优化：&lt;/p>
+&lt;p>$$
+\begin{align*}
+\max_{\{x_t\}_{t=0}^{T+1}}&amp;amp;\quad\sum_{t=0}^T\beta^tu(x_t,x_{t+1}), \\
+\text{s.t.}&amp;amp;\quad x_{t+1}\geq0, \\
+&amp;amp;\quad x_0 \text{ is given.}
+\end{align*}
+$$&lt;/p>
+&lt;p>关于 $x_{t+1}$ 的一阶必要条件是&lt;/p>
+&lt;p>$$
+\begin{cases}
+\beta^Tu_2(x_T,x_{T+1}) = 0, &amp;amp; \text{if } x_{T+1}&amp;gt;0, \\
+\beta^Tu_2(x_T,x_{T+1}) \leq 0, &amp;amp; \text{if } x_{T+1}=0.
+\end{cases}
+$$&lt;/p>
+&lt;p>两种情况可以合写为&lt;/p>
+&lt;p>$$
+\beta^Tu_2(x_T,x_{T+1})x_{T+1} = 0.
+$$&lt;/p>
+&lt;p>这便是横截性条件。它是说，除非增加下一期存量的边际成本为0，否则终末期的存量必定是0。我们把 $x_t$ 对应为资本存量，就更好理解了，在终末期，最优的选择就是，不进行任何储蓄而是把现有的产出全部用作消费。考虑离散 Ramsey 模型：即时效用定义为消费的函数 $u(c_t)$，资本存量的演化服从&lt;/p>
+&lt;p>$$
+k_{t+1} = f(k_t) + (1-\delta)k_t - c_t.
+$$&lt;/p>
+&lt;p>将即时效用写作 $k_t$ 和 $k_{t+1}$ 的函数：&lt;/p>
+&lt;p>$$
+u(k_t,k_{t+1}) = u(f(k_t) + (1-\delta)k_t - k_{t+1}).
+$$&lt;/p>
+&lt;p>从而横截性条件&lt;/p>
+&lt;p>$$
+-\beta^Tu&amp;rsquo;(c_T)k_{T+1} = 0.
+$$&lt;/p>
+&lt;p>这基本上意味着 $k_{T+1} = 0$，即 $T$ 期全部产出和资本都用于消费，没有储蓄。&lt;/p>
+&lt;h3 id="the-infinite-horizon-case">The infinite horizon case&lt;/h3>
+&lt;p>在无限期动态优化中，我们无法像上面那样直接推导出横截性条件，但我们可以基于此合理推广为极限形式：&lt;/p>
+&lt;p>$$
+\lim_{t\to\infty}\beta^Tu_2(x_T,x_{T+1})x_{T+1} = 0.
+$$&lt;/p>
+&lt;p>如果结合欧拉方程 $u_2(x_t,x_{t+1})+\beta u_1(x_{t+1},x_{t+2})=0$，我们还有另一种形式:&lt;/p>
+&lt;p>$$
+\lim_{t\to\infty}\beta^Tu_1(x_T,x_{T+1})x_T = 0.
+$$&lt;/p>
+&lt;p>它们意味着无穷远期存量的贴现值为0，这表明最优路径上存量不能是过度积累的。&lt;/p>
+- https://cwleo.github.io/posts/macro-qe-preparation-dynamic-programming/ - 2023–2024 嘉树.</description></item><item><title>Micro QE 备考练习</title><link>https://cwleo.github.io/posts/micro-qe-preparation/</link><pubDate>Fri, 09 Jun 2023 16:22:12 +0800</pubDate><guid>https://cwleo.github.io/posts/micro-qe-preparation/</guid><description>嘉树的世界 https://cwleo.github.io/posts/micro-qe-preparation/ -&lt;p>本来计划做一份所有往年题的答案（已经全部做好了但希望打出一份电子版），但不幸考前🐑了，只完成此三题的誊抄，姑且留个纪念吧。&lt;/p>
+&lt;h2 id="problem-1-stochastic-dominance">Problem 1 (stochastic dominance)&lt;/h2>
+&lt;p>Consider lotteries $L_1\equiv(p_1\circ x_1,p_2\circ x_2)$ and $L_2\equiv(1\circ \bar{x})$, where $\bar{x} &amp;gt; p_1x_1+p_2x_2$, and $\bar{x}&amp;lt;x_2$. Let $x$ denote the outcome of $L_1$ and $\widetilde{x}$ the outcome of $L_2$. ($L_2$ is a trivial lottery. So $\widetilde{x}$ is a random variable that equals $\bar{x}$ with probability one.) Let $z$ denote the outcome of lottery&lt;/p>
+&lt;p>$$
+L_3 \equiv (q_1\circ z_1, \dots, q_i\circ z_i, \dots, q_n\circ z_n),
+$$&lt;/p>
+&lt;p>where $n$ is some finite number greater than 1. Let $F_1$ and $F_2$ denote the cumulative distributions of $x+z$ and $\widetilde{x}+z$, respectively.&lt;/p>
+&lt;ol class="alph" start="1">
+&lt;li>Suppose $n=2$. Use a diagram to illustrate $F_1$ and $F_2$.&lt;/li>
+&lt;li>Show that $\widetilde{x}+z$ cannot first-order stochastically dominates (f.o.s.d.) $x+z$. [Recall that for any two lotteries $L_1$ and $L_2$ with cdf $F_1$ and $F_2$, respectively, we say that $F_1$ first-order stochastically dominates $L_2$ if for any $x$, $F_1(x)\leq F_2(x)$.]&lt;/li>
+&lt;li>&lt;p>Let $z$ denote the outcome of a lottery&lt;/p>
+&lt;p>$$
+L_4 \equiv (q_1\circ z_1, \dots, q_i\circ z_i, \dots)
+$$&lt;/p>
+&lt;p>that has a countably infinite number of outcomes. Show that in this case it is possible that $\widetilde{x}+z$ f.o.s.d. $x+z$. That is, come up with an example of $L_4$ such that $\widetilde{x}+z$ f.o.s.d. $x+z$.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="solution">Solution&lt;/h3>
+&lt;p>&lt;strong>&lt;code>(a)&lt;/code>&lt;/strong> Omitted.&lt;/p>
+&lt;p>&lt;strong>&lt;code>(b)&lt;/code>&lt;/strong> We need to prove that there is some $x$ such that $F_2(x) &amp;gt; F_1(x)$. WLOG, assume $z_n$ is the largest outcome of $L_3$, i.e., $x_n\geq x_i$ for every $i$. Since $p_1x_1+p_2x_2&amp;lt;\bar{x}&amp;lt;x_2$, we must have $x_1&amp;lt;\bar{x}&amp;lt;x_2$. Then $x_2+z_n$ is the rightmost point where $F_1$ puts a positive mass, which means $F_1(x_2+z_n) = 1 &amp;gt; F_1(\bar{x}+z_n)$. It is easy to see $F_2(\bar{x}+z_n) = 1$. So we have shown $F_2(\bar{x}+z_n) = 1 &amp;gt; F_1(\bar{x}+z_n)$.&lt;/p>
+&lt;p>&lt;strong>&lt;code>(c)&lt;/code>&lt;/strong> If there is some $x_m \geq x_i$ for every $i$, then we can use the same argument as in (b) to show that $F_2$ cannot f.o.s.d. $F_1$. Thus we may consider the case in which $\{z_n\}$ is an increasing sequence unbounded from above. We first show the following claim:&lt;/p>
+&lt;p>&lt;em>Claim.&lt;/em> If $\{z_n\}$ is an increasing sequence, then $F_2(x)\leq F_1(x)$ iff $F_2(\bar{x}+z_n)\leq F_1(\bar{x}+z_n)$ for each $n\in\mathbb{N}$.&lt;/p>
+&lt;p>&lt;em>Proof.&lt;/em> &amp;ldquo;Only if&amp;rdquo; is trivial. We show the &amp;ldquo;if&amp;rdquo; part. As both $F_1$ and $F_2$ are discrete distributions, it would suffice to show $F_2(x_j+z_n)\leq F(x_j+z_n)$ for $j=1,2$. For convenience, let $z_0=-\infty$. Then $x_1+z_n\in[\bar{x}+z_0,\bar{x}+z_n)$. There must exist some $m\leq n$ such that $x_1+z_n\in[\bar{x}+z_{m-1},\bar{x}+z_m)$. We have&lt;/p>
+&lt;p>$$
+F_2(x_1+z_n) = F_2(\bar{x}+z_{m-1}) \leq F_1(\bar{x}+z_{m-1}) \leq F_1(x_1+z_n).
+$$&lt;/p>
+&lt;p>Likewise, there is some $k\geq n$ such that $x_2+z_n\in[\bar{x}+z_k,\bar{x}+z_{k+1})$ and it follows that $F_2(x_2+z_n)$ is no greater than $F_2(x_2+z_n)$. This completes the proof. &lt;em>&lt;code>Q.E.D.&lt;/code>&lt;/em>&lt;/p>
+&lt;p>By the claim, we only need to construct $\{z_n\}$ and the corresponding pmf $\{q_n\}$ so that $F_2(\bar{x}+z_n)\leq F_1(\bar{x}+z_n)$ for each $n$.&lt;/p>
+&lt;p>First, it is easy to see $F_2(\bar{x}+z_n) = \sum_{j=1}^nq_j$. In addition, it is for sure that for $j\leq n$, $x_1+z_j&amp;lt;\bar{x}+z_n$ and so $F_1(\bar{x}+z_n)\geq p_1\sum_{j=1}^nq_j$. To make $F_1(\bar{x}+z_n)$ larger, we can let&lt;/p>
+&lt;p>$$
+x_1+z_{n+1}\leq\bar{x}+z_n \quad\text{and}\quad x_2+z_{n-1}\leq\bar{x}+z_n
+$$&lt;/p>
+&lt;p>for each $n$. Note that this amounts to $x_2-\bar{x}\leq z_{n}-z_{n-1}\leq \bar{x}-x_1$, which requires&lt;/p>
+&lt;p>$$
+x_2-\bar{x}\leq\bar{x}-x_1 \quad\Rightarrow\quad \bar{x}\geq\frac{x_1+x_2}{2}.
+$$&lt;/p>
+&lt;p>Now we have&lt;/p>
+&lt;p>$$
+F_1(\bar{x}+z_n) \geq \sum_{j=1}^{n-1}q_j + p_1q_n + p_1q_{n+1}.
+$$&lt;/p>
+&lt;p>Thus, a sufficient condition for $F_2(\bar{x}+z_n)\leq F_1(\bar{x}+z_n)$ is&lt;/p>
+&lt;p>$$
+\sum_{j=1}^{n-1}q_j + p_1q_n + p_1q_{n+1} \geq \sum_{j=1}^nq_j \quad\Leftrightarrow\quad \frac{q_{n+1}}{q_n}\geq\frac{1-p_1}{p_1}.
+$$&lt;/p>
+&lt;p>This would require $p_1&amp;gt;\frac12$ since otherwise $q_n$ would explode. We can then construct $\{q_n\}$ as a geometric sequence: $q_n = (1-q)q^{n-1}$ where $q=(1-p_1)/p_1$.&lt;/p>
+&lt;p>Therefore, if $\bar{x}\geq(x_1+x_2)/2$ and $p_1&amp;gt;\frac12$,&lt;/p>
+&lt;p>$$
+\begin{align*}
+z_n &amp;amp;= n\delta \quad\text{where } \delta\in[x_2-\bar{x},\bar{x}-x_1],\\
+q_n &amp;amp;= (1-q)q^{n-1} \quad\text{where } q = (1-p_1)/p_1,
+\end{align*}
+$$&lt;/p>
+&lt;p>would lead $F_2$ to f.o.s.d. $F_1$.&lt;/p>
+&lt;hr>
+&lt;h2 id="problem-2-spne">Problem 2 (SPNE)&lt;/h2>
+&lt;p>Consider the following two-stage game between players 1 and 2. In stage 1, two players decide simultaneously whether to invest on a joint project. The cost of investment is $c&amp;gt;0$ for both players. No cost is incurred if a player chooses not to invest. The project generates a surplus of $(1+R)c$ if one player invests and of $(2+R)c$ if both players invest, where $0&amp;lt;R&amp;lt;1$. The game ends after stage 1 if no one invests and each player receives a payoff 0. If at least one player invests, the game enters stage 2, in which the players negotiate how to divide the realized surplus. Note that even a player did not invest, he is still entitled to participate in the surplus negotiation. The negotiation goes as follows: the players simultaneously announce their demands $d_1$ and $d_2$, where $d_i\in[0,1]$ refers to the share of the realized surplus. An agreement is reached if and only if the demands are compatible (i.e., $d_1+d_2\leq1$), in which case each player simply receives his own demand. If no agreement is reached (i.e., $d_1+d_2&amp;gt;1$), a player receives 0 if he did not invest in stage 1 and receives a compensation of $\delta c$ if he invested, where $0&amp;lt;\delta&amp;lt;1$. Each player&amp;rsquo;s payoff, denoted by $U_i$, is equal to the surplus or the compensation that he receives from the negotiation less his investment cost. For example, if player 1 is the only one who invested in stage 1 and an agreement of $(d_1,d_2)$ is reached in stage 2, then $U_1=d_1(1+R)c-c$ and $U_2=d_2(1+R)c$; if player 1 is the only one who invested in stage 1 and no agreement is reached in stage 2, then $U_1=\delta c-c$ and $U_2=0$.&lt;/p>
+&lt;ol class="alph" start="1">
+&lt;li>Specify a subgame perfect equilibrium in which no one invests in stage 1.&lt;/li>
+&lt;li>Specify a subgame perfect equilibrium in which both players invest in stage 1.&lt;/li>
+&lt;/ol>
+&lt;p>Suppose that in the negotiation in stage 2, one of the two players in randomly selected, with probability $1/2$, to make a take-it-or-leave-it proposal in the form of $(d_1,d_2)$, with $d_i\geq0$ and $d_1+d_2=1$. The other player then decides whether to accept or reject this proposal. An agreement is reached if and only if the proposal accepted. Players&amp;rsquo; payoffs are the same as specified in the previous parts. Assume that $R+\delta&amp;gt;1$.&lt;/p>
+&lt;ol class="alph" start="3">
+&lt;li>Specify a subgame perfect equilibrium. Which player(s) will invest in the equilibrium?&lt;/li>
+&lt;li>Briefly discuss the efficiency of the equilibrium outcomes in the previous parts.&lt;/li>
+&lt;/ol>
+&lt;h3 id="solution-1">Solution&lt;/h3>
+&lt;p>&lt;strong>&lt;code>(a)&lt;/code>&lt;/strong> There are four (proper) subgames, and we need to find the stage NEs for each of them. Use $Y$ to denote invest and $N$ not invest.&lt;/p>
+&lt;p>If both players invest in stage 1, denoted $(Y,Y)$, then in stage 2, given player $i$&amp;rsquo;s demand $d_i$, player $j$&amp;rsquo;s payoff function:&lt;/p>
+&lt;p>$$
+U_j(d_j|d_i,Y,Y) = \begin{cases}
+d_j(2+R)c-c, &amp;amp; \text{if } d_j\leq1-d_i,\\
+\delta c-c, &amp;amp; \text{if } d_j&amp;gt;1-d_i.
+\end{cases}
+$$&lt;/p>
+&lt;p>Then player $j$&amp;rsquo;s best response:&lt;/p>
+&lt;p>$$
+\mathit{BR}_j(d_i,Y,Y) = \begin{cases}
+1-d_i, &amp;amp; \text{if } (1-d_i)(2+R)\geq\delta,\\
+\in(1-d_i,1], &amp;amp; \text{otherwise}.
+\end{cases}
+$$&lt;/p>
+&lt;p>If $(Y_i,N_j)$, then in stage 2, given player $i$&amp;rsquo;s demand $d_i$, player $j$&amp;rsquo;s payoff function:&lt;/p>
+&lt;p>$$
+U_j(d_j|d_i,Y_i,N_j) = \begin{cases}
+d_j(1+R)c, &amp;amp; \text{if } d_j\leq1-d_i,\\
+0, &amp;amp; \text{if } d_j&amp;gt;1-d_i.
+\end{cases}
+$$&lt;/p>
+&lt;p>Then player $j$&amp;rsquo;s best response:&lt;/p>
+&lt;p>$$
+\mathit{BR}_j(d_i,Y_i,N_j) = 1-d_i.
+$$&lt;/p>
+&lt;p>If $(N_i,Y_j)$, then in stage 2, given player $i$&amp;rsquo;s demand $d_i$, player $j$&amp;rsquo;s payoff function:&lt;/p>
+&lt;p>$$
+U_j(d_j|d_i,N_i,Y_j) = \begin{cases}
+d_j(1+R)c-c, &amp;amp; \text{if } d_j\leq1-d_i,\\
+\delta c-c, &amp;amp; \text{if } d_j&amp;gt;1-d_i.
+\end{cases}
+$$&lt;/p>
+&lt;p>Then player $j$&amp;rsquo;s best response:&lt;/p>
+&lt;p>$$
+\mathit{BR}_j(d_i,N_i,Y_j) = \begin{cases}
+1-d_i, &amp;amp; \text{if } (1-d_i)(1+R)\geq\delta,\\
+\in(1-d_i,1), &amp;amp; \text{otherwise}.
+\end{cases}
+$$&lt;/p>
+&lt;p>If $(N,N)$, then in stage 2, given player $i$&amp;rsquo;s demand $d_i$, player $j$&amp;rsquo;s payoff function:&lt;/p>
+&lt;p>$$
+U_j(d_j|d_i,N,N) = 0.
+$$&lt;/p>
+&lt;p>Then player $j$&amp;rsquo;s best response:&lt;/p>
+&lt;p>$$
+\mathit{BR}_j(d_i,N,N) \in [0,1].
+$$&lt;/p>
+&lt;p>In an SPNE where $(N,N)$ is the stage-1 action profile, both players must have zero payoffs. Then, no incentive to deviate means that player $i$ should have non-positive payoff in the stage-2 subgame corresponding to $(Y_i,N_j)$. For the subgame corresponding to $(Y,Y)$, there is actually no such requirement: any subgame NE is fine; this is because a player&amp;rsquo;s deviation does not lead him to that subgame.&lt;/p>
+&lt;p>According to the above best response functions, we can easily find the stage-2 NEs. For example, $(d_1=d_2=1)$ in the subgame corresponding to $(Y,Y)$; $(d_i=\frac{1}{1+R},d_j=\frac{R}{1+R})$ corresponding to $(Y_i,N_j)$; $(d_1=d_2=1)$ corresponding to $(N,N)$. If player $i$ deviates from his current actions to $Y_i$ and other $d_i$&amp;rsquo;s, he would not be strictly better off. Thus, we indeed find an NE, and it is, as all stage-2 action profiles form NEs, an SPNE.&lt;/p>
+&lt;p>&lt;strong>&lt;code>(b)&lt;/code>&lt;/strong> First, let us find an NE in the subgame corresponding to $(Y,Y)$. A straightforward one is $(d_1=d_2=\frac12)$ in which both players have payoff $\frac12Rc$. Now, no incentive to deviate requires that player $i$ should have payoff no greater than $\frac12Rc$ in the stage-2 subgame corresponding to $(N_i,Y_j)$; easy to see $(d_i=0,d_j=1)$ is an NE that gives player $i$ zero payoff in this subgame. For the subgame corresponding to $(N,N)$, we can still use $(d_1=d_2=1)$.&lt;/p>
+&lt;p>&lt;strong>&lt;code>(c)&lt;/code>&lt;/strong> Analyze the four stage-2 subgames one by one. In the subgame following $(Y,Y)$: If player $i$ is selected as the proposer, then player $j$ would accept if $d_j(2+R)\geq\delta$, and so player $i$ would propose $d_i=1-\frac{\delta}{2+R}$. Player $i$ and $j$&amp;rsquo;s expected payoff are both&lt;/p>
+&lt;p>$$
+U_i = U_j = \frac12(\delta c-c)+\frac12(1+R-\delta)c = \frac12Rc.
+$$&lt;/p>
+&lt;p>In the subgame following $(Y_i,N_j)$: If player $i$ is selected as the proposer, then player $j$ would always accept, so player $i$ proposes $d_i=1$; if player $j$ is selected as the proposer, then player $i$ would accept if $d_i(1+R)\geq\delta$, so player $j$ would propose $d_i = \frac{\delta}{1+R}$. Players $i$ and $j$&amp;rsquo;s expected payoffs are thus&lt;/p>
+&lt;p>$$
+\begin{align*}
+U_i &amp;amp;= \frac12Rc+\frac12(\delta-1)c = \frac12(R+\delta-1)c &amp;gt; 0, \\
+U_j &amp;amp;= \frac12\cdot0 + \frac12(1+R-\delta)c = \frac12(1+R-\delta)c &amp;gt; \frac12Rc.
+\end{align*}
+$$&lt;/p>
+&lt;p>In the subgame following $(N,N)$: Any proposal would be accepted and $U_i=U_j=0$.&lt;/p>
+&lt;p>The above analysis indicates an SPNE where one player invests while the other does not. Suppose $(Y_i,N_j)$. Clearly, player $i$ has no incentive to deviate to $N_i$ and player $j$ has no incentive to deviate to $Y_j$.&lt;/p>
+&lt;p>&lt;strong>&lt;code>(d)&lt;/code>&lt;/strong> The SPNE in which neither invests is inefficient. The other SPNEs in which at least one invests are efficient since the total (expected) payoff is $Rc$ and there is no room for any further improvement.&lt;/p>
+&lt;hr>
+&lt;h2 id="problem-3-mechanism-design">Problem 3 (mechanism design)&lt;/h2>
+&lt;p>Consider a bilateral trade setting. A seller owns an object, which a buyer wants to buy. The object quality $v$ is drawn from $[0,1]$ according to the distribution $F(v) = v^a$, where $a &amp;gt; 0$ is a parameter. The seller knows $v$, while the buyer does not. When the object quality is $v$, its value is $v$ to the seller and $bv$ to the buyer with $b &amp;gt; 1$. If a trade happens at the price $p$, then the seller gets $p−v$ and the buyer gets $bv − p$. When there is no trade, both players get 0.&lt;/p>
+&lt;p>For each $(a,b)$, present an incentive–compatible individually–rational mechanism that maximizes the (ex-ante) probability of trade. Denote the maximal probability by $H(a,b)$. Derive the function $H$.&lt;/p>
+&lt;h3 id="solution-2">Solution&lt;/h3>
+&lt;p>A mechanism consists of $q\colon [0,1]\to[0,1]$ and $p\colon [0,1]\to\mathbb{R}$. More specifically, $q(v)$ is the probability of the seller accepting the trade (allocation rule) and $p(v)$ stipulates the payment (transfer rule).&lt;/p>
+&lt;p>The seller of type $v$, if he tells the truth (reporting his type as is), has payoff&lt;/p>
+&lt;p>$$
+u_s(v) = q(v)[p(v)-v] = q(v)p(v) - vq(v) = t(v) - vq(v),
+$$&lt;/p>
+&lt;p>where we let $t(v):=q(v)p(v)$; it is the expected transfer. Now, instead of directly finding the optimal $q$ and $p$, we would determine $q$ and $t$.&lt;/p>
+&lt;p>Incentive compatibility implies&lt;/p>
+&lt;p>$$
+\begin{align*}
+t(v) - vq(v) &amp;amp;\geq t(v&amp;rsquo;) - vq(v&amp;rsquo;), \\
+t(v&amp;rsquo;) - v&amp;rsquo;q(v&amp;rsquo;) &amp;amp;\geq t(v) - v&amp;rsquo;q(v).
+\end{align*}
+$$&lt;/p>
+&lt;p>Thus, we have&lt;/p>
+&lt;p>$$
+(v&amp;rsquo;-v)[q(v)-q(v&amp;rsquo;)] \geq 0.
+$$&lt;/p>
+&lt;p>This means $q(v)\geq q(v&amp;rsquo;)$ whenever $v&amp;lt;v&amp;rsquo;$. In other words, $q(\cdot)$ is decreasing.&lt;/p>
+&lt;p>Further, IC must imply&lt;/p>
+&lt;p>$$
+u_s(v) = \max_{v&amp;rsquo;}\ t(v&amp;rsquo;) - vq(v&amp;rsquo;).
+$$&lt;/p>
+&lt;p>By the envelope theorem (assuming $u_s$ is differentiable), $u_s&amp;rsquo;(v) = -q(v)\leq0$. Since $q(v)$ is decreasing, $u_s(v)$ is a convex, decreasing function. (In fact, the convexity can be proved directly from the formula above without imposing differentiability assumption.) Then, we have&lt;/p>
+&lt;p>$$
+\begin{align*}
+u_s(v) &amp;amp;= \int_v^1 q(x)\,dx + u_s(1), \\
+t(v) &amp;amp;= u_s(v) + vq(v) = \int_v^1 q(x)\,dx + u_s(1) + vq(v).
+\end{align*}
+$$&lt;/p>
+&lt;p>Now, given IC, IR would imply&lt;/p>
+&lt;p>$$
+u_s(v)\geq 0 \text{ for each } v \quad\Leftrightarrow\quad u_s(1)\geq0.
+$$&lt;/p>
+&lt;p>If an IC and IR mechanism maximizes the probability of trade, then it maximizes&lt;/p>
+&lt;p>$$
+\mathbb{E}[q(v)] = \int_0^1q(v)\,dF(v)
+$$&lt;/p>
+&lt;p>subject to&lt;/p>
+&lt;p>$$
+\mathbb{E}(q(v)[bv-p(v)]) = \int_0^1bvq(v)-t(v)\,dF(v) \geq 0.
+$$&lt;/p>
+&lt;p>Doing some algebra, the constraint reduces to&lt;/p>
+&lt;p>$$
+\begin{align*}
+&amp;amp;\mathbin{\phantom{=}}\int_0^1\left[(b-1)v\frac{f(v)}{F(v)}-1\right]q(v)F(v)\,dv - u_s(1) \\
+&amp;amp;= \int_0^1[a(b-1)-1]q(v)F(v)\,dv - u_s(1)\geq0.
+\end{align*}
+$$&lt;/p>
+&lt;p>If $a(b-1)&amp;lt;1$, then any $q(v)\geq 0$ would not make trade happen with a positive probability. If $a(b-1)\geq 1$, then $q(v) = 1$ with $u_s(1) = 0$ would make trade happen for sure and so is the optimal allocation rule. Hence, we derive $H(a,b) = \mathbb{1}\{a(b-1)\geq1\}$.&lt;/p>
+- https://cwleo.github.io/posts/micro-qe-preparation/ - 2023–2024 嘉树.</description></item><item><title>计量复习笔记 (VIII)：自回归估计与 (A)DF 检验</title><link>https://cwleo.github.io/posts/ecmt-notes-ar-adf/</link><pubDate>Sun, 30 Apr 2023 12:02:47 +0800</pubDate><guid>https://cwleo.github.io/posts/ecmt-notes-ar-adf/</guid><description>嘉树的世界 https://cwleo.github.io/posts/ecmt-notes-ar-adf/ -&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
+&lt;div>&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/>&lt;/symbol>&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>&lt;/symbol>&lt;/svg>&lt;/div>&lt;div class="notice info" >
+&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#info-notice">&lt;/use>&lt;/svg>&lt;/span>Info&lt;/p>&lt;p>本系列是2023年春季学期《应用计量经济学》期末复习笔记，仅涵盖时间序列部分，对应 Hansen (2022) &lt;em>Econometrics&lt;/em> 第14和16章的内容。&lt;/p>&lt;/div>
+&lt;h2 id="内容提要">内容提要&lt;/h2>
+&lt;p>介绍了单位根假设下自回归系数的 OLS 估计量的渐进分布，以及由此而来的 (Augmented) Dicky-Fuller 单位根检验。&lt;/p>
+&lt;h2 id="ar1-的估计和单位根检验">AR(1) 的估计和单位根检验&lt;/h2>
+&lt;p>设 $Y_t$ 是一个 AR(1) 过程：$Y_t = \alpha Y_{t-1} + e_t$，为简化问题&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>，这里 $e_t$ 是平稳遍历的鞅差分，方差为 $\sigma_e^2$。&lt;/p>
+&lt;p>在平稳情形下，即 $|\alpha| &amp;lt; 1$ 时，我们对 OLS 估计量 $\hat{\alpha}$ 以 $\sqrt{n}$ 作为 scaling，容易得到&lt;/p>
+&lt;p>$$
+\sqrt{n}(\hat{\alpha} - \alpha) = \sqrt{n}\frac{\sum_{t=2}^nY_{t-1}e_t}{\sum_{t=2}^nY_{t-1}^2} = \frac{n^{-1/2}\sum_{t=2}^nY_{t-1}e_t}{n^{-1}\sum_{t=2}^nY_{t-1}^2} \to_d N(0,1-\alpha^2)
+$$&lt;/p>
+&lt;p>可见，当 $\alpha \to 1$，上式将依概率收敛到 0。这也说明，$\sqrt{n}$ 放缩对于单位根是不够的。&lt;/p>
+&lt;p>事实上，当 $\alpha = 1$，即单位根情形下&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>，应采用 $n$ 作为 scaling：&lt;/p>
+&lt;p>$$
+n(\hat{\alpha} - 1) = \frac{n^{-1}\sum_{t=2}^nY_{t-1}e_t}{n^{-2}\sum_{t=2}^nY_{t-1}^2}
+$$&lt;/p>
+&lt;p>分母项的收敛利用前一讲的推导方法可以得到：&lt;/p>
+&lt;p>$$
+\begin{align*}
+\frac{1}{n^2}\sum_{t=2}^nY_{t-1}^2 &amp;amp;= \frac1n\sum_{t=2}^n\left(\frac{Y_t}{\sqrt{n}}\right)^2 \\
+&amp;amp;= \sum_{t=2}^n\int_{t/n}^{(t+1)/n}[Y_n(r)]^2\,dr \\
+&amp;amp;= \int_0^1[Y_n(r)]^2\,dr + o_p(1) \\
+&amp;amp;\to_d \int_0^1 [B(r)]^2\,dr
+\end{align*}
+$$&lt;/p>
+&lt;p>分子项的收敛涉及到随机积分。&lt;/p>
+&lt;div class="thm">
+&lt;p id="def:stochint" class="thm-title thm-definition">Definition 1.&lt;/p>
+&lt;div class="thm-inner thm-definition">
+&lt;p>随机过程 $X(r)$ 关于 $Z(r)$ 在 $[0,1]$ 上的随机积分是一个概率极限：&lt;/p>
+&lt;p>$$
+\int_0^1X(r)\,dZ(r) := \mathop{\mathrm{plim}}\limits_{n\to\infty}\sum_{i=1}^{n-1}{\textstyle X\bigl(\frac{i}{n}\bigr)\left[Z\bigl(\frac{i+1}{n}\bigr)-Z\bigl(\frac{i}{n}\bigr)\right]}
+$$&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;p>据此定义，我们有&lt;/p>
+&lt;p>$$
+\frac1n\sum_{t=2}^nY_{t-1}e_t = \sum_{t=2}^n\frac{Y_{t-1}}{\sqrt{n}}\frac{e_t}{\sqrt{n}} = \sum_{t=2}^{n}{\textstyle Y_n\bigl(\frac{t-1}{n}\bigr)\left[Y_n\bigl(\frac{t}{n}\bigr)-Y_n\bigl(\frac{t-1}{n}\bigr)\right]} = \int_0^1 Y_n(r)\,dY_n(r)
+$$&lt;/p>
+&lt;p>尽管 $Y_n(r)\to_d B(r)$，但这不直接意味着上式依分布收敛到 $\int_0^1 B(r)\,dB(r)$，因为随机积分不是一个连续泛函，不能使用 CMT。不过我们确实有 $\int_0^1 Y_n(r)\,dY_n(r)\to_d\int_0^1 B(r)\,dB(r)$，其严格证明比较技术化。&lt;/p>
+&lt;p>另一种比较取巧的方式如下（简便起见，假设 $Y_0 = 0$）：&lt;/p>
+&lt;p>$$
+\begin{align*}
+\frac1n\textstyle\sum_{t=2}^nY_{t-1}e_t &amp;amp;= \frac1n\textstyle\sum_{t=2}^n\left(\sum_{j=1}^{t-1}e_j\right)e_t \\
+&amp;amp;= \frac12\left[\frac1n\left(\textstyle\sum_{j=1}^ne_j\right)^2-\frac1n\textstyle\sum_{j=1}^ne_j^2\right] \\
+&amp;amp;\to_d \frac12[B(1)^2-\sigma_e^2] = \int_0^1B(r)\,dB(r)
+\end{align*}
+$$&lt;/p>
+&lt;p>第一个等式由于我们假设了 $Y_0 = 0$ 而成立，$Y_0$ 当然可以为任意随机变量，这于最终结果只是一个 $o_p(1)$ 的影响。第二个等式使用了分步求和，很巧妙，因而只用普通 CLT 就可得到收敛性，注意 $B(1)\sim N(0,\sigma_e^2)$。最后一个等式是 Itô 积分。&lt;/p>
+&lt;div class="notice note" >
+&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>如果 $e_t$ 是弱相关序列，那么长期方差 $\gamma^2=\sigma_e^2 + 2\lambda$，$\int_0^1B(r)\,dB(r) = \frac12[B(1)^2-\gamma^2]$，最后的极限分布将是 $\int_0^1B(r)\,B(r)+\lambda$。&lt;/p>&lt;/div>
+&lt;p>综上所述，我们得到最终结果：&lt;/p>
+&lt;p>$$
+n(\hat{\alpha} - 1) \to_d \frac{\int_0^1B(r)\,dB(r)}{\int_0^1 [B(r)]^2\,dr} = \frac{\int_0^1W\,dW}{\int_0^1 W^2}
+$$&lt;/p>
+&lt;p>其中 $W(r)$ 是标准布朗运动，即 $W(1)\sim N(0,1)$。注意，这里还是使用了 CMT，因为分子部分等于 $\frac12W(1)^2-\frac12$ 相当于一个常数（不考虑随机性时），而分母部分是连续泛函。&lt;/p>
+&lt;h3 id="dickey-fuller-单位根检验">Dickey-Fuller 单位根检验&lt;/h3>
+&lt;p>DF 检验统计量和经典的 t-statistic 形式相同：&lt;/p>
+&lt;p>$$
+\text{DF t-stat }= \frac{\hat{\alpha}-1}{\text{se}(\hat{\alpha})} = \frac{\sum y_{t-1}e_t/\sum y_{t-1}^2}{\hat{\sigma}_e\Big/\sqrt{\sum y_{t-1}^2}} = \frac{n^{-1}\sum y_{t-1}e_t}{\hat{\sigma}_e\sqrt{n^{-2}\sum y_{t-1}^2}} \to_d \frac{\int_0^1 W\,dW}{\bigl(\int_0^1 W^2\bigr)^{1/2}}
+$$&lt;/p>
+&lt;p>可以看到，在原假设 $\alpha=1$ 下，DF 检验统计量并不服从正态分布，其分布没有解析表达式而只能通过模拟得到，是一个非对称分布。&lt;/p>
+&lt;h3 id="带截距项回归">带截距项回归&lt;/h3>
+&lt;p>设 $Y_t$ 是一个带截距项的单位根 $Y_t = \mu + \alpha Y_{t-1} + e_t$。根据 Frisch-Waugh-Lovell (FWL) 定理，$\hat{\alpha}$ 可由除均值序列 $Y_t^* = Y_t-\frac1n\sum_{\tau=1}^{n-1}Y_\tau$ 自回归得到，于是根据上一讲的内容，我们可以推出&lt;/p>
+&lt;p>$$
+n(\hat{\alpha} - 1) = \frac{n^{-1}\sum_{t=2}^nY_{t-1}^{*}e_t}{n^{-2}\sum_{t=2}^n(Y_{t-1}^{*})^2} \to_d \frac{\int_0^1W^{*}\,dW}{\int_0^1 (W^{*})^2}
+$$&lt;/p>
+&lt;p>其中 $W^*(r) = W(r) - \int_0^1W$。&lt;/p>
+&lt;p>对应的 DF 检验统计量在原假设下的极限具有和无截距项时相似的表达式。&lt;/p>
+&lt;h3 id="带时间趋势项回归">带时间趋势项回归&lt;/h3>
+&lt;p>设 $Y_t = \mu + \beta t + \alpha Y_{t-1} + e_t$。依然由 FWL 定理，$\hat{\alpha}$ 可由除趋势序列 $Y_t^{**}$ 自回归得到，因此&lt;/p>
+&lt;p>$$
+n(\hat{\alpha} - 1) = \frac{n^{-1}\sum_{t=2}^nY_{t-1}^{**}e_t}{n^{-2}\sum_{t=2}^n(Y_{t-1}^{**})^2} \to_d \frac{\int_0^1W^{**}\,dW}{\int_0^1 (W^{**})^2}
+$$&lt;/p>
+&lt;p>其中 $W^{**} = W - \bm{X}'\bigl(\int_0^1\bm{X}\bm{X}'\bigr)^{-1}\int_0^1\bm{X}W$。&lt;/p>
+&lt;h2 id="arp-的估计和单位根检验">AR(p) 的估计和单位根检验&lt;/h2>
+&lt;p>假设 $Y_t$ 是一个 AR($p$) 过程：$a(L)Y_t=e_t$，$e_t$ 仍为一个平稳遍历的鞅差分，方差 $\sigma_e^2$；$a(z)$ 是一个可逆的 $p$ 阶多项式。&lt;/p>
+&lt;p>假设 $a(z)$ 有一个单位根，换言之，$a(z) = (1-z)\tilde{a}(z)$，$\tilde{a}(z)$ 是一个可逆 $p-1$ 阶多项式。这意味着&lt;/p>
+&lt;p>$$
+\tilde{a}(L)\Delta Y_t = e_t \Rightarrow Y_t = Y_{t-1} + \tilde{b}(L)e_t
+$$&lt;/p>
+&lt;p>即 $Y_t$ 本身就是一个随机游走。我们可通过 Beveridge-Nelson 分解得到其均值和趋势的极限分布，但现在我们关心的是估计和检验的问题。&lt;/p>
+&lt;p>首先注意到 $Y_t$ 可以写成&lt;/p>
+&lt;p>$$
+Y_t = a_1Y_{t-1} + \dots + a_pY_{t-p} + e_t
+$$&lt;/p>
+&lt;p>其中必有 $a_1+\dots+a_p = 1$，因为单位根的存在。或者表述成更紧凑的形式&lt;/p>
+&lt;p>$$
+Y_t = \bm{a}'\bm{W}_{t-1} + e_t \quad\text{where }\bm{a} = (a_1,\dots,a_p)', \bm{W}_{t-1} = (Y_{t-1},\dots,Y_{t-p})'
+$$&lt;/p>
+&lt;p>然后，我们使用矩阵做一点小小的变换：&lt;/p>
+&lt;p>$$
+Y_t = (\bm{B}\bm{a})&amp;rsquo;(\bm{B}')^{-1}\bm{W}_{t-1} + e_t = (\rho,\bm{\beta}')(Y_{t-1},\bm{X}'_{t-1})' + e_t
+$$&lt;/p>
+&lt;p>其中变换矩阵 $\bm{B}$ 和其逆矩阵的转置（取 $p=3$）形如&lt;/p>
+&lt;p>$$
+\bm{B} =
+\begin{pmatrix}
+1 &amp;amp; 1 &amp;amp; 1 \\
+0 &amp;amp; -1 &amp;amp; -1 \\
+0 &amp;amp; 0 &amp;amp; -1
+\end{pmatrix}\quad
+(\bm{B}')^{-1} =
+\begin{pmatrix}
+1 &amp;amp; 0 &amp;amp; 0 \\
+1 &amp;amp; -1 &amp;amp; 0 \\
+0 &amp;amp; 1 &amp;amp; -1
+\end{pmatrix}
+$$&lt;/p>
+&lt;p>因此 $\rho = a_1+\dots+a_p=1$，$\bm{X}_{t-1} = (\Delta Y_{t-1},\dots,\Delta Y_{t-p+1})$。我们实际上在将 $Y_t$ 写为&lt;/p>
+&lt;p>$$
+Y_t = \rho Y_{t-1} + \beta_1\Delta Y_{t-1} + \dots + \beta_{p-1}\Delta Y_{t-p+1} + e_t
+$$&lt;/p>
+&lt;p>这方便我们做回归并直接检验 $\rho = 1$ 而不必做联合检验。这种手法在初级计量接触过。此外，上述变换将回归元分为单位根部分 $Y_{t-1}$ 和平稳部分 $\bm{X}_{t-1}$。&lt;/p>
+&lt;p>于是，我们为 $\hat{\rho}$ 和 $\hat{\bm{\beta}}$ 选择不同的 scaling：&lt;/p>
+&lt;p>$$
+\begin{pmatrix}
+n(\hat{\rho}-1) \\ \sqrt{n}(\hat{\bm{\beta}}-\bm{\beta})
+\end{pmatrix} =
+\begin{bmatrix}
+\displaystyle
+\frac{1}{n^2}\sum_{t=1+p}^nY_{t-1}^2 &amp;amp; \displaystyle\frac{1}{n^{3/2}}\sum_{t=1+p}^nY_{t-1}\bm{X}_{t-1}' \\
+\displaystyle\frac{1}{n^{3/2}}\sum_{t=1+p}^n\bm{X}_{t-1}Y_{t-1} &amp;amp; \displaystyle\frac{1}{n}\sum_{t=1+p}^n\bm{X}_{t-1}\bm{X}_{t-1}'
+\end{bmatrix}^{-1}
+\begin{bmatrix}
+\displaystyle
+\frac1n\sum_{t=1+p}^nY_{t-1}e_t \\
+\displaystyle
+\frac1{\sqrt{n}}\sum_{t=1+p}^n\bm{X}_{t-1}e_t
+\end{bmatrix}
+$$&lt;/p>
+&lt;p>我们依次对各项进行分析。首先根据 Beveridge-Nelson 分解我们知道 $Y_n(r)\to_d B(r)$，单位时间方差 $\sigma_y^2=\sigma_e^2/a(1)^2$，因此&lt;/p>
+&lt;p>$$
+\frac{1}{n^2}\sum_{t=1+p}^nY_{t-1}^2 \to_d \frac{\sigma_e^2}{a(1)^2}\int_0^1W^2
+$$&lt;/p>
+&lt;p>交叉项是一个 $p-1$ 维向量，我们分析其中一个分量，例如第一个分量&lt;/p>
+&lt;p>$$
+\frac{1}{n^{3/2}}\sum_{t=1+p}^nY_{t-1}\Delta Y_{t-1} = \frac{1}{\sqrt{n}}\frac1n\sum_{t=1+p}^n(Y_{t-1}^2-Y_{t-1}Y_{t-2}) = \frac{1}{\sqrt{n}} O_p(1) = o_p(1)
+$$&lt;/p>
+&lt;p>类似可证明其他分量也是 $o_p(1)$。&lt;/p>
+&lt;p>$\bm{X}_{t-1}$ 是平稳遍历的，因此遍历定理表明 $n^{-1}\sum\bm{X}_{t-1}\bm{X}_{t-1}'\to_p\bm{Q}=\mathbb{E}(\bm{X}\bm{X}')$。此外，$\bm{X}_{t-1}e_t$ 是平稳弱相关的（但不再是鞅差分，因而无法使用鞅差分 CLT），采用对应的 CLT（课本定理 14.15），我们有&lt;/p>
+&lt;p>$$
+\frac1{\sqrt{n}}\sum_{t=1+p}^n\bm{X}_{t-1}e_t \to_d N(\bm{0},\bm{\Omega}) \quad\text{where } \bm{\Omega}=\mathbb{E}(\bm{X}_{t-1}\bm{X}_{t-1}'e_t^2)
+$$&lt;/p>
+&lt;p>最后，$\frac1n\sum_{t=1+p}^nY_{t-1}e_t$ 的极限分布&lt;/p>
+&lt;p>$$
+\frac1n\sum_{t=1+p}^nY_{t-1}e_t \to_d \int_0^1B_y(r)\,B_e(r) = \sigma_y\sigma_e\int_0^1W\,dW
+$$&lt;/p>
+&lt;p>注意 $B_y$ 和 $B_e$ 是完全相关的两个布朗运动，它们标准化后是同一个标准布朗运动。&lt;/p>
+&lt;p>综合以上分析，我们有&lt;/p>
+&lt;p>$$
+\begin{pmatrix}
+n(\hat{\rho}-1) \\ \sqrt{n}(\hat{\bm{\beta}}-\bm{\beta})
+\end{pmatrix}\to_d
+\begin{pmatrix}
+\sigma_y^2\int_0^1W^2 &amp;amp; 0 \\ 0 &amp;amp; \bm{Q}
+\end{pmatrix}^{-1}
+\begin{pmatrix}
+\sigma_y\sigma_e\int_0^1W\,dW \\ N(\bm{0},\bm{\Omega})
+\end{pmatrix} =
+\begin{pmatrix}
+a(1)\frac{\int_0^1W\,dW}{\int_0^1W^2} \\ N(\bm{0},\bm{Q}^{-1}\bm{\Omega}\bm{Q}^{-1})
+\end{pmatrix}
+$$&lt;/p>
+&lt;p>可见，在渐进分布中，平稳部分和非平稳部分是不相干的。&lt;/p>
+&lt;p>若要恢复对原模型的估计，只需要做逆变换 $\bm{a} = \bm{B}^{-1}(\rho,\bm{\beta}')'$，我们有&lt;/p>
+&lt;p>$$
+\sqrt{n}(\hat{\bm{a}}-\bm{a}) = \sqrt{n}\bm{B}^{-1}
+\begin{pmatrix}
+n^{-1} &amp;amp; 0 \\ 0 &amp;amp; n^{-1/2}
+\end{pmatrix}
+\begin{pmatrix}
+n(\hat{\rho}-1) \\ \sqrt{n}(\hat{\bm{\beta}}-\bm{\beta})
+\end{pmatrix}\to_d
+\bm{B}^{-1}
+\begin{pmatrix}
+o_p(1) \\ N(\bm{0},\bm{Q}^{-1}\bm{\Omega}\bm{Q}^{-1})
+\end{pmatrix}
+$$&lt;/p>
+&lt;p>令 $\bm{G} = \bm{B}^{-1}(:,2:p)$，则&lt;/p>
+&lt;p>$$
+\sqrt{n}(\hat{\bm{a}}-\bm{a}) \to_d N(\bm{0},\bm{G}\bm{Q}^{-1}\bm{\Omega}\bm{Q}^{-1}\bm{G}')
+$$&lt;/p>
+&lt;p>可见单位根的存在完全不影响对原 AR 模型的估计和检验，我们可以假装看不见而采用经典的估计和检验方法。这本质上是因为单位根部分以 $O_p(n^{-1})$ 的速率收敛，在寻常的 $\sqrt{n}$ 缩放下依然是收敛的。&lt;/p>
+&lt;h3 id="augmented-dickey-fuller-检验">Augmented Dickey-Fuller 检验&lt;/h3>
+&lt;p>依照上述推导，ADF 检验 $H_0\colon\rho=1$ vs. $H_1\colon\rho&amp;lt;1$，检验统计量及分布：&lt;/p>
+&lt;p>$$
+\text{ADF t-stat }= \frac{\hat{\rho}-1}{\text{se}(\hat{\rho})} = \to_d \frac{\int_0^1 W\,dW}{\bigl(\int_0^1 W^2\bigr)^{1/2}}
+$$&lt;/p>
+&lt;p>此外，还有带截距项、带趋势项回归的检验，统计量和分布可比照 AR(1) 情形。&lt;/p>
+&lt;h2 id="参考">参考&lt;/h2>
+&lt;p>Hansen, Bruce (2022). &lt;em>Econometrics&lt;/em>. Princeton University Press.&lt;/p>
+&lt;p>Phillips, Peter C.B. (1987). &amp;ldquo;Time Series Regression with a Unit Root.&amp;rdquo; &lt;em>Econometrica&lt;/em>, 55(2), 277-301.&lt;/p>
+&lt;p>Phillips, Peter C.B. and Xiao, Zhijie (1998). &amp;ldquo;A Primer on Unit Root Testing.&amp;rdquo; &lt;em>Journal of Economic Surveys&lt;/em>, 12(5), 423-470.&lt;/p>
+&lt;p>Xiao, Zhijie (2014). &amp;ldquo;Unit Roots: A Selective Review of the Contributions of Peter C.B. Phillips.&amp;rdquo; &lt;em>Econometric Theory&lt;/em>, 30(4), 775-814.&lt;/p>
+&lt;br>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>$e_t$ 可以是平稳弱相关序列，这会导致后文极限分布表达式中包含 $e_t$ 的长期协方差，例如，见 Xiao (2014) 或文中 Note。&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>对于 $\alpha = -1$，我们有 $Y_t = Y_{t-2} + \Delta e_t$，令 $X_{t-j} = Y_{t-2j}$，则 $X_t$ 是一个随机游走。因此分析 $\alpha = 1$ 不失一般性。&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div>
+- https://cwleo.github.io/posts/ecmt-notes-ar-adf/ - 2023–2024 嘉树.</description></item><item><title>计量复习笔记 (VII)：单位根序列的均值和趋势</title><link>https://cwleo.github.io/posts/ecmt-notes-fclt-means-trends/</link><pubDate>Sat, 29 Apr 2023 13:28:11 +0800</pubDate><guid>https://cwleo.github.io/posts/ecmt-notes-fclt-means-trends/</guid><description>嘉树的世界 https://cwleo.github.io/posts/ecmt-notes-fclt-means-trends/ -&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
+&lt;div>&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/>&lt;/symbol>&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>&lt;/symbol>&lt;/svg>&lt;/div>&lt;div class="notice info" >
+&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#info-notice">&lt;/use>&lt;/svg>&lt;/span>Info&lt;/p>&lt;p>本系列是2023年春季学期《应用计量经济学》期末复习笔记，仅涵盖时间序列部分，对应 Hansen (2022) &lt;em>Econometrics&lt;/em> 第14和16章的内容。&lt;/p>&lt;/div>
+&lt;h2 id="内容提要">内容提要&lt;/h2>
+&lt;p>介绍了随机游走序列的样本均值、带趋势项回归、除均值和除趋势等过程的渐进分布，它们都涉及布朗运动。&lt;/p>
+&lt;h2 id="样本均值过程">样本均值过程&lt;/h2>
+&lt;p>设 $Y_t = \sum_{\tau=1}^te_\tau$ 是上一讲定义的部分和序列，阶跃函数 $Y_n(r)$ 的具体定义如下：&lt;/p>
+&lt;p>$$
+Y_n(r) = \frac{1}{\sqrt{n}}Y_{\lfloor nr\rfloor} = \frac{1}{\sqrt{n}}Y_t \quad \text{for } \textstyle r\in\left[\frac{t}{n},\frac{t+1}{n}\right) \quad t = 1,\dots,n
+$$&lt;/p>
+&lt;p>也就是说，$Y_n(r)$ 在区间 $\left[\frac{t}{n},\frac{t+1}{n}\right)$ 上是常数（当然是对固定的 $\omega$），因此可写为&lt;/p>
+&lt;p>$$
+\frac{1}{\sqrt{n}}Y_t = n\cdot\frac1n Y_n(r) = n\int_{t/n}^{(t+1)/n} Y_n(r)\,dr
+$$&lt;/p>
+&lt;p>于是，对样本均值 $\bar{Y}_n = n^{-1}\sum_{t=1}^nY_t$，我们有&lt;/p>
+&lt;p>$$
+\begin{align*}
+\frac{1}{\sqrt{n}}\bar{Y}_n &amp;amp;= \sum_{t=1}^n\int_{t/n}^{(t+1)/n} Y_n(r)\,dr = \int_{1/n}^{1+1/n} Y_n(r)\,dr \\
+&amp;amp;= \int_0^1Y_n(r)\,dr + \frac{1}{n^{3/2}}Y_n - \frac{1}{n^{3/2}}Y_0 \\
+&amp;amp;= \int_0^1Y_n(r)\,dr + o_p(1)
+\end{align*}
+$$&lt;/p>
+&lt;p>这个式子刻画了（标准化的）样本均值同（几乎处处连续的）阶跃函数的关系：阶跃函数是一个连续时间随机过程，它关于时间的积分就成了一个随机变量，我们就是在将样本均值表述成一个连续时间随机过程对时间的积分。&lt;/p>
+&lt;p>我们从上一讲已经知道 $Y_n(r)\to_d B(r)$。积分作为一个泛函，是关于被积函数的一个连续函数，因而根据 &lt;em>连续映射定理 (Continuous Mapping Theorem, CMT)&lt;/em>，有&lt;/p>
+&lt;p>$$
+\frac{1}{\sqrt{n}}\bar{Y}_n = \int_0^1 Y_n(r)\,dr + o_p(1) \to_d \int_0^1 B(r)\,dr
+$$&lt;/p>
+&lt;p>即 scaled 样本均值依分布收敛于布朗运动在时间维度上的平均。这也表明了 $\bar{Y}_n$ 本身是发散的，即一个单位根序列不具有均值回归的性质。&lt;/p>
+&lt;h2 id="带趋势项回归">带趋势项回归&lt;/h2>
+&lt;p>用单位根序列对时间趋势回归会得到不同寻常的结果。我们采用 &lt;a href="https://cwleo.github.io/posts/ecmt-notes-time-trends/">第四讲&lt;/a> 中的 scaling 矩阵 $\bm{D}_n = \text{diag}\{\sqrt{n},n^{3/2}\}$，分母的收敛仍然是&lt;/p>
+&lt;p>$$
+\bm{D}_n^{-1}\bm{X}'\bm{X}\bm{D}_n^{-1} \to
+\begin{pmatrix}
+1 &amp;amp; \frac12 \\ \frac12 &amp;amp; \frac13
+\end{pmatrix}
+$$&lt;/p>
+&lt;p>分子项 $\bm{D}_n^{-1}\sum_{t=1}^n\bm{X}_tY_{t}$ 的两个分量可以表述如下：&lt;/p>
+&lt;p>$$
+\begin{align*}
+\frac{1}{\sqrt{n}}\sum_{t=1}^n Y_t &amp;amp;= n\cdot\frac{1}{\sqrt{n}}\bar{Y}_n \\
+\frac{1}{n^{3/2}}\sum_{t=1}^n tY_t &amp;amp;= n\sum_{t=1}^n\int_{t/n}^{(t+1)/n} X_n(r)Y_n(r)\,dr = n\left[\int_0^1 X_n(r)Y_n(r)\,dr + o_p(1)\right]
+\end{align*}
+$$&lt;/p>
+&lt;p>其中 $X_n(r)$ 的定义与 $Y_n(r)$ 类似：&lt;/p>
+&lt;p>$$
+X_n(r) = \frac{1}{n}X_{\lfloor nr\rfloor} = \frac{1}{n}t \quad \text{for } \textstyle r\in\left[\frac{t}{n},\frac{t+1}{n}\right) \quad t = 1,\dots,n
+$$&lt;/p>
+&lt;p>显然，$\sup_r|X_n(r)-r|=1/n\to0$，因而由 CMT 得到 $X_n(r)Y_n(r)\to_d rB(r)$，再次使用 CMT 便有&lt;/p>
+&lt;p>$$
+\int_0^1 X_n(r)Y_n(r)\,dr \to_d \int_0^1 rB(r)\,dr
+$$&lt;/p>
+&lt;p>以上分析表明，$\bm{D}_n^{-1}$ 还不足以使分子项收敛，还需除以 $n$，即有&lt;/p>
+&lt;p>$$
+\frac{1}{n}\bm{D}_n^{-1}\sum_{t=1}^n\bm{X}_tY_{t} \to_d
+\begin{pmatrix}
+\int_0^1 B(r)\,dr \\ \int_0^1 rB(r)\,dr
+\end{pmatrix}
+$$&lt;/p>
+&lt;p>综合起来就是&lt;/p>
+&lt;p>$$
+\frac1n\bm{D}_n\hat{\bm{\beta}} =
+\begin{pmatrix}
+n^{-1/2}\hat{\beta}_0 \\ \sqrt{n}\hat{\beta}_1
+\end{pmatrix}
+\to_d
+\begin{pmatrix}
+1 &amp;amp; \frac12 \\ \frac12 &amp;amp; \frac13
+\end{pmatrix}^{-1}
+\begin{pmatrix}
+\int_0^1 B(r)\,dr \\ \int_0^1 rB(r)\,dr
+\end{pmatrix}
+$$&lt;/p>
+&lt;p>这表明，$\hat{\beta}_1$ 具有与平稳情形下 OLS 估计量相同的收敛速度，只是收敛到 0。如果我们不知道一个序列是单位根而做了带趋势项回归，那么拟合出的趋势线的斜率是具有误导性的，因为它不应该传达任何有价值的信息，对预测也毫无帮助。&lt;/p>
+&lt;h2 id="除均值和除趋势">除均值和除趋势&lt;/h2>
+&lt;p>考虑除均值序列 $Y_t^* = Y_t - \bar{Y}_n$，对其构造阶跃并除以 $\sqrt{n}$，得到&lt;/p>
+&lt;p>$$
+Y_n^{*}(r) = \frac{1}{\sqrt{n}}Y_{\lfloor nr\rfloor}^* = Y_n(r) - \frac{1}{\sqrt{n}}\bar{Y}_n \to_d B(r) - \int_0^1 B(s)\,ds
+$$&lt;/p>
+&lt;p>注意，我们仍应用了 CMT，这里的映射 $T(f) = f - \int_0^1 f$ 是一个泛函，它将 $C[0,1]$ 中的函数映射回 $C[0,1]$。&lt;/p>
+&lt;p>线性除趋势序列 $Y_t^{**} = Y_t - \bm{X}_t'\hat{\bm{\beta}}$，对应的阶跃函数&lt;/p>
+&lt;p>$$
+\begin{align*}
+Y_n^{**}(r) &amp;amp;= \frac{1}{\sqrt{n}}Y_{\lfloor nr\rfloor}^{**} = Y_n(r) - \frac{1}{\sqrt{n}}\hat{\beta}_0 - \frac{\lfloor nr\rfloor}{n}\sqrt{n}\hat{\beta}_1 \\
+&amp;amp;\to_d B(r) - \bm{X}(r)'\begin{pmatrix}
+1 &amp;amp; \frac12 \\ \frac12 &amp;amp; \frac13
+\end{pmatrix}^{-1}\int_0^1\bm{X}(s)B(s)\,ds
+\end{align*}
+$$&lt;/p>
+&lt;p>其中 $\bm{X}(r) = (1,r)'$。&lt;/p>
+&lt;p>线性插值除趋势：$\widetilde{Y}_t = Y_t - Y_0 - \frac{t}{n}(Y_n-Y_0)$，这不是通过拟合，而是连接 $Y_0$ 和 $Y_n$ 得到的趋势线。对应的阶跃函数&lt;/p>
+&lt;p>$$
+\begin{align*}
+\widetilde{Y}_n(r) &amp;amp;= \frac{1}{\sqrt{n}}\widetilde{Y}_{\lfloor nr\rfloor} = Y_n(r) - \frac{1}{\sqrt{n}}Y_0 - \frac{\lfloor nr\rfloor}{n^{3/2}}(Y_n-Y_0) \\
+&amp;amp;= Y_n(r) - \frac{\lfloor nr\rfloor}{n}\frac{1}{\sqrt{n}}Y_n + o_p(1) \\
+&amp;amp;\to_d B(r) - rB(1)
+\end{align*}
+$$&lt;/p>
+&lt;p>极限过程 $V(r) := B(r) - rB(1)$ 称作 &lt;em>&lt;a href="https://en.wikipedia.org/wiki/Brownian_bridge">布朗桥 (Brownian Bridge)&lt;/a>&lt;/em>，其特点是每条样本路径首末值均为 0，就像一座桥一样连接 $r=0$ 和 $r=1$ 两个端点。&lt;/p>
+&lt;h2 id="参考">参考&lt;/h2>
+&lt;p>Hansen, Bruce (2022). &lt;em>Econometrics&lt;/em>. Princeton University Press.&lt;/p>
+- https://cwleo.github.io/posts/ecmt-notes-fclt-means-trends/ - 2023–2024 嘉树.</description></item></channel></rss>

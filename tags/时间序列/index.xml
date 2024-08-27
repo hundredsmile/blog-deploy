@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>时间序列 on 嘉树的世界</title><link>https://cwleo.github.io/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/</link><description>Recent content in 时间序列 on 嘉树的世界</description><generator>Hugo</generator><language>zh</language><copyright>2023–2024 嘉树.</copyright><lastBuildDate>Mon, 01 May 2023 20:37:45 +0800</lastBuildDate><atom:link href="https://cwleo.github.io/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/index.xml" rel="self" type="application/rss+xml"/><item><title>计量复习笔记 (VIII)：自回归估计与 (A)DF 检验</title><link>https://cwleo.github.io/posts/ecmt-notes-ar-adf/</link><pubDate>Sun, 30 Apr 2023 12:02:47 +0800</pubDate><guid>https://cwleo.github.io/posts/ecmt-notes-ar-adf/</guid><description>Info
+本系列是2023年春季学期《应用计量经济学》期末复习笔记，仅涵盖时间序列部分，对应 Hansen (2022) Econometrics 第14和16章的内容。
+内容提要 介绍了单位根假设下自回归系数的 OLS 估计量的渐进分布，以及由此而来的 (Augmented) Dicky-Fuller 单位根检验。
+AR(1) 的估计和单位根检验 设 $Y_t$ 是一个 AR(1) 过程：$Y_t = \alpha Y_{t-1} + e_t$，为简化问题1，这里 $e_t$ 是平稳遍历的鞅差分，方差为 $\sigma_e^2$。
+在平稳情形下，即 $|\alpha| &amp;lt; 1$ 时，我们对 OLS 估计量 $\hat{\alpha}$ 以 $\sqrt{n}$ 作为 scaling，容易得到
+$$ \sqrt{n}(\hat{\alpha} - \alpha) = \sqrt{n}\frac{\sum_{t=2}^nY_{t-1}e_t}{\sum_{t=2}^nY_{t-1}^2} = \frac{n^{-1/2}\sum_{t=2}^nY_{t-1}e_t}{n^{-1}\sum_{t=2}^nY_{t-1}^2} \to_d N(0,1-\alpha^2) $$
+可见，当 $\alpha \to 1$，上式将依概率收敛到 0。这也说明，$\sqrt{n}$ 放缩对于单位根是不够的。
+事实上，当 $\alpha = 1$，即单位根情形下2，应采用 $n$ 作为 scaling：
+$$ n(\hat{\alpha} - 1) = \frac{n^{-1}\sum_{t=2}^nY_{t-1}e_t}{n^{-2}\sum_{t=2}^nY_{t-1}^2} $$</description></item><item><title>计量复习笔记 (VII)：单位根序列的均值和趋势</title><link>https://cwleo.github.io/posts/ecmt-notes-fclt-means-trends/</link><pubDate>Sat, 29 Apr 2023 13:28:11 +0800</pubDate><guid>https://cwleo.github.io/posts/ecmt-notes-fclt-means-trends/</guid><description>Info
+本系列是2023年春季学期《应用计量经济学》期末复习笔记，仅涵盖时间序列部分，对应 Hansen (2022) Econometrics 第14和16章的内容。
+内容提要 介绍了随机游走序列的样本均值、带趋势项回归、除均值和除趋势等过程的渐进分布，它们都涉及布朗运动。
+样本均值过程 设 $Y_t = \sum_{\tau=1}^te_\tau$ 是上一讲定义的部分和序列，阶跃函数 $Y_n(r)$ 的具体定义如下：
+$$ Y_n(r) = \frac{1}{\sqrt{n}}Y_{\lfloor nr\rfloor} = \frac{1}{\sqrt{n}}Y_t \quad \text{for } \textstyle r\in\left[\frac{t}{n},\frac{t+1}{n}\right) \quad t = 1,\dots,n $$
+也就是说，$Y_n(r)$ 在区间 $\left[\frac{t}{n},\frac{t+1}{n}\right)$ 上是常数（当然是对固定的 $\omega$），因此可写为
+$$ \frac{1}{\sqrt{n}}Y_t = n\cdot\frac1n Y_n(r) = n\int_{t/n}^{(t+1)/n} Y_n(r)\,dr $$
+于是，对样本均值 $\bar{Y}_n = n^{-1}\sum_{t=1}^nY_t$，我们有
+$$ \begin{align*} \frac{1}{\sqrt{n}}\bar{Y}_n &amp;amp;= \sum_{t=1}^n\int_{t/n}^{(t+1)/n} Y_n(r)\,dr = \int_{1/n}^{1+1/n} Y_n(r)\,dr \\ &amp;amp;= \int_0^1Y_n(r)\,dr + \frac{1}{n^{3/2}}Y_n - \frac{1}{n^{3/2}}Y_0 \\ &amp;amp;= \int_0^1Y_n(r)\,dr + o_p(1) \end{align*} $$</description></item><item><title>计量复习笔记 (VI)：Beveridge-Nelson 分解</title><link>https://cwleo.github.io/posts/ecmt-notes-bndecomp/</link><pubDate>Fri, 28 Apr 2023 23:42:25 +0800</pubDate><guid>https://cwleo.github.io/posts/ecmt-notes-bndecomp/</guid><description>Info
+本系列是2023年春季学期《应用计量经济学》期末复习笔记，仅涵盖时间序列部分，对应 Hansen (2022) Econometrics 第14和16章的内容。
+内容提要 介绍了 Beveridge-Nelson 分解，并通过此法证明了更一般的平稳序列（允许序列相关）的部分和过程的极限分布。
+Beveridge-Nelson 分解 在上一讲的例子中，$e_t$ 是一个平稳遍历的鞅差分，这是一个比较特殊的平稳序列，现在我们想知道对于更一般的平稳序列，其（标准化的）部分和过程 $S_n(r)$ 是否也能通过 FCLT 得到一个极限分布。
+我们考虑 $e_t$ 是一个 $\text{MA}(\infty)$ 的情况，它仍然是平稳的，只是允许了序列相关。具体而言，设
+$$ e_t = \Theta(L)u_t = \sum_{j=0}^\infty\theta_ju_{t-j} $$
+其中 $u_t$ 是一个平稳遍历的鞅差分，方差为 $\sigma^2$。
+Beveridge-Nelson 分解依赖于对多项式 $\Theta(z)$ 的分解：
+$$ \begin{align*} \Theta(z) &amp;amp;= \Theta(1) + [\Theta(z)-\Theta(1)] \\ &amp;amp;= \textstyle\Theta(1) + \left(\sum_{j=0}^\infty\theta_jz^j-\sum_{j=0}^\infty\theta_j\right) \\ &amp;amp;= \textstyle\Theta(1) + (1-z)\sum_{j=0}^\infty\left(-\theta_j\sum_{k=0}^{j-1}z^k\right) \\ &amp;amp;= \textstyle\Theta(1) + (1-z)\sum_{k=0}^\infty\left(-\sum_{j=k+1}^\infty\theta_j\right)z^k \\ &amp;amp;= \textstyle\Theta(1) + (1-z)\sum_{k=0}^\infty\theta_k^* z^k \\ &amp;amp;= \Theta(1) + (1-z)\Theta^{*}(z) \end{align*} $$</description></item><item><title>计量复习笔记 (V)：泛函中心极限定理</title><link>https://cwleo.github.io/posts/ecmt-notes-fclt/</link><pubDate>Thu, 27 Apr 2023 20:46:10 +0800</pubDate><guid>https://cwleo.github.io/posts/ecmt-notes-fclt/</guid><description>Info
+本系列是2023年春季学期《应用计量经济学》期末复习笔记，仅涵盖时间序列部分，对应 Hansen (2022) Econometrics 第14和16章的内容。
+内容提要 介绍了泛函中心极限定理，并用其证明了鞅差分部分和过程的极限分布。
+泛函中心极限定理 一个随机过程 $\{e_t(\omega)\}_{t=1}^n$，当我们固定 $\omega$ 时（即一次 realization），我们就得到了一条样本路径，关于时间的函数。我们可以像在绘制折线图那样，将离散点连接起来，就得到了一条 $[1,n]$ 上连续的曲线；当然，也可以像后文那样，在离散点之间用水平线插值，得到一个阶跃函数，只在有限个点处不连续，这不会影响核心性质。不失一般性，我们总可以将区间 $[1,n]$ 对应到 $[0,1]$ 上，也就是说，将一个 $[1,n]$ 上的函数水平伸缩到 $[0,1]$ 上，这不难做到。最后，我们将得到一个 $C[0,1]$ 中的函数，$C[0,1]$ 是全体 $[0,1]$ 上（几乎处处）连续的实值函数构成的函数空间1。
+以上的操作事实上建立了从 $\mathbb{R}^{n}$ 中的点（因为 $e_1(\omega),\dots,e_n(\omega)$ 是 $n$ 个实数值）到 $C[0,1]$ 中的函数的映射，在这个映射下会有一个像测度，它描述了 $C[0,1]$ 上随机函数的分布，或者说连续时间随机过程的分布。泛函中心极限定理关心的问题就是，当 $n\to\infty$ 时，这个分布的收敛情况。
+一个典型的 $C[0,1]$ 上的概率测度是 Wiener 测度，它是 Wiener 过程（又称 Brownian motion）的分布。
+以下我们直接给出泛函中心极限定理 (Functional Central Limit Theorem, FCLT)：
+Theorem 1.
+对随机过程 $\{e_t(\omega)\}_{t=1}^\infty$，记 $S_t = \sum_{\tau=1}^te_{\tau}$ 为部分和序列，构造一个阶跃函数 $S_n(\cdot)\colon[0,1]\to\mathbb{R}$：
+$$ S_n(r) = \frac{1}{\sqrt{n}} S_{\lfloor nr\rfloor} = \frac{1}{\sqrt{n}}\sum_{t=1}^{\lfloor nr\rfloor}e_t $$</description></item><item><title>计量复习笔记 (IV)：时间趋势与收敛速率</title><link>https://cwleo.github.io/posts/ecmt-notes-time-trends/</link><pubDate>Tue, 25 Apr 2023 19:14:11 +0800</pubDate><guid>https://cwleo.github.io/posts/ecmt-notes-time-trends/</guid><description>Info
+本系列是2023年春季学期《应用计量经济学》期末复习笔记，仅涵盖时间序列部分，对应 Hansen (2022) Econometrics 第14和16章的内容。
+内容提要 介绍了含时间趋势回归中 OLS 估计量的渐进分布，揭示了收敛速率的差异。
+时间趋势回归 考虑线性回归模型
+$$ Y_t = \beta_0 + \beta_1 t + e_t $$
+其中 ${e_t}$ 是平稳遍历的鞅差分，方差为 $\sigma^2$。
+假设我们有 $t=1,\dots,n$ 的样本，OLS 估计量（的偏误）就是
+$$ \begin{pmatrix} \hat{\beta}_0-\beta_0 \\ \hat{\beta}_1-\beta_1 \end{pmatrix} = \begin{pmatrix} n &amp;amp; \sum_{t=1}^n t \\ \sum_{t=1}^n t &amp;amp; \sum_{t=1}^n t^2 \end{pmatrix}^{-1} \begin{pmatrix} \sum_{t=1}^n e_t \\ \sum_{t=1}^n te_t \end{pmatrix} $$
+很显然，$\frac1n\bm{X}'\bm{X}$ 是不收敛的，因为 $\sum_{t=1}^n t = O(n^2)$，$\sum_{t=1}^n t^2 = O(n^3)$。不过，我们可以做一些 rescaling 凑出收敛。
+首先将 $\bm{X}'\bm{X}$ 统一调成 $O(1)$，这意味着放缩因子是</description></item><item><title>计量复习笔记 (III)：几个话题</title><link>https://cwleo.github.io/posts/ecmt-notes-some-notions/</link><pubDate>Mon, 24 Apr 2023 12:18:41 +0800</pubDate><guid>https://cwleo.github.io/posts/ecmt-notes-some-notions/</guid><description>Info
+本系列是2023年春季学期《应用计量经济学》期末复习笔记，仅涵盖时间序列部分，对应 Hansen (2022) Econometrics 第14和16章的内容。
+内容提要 这一讲不是单个概念，而是好几个话题。因为单个的内容都比较少，所以我把它们都放在这里。当然，每一个话题都可以拓展为很丰富的内容，但由于课上也是选择性介绍的，这里我也就没有再去探索（留待以后），因为往后的重心是非平稳时间序列。
+介绍了鞅差分中心极限定理、线性投影和 Wold 分解定理。
+鞅差分中心极限定理 鞅 (martingale) 是一类非常重要的随机过程，鞅差分 (martingale difference sequence, m.d.s.) 顾名思义就是鞅的差分。这里我们不通过鞅来定义鞅差分，而是直接给出鞅差分的定义：
+Definition 1.
+随机过程 $\{e_t\}$ 若适应于滤流 (filtration) $\{\mathcal{F}_t\}$ 且满足
+$$ \mathbb{E}(e_t|\mathcal{F_{t-1}}) = 0 \quad\text{almost surely} $$
+则称之为鞅差分序列。
+容易验证一个 m.d.s. 是零均值、序列不相关的。
+不加证明地给出鞅差分中心极限定理：
+Theorem 2.
+若 $\{e_t\}$ 是平稳遍历的 m.d.s.，且 $\mathbb{E}(e_t^2) = \sigma^2 &amp;lt;\infty$，则有
+$$ \sqrt{n}\bar{e}_n = \frac{1}{\sqrt{n}}\sum_{t=1}^ne_t \to_d N(0,\sigma^2) $$
+此定理特别适合我们的需要，因为之前已经介绍了平稳和遍历，为了得到一个中心极限定理，只需额外要求序列是一个鞅差分。此定理的严格证明可参考 Davidson (1994) 定理 24.3，它事实上是 McLeish (1974) 鞅差分 CLT 的一个较弱的推论，平稳遍历将保证那个定理中的各项条件得到满足。
+课本中还介绍了 混合 (mixing) 的概念，它是比遍历更强的要求，但思想是相同的，就是渐进独立性（见上一讲定理 4 下面的讨论）。这里不作更多介绍。</description></item><item><title>计量复习笔记 (II)：遍历性</title><link>https://cwleo.github.io/posts/ecmt-notes-ergodicity/</link><pubDate>Sat, 22 Apr 2023 20:22:42 +0800</pubDate><guid>https://cwleo.github.io/posts/ecmt-notes-ergodicity/</guid><description>Info
+本系列是2023年春季学期《应用计量经济学》期末复习笔记，仅涵盖时间序列部分，对应 Hansen (2022) Econometrics 第14和16章的内容。
+内容提要 引入一个重要概念：遍历性 (ergodicity)，并证明了（弱版本的）遍历定理，该定理是时间序列版本的大数定律。
+遍历性 上一讲介绍了平稳性，它本质上诱导出一个保测变换。但平稳性仍不足以建立起大数定律，例如，考虑一个平凡的时间序列 $Y_t = Y$，它没有任何时间维度上的变动，很显然，它是平稳的，然而 $\frac1n\sum Y_t = Y$ 并不收敛到 $\mathbb{E}(Y)$。大数定律还需要时间序列是遍历的。顺带一提，遍历性理论已经发展成了一个数学分支，在时间序列中的应用只是其诸多应用之一。
+在定义遍历性之前我们先介绍一些必要概念。称事件 $A$ 在变换 $T$ 下是 不变的(invariant) 若 $A$ 在 $T$ 下的原像也是 $A$，即 $T^{-1}A = A$。例如，在时间序列中，我们接触到最多的变换之一就是时间位移变换 $(\delta x)_t = x_{t+1}$，很显然，$\mathbb{R}^{\mathbb{Z}}$ 在 $\delta$ 下就是不变的。称事件 $A$ 是 平凡的(trivial) 如果 $\mathbb{P}(A)$ 等于 0 或 1。称一个变换 $T$ 是 遍历的 若所有在 $T$ 下不变的事件 $A\in\mathcal{F}$（$\mathcal{F}$ 是 $\sigma$ 域）都是平凡的，换言之，没有非平凡不变事件。
+现在给出时间序列遍历性的正式定义：
+Definition 1.
+设时间序列 $\{Y_t\}_{t\in\mathbb{Z}}$ 的分布为 $\mu$，相应地有概率空间 $(\mathbb{R}^{\mathbb{Z}},\mathcal{B}(\mathbb{R}^{\mathbb{Z}}),\mu)$。若位移变换 $\delta: \mathbb{R}^{\mathbb{Z}}\to\mathbb{R}^{\mathbb{Z}}$ 是遍历的，则称 $\{Y_t\}$ 是遍历的。 可以看到，数学上，平稳性要求位移变换是一个保测变换（见上一讲对定理 2 的证明，在那里还说明了像测度 $\mu$ 是如何定义的），而遍历性要求位移变换是遍历的。那么，该如何理解遍历性呢？直观来讲，它意味着一个时间序列随着时间的演进将最终到达样本空间内的所有状态，而被吸收到特定状态的概率为零。可以想见，当一个时间序列既是平稳又是遍历的，那么一条样本路径随机而均匀地（此处「均匀」指按照单个 $Y_t$ 分布的均匀）访问了整个样本空间，于是它们的样本均值就能很好地刻画总体均值，这就是遍历定理的基本思想。</description></item><item><title>计量复习笔记 (I)：严格平稳性</title><link>https://cwleo.github.io/posts/ecmt-notes-stationarity/</link><pubDate>Sat, 22 Apr 2023 00:58:32 +0800</pubDate><guid>https://cwleo.github.io/posts/ecmt-notes-stationarity/</guid><description>Info
+本系列是2023年春季学期《应用计量经济学》期末复习笔记，仅涵盖时间序列部分，对应 Hansen (2022) Econometrics 第14和16章的内容。
+内容提要 介绍了时间序列中的一个重要概念：严格平稳性（如无特别说明，平稳性均指代严格平稳），并证明了对平稳序列的任意（可测）变换所得序列仍是平稳的（原书定理 14.2）。
+平稳时间序列 对于构建时间序列的严格且正式的理论而言，我们需要的是严格平稳性，弱平稳（宽平稳、协方差平稳）是不足够的。平稳性对于一列随机变量序列，即随机过程，施加了特别的结构，从而使我们在离开独立性世界后依然能发展出类似大数定律、中心极限定理的重要理论。
+首先给出严格平稳时间序列的定义：
+Definition 1.
+随机过程 $\{Y_t\}_{t\in\mathbb{Z}}$ 若满足：给定任意的 $r\in\mathbb{Z}$，$(Y_t,\dots,Y_{t+r})$ 的联合分布与 $t$ 无关，则称之为平稳过程。 以随机过程的术语来说，平稳时间序列的分布具有 位移不变 (shift-invariant) 的性质。如果我们采用测度论的严格表述，就是：对于 $\mathbb{R}$ 的任意 Borel 子集 $B_0,B_2,\dots,B_r$，以及任意的 $t$ 和 $\tau$，都有
+$$ \mathbb{P}\{\omega\colon Y_t(\omega)\in B_0,\dots,Y_{t+r}(\omega)\in B_r\} = \mathbb{P}\{\omega\colon Y_\tau(\omega)\in B_0,\dots,Y_{\tau+r}(\omega)\in B_r\} $$
+这就是在表述 $(Y_t,\dots,Y_{t+r})$ 和 $(Y_{\tau},\dots,Y_{\tau+r})$ 具有相同分布。
+值得一提，有时我们会看到略有不同的定义：
+若对任意的 $t_1,t_2,\dots,t_r$，$(Y_{t_1},\dots,Y_{t_r})$ 的联合分布与 $(Y_{t_1+k},\dots,Y_{t_r+k})$ 相同，而与 $k$ 无关，则称 ${Y_t}$ 是平稳序列。
+乍一看，这个定义似乎更一般，但它和上面的定义是等价的。要从前述定义推出此定义，只需注意到联合分布相同，则边缘分布必定相同，而 $(Y_{t_1},\dots,Y_{t_r})$ 的分布实际上就是 $(Y_t)_{t=t_1}^{t_r}$ 的边缘分布（不失一般性，假设 $t_1,\dots,t_r$ 由小到大排列）。
+平稳时间序列的变换 现在给出一个很强大的定理，它表明了平稳时间序列在任意可测变换下仍可保留平稳性。
+Theorem 2.</description></item></channel></rss>
