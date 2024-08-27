@@ -208,7 +208,7 @@
 
 .heti::before, .heti::after {
     content: "";
-    display:table
+    /* display:table */
 }
 
 .heti::after {
@@ -271,9 +271,9 @@
     -webkit-hyphens: auto;
 }
 
-.heti pre {
-    margin-block-start: 12px;
-    margin-block-end: 12px;
+.heti pre, .heti .highlight pre {
+    margin-block-start: 16px !important;
+    margin-block-end: 16px !important;
     margin-inline-start: 0;
     margin-inline-end: 0;
     padding-block-start: 12px;
@@ -462,10 +462,10 @@
 }
 
 .heti code {
-    margin-inline-start: .25em;
-    margin-inline-end: .25em;
+    /* margin-inline-start: .25em; */
+    /* margin-inline-end: .25em; */
     font-family: "SFMono-Regular", consolas, "Liberation Mono", menlo, courier, monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size:.875em
+    font-size: 13px
 }
 
 .heti dfn {
