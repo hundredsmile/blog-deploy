@@ -1,12 +1,28 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>高维理论 on 嘉树的世界</title><link>https://gaxu.xyz/tags/%E9%AB%98%E7%BB%B4%E7%90%86%E8%AE%BA/</link><description>Recent content in 高维理论 on 嘉树的世界</description><generator>Hugo</generator><language>zh</language><copyright>2023–2024 嘉树.</copyright><lastBuildDate>Wed, 21 Aug 2024 13:24:11 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/tags/%E9%AB%98%E7%BB%B4%E7%90%86%E8%AE%BA/index.xml" rel="self" type="application/rss+xml"/><item><title>集中不等式 (I)：Hoeffding 不等式</title><link>https://gaxu.xyz/posts/conctr-ineq-hoeffding/</link><pubDate>Sun, 11 Aug 2024 15:30:25 +0800</pubDate><guid>https://gaxu.xyz/posts/conctr-ineq-hoeffding/</guid><description>内容提要 介绍了集中不等式的概念，引入了 Chernoff 界方法，并以此证明了 Hoeffding 不等式。
-什么是集中不等式？ Concentration inequalities，中文译作「集中不等式」，是概率论中的一类不等式，描述了一个随机变量的取值是否集中在某个特定的值附近，换句话说，相对于这个特定值偏离了多少，从概率上讲这个偏离的可能性又如何量化。这个特定的值通常取的是总体均值。数学上，这类不等式的形式可写作
-$$ \mathbb{P}\{|X-\mu|&amp;gt;t\} \leq \text{something small} $$
-这个不等式表明了，我们希望随机变量 $X$ 以很高的概率围绕在其均值附近波动。最简单、也最为我们熟悉的集中不等式当属 Chebyshev 不等式：如果 $X$ 的均值是 $\mu$，方差是 $\sigma^2$，那么
-$$ \mathbb{P}\{|X-\mu|&amp;gt;t\} \leq \frac{\sigma^2}{t^2} $$
-这个不等式当然是很一般的──我们只要求方差有限，除此之外并没有对 $X$ 的分布做更多要求。但是，在很多应用场景中，它还是太弱了，弱在不等式右边的东西不够小，或者更具体地说，当 $t\to\infty$ 时收敛到 0 的速度不够快。我们希望能有指数级别的收敛。
-从渐进的观点看，当样本量足够大时，我们可以使用中心极限定理近似地得到样本均值偏离总体均值的概率，而正态分布的尾概率是指数衰减的。
-Proposition 1.
-若 $Z\sim\mathcal{N}(0,1)$，则对任意 $t&amp;gt;0$，都有
-$$ \biggl(\frac1t-\frac{1}{t^3}\biggr)\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2} \leq \mathbb{P}\{Z\geq t\} \leq \frac{1}{t}\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2} $$
-Proof. 对于上界，有
-$$ \begin{align*} \mathbb{P}\{Z\geq t\} &amp;amp;= \frac{1}{\sqrt{2\pi}}\int_t^\infty e^{-x^2/2}\,dx \\ &amp;amp;\leq \frac{1}{\sqrt{2\pi}}\int_t^\infty \frac{x}{t}e^{-x^2/2}\,dx \\ &amp;amp;= \frac{1}{t\sqrt{2\pi}} \int_t^\infty -\frac{\partial}{\partial x}e^{-x^2/2}\,dx \\ &amp;amp;= \frac{1}{t}\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2} \end{align*} $$</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>高维理论 on 嘉树的世界</title><link>https://gaxu.xyz/tags/%E9%AB%98%E7%BB%B4%E7%90%86%E8%AE%BA/</link><description>Recent content in 高维理论 on 嘉树的世界</description><generator>Hugo</generator><language>zh</language><copyright>2023–2024 嘉树.</copyright><lastBuildDate>Wed, 21 Aug 2024 13:24:11 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/tags/%E9%AB%98%E7%BB%B4%E7%90%86%E8%AE%BA/index.xml" rel="self" type="application/rss+xml"/><item><title>集中不等式 (I)：Hoeffding 不等式</title><link>https://gaxu.xyz/posts/conctr-ineq-hoeffding/</link><pubDate>Sun, 11 Aug 2024 15:30:25 +0800</pubDate><guid>https://gaxu.xyz/posts/conctr-ineq-hoeffding/</guid><description>&lt;h2 id="内容提要">内容提要&lt;/h2>
+&lt;p>介绍了集中不等式的概念，引入了 Chernoff 界方法，并以此证明了 Hoeffding 不等式。&lt;/p>
+&lt;h2 id="什么是集中不等式">什么是集中不等式？&lt;/h2>
+&lt;p>Concentration inequalities，中文译作「集中不等式」，是概率论中的一类不等式，描述了一个随机变量的取值是否集中在某个特定的值附近，换句话说，相对于这个特定值偏离了多少，从概率上讲这个偏离的可能性又如何量化。这个特定的值通常取的是总体均值。数学上，这类不等式的形式可写作&lt;/p>
+&lt;p>$$
+\mathbb{P}\{|X-\mu|&amp;gt;t\} \leq \text{something small}
+$$&lt;/p>
+&lt;p>这个不等式表明了，我们希望随机变量 $X$ 以很高的概率围绕在其均值附近波动。最简单、也最为我们熟悉的集中不等式当属 Chebyshev 不等式：如果 $X$ 的均值是 $\mu$，方差是 $\sigma^2$，那么&lt;/p>
+&lt;p>$$
+\mathbb{P}\{|X-\mu|&amp;gt;t\} \leq \frac{\sigma^2}{t^2}
+$$&lt;/p>
+&lt;p>这个不等式当然是很一般的──我们只要求方差有限，除此之外并没有对 $X$ 的分布做更多要求。但是，在很多应用场景中，它还是太弱了，弱在不等式右边的东西不够小，或者更具体地说，当 $t\to\infty$ 时收敛到 0 的速度不够快。我们希望能有指数级别的收敛。&lt;/p>
+&lt;p>从渐进的观点看，当样本量足够大时，我们可以使用中心极限定理近似地得到样本均值偏离总体均值的概率，而正态分布的尾概率是指数衰减的。&lt;/p>
+
+
+
+
+
+ 
+ 
+ 
+
+
+
+
+
+&lt;div class="thm">
+ &lt;p id="prop:normal" class="thm-title thm-proposition">Proposition 1.&lt;/p></description></item></channel></rss>
