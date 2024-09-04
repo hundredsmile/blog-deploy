@@ -5,97 +5,84 @@
 &lt;p>介绍了随机游走序列的样本均值、带趋势项回归、除均值和除趋势等过程的渐进分布，它们都涉及布朗运动。&lt;/p>
 &lt;h2 id="样本均值过程">样本均值过程&lt;/h2>
 &lt;p>设 $Y_t = \sum_{\tau=1}^te_\tau$ 是上一讲定义的部分和序列，阶跃函数 $Y_n(r)$ 的具体定义如下：&lt;/p>
-&lt;p>$$
+$$
 Y_n(r) = \frac{1}{\sqrt{n}}Y_{\lfloor nr\rfloor} = \frac{1}{\sqrt{n}}Y_t \quad \text{for } \textstyle r\in\left[\frac{t}{n},\frac{t+1}{n}\right) \quad t = 1,\dots,n
-$$&lt;/p>
-&lt;p>也就是说，$Y_n(r)$ 在区间 $\left[\frac{t}{n},\frac{t+1}{n}\right)$ 上是常数（当然是对固定的 $\omega$），因此可写为&lt;/p>
-&lt;p>$$
+$$&lt;p>也就是说，$Y_n(r)$ 在区间 $\left[\frac{t}{n},\frac{t+1}{n}\right)$ 上是常数（当然是对固定的 $\omega$），因此可写为&lt;/p>
+$$
 \frac{1}{\sqrt{n}}Y_t = n\cdot\frac1n Y_n(r) = n\int_{t/n}^{(t+1)/n} Y_n(r)\,dr
-$$&lt;/p>
-&lt;p>于是，对样本均值 $\bar{Y}_n = n^{-1}\sum_{t=1}^nY_t$，我们有&lt;/p>
-&lt;p>$$
+$$&lt;p>于是，对样本均值 $\bar{Y}_n = n^{-1}\sum_{t=1}^nY_t$，我们有&lt;/p>
+$$
 \begin{align*}
-\frac{1}{\sqrt{n}}\bar{Y}_n &amp;amp;= \sum_{t=1}^n\int_{t/n}^{(t+1)/n} Y_n(r)\,dr = \int_{1/n}^{1+1/n} Y_n(r)\,dr \\
-&amp;amp;= \int_0^1Y_n(r)\,dr + \frac{1}{n^{3/2}}Y_n - \frac{1}{n^{3/2}}Y_0 \\
-&amp;amp;= \int_0^1Y_n(r)\,dr + o_p(1)
+\frac{1}{\sqrt{n}}\bar{Y}_n &amp;= \sum_{t=1}^n\int_{t/n}^{(t+1)/n} Y_n(r)\,dr = \int_{1/n}^{1+1/n} Y_n(r)\,dr \\
+&amp;= \int_0^1Y_n(r)\,dr + \frac{1}{n^{3/2}}Y_n - \frac{1}{n^{3/2}}Y_0 \\
+&amp;= \int_0^1Y_n(r)\,dr + o_p(1)
 \end{align*}
-$$&lt;/p>
-&lt;p>这个式子刻画了（标准化的）样本均值同（几乎处处连续的）阶跃函数的关系：阶跃函数是一个连续时间随机过程，它关于时间的积分就成了一个随机变量，我们就是在将样本均值表述成一个连续时间随机过程对时间的积分。&lt;/p>
+$$&lt;p>这个式子刻画了（标准化的）样本均值同（几乎处处连续的）阶跃函数的关系：阶跃函数是一个连续时间随机过程，它关于时间的积分就成了一个随机变量，我们就是在将样本均值表述成一个连续时间随机过程对时间的积分。&lt;/p>
 &lt;p>我们从上一讲已经知道 $Y_n(r)\to_d B(r)$。积分作为一个泛函，是关于被积函数的一个连续函数，因而根据 &lt;em>连续映射定理 (Continuous Mapping Theorem, CMT)&lt;/em>，有&lt;/p>
-&lt;p>$$
+$$
 \frac{1}{\sqrt{n}}\bar{Y}_n = \int_0^1 Y_n(r)\,dr + o_p(1) \to_d \int_0^1 B(r)\,dr
-$$&lt;/p>
-&lt;p>即 scaled 样本均值依分布收敛于布朗运动在时间维度上的平均。这也表明了 $\bar{Y}_n$ 本身是发散的，即一个单位根序列不具有均值回归的性质。&lt;/p>
+$$&lt;p>即 scaled 样本均值依分布收敛于布朗运动在时间维度上的平均。这也表明了 $\bar{Y}_n$ 本身是发散的，即一个单位根序列不具有均值回归的性质。&lt;/p>
 &lt;h2 id="带趋势项回归">带趋势项回归&lt;/h2>
 &lt;p>用单位根序列对时间趋势回归会得到不同寻常的结果。我们采用 &lt;a href="https://gaxu.xyz/posts/ecmt-notes-time-trends/">第四讲&lt;/a> 中的 scaling 矩阵 $\bm{D}_n = \text{diag}\{\sqrt{n},n^{3/2}\}$，分母的收敛仍然是&lt;/p>
-&lt;p>$$
+$$
 \bm{D}_n^{-1}\bm{X}'\bm{X}\bm{D}_n^{-1} \to
 \begin{pmatrix}
-1 &amp;amp; \frac12 \\ \frac12 &amp;amp; \frac13
+1 &amp; \frac12 \\ \frac12 &amp; \frac13
 \end{pmatrix}
-$$&lt;/p>
-&lt;p>分子项 $\bm{D}_n^{-1}\sum_{t=1}^n\bm{X}_tY_{t}$ 的两个分量可以表述如下：&lt;/p>
-&lt;p>$$
+$$&lt;p>分子项 $\bm{D}_n^{-1}\sum_{t=1}^n\bm{X}_tY_{t}$ 的两个分量可以表述如下：&lt;/p>
+$$
 \begin{align*}
-\frac{1}{\sqrt{n}}\sum_{t=1}^n Y_t &amp;amp;= n\cdot\frac{1}{\sqrt{n}}\bar{Y}_n \\
-\frac{1}{n^{3/2}}\sum_{t=1}^n tY_t &amp;amp;= n\sum_{t=1}^n\int_{t/n}^{(t+1)/n} X_n(r)Y_n(r)\,dr = n\left[\int_0^1 X_n(r)Y_n(r)\,dr + o_p(1)\right]
+\frac{1}{\sqrt{n}}\sum_{t=1}^n Y_t &amp;= n\cdot\frac{1}{\sqrt{n}}\bar{Y}_n \\
+\frac{1}{n^{3/2}}\sum_{t=1}^n tY_t &amp;= n\sum_{t=1}^n\int_{t/n}^{(t+1)/n} X_n(r)Y_n(r)\,dr = n\left[\int_0^1 X_n(r)Y_n(r)\,dr + o_p(1)\right]
 \end{align*}
-$$&lt;/p>
-&lt;p>其中 $X_n(r)$ 的定义与 $Y_n(r)$ 类似：&lt;/p>
-&lt;p>$$
+$$&lt;p>其中 $X_n(r)$ 的定义与 $Y_n(r)$ 类似：&lt;/p>
+$$
 X_n(r) = \frac{1}{n}X_{\lfloor nr\rfloor} = \frac{1}{n}t \quad \text{for } \textstyle r\in\left[\frac{t}{n},\frac{t+1}{n}\right) \quad t = 1,\dots,n
-$$&lt;/p>
-&lt;p>显然，$\sup_r|X_n(r)-r|=1/n\to0$，因而由 CMT 得到 $X_n(r)Y_n(r)\to_d rB(r)$，再次使用 CMT 便有&lt;/p>
-&lt;p>$$
+$$&lt;p>显然，$\sup_r|X_n(r)-r|=1/n\to0$，因而由 CMT 得到 $X_n(r)Y_n(r)\to_d rB(r)$，再次使用 CMT 便有&lt;/p>
+$$
 \int_0^1 X_n(r)Y_n(r)\,dr \to_d \int_0^1 rB(r)\,dr
-$$&lt;/p>
-&lt;p>以上分析表明，$\bm{D}_n^{-1}$ 还不足以使分子项收敛，还需除以 $n$，即有&lt;/p>
-&lt;p>$$
+$$&lt;p>以上分析表明，$\bm{D}_n^{-1}$ 还不足以使分子项收敛，还需除以 $n$，即有&lt;/p>
+$$
 \frac{1}{n}\bm{D}_n^{-1}\sum_{t=1}^n\bm{X}_tY_{t} \to_d
 \begin{pmatrix}
 \int_0^1 B(r)\,dr \\ \int_0^1 rB(r)\,dr
 \end{pmatrix}
-$$&lt;/p>
-&lt;p>综合起来就是&lt;/p>
-&lt;p>$$
+$$&lt;p>综合起来就是&lt;/p>
+$$
 \frac1n\bm{D}_n\hat{\bm{\beta}} =
 \begin{pmatrix}
 n^{-1/2}\hat{\beta}_0 \\ \sqrt{n}\hat{\beta}_1
 \end{pmatrix}
 \to_d
 \begin{pmatrix}
-1 &amp;amp; \frac12 \\ \frac12 &amp;amp; \frac13
+1 &amp; \frac12 \\ \frac12 &amp; \frac13
 \end{pmatrix}^{-1}
 \begin{pmatrix}
 \int_0^1 B(r)\,dr \\ \int_0^1 rB(r)\,dr
 \end{pmatrix}
-$$&lt;/p>
-&lt;p>这表明，$\hat{\beta}_1$ 具有与平稳情形下 OLS 估计量相同的收敛速度，只是收敛到 0。如果我们不知道一个序列是单位根而做了带趋势项回归，那么拟合出的趋势线的斜率是具有误导性的，因为它不应该传达任何有价值的信息，对预测也毫无帮助。&lt;/p>
+$$&lt;p>这表明，$\hat{\beta}_1$ 具有与平稳情形下 OLS 估计量相同的收敛速度，只是收敛到 0。如果我们不知道一个序列是单位根而做了带趋势项回归，那么拟合出的趋势线的斜率是具有误导性的，因为它不应该传达任何有价值的信息，对预测也毫无帮助。&lt;/p>
 &lt;h2 id="除均值和除趋势">除均值和除趋势&lt;/h2>
 &lt;p>考虑除均值序列 $Y_t^* = Y_t - \bar{Y}_n$，对其构造阶跃并除以 $\sqrt{n}$，得到&lt;/p>
-&lt;p>$$
+$$
 Y_n^{*}(r) = \frac{1}{\sqrt{n}}Y_{\lfloor nr\rfloor}^* = Y_n(r) - \frac{1}{\sqrt{n}}\bar{Y}_n \to_d B(r) - \int_0^1 B(s)\,ds
-$$&lt;/p>
-&lt;p>注意，我们仍应用了 CMT，这里的映射 $T(f) = f - \int_0^1 f$ 是一个泛函，它将 $C[0,1]$ 中的函数映射回 $C[0,1]$。&lt;/p>
+$$&lt;p>注意，我们仍应用了 CMT，这里的映射 $T(f) = f - \int_0^1 f$ 是一个泛函，它将 $C[0,1]$ 中的函数映射回 $C[0,1]$。&lt;/p>
 &lt;p>线性除趋势序列 $Y_t^{**} = Y_t - \bm{X}_t'\hat{\bm{\beta}}$，对应的阶跃函数&lt;/p>
-&lt;p>$$
+$$
 \begin{align*}
-Y_n^{**}(r) &amp;amp;= \frac{1}{\sqrt{n}}Y_{\lfloor nr\rfloor}^{**} = Y_n(r) - \frac{1}{\sqrt{n}}\hat{\beta}_0 - \frac{\lfloor nr\rfloor}{n}\sqrt{n}\hat{\beta}_1 \\
-&amp;amp;\to_d B(r) - \bm{X}(r)'\begin{pmatrix}
-1 &amp;amp; \frac12 \\ \frac12 &amp;amp; \frac13
+Y_n^{**}(r) &amp;= \frac{1}{\sqrt{n}}Y_{\lfloor nr\rfloor}^{**} = Y_n(r) - \frac{1}{\sqrt{n}}\hat{\beta}_0 - \frac{\lfloor nr\rfloor}{n}\sqrt{n}\hat{\beta}_1 \\
+&amp;\to_d B(r) - \bm{X}(r)'\begin{pmatrix}
+1 &amp; \frac12 \\ \frac12 &amp; \frac13
 \end{pmatrix}^{-1}\int_0^1\bm{X}(s)B(s)\,ds
 \end{align*}
-$$&lt;/p>
-&lt;p>其中 $\bm{X}(r) = (1,r)'$。&lt;/p>
+$$&lt;p>其中 $\bm{X}(r) = (1,r)'$。&lt;/p>
 &lt;p>线性插值除趋势：$\widetilde{Y}_t = Y_t - Y_0 - \frac{t}{n}(Y_n-Y_0)$，这不是通过拟合，而是连接 $Y_0$ 和 $Y_n$ 得到的趋势线。对应的阶跃函数&lt;/p>
-&lt;p>$$
+$$
 \begin{align*}
-\widetilde{Y}_n(r) &amp;amp;= \frac{1}{\sqrt{n}}\widetilde{Y}_{\lfloor nr\rfloor} = Y_n(r) - \frac{1}{\sqrt{n}}Y_0 - \frac{\lfloor nr\rfloor}{n^{3/2}}(Y_n-Y_0) \\
-&amp;amp;= Y_n(r) - \frac{\lfloor nr\rfloor}{n}\frac{1}{\sqrt{n}}Y_n + o_p(1) \\
-&amp;amp;\to_d B(r) - rB(1)
+\widetilde{Y}_n(r) &amp;= \frac{1}{\sqrt{n}}\widetilde{Y}_{\lfloor nr\rfloor} = Y_n(r) - \frac{1}{\sqrt{n}}Y_0 - \frac{\lfloor nr\rfloor}{n^{3/2}}(Y_n-Y_0) \\
+&amp;= Y_n(r) - \frac{\lfloor nr\rfloor}{n}\frac{1}{\sqrt{n}}Y_n + o_p(1) \\
+&amp;\to_d B(r) - rB(1)
 \end{align*}
-$$&lt;/p>
-&lt;p>极限过程 $V(r) := B(r) - rB(1)$ 称作 &lt;em>&lt;a href="https://en.wikipedia.org/wiki/Brownian_bridge">布朗桥 (Brownian Bridge)&lt;/a>&lt;/em>，其特点是每条样本路径首末值均为 0，就像一座桥一样连接 $r=0$ 和 $r=1$ 两个端点。&lt;/p>
+$$&lt;p>极限过程 $V(r) := B(r) - rB(1)$ 称作 &lt;em>&lt;a href="https://en.wikipedia.org/wiki/Brownian_bridge">布朗桥 (Brownian Bridge)&lt;/a>&lt;/em>，其特点是每条样本路径首末值均为 0，就像一座桥一样连接 $r=0$ 和 $r=1$ 两个端点。&lt;/p>
 &lt;h2 id="参考">参考&lt;/h2>
 &lt;p>Hansen, Bruce (2022). &lt;em>Econometrics&lt;/em>. Princeton University Press.&lt;/p>
 - https://gaxu.xyz/posts/ecmt-notes-fclt-means-trends/ - 2023–2024 嘉树.</description></item><item><title>计量复习笔记 (VI)：Beveridge-Nelson 分解</title><link>https://gaxu.xyz/posts/ecmt-notes-bndecomp/</link><pubDate>Fri, 28 Apr 2023 23:42:25 +0800</pubDate><guid>https://gaxu.xyz/posts/ecmt-notes-bndecomp/</guid><description>嘉树的世界 https://gaxu.xyz/posts/ecmt-notes-bndecomp/ -&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
@@ -106,47 +93,40 @@ $$&lt;/p>
 &lt;h2 id="beveridge-nelson-分解">Beveridge-Nelson 分解&lt;/h2>
 &lt;p>在上一讲的例子中，$e_t$ 是一个平稳遍历的鞅差分，这是一个比较特殊的平稳序列，现在我们想知道对于更一般的平稳序列，其（标准化的）部分和过程 $S_n(r)$ 是否也能通过 FCLT 得到一个极限分布。&lt;/p>
 &lt;p>我们考虑 $e_t$ 是一个 $\text{MA}(\infty)$ 的情况，它仍然是平稳的，只是允许了序列相关。具体而言，设&lt;/p>
-&lt;p>$$
+$$
 e_t = \Theta(L)u_t = \sum_{j=0}^\infty\theta_ju_{t-j}
-$$&lt;/p>
-&lt;p>其中 $u_t$ 是一个平稳遍历的鞅差分，方差为 $\sigma^2$。&lt;/p>
+$$&lt;p>其中 $u_t$ 是一个平稳遍历的鞅差分，方差为 $\sigma^2$。&lt;/p>
 &lt;p>Beveridge-Nelson 分解依赖于对多项式 $\Theta(z)$ 的分解：&lt;/p>
-&lt;p>$$
+$$
 \begin{align*}
-\Theta(z) &amp;amp;= \Theta(1) + [\Theta(z)-\Theta(1)] \\
-&amp;amp;= \textstyle\Theta(1) + \left(\sum_{j=0}^\infty\theta_jz^j-\sum_{j=0}^\infty\theta_j\right) \\
-&amp;amp;= \textstyle\Theta(1) + (1-z)\sum_{j=0}^\infty\left(-\theta_j\sum_{k=0}^{j-1}z^k\right) \\
-&amp;amp;= \textstyle\Theta(1) + (1-z)\sum_{k=0}^\infty\left(-\sum_{j=k+1}^\infty\theta_j\right)z^k \\
-&amp;amp;= \textstyle\Theta(1) + (1-z)\sum_{k=0}^\infty\theta_k^* z^k \\
-&amp;amp;= \Theta(1) + (1-z)\Theta^{*}(z)
+\Theta(z) &amp;= \Theta(1) + [\Theta(z)-\Theta(1)] \\
+&amp;= \textstyle\Theta(1) + \left(\sum_{j=0}^\infty\theta_jz^j-\sum_{j=0}^\infty\theta_j\right) \\
+&amp;= \textstyle\Theta(1) + (1-z)\sum_{j=0}^\infty\left(-\theta_j\sum_{k=0}^{j-1}z^k\right) \\
+&amp;= \textstyle\Theta(1) + (1-z)\sum_{k=0}^\infty\left(-\sum_{j=k+1}^\infty\theta_j\right)z^k \\
+&amp;= \textstyle\Theta(1) + (1-z)\sum_{k=0}^\infty\theta_k^* z^k \\
+&amp;= \Theta(1) + (1-z)\Theta^{*}(z)
 \end{align*}
-$$&lt;/p>
-&lt;p>为保证求和顺序可交换，一个充分条件是 $\sum_{k=0}^\infty|\theta^*_k|&amp;lt;\infty$。&lt;/p>
+$$&lt;p>为保证求和顺序可交换，一个充分条件是 $\sum_{k=0}^\infty|\theta^*_k|&lt;\infty$。&lt;/p>
 &lt;p>于是，$e_t$ 可分解为&lt;/p>
-&lt;p>$$
+$$
 e_t = \Theta(1)u_t + (1-L)[\Theta^{*}(L)u_t] \equiv \xi_t + \nu_t-\nu_{t-1}
-$$&lt;/p>
-&lt;p>$\xi_t$ 无疑仍是一个平稳遍历的鞅差分，方差为 $\Theta(1)^2\sigma^2$；根据第二和第三讲，$\nu_t=\Theta^{*}(L)u_t$ 也是平稳遍历的（但不再是鞅差分）。&lt;/p>
+$$&lt;p>$\xi_t$ 无疑仍是一个平稳遍历的鞅差分，方差为 $\Theta(1)^2\sigma^2$；根据第二和第三讲，$\nu_t=\Theta^{*}(L)u_t$ 也是平稳遍历的（但不再是鞅差分）。&lt;/p>
 &lt;p>那么，部分和序列就有如下分解&lt;/p>
-&lt;p>$$
+$$
 Y_t = \sum_{\tau=1}^te_\tau = \sum_{\tau=1}^t\xi_\tau + \nu_t - \nu_0
-$$&lt;/p>
-&lt;p>求和项 $\sum\xi_\tau$ 称为 &lt;em>永久部分 (permenant component)&lt;/em> 或趋势部分，随时间而积累；$\nu_t-\nu_0$ 称为 &lt;em>瞬时部分 (transitory component)&lt;/em>，不随时间积累；前者是 $Y_t$ 在长期的决定部分。此分解就是 Beveridge-Nelson 分解。&lt;/p>
+$$&lt;p>求和项 $\sum\xi_\tau$ 称为 &lt;em>永久部分 (permenant component)&lt;/em> 或趋势部分，随时间而积累；$\nu_t-\nu_0$ 称为 &lt;em>瞬时部分 (transitory component)&lt;/em>，不随时间积累；前者是 $Y_t$ 在长期的决定部分。此分解就是 Beveridge-Nelson 分解。&lt;/p>
 &lt;h2 id="部分和过程的极限分布">部分和过程的极限分布&lt;/h2>
 &lt;p>通过构造阶跃并除以 $\sqrt{n}$，得到标准化的连续时间部分和过程&lt;/p>
-&lt;p>$$
+$$
 Y_n(r) = \frac{1}{\sqrt{n}}Y_{\lfloor nr\rfloor} = \frac{1}{\sqrt{n}}\sum_{\tau=1}^{\lfloor nr\rfloor}\xi_\tau + \frac{1}{\sqrt{n}}\nu_{\lfloor nr\rfloor} - \frac{1}{\sqrt{n}}\nu_0
-$$&lt;/p>
-&lt;p>第一项应用上一讲的内容，依分布收敛到布朗运动 $B(r)$，单位时间累积方差为 $\Theta(1)^2\sigma^2$；第三项显然是 $o_p(1)$，因为任意随机变量都是 $O_p(1)$。&lt;/p>
+$$&lt;p>第一项应用上一讲的内容，依分布收敛到布朗运动 $B(r)$，单位时间累积方差为 $\Theta(1)^2\sigma^2$；第三项显然是 $o_p(1)$，因为任意随机变量都是 $O_p(1)$。&lt;/p>
 &lt;p>第二项值得细说。它是 $o_p(1)$ 的一个充分条件是 $\max_{1\leq t\leq n}n^{-1/2}|\nu_t| = o_p(1)$，这是因为&lt;/p>
-&lt;p>$$
+$$
 |\nu_{\lfloor nr\rfloor}| \leq \max_{1\leq t\leq n}|\nu_t| \quad\text{for every } r\in[0,1]
-$$&lt;/p>
-&lt;p>而 $\max_{1\leq t\leq n}n^{-1/2}|\nu_t| = o_p(1)$ 的一个充分条件是平稳序列 $\nu_t$ 方差有限，这一点是满足的：&lt;/p>
-&lt;p>$$
-\text{var}(\nu_t) = \sigma^2\sum_{j=0}^\infty(\theta^{*}_j)^2 &amp;lt; \infty
-$$&lt;/p>
-&lt;p>注意，$\sum_{j=0}^\infty|\theta^{*}_j|$ 收敛必然意味着 $\sum_{j=0}^\infty(\theta^{*}_j)^2$ 收敛。因此，第二项也是 $o_p(1)$。&lt;/p>
+$$&lt;p>而 $\max_{1\leq t\leq n}n^{-1/2}|\nu_t| = o_p(1)$ 的一个充分条件是平稳序列 $\nu_t$ 方差有限，这一点是满足的：&lt;/p>
+$$
+\text{var}(\nu_t) = \sigma^2\sum_{j=0}^\infty(\theta^{*}_j)^2 &lt; \infty
+$$&lt;p>注意，$\sum_{j=0}^\infty|\theta^{*}_j|$ 收敛必然意味着 $\sum_{j=0}^\infty(\theta^{*}_j)^2$ 收敛。因此，第二项也是 $o_p(1)$。&lt;/p>
 &lt;p>以上分析表明了，$Y_n(r) \to_d B(r)$，单位时间方差 $\Theta(1)^2\sigma^2$。&lt;/p>
 &lt;h2 id="参考">参考&lt;/h2>
 &lt;p>Hansen, Bruce (2022). &lt;em>Econometrics&lt;/em>. Princeton University Press.&lt;/p>
@@ -164,16 +144,14 @@ $$&lt;/p>
 &lt;p id="thm:fclt" class="thm-title thm-Theorem">Theorem 1.&lt;/p>
 &lt;div class="thm-inner thm-Theorem">
 &lt;p>对随机过程 $\{e_t(\omega)\}_{t=1}^\infty$，记 $S_t = \sum_{\tau=1}^te_{\tau}$ 为部分和序列，构造一个阶跃函数 $S_n(\cdot)\colon[0,1]\to\mathbb{R}$：&lt;/p>
-&lt;p>$$
+$$
 S_n(r) = \frac{1}{\sqrt{n}} S_{\lfloor nr\rfloor} = \frac{1}{\sqrt{n}}\sum_{t=1}^{\lfloor nr\rfloor}e_t
-$$&lt;/p>
-&lt;p>称之为标准化部分和过程，它不再是离散的，而是一个连续过程。&lt;/p>
+$$&lt;p>称之为标准化部分和过程，它不再是离散的，而是一个连续过程。&lt;/p>
 &lt;p>若 $S_n(r)$ 满足&lt;/p>
 &lt;ol>
 &lt;li>对任意 $r_1,\dots,r_m$，都有&lt;/li>
 &lt;/ol>
-&lt;p>$$(S_n(r_1),\dots,S_n(r_m))\to_d(S(r_1),\dots,S(r_m))$$&lt;/p>
-&lt;ol start="2">
+$$(S_n(r_1),\dots,S_n(r_m))\to_d(S(r_1),\dots,S(r_m))$$&lt;ol start="2">
 &lt;li>$S_n(r)$ &lt;em>&lt;a href="https://en.wikipedia.org/wiki/Stochastic_equicontinuity">渐进等度连续 (asymptotically equicontinuous)&lt;/a>&lt;/em>。&lt;/li>
 &lt;/ol>
 &lt;p>则 $S_n(r) \to_d S(r)$。&lt;/p>
@@ -182,10 +160,9 @@ $$&lt;/p>
 &lt;p>简单说一下两个条件的含义。第一个条件保证函数在任意有限个点处取值得到的有限维分布收敛，第二个条件是说随机过程作为一个函数族在概率意义上一致连续，是比单个函数一致连续更强的条件，这个条件将使得任意有限维的收敛足以确保函数在一个连续区间上的收敛。&lt;/p>
 &lt;h2 id="一个例子">一个例子&lt;/h2>
 &lt;p>设 $\{e_t(\omega)\}_{t=1}^\infty$ 是一个平稳遍历的鞅差分，方差为 $\sigma^2$，标准化部分和 $S_n(r)$ 依照前述定义。根据鞅差分中心极限定理（见 &lt;a href="../ecmt-notes-some-notions/">第三讲&lt;/a>），有&lt;/p>
-&lt;p>$$
+$$
 S_n(r) = \sqrt{\frac{\lfloor nr\rfloor}{n}}\frac{1}{\sqrt{\lfloor nr\rfloor}}\sum_{t=1}^{\lfloor nr\rfloor}e_t \to_d N(0,r\sigma^2)
-$$&lt;/p>
-&lt;p>此外，我们还可证明 $S_n(r_1)$ 和 $S_n(r_2)-S_n(r_1)$ 的联合分布渐进服从联合正态分布，协方差矩阵为 $\text{diag}\{r_1\sigma^2,(r_2-r_1)\sigma^2\}$。这事实上表明了 $S_n(r)$ 的极限分布具有布朗运动的性质。&lt;/p>
+$$&lt;p>此外，我们还可证明 $S_n(r_1)$ 和 $S_n(r_2)-S_n(r_1)$ 的联合分布渐进服从联合正态分布，协方差矩阵为 $\text{diag}\{r_1\sigma^2,(r_2-r_1)\sigma^2\}$。这事实上表明了 $S_n(r)$ 的极限分布具有布朗运动的性质。&lt;/p>
 &lt;p>$S_n(r)$ 还是是渐进等度连续的，证明可见 Hansen 课本第 16.22 节。&lt;/p>
 &lt;p>于是，根据 FCLT，$S_n(r)\to_d B(r)$。&lt;/p>
 &lt;h2 id="参考">参考&lt;/h2>
@@ -207,47 +184,43 @@ $$&lt;/p>
 &lt;p>介绍了含时间趋势回归中 OLS 估计量的渐进分布，揭示了收敛速率的差异。&lt;/p>
 &lt;h2 id="时间趋势回归">时间趋势回归&lt;/h2>
 &lt;p>考虑线性回归模型&lt;/p>
-&lt;p>$$
+$$
 Y_t = \beta_0 + \beta_1 t + e_t
-$$&lt;/p>
-&lt;p>其中 ${e_t}$ 是平稳遍历的鞅差分，方差为 $\sigma^2$。&lt;/p>
+$$&lt;p>其中 $\{e_t\}$ 是平稳遍历的鞅差分，方差为 $\sigma^2$。&lt;/p>
 &lt;p>假设我们有 $t=1,\dots,n$ 的样本，OLS 估计量（的偏误）就是&lt;/p>
-&lt;p>$$
+$$
 \begin{pmatrix}
 \hat{\beta}_0-\beta_0 \\ \hat{\beta}_1-\beta_1
 \end{pmatrix} =
 \begin{pmatrix}
-n &amp;amp; \sum_{t=1}^n t \\ \sum_{t=1}^n t &amp;amp; \sum_{t=1}^n t^2
+n &amp; \sum_{t=1}^n t \\ \sum_{t=1}^n t &amp; \sum_{t=1}^n t^2
 \end{pmatrix}^{-1}
 \begin{pmatrix}
 \sum_{t=1}^n e_t \\ \sum_{t=1}^n te_t
 \end{pmatrix}
-$$&lt;/p>
-&lt;p>很显然，$\frac1n\bm{X}'\bm{X}$ 是不收敛的，因为 $\sum_{t=1}^n t = O(n^2)$，$\sum_{t=1}^n t^2 = O(n^3)$。不过，我们可以做一些 rescaling 凑出收敛。&lt;/p>
+$$&lt;p>很显然，$\frac1n\bm{X}'\bm{X}$ 是不收敛的，因为 $\sum_{t=1}^n t = O(n^2)$，$\sum_{t=1}^n t^2 = O(n^3)$。不过，我们可以做一些 rescaling 凑出收敛。&lt;/p>
 &lt;p>首先将 $\bm{X}'\bm{X}$ 统一调成 $O(1)$，这意味着放缩因子是&lt;/p>
-&lt;p>$$
+$$
 \begin{pmatrix}
-1 &amp;amp; \frac{1}{n^2} \\ \frac{1}{n^2} &amp;amp; \frac{1}{n^3}
+1 &amp; \frac{1}{n^2} \\ \frac{1}{n^2} &amp; \frac{1}{n^3}
 \end{pmatrix}
-$$&lt;/p>
-&lt;p>能起到缩放作用的是对角矩阵，左乘一个对角矩阵意味着逐行放缩，右乘一个对角矩阵意味着逐列放缩。假设我们对 $\bm{X}'\bm{X}$ 左乘和右乘相同的矩阵 $\bm{D}_n^{-1} = \text{diag}\{a,b\}$，则必定有&lt;/p>
-&lt;p>$$
+$$&lt;p>能起到缩放作用的是对角矩阵，左乘一个对角矩阵意味着逐行放缩，右乘一个对角矩阵意味着逐列放缩。假设我们对 $\bm{X}'\bm{X}$ 左乘和右乘相同的矩阵 $\bm{D}_n^{-1} = \text{diag}\{a,b\}$，则必定有&lt;/p>
+$$
 a^2=\frac1n,\quad ab = \frac1{n^2},\quad b^2 = \frac{1}{n^3}
-$$&lt;/p>
-&lt;p>解当然不唯一，但我们取正值，也就是 $a = 1/\sqrt{n}$ 和 $b = n^{-3/2}$。&lt;/p>
+$$&lt;p>解当然不唯一，但我们取正值，也就是 $a = 1/\sqrt{n}$ 和 $b = n^{-3/2}$。&lt;/p>
 &lt;p>于是，通过缩放，我们得到&lt;/p>
-&lt;p>$$
+$$
 \begin{align*}
 \bm{D_n}
 \begin{pmatrix}
 \hat{\beta}_0-\beta_0 \\ \hat{\beta}_1-\beta_1
-\end{pmatrix} &amp;amp;=
+\end{pmatrix} &amp;=
 (\bm{D_n}^{-1}\bm{X}'\bm{X}\bm{D_n}^{-1})^{-1}\bm{D_n}^{-1}
 \begin{pmatrix}
 \sum_{t=1}^n e_t \\ \sum_{t=1}^n te_t
 \end{pmatrix} \\
-&amp;amp;=\begin{pmatrix}
-1 &amp;amp; \frac{1}{n^2}\sum t \\ \frac{1}{n^2}\sum t &amp;amp; \frac{1}{n^3}\sum t^2
+&amp;=\begin{pmatrix}
+1 &amp; \frac{1}{n^2}\sum t \\ \frac{1}{n^2}\sum t &amp; \frac{1}{n^3}\sum t^2
 \end{pmatrix}^{-1}
 \frac{1}{\sqrt{n}}\sum_{t=1}^n
 \begin{pmatrix}
@@ -255,22 +228,19 @@ $$&lt;/p>
 \end{pmatrix}
 e_t
 \end{align*}
-$$&lt;/p>
-&lt;p>可以证明 $\frac{1}{n^2}\sum t\to\frac12$，$\frac{1}{n^3}\sum t^2\to\frac13$，因此&lt;/p>
-&lt;p>$$
+$$&lt;p>可以证明 $\frac{1}{n^2}\sum t\to\frac12$，$\frac{1}{n^3}\sum t^2\to\frac13$，因此&lt;/p>
+$$
 \bm{D_n}^{-1}\bm{X}'\bm{X}\bm{D_n}^{-1} \to
 \begin{pmatrix}
-1 &amp;amp; \frac12 \\ \frac12 &amp;amp; \frac13
+1 &amp; \frac12 \\ \frac12 &amp; \frac13
 \end{pmatrix}
-$$&lt;/p>
-&lt;div class="notice note" >
-&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>事实上，对任意 $r&amp;gt;0$，都有&lt;/p>
-&lt;p>$$
-\lim_{n\to\infty}\frac{1}{n^{1+r}}\sum_{t=1}^n t^r = \lim_{n\to\infty}\sum_{t=1}^n \left(\frac{t}{n}\right)^r\cdot\frac1n = \int_0^1 x^r\,dr = \frac{1}{1+r}
-$$&lt;/p>
-&lt;p>这里利用了 Riemann 积分的定义。&lt;/p>&lt;/div>
+$$&lt;div class="notice note" >
+&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>事实上，对任意 $r>0$，都有&lt;/p>
+$$
+\lim_{n\to\infty}\frac{1}{n^{1+r}}\sum_{t=1}^n t^r = \lim_{n\to\infty}\sum_{t=1}^n \left(\frac{t}{n}\right)^r\cdot\frac1n = \int_0^1 x^r\\,dr = \frac{1}{1+r}
+$$&lt;p>这里利用了 Riemann 积分的定义。&lt;/p>&lt;/div>
 &lt;p>接下来，我们要考察第二个部分的渐进分布。前一讲的鞅差分 CLT 不足以用来证明，因为每一项的方差是变化的，需要回到 Davidson (1994) 定理24.3。不论如何，在 $e_t$ 是平稳遍历鞅差分的条件下，我们总可以使用中心极限定理，于是有&lt;/p>
-&lt;p>$$
+$$
 \frac{1}{\sqrt{n}}\sum_{t=1}^n
 \begin{pmatrix}
 1 \\ \frac{t}{n}
@@ -278,22 +248,19 @@ $$&lt;/p>
 e_t
 \to_d
 N(\bm{0},\bm{\Sigma})
-$$&lt;/p>
-&lt;p>其中渐进方差 $\bm{\Sigma}$ 就是&lt;/p>
-&lt;p>$$
+$$&lt;p>其中渐进方差 $\bm{\Sigma}$ 就是&lt;/p>
+$$
 \bm{\Sigma} = \lim_{n\to\infty} \sum_{t=1}^n\mathbb{E}\left[\begin{pmatrix}
 1 \\ t/n
 \end{pmatrix}(1,t/n)e_t^2\right] = \begin{pmatrix}
-1 &amp;amp; 1/2 \\ 1/2 &amp;amp; 1/3
+1 &amp; 1/2 \\\ 1/2 &amp; 1/3
 \end{pmatrix}\sigma^2
-$$&lt;/p>
-&lt;p>因此，$\bm{D_n}(\hat{\bm{\beta}}-\beta)$ 的渐进分布&lt;/p>
-&lt;p>$$
+$$&lt;p>因此，$\bm{D_n}(\hat{\bm{\beta}}-\beta)$ 的渐进分布&lt;/p>
+$$
 \bm{D_n}(\hat{\bm{\beta}}-\beta) \to_d N(\bm{0},\bm{V}) \quad\text{where } \bm{V} = \sigma^2\begin{pmatrix}
-1 &amp;amp; 1/2 \\ 1/2 &amp;amp; 1/3
+1 &amp; 1/2 \\\ 1/2 &amp; 1/3
 \end{pmatrix}^{-1}
-$$&lt;/p>
-&lt;p>可以看到，$\hat{\beta}_1-\beta_1 = O_p(n^{-3/2})$，比 $\beta_0$ 有更快的收敛速度。这本质上是因为，$X_t = t$ 是一个非平稳的（尽管是确定性的）时间序列，非平稳性意味着序列失去均值回归的性质，因而大数定律失效，欲得到回归或者收敛性，必须使用更高阶的平均。&lt;/p>
+$$&lt;p>可以看到，$\hat{\beta}_1-\beta_1 = O_p(n^{-3/2})$，比 $\beta_0$ 有更快的收敛速度。这本质上是因为，$X_t = t$ 是一个非平稳的（尽管是确定性的）时间序列，非平稳性意味着序列失去均值回归的性质，因而大数定律失效，欲得到回归或者收敛性，必须使用更高阶的平均。&lt;/p>
 &lt;h2 id="参考">参考&lt;/h2>
 &lt;p>Davidson, James (1994). &lt;em>Stochastic Limit Theory: An Introduction for Econometricians&lt;/em>. Oxford University Press.&lt;/p>
 &lt;p>Hansen, Bruce (2022). &lt;em>Econometrics&lt;/em>. Princeton University Press.&lt;/p>
@@ -309,10 +276,9 @@ $$&lt;/p>
 &lt;p id="def:mds" class="thm-title thm-definition">Definition 1.&lt;/p>
 &lt;div class="thm-inner thm-definition">
 &lt;p>随机过程 $\{e_t\}$ 若适应于滤流 (filtration) $\{\mathcal{F}_t\}$ 且满足&lt;/p>
-&lt;p>$$
+$$
 \mathbb{E}(e_t|\mathcal{F_{t-1}}) = 0 \quad\text{almost surely}
-$$&lt;/p>
-&lt;p>则称之为鞅差分序列。&lt;/p>
+$$&lt;p>则称之为鞅差分序列。&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;p>容易验证一个 m.d.s. 是零均值、序列不相关的。&lt;/p>
@@ -320,10 +286,10 @@ $$&lt;/p>
 &lt;div class="thm">
 &lt;p id="thm:mds" class="thm-title thm-Theorem">Theorem 2.&lt;/p>
 &lt;div class="thm-inner thm-Theorem">
-&lt;p>若 $\{e_t\}$ 是平稳遍历的 m.d.s.，且 $\mathbb{E}(e_t^2) = \sigma^2 &amp;lt;\infty$，则有&lt;/p>
-&lt;p>$$
+&lt;p>若 $\{e_t\}$ 是平稳遍历的 m.d.s.，且 $\mathbb{E}(e_t^2) = \sigma^2 &lt;\infty$，则有&lt;/p>
+$$
 \sqrt{n}\bar{e}_n = \frac{1}{\sqrt{n}}\sum_{t=1}^ne_t \to_d N(0,\sigma^2)
-$$&lt;/p>
+$$
 &lt;/div>
 &lt;/div>
 &lt;p>此定理特别适合我们的需要，因为之前已经介绍了平稳和遍历，为了得到一个中心极限定理，只需额外要求序列是一个鞅差分。此定理的严格证明可参考 Davidson (1994) 定理 24.3，它事实上是 McLeish (1974) 鞅差分 CLT 的一个较弱的推论，平稳遍历将保证那个定理中的各项条件得到满足。&lt;/p>
@@ -331,15 +297,13 @@ $$&lt;/p>
 &lt;h2 id="线性投影">线性投影&lt;/h2>
 &lt;p>设 $(Y,\bm{X})$ 服从联合分布。$Y$ 可表示为两个部分，第一个部分是 $\bm{X}$ 的一个线性组合，第二个部分 $e$ 是正交于（即不相关）第一部分的误差；两者可分别称为 &lt;em>线性投影 (linear projection)&lt;/em> 和 &lt;em>投影误差 (projection error)&lt;/em>。&lt;/p>
 &lt;p>那么，这个线性组合 $\bm{X}'\bm{\beta}$ 应该如何选取呢？或者说，以什么标准来确定最优的线性投影？这个问题的答案是，使得投影误差的 $L^2$ 范数最小化。也就是说，最好的 $\bm{\beta}^*$ 是&lt;/p>
-&lt;p>$$
-\bm{\beta}^* = \arg\min_{\bm{\beta}} \mathbb{E}[(Y-\bm{X}&amp;rsquo;\bm{\beta})^2]
-$$&lt;/p>
-&lt;p>解为 $\bm{\beta}^* = [\mathbb{E}(\bm{XX}')]^{-1}\mathbb{E}(\bm{X}Y)$。&lt;/p>
+$$
+\bm{\beta}^* = \arg\min_{\bm{\beta}} \mathbb{E}[(Y-\bm{X}'\bm{\beta})^2]
+$$&lt;p>解为 $\bm{\beta}^* = [\mathbb{E}(\bm{XX}')]^{-1}\mathbb{E}(\bm{X}Y)$。&lt;/p>
 &lt;p>事实上，选择 $L^2$ 范数最小化来自于一个事实：条件期望 $\mathbb{E}(Y|\bm{X})$ 是 $Y$ 在 $L^2(\Omega,\sigma(\bm{X}),\mathbb{P})$ 空间上的投影，因此&lt;/p>
-&lt;p>$$
+$$
 \mathbb{E}(Y|\bm{X}) \in \arg\min_g \mathbb{E}[(Y-g(\bm{X}))^2]
-$$&lt;/p>
-&lt;p>当条件期望为线性时，正好有 $\bm{X}'\bm{\beta}^* = \mathbb{E}(Y|\bm{X})$。&lt;/p>
+$$&lt;p>当条件期望为线性时，正好有 $\bm{X}'\bm{\beta}^* = \mathbb{E}(Y|\bm{X})$。&lt;/p>
 &lt;p>在时间序列中，线性投影特别有用，尤其在（平稳时间序列）预测中。这是因为当我们对时间序列施加平稳性假设时，线性投影和相应的投影误差将是正交的。这一结论导出自著名的 &lt;em>&lt;a href="https://en.wikipedia.org/wiki/Hilbert_projection_theorem">Hilbert 投影定理&lt;/a>&lt;/em>，陈述如下：（注：Hibert 空间，即完备内积空间）&lt;/p>
 &lt;div class="thm">
 &lt;p id="thm:hilbert" class="thm-title thm-Theorem">Theorem 3.&lt;/p>
@@ -356,10 +320,9 @@ $$&lt;/p>
 &lt;p id="thm:proj" class="thm-title thm-Theorem">Theorem 4.&lt;/p>
 &lt;div class="thm-inner thm-Theorem">
 &lt;p>若 $\{Y_t\}$ 协方差平稳，则它有投影方程&lt;/p>
-&lt;p>$$
+$$
 Y_t = \mathcal{P}_{t-1}[Y_t] + e_t
-$$&lt;/p>
-&lt;p>其中 $\mathcal{P}_{t-1}[Y_t]$ 是 $Y_t$ 到 $(\dots,Y_{t-2},Y_{t-1})$ 上的最优线性投影（最小化误差的 $L^2$ 范数），且投影误差序列不相关，方差有限。&lt;/p>
+$$&lt;p>其中 $\mathcal{P}_{t-1}[Y_t]$ 是 $Y_t$ 到 $(\dots,Y_{t-2},Y_{t-1})$ 上的最优线性投影（最小化误差的 $L^2$ 范数），且投影误差序列不相关，方差有限。&lt;/p>
 &lt;p>若 $\{Y_t\}$ 严格平稳，除上述结果外，还有 $\{e_t\}$ 也是严格平稳的。&lt;/p>
 &lt;/div>
 &lt;/div>
@@ -368,10 +331,9 @@ $$&lt;/p>
 &lt;div class="proof-content">
 &lt;div class="thm-inner-proof">
 &lt;p>需要首先指出，投影方程取决于有多少期的数据可得。假设有 $n$ 期的历史 $(Y_{t-n},\dots,Y_{t-2},Y_{t-1})$，那么线性子空间&lt;/p>
-&lt;p>$$
+$$
 \text{span}(\{Y_{t-n},\dots,Y_{t-2},Y_{t-1}\}) = \left\{\sum_{j=1}^na_jY_{t-j}\colon a_j\in\mathbb{R},Y_{t-j}\in L^2(\mathbb{P})\right\}
-$$&lt;/p>
-&lt;p>一定是闭的（对极限封闭），容易证明由有限集张成的线性空间一定是闭的。&lt;/p>
+$$&lt;p>一定是闭的（对极限封闭），容易证明由有限集张成的线性空间一定是闭的。&lt;/p>
 &lt;p>根据 Hilbert 投影定理，我们就可以确定投影方程。此外，投影误差序列不相关，且是平稳的（严格平稳的），这可由 $\{Y_t\}$ 平稳性（严格平稳性）得到。&lt;/p>
 &lt;p>需要指出，将 $Y_t$ 投影到无穷维线性空间 $\text{span}(\{\dots,Y_{t-2},Y_{t-1}\})$ 不一定可行，因为无穷维线性子空间不一定是闭的。当然，我们可以取其闭包得到一个闭的子空间，但这个空间内并不是所有元素都一定可表为 $\{\dots,Y_{t-2},Y_{t-1}\}$ 的线性组合，相应地我们需要修改 $\mathcal{P}_{t-1}$ 的定义，使之不限于线性投影。&lt;/p>
 &lt;/div>
@@ -387,11 +349,10 @@ $$&lt;/p>
 &lt;div class="thm">
 &lt;p id="thm:wold" class="thm-title thm-Theorem">Theorem 5.&lt;/p>
 &lt;div class="thm-inner thm-Theorem">
-&lt;p>若 &lt;em>零均值&lt;/em> 时间序列 $\{Y_t\}$ 协方差平稳且投影误差的方差 $\sigma^2 &amp;gt; 0$，则 $Y_t$ 可分解为&lt;/p>
-&lt;p>$$
+&lt;p>若 &lt;em>零均值&lt;/em> 时间序列 $\{Y_t\}$ 协方差平稳且投影误差的方差 $\sigma^2 > 0$，则 $Y_t$ 可分解为&lt;/p>
+$$
 Y_t = \sum_{j=0}^\infty b_je_{t-j} + \mu_t
-$$&lt;/p>
-&lt;p>其中 $b_0 = 1$，$\sum_{j=0}^\infty b_j^2 &amp;lt; \infty$；$e_t$ 是方差为 $\sigma^2$ 的白噪声序列，且和 $\mu_t$ 无关；$\mu_t$ 是由 $Y_t$ 的历史决定的确定性过程。&lt;/p>
+$$&lt;p>其中 $b_0 = 1$，$\sum_{j=0}^\infty b_j^2 &lt; \infty$；$e_t$ 是方差为 $\sigma^2$ 的白噪声序列，且和 $\mu_t$ 无关；$\mu_t$ 是由 $Y_t$ 的历史决定的确定性过程。&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;p>可以看到 Wold 分解和 ARMA 模型的深刻联系，它事实上为后者提供了理论基础。&lt;/p>
@@ -428,15 +389,13 @@ $$&lt;/p>
 &lt;div class="proof-content">
 &lt;div class="thm-inner-proof">
 &lt;p>设 $\{X_t\}$ 的分布为 $\lambda$，它是 $\mu$ 在 $T\colon\mathbb{R}^{\mathbb{Z}}\to\mathbb{R}^{\mathbb{Z}}$ 下的像测度，$T$ 由下式定义：&lt;/p>
-&lt;p>$$
+$$
 (Tx)_t = \phi(y_t, y_{t-1},\dots)
-$$&lt;/p>
-&lt;p>我们要证明位移变换在 $\lambda$ 的意义下是遍历的，即任意 $\delta$-invariant 事件 $A$ 都是平凡的。&lt;/p>
+$$&lt;p>我们要证明位移变换在 $\lambda$ 的意义下是遍历的，即任意 $\delta$-invariant 事件 $A$ 都是平凡的。&lt;/p>
 &lt;p>由 $\{Y_t\}$ 的遍历性，对任意 $\delta$-invariant 事件 $A$，有 $\mu(A) = 0$ 或 $\mu(A) = 1$。根据 $\lambda$ 的定义，有&lt;/p>
-&lt;p>$$
+$$
 \lambda(A) = \mu(T^{-1}A)
-$$&lt;/p>
-&lt;p>若能证明 $T^{-1}A$ 也是 $\delta$-invariant 事件，则我们就证明了 $\{X_t\}$ 是遍历的。&lt;/p>
+$$&lt;p>若能证明 $T^{-1}A$ 也是 $\delta$-invariant 事件，则我们就证明了 $\{X_t\}$ 是遍历的。&lt;/p>
 &lt;p>容易推出 $\delta^{-1}(T^{-1}A) = \{x\colon T(\delta x)\in A\}$；由 $T$ 的定义，易见 $T(\delta x) = \delta(Tx)$；再由 $A$ 的不变性有 $\delta x\in A$ 当且仅当 $x\in A$；因此，有 $T(\delta x)\in A$ 当且仅当 $Tx\in A$，这也就证明了 $\delta^{-1}(T^{-1}A) = T^{-1}A$，即 $T^{-1}A$ 是 $\delta$-invariant 事件。&lt;/p>
 &lt;/div>
 &lt;div class="thm-end-proof">
@@ -448,7 +407,7 @@ $$&lt;/p>
 &lt;div class="thm">
 &lt;p id="thm:conv" class="thm-title thm-Theorem">Theorem 3.&lt;/p>
 &lt;div class="thm-inner thm-Theorem">
-若 $\{Y_t\}$ 遍历，$\mathbb{E}|Y|&amp;lt;\infty$，且 $\sum_{j=0}^\infty|a_j| &amp;lt; \infty$，则 $X_t = \sum_{j=0}^\infty a_jY_{t-j}$ 收敛且遍历。
+若 $\{Y_t\}$ 遍历，$\mathbb{E}|Y|&lt;\infty$，且 $\sum_{j=0}^\infty|a_j| &lt; \infty$，则 $X_t = \sum_{j=0}^\infty a_jY_{t-j}$ 收敛且遍历。
 &lt;/div>
 &lt;/div>
 &lt;h2 id="遍历定理">遍历定理&lt;/h2>
@@ -457,9 +416,9 @@ $$&lt;/p>
 &lt;p id="thm:mix" class="thm-title thm-Theorem">Theorem 4.&lt;/p>
 &lt;div class="thm-inner thm-Theorem">
 &lt;p>若 $\{Y_t\}$ 平稳，则其遍历的充要条件是：对任意事件 $A,B\in\mathcal{B}(\mathbb{R}^{\mathbb{Z}})$，有&lt;/p>
-&lt;p>$$
+$$
 \lim_{n\to\infty} \frac1n\sum_{k=1}^n\mu(\delta^kA\cap B) = \mu(A)\mu(B)
-$$&lt;/p>
+$$
 &lt;/div>
 &lt;/div>
 &lt;p>其严格证明可见 Davidson (1994) 定理 13.13。这里提供一种直觉解释。在保测且遍历的位移变换下，非平凡的事件 $A$ 在位移后和会得到 $A$ 和其补集 $A^c$ 元素的某种混合（因为 $A$ 肯定不是 invariant），随着时间的演进，不停地进行位移变换，我们可以得到不同程度的混合。对于另一个事件 $B$，它和 $\delta^k A$ 的相关程度由 $\mu(\delta^kA\cap B)-\mu(A)\mu(B)$ 刻画，这些相关性平均下来，应该接近零，这是因为：$\delta^kA$ 会是 $A$ 和 $A^c$ 各种程度的混合，也决定了它和 $B$ 的相关性，但平均值应该接近零。&lt;/p>
@@ -467,11 +426,10 @@ $$&lt;/p>
 &lt;div class="thm">
 &lt;p id="coro:cov" class="thm-title thm-Corollary">Corollary 5.&lt;/p>
 &lt;div class="thm-inner thm-Corollary">
-&lt;p>若 $\{Y_t\}$ 平稳且遍历，以及 $\mathbb{E}(Y^2)&amp;lt;\infty$，则对任意 $t\in\mathbb{Z}$，有&lt;/p>
-&lt;p>$$
+&lt;p>若 $\{Y_t\}$ 平稳且遍历，以及 $\mathbb{E}(Y^2)&lt;\infty$，则对任意 $t\in\mathbb{Z}$，有&lt;/p>
+$$
 \frac1n\sum_{k=1}^n\text{cov}(Y_t,Y_{t+k}) \to 0 \quad\text{as } n\to\infty
-$$&lt;/p>
-&lt;p>即平均协方差趋于零。&lt;/p>
+$$&lt;p>即平均协方差趋于零。&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;div class="thm">
@@ -480,21 +438,19 @@ $$&lt;/p>
 &lt;div class="thm-inner-proof">
 &lt;p>不失一般性，假设 $\mathbb{E}(Y) = 0$。记 $\gamma_k = \mathbb{E}(Y_tY_{t+k})$。我们要证明 $\frac1n\sum_k\gamma_k \to 0$。&lt;/p>
 &lt;p>以概率测度 $\mu$ 来表述，$\gamma_k = \int \pi_0(x)\pi_k(x)\,\mu(dx)$，其中 $\pi_k(x) = x_{t+k}$ 是坐标投影映射。考虑 $\pi_0$ 为简单函数的情况，即 $\pi_0(x) = \sum_i \alpha_i\mathbb{1}_{A_i}(x)$，其中 $\{A_i\}$ 构成对 $\mathbb{R}^{\mathbb{Z}}$ 的分割。于是 $\pi_1(x) = \pi_0(\delta^{-1} x) = \sum_i\alpha_i\mathbb{1}_{\delta^{-1}A_i}(x)$。不难证明 $\{\delta^{-1}A_i\}$ 两两互斥，且它们的概率和为 1（利用 $\delta$ 的保测性），因此我们就可以把它视作对 $\mathbb{R}^{\mathbb{Z}}$ 的分割。这可以自然地推广到 $\pi_k$。因此&lt;/p>
-&lt;p>$$
+$$
 \begin{align*}
-\gamma_k &amp;amp;= \int \sum_i\sum_j\alpha_i\alpha_j\mathbb{1}_{A_i\cap\delta^{-k}A_j}(x)\,\mu(dx) \\
-&amp;amp;= \sum_i\sum_j\alpha_i\alpha_j\mu(A_i\cap\delta^{-k}A_j)
+\gamma_k &amp;= \int \sum_i\sum_j\alpha_i\alpha_j\mathbb{1}_{A_i\cap\delta^{-k}A_j}(x)\,\mu(dx) \\
+&amp;= \sum_i\sum_j\alpha_i\alpha_j\mu(A_i\cap\delta^{-k}A_j)
 \end{align*}
-$$&lt;/p>
-&lt;p>根据前述定理，就有&lt;/p>
-&lt;p>$$
+$$&lt;p>根据前述定理，就有&lt;/p>
+$$
 \begin{align*}
-\lim_{n\to\infty}\frac1n\sum_k\gamma_k &amp;amp;= \sum_i\sum_j\alpha_i\alpha_j\left(\lim_{n\to\infty}\frac1n\sum_k\mu(A_i\cap\delta^{-k}A_j)\right) \\
-&amp;amp;= \sum_i\sum_j\alpha_i\alpha_j\mu(A_i)\mu(A_j) \\
-&amp;amp;= [\mathbb{E}_{\mu}(\pi_0)]^2 = 0
+\lim_{n\to\infty}\frac1n\sum_k\gamma_k &amp;= \sum_i\sum_j\alpha_i\alpha_j\left(\lim_{n\to\infty}\frac1n\sum_k\mu(A_i\cap\delta^{-k}A_j)\right) \\
+&amp;= \sum_i\sum_j\alpha_i\alpha_j\mu(A_i)\mu(A_j) \\
+&amp;= [\mathbb{E}_{\mu}(\pi_0)]^2 = 0
 \end{align*}
-$$&lt;/p>
-&lt;p>最后，根据测度论中任意可测函数可由简单函数的递增序列逼近的性质，以及单调收敛定理，便可将上述结论拓展到一般情形。&lt;/p>
+$$&lt;p>最后，根据测度论中任意可测函数可由简单函数的递增序列逼近的性质，以及单调收敛定理，便可将上述结论拓展到一般情形。&lt;/p>
 &lt;/div>
 &lt;div class="thm-end-proof">
 &lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-2">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
@@ -508,7 +464,7 @@ $$&lt;/p>
 &lt;div class="thm">
 &lt;p id="thm:ergo" class="thm-title thm-Theorem">Theorem 6.&lt;/p>
 &lt;div class="thm-inner thm-Theorem">
-若 $\{Y_t\}$ 平稳且遍历，以及 $\mathbb{E}(Y^2)&amp;lt;\infty$，则 $\frac1n\sum Y_t\to_p\mathbb{E}(Y)$。
+若 $\{Y_t\}$ 平稳且遍历，以及 $\mathbb{E}(Y^2)&lt;\infty$，则 $\frac1n\sum Y_t\to_p\mathbb{E}(Y)$。
 &lt;/div>
 &lt;/div>
 &lt;div class="thm">
@@ -517,21 +473,19 @@ $$&lt;/p>
 &lt;div class="thm-inner-proof">
 &lt;p>记 $\bar{y}_n = \frac1n\sum Y_t$ 为样本均值。&lt;/p>
 &lt;p>由 Chebyshev 不等式&lt;/p>
-&lt;p>$$
+$$
 \mathbb{P}(|\bar{y}_n-\mu|\geq\varepsilon) \leq \frac{\text{var}(\bar{y}_n)}{\varepsilon^2}
-$$&lt;/p>
-&lt;p>我们只要证明 $\lim_{n\to\infty}\text{var}(\bar{y}_n)=0$。&lt;/p>
+$$&lt;p>我们只要证明 $\lim_{n\to\infty}\text{var}(\bar{y}_n)=0$。&lt;/p>
 &lt;p>不失一般性，假设 $\mu = 0$。我们有&lt;/p>
-&lt;p>$$
+$$
 \begin{align*}
-\text{var}(\bar{y}_n) &amp;amp;= \frac{1}{n^2}\mathbb{E}[(Y_1+\dots+Y_T)^2] \\
-&amp;amp;= \frac{1}{n^2}[n\gamma_0 + 2(n-1)\gamma_1 + 2(n-2)\gamma_2 +\dots+ 2\gamma_{n-1}] \\
-&amp;amp;= \frac{1}{n^2}\left[n\gamma_0+2\sum_{k=1}^{n-1}(n-k) \gamma_k\right] \\
-&amp;amp;= \frac{1}{n^2}\left[n\gamma_0+2\sum_{k=1}^{n-1}\sum_{\ell=1}^k\gamma_\ell\right] \\
-&amp;amp;= \frac{\gamma_0}{n} + \frac{2}{n}\sum_{k=1}^{n-1}\left(\frac{1}{n}\sum_{\ell=1}^k\gamma_\ell\right)
+\text{var}(\bar{y}_n) &amp;= \frac{1}{n^2}\mathbb{E}[(Y_1+\dots+Y_T)^2] \\
+&amp;= \frac{1}{n^2}[n\gamma_0 + 2(n-1)\gamma_1 + 2(n-2)\gamma_2 +\dots+ 2\gamma_{n-1}] \\
+&amp;= \frac{1}{n^2}\left[n\gamma_0+2\sum_{k=1}^{n-1}(n-k) \gamma_k\right] \\
+&amp;= \frac{1}{n^2}\left[n\gamma_0+2\sum_{k=1}^{n-1}\sum_{\ell=1}^k\gamma_\ell\right] \\
+&amp;= \frac{\gamma_0}{n} + \frac{2}{n}\sum_{k=1}^{n-1}\left(\frac{1}{n}\sum_{\ell=1}^k\gamma_\ell\right)
 \end{align*}
-$$&lt;/p>
-&lt;p>第一项显然收敛到0；由前述推论，第二项括号内趋于0，再由 Cesàro 求和的结论知整个第二项趋于0。&lt;/p>
+$$&lt;p>第一项显然收敛到0；由前述推论，第二项括号内趋于0，再由 Cesàro 求和的结论知整个第二项趋于0。&lt;/p>
 &lt;/div>
 &lt;div class="thm-end-proof">
 &lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-3">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
@@ -558,13 +512,12 @@ $$&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;p>以随机过程的术语来说，平稳时间序列的分布具有 &lt;em>位移不变 (shift-invariant)&lt;/em> 的性质。如果我们采用测度论的严格表述，就是：对于 $\mathbb{R}$ 的任意 Borel 子集 $B_0,B_2,\dots,B_r$，以及任意的 $t$ 和 $\tau$，都有&lt;/p>
-&lt;p>$$
+$$
 \mathbb{P}\{\omega\colon Y_t(\omega)\in B_0,\dots,Y_{t+r}(\omega)\in B_r\} = \mathbb{P}\{\omega\colon Y_\tau(\omega)\in B_0,\dots,Y_{\tau+r}(\omega)\in B_r\}
-$$&lt;/p>
-&lt;p>这就是在表述 $(Y_t,\dots,Y_{t+r})$ 和 $(Y_{\tau},\dots,Y_{\tau+r})$ 具有相同分布。&lt;/p>
+$$&lt;p>这就是在表述 $(Y_t,\dots,Y_{t+r})$ 和 $(Y_{\tau},\dots,Y_{\tau+r})$ 具有相同分布。&lt;/p>
 &lt;p>值得一提，有时我们会看到略有不同的定义：&lt;/p>
 &lt;blockquote>
-&lt;p>若对任意的 $t_1,t_2,\dots,t_r$，$(Y_{t_1},\dots,Y_{t_r})$ 的联合分布与 $(Y_{t_1+k},\dots,Y_{t_r+k})$ 相同，而与 $k$ 无关，则称 ${Y_t}$ 是平稳序列。&lt;/p>
+&lt;p>若对任意的 $t_1,t_2,\dots,t_r$，$(Y_{t_1},\dots,Y_{t_r})$ 的联合分布与 $(Y_{t_1+k},\dots,Y_{t_r+k})$ 相同，而与 $k$ 无关，则称 $\{Y_t\}$ 是平稳序列。&lt;/p>
 &lt;/blockquote>
 &lt;p>乍一看，这个定义似乎更一般，但它和上面的定义是等价的。要从前述定义推出此定义，只需注意到联合分布相同，则边缘分布必定相同，而 $(Y_{t_1},\dots,Y_{t_r})$ 的分布实际上就是 $(Y_t)_{t=t_1}^{t_r}$ 的边缘分布（不失一般性，假设 $t_1,\dots,t_r$ 由小到大排列）。&lt;/p>
 &lt;h3 id="平稳时间序列的变换">平稳时间序列的变换&lt;/h3>
@@ -581,25 +534,21 @@ $$&lt;/p>
 &lt;div class="thm-inner-proof">
 &lt;p>此证明是以测度论表述的严格证明，因为涉及到无穷维的情况。&lt;/p>
 &lt;p>我们先定义整个随机过程 $\{Y_t\}$ 的分布。设 $T\colon\Omega\to\mathbb{R}^{\mathbb{Z}}$ 以 $(T\omega)_t = Y_t(\omega)$ 作为定义，换言之，$T\omega$ 是一个无穷维向量。设 $\mu$ 是 $\mathbb{P}$ 在 $T$ 下的像测度，即有&lt;/p>
-&lt;p>$$
+$$
 \mu(E) = \mathbb{P}(T^{-1}E) \quad\text{for each } E\in\mathcal{B}(\mathbb{R}^{\mathbb{Z}})
-$$&lt;/p>
-&lt;p>$\mu$ 描述了 $\{Y_t\}$ 的分布。&lt;/p>
+$$&lt;p>$\mu$ 描述了 $\{Y_t\}$ 的分布。&lt;/p>
 &lt;p>现在，我们在无穷维空间 $\mathbb{R}^{\mathbb{Z}}$ 上定义一个 &lt;em>位移变换&lt;/em> $\delta\colon\mathbb{R}^{\mathbb{Z}}\to\mathbb{R}^{\mathbb{Z}}$：&lt;/p>
-&lt;p>$$
+$$
 (\delta x)_t = x_{t+r}
-$$&lt;/p>
-&lt;p>也就是说，$\delta$ 将给定的坐标移位 $r$ 个维度。这在时间序列中便是滞后算子。&lt;/p>
+$$&lt;p>也就是说，$\delta$ 将给定的坐标移位 $r$ 个维度。这在时间序列中便是滞后算子。&lt;/p>
 &lt;p>我们要证明 $\delta$ 是一个 $\mu$-&lt;em>&lt;a href="https://en.wikipedia.org/wiki/Measure-preserving_dynamical_system">保测变换&lt;/a>&lt;/em>（或称 $\mu$ 在 $\delta$ 下是 invariant）：&lt;/p>
-&lt;p>$$
+$$
 \mu(\delta^{-1}E) = \mu(E) \quad\text{for each } E\in\mathcal{B}(\mathbb{R}^{\mathbb{Z}})
-$$&lt;/p>
-&lt;p>根据 &lt;em>&lt;a href="https://en.wikipedia.org/wiki/Carath%C3%A9odory%27s_extension_theorem">Carathéodory 扩张定理&lt;/a>&lt;/em>，我们不需要证明上式对任意 Borel 子集成立，而只需证明对某个能生成 $\mathcal{B}(\mathbb{R}^{\mathbb{Z}})$ 的代数（对有限交、并、补封闭）的所有子集成立。我们选取的这个代数就是所有 $\mathbb{R}^{\mathbb{Z}}$ 的 &lt;em>&lt;a href="https://en.wikipedia.org/wiki/Cylinder_set">圆柱&lt;/a>&lt;/em> 子集构成的集族，记作 $\mathcal{C}$。&lt;/p>
+$$&lt;p>根据 &lt;em>&lt;a href="https://en.wikipedia.org/wiki/Carath%C3%A9odory%27s_extension_theorem">Carathéodory 扩张定理&lt;/a>&lt;/em>，我们不需要证明上式对任意 Borel 子集成立，而只需证明对某个能生成 $\mathcal{B}(\mathbb{R}^{\mathbb{Z}})$ 的代数（对有限交、并、补封闭）的所有子集成立。我们选取的这个代数就是所有 $\mathbb{R}^{\mathbb{Z}}$ 的 &lt;em>&lt;a href="https://en.wikipedia.org/wiki/Cylinder_set">圆柱&lt;/a>&lt;/em> 子集构成的集族，记作 $\mathcal{C}$。&lt;/p>
 &lt;p>$\mathbb{R}^{\mathbb{Z}}$ 的一个圆柱子集定义为如下形式：&lt;/p>
-&lt;p>$$
+$$
 C = \{(\dots,x_{-1},x_0,x_1,\dots)\in\mathbb{R}^{\mathbb{Z}}\colon (x_{t_1},x_{t_2},\dots,x_{t_n})\in B\}
-$$&lt;/p>
-&lt;p>其中 $B\in\mathbb{R}^n$ 是一个 Borel 子集。&lt;/p>
+$$&lt;p>其中 $B\in\mathbb{R}^n$ 是一个 Borel 子集。&lt;/p>
 &lt;p>容易证明，$\mathcal{C}$ 是一个代数，并且其生成的 $\sigma$ 域 $\sigma(\mathcal{C})$ 正好是 $\mathcal{B}(\mathbb{R}^{\mathbb{Z}})$。这样，我们只需证明 $\delta$ 在 $\mathcal{C}$ 上保测，而根据 $Y_t$ 的平稳性，这显然成立。于是，$\delta$ 是一个保测变换。&lt;/p>
 &lt;p>上面的证明立即表明，无穷维向量 $\widetilde{Y}_t:=(Y_t, Y_{t-1},\dots)$ 和其任意移位变换 $(Y_{t+r},Y_{t+r-1},\dots)$ 具有相同分布，进而 $x_t = \phi(\widetilde{Y}_t)$ 是平稳的。&lt;/p>
 &lt;/div>
@@ -609,14 +558,13 @@ $$&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;p>在时间序列中，我们经常用到的一个特殊变换就是移动平均，即 $Y_t,Y_{t-1},\dots$ 的线性组合：&lt;/p>
-&lt;p>$$
+$$
 X_t = \sum_{j=0}^\infty a_jY_{t-j}
-$$&lt;/p>
-&lt;p>当然，我们要求这个级数是几乎确定收敛的，一般情况下，我们省略限定语「几乎确定」。毫无疑问，根据上面的定理，$X_t$ 是平稳的。现在给出 $X_t$ 收敛的充分条件：&lt;/p>
+$$&lt;p>当然，我们要求这个级数是几乎确定收敛的，一般情况下，我们省略限定语「几乎确定」。毫无疑问，根据上面的定理，$X_t$ 是平稳的。现在给出 $X_t$ 收敛的充分条件：&lt;/p>
 &lt;div class="thm">
 &lt;p id="thm:conv" class="thm-title thm-Theorem">Theorem 3.&lt;/p>
 &lt;div class="thm-inner thm-Theorem">
-若 $\{Y_t\}$ 平稳，$\mathbb{E}|Y|&amp;lt;\infty$，且 $\sum_{j=0}^\infty|a_j| &amp;lt; \infty$，则 $X_t$ 收敛且平稳。
+若 $\{Y_t\}$ 平稳，$\mathbb{E}|Y|&lt;\infty$，且 $\sum_{j=0}^\infty|a_j| &lt; \infty$，则 $X_t$ 收敛且平稳。
 &lt;/div>
 &lt;/div>
 &lt;div class="thm">
@@ -624,27 +572,24 @@ $$&lt;/p>
 &lt;div class="proof-content">
 &lt;div class="thm-inner-proof">
 &lt;p>记 $S_n = \sum_{j=0}^n a_jY_{t-j}$ 为部分和序列。&lt;/p>
-&lt;p>根据 Cauchy 收敛准则，$X_t$ 收敛的充要条件是：对于任意的 $\varepsilon&amp;gt;0$，存在 $N$，当 $n&amp;gt;N$ 时，我们有&lt;/p>
-&lt;p>$$
-\sup_{p\geq1}|S_{n+p}-S_n| &amp;lt; \varepsilon
-$$&lt;/p>
-&lt;p>我们要证明这个条件几乎处处成立。这等价于证明以下事件&lt;/p>
-&lt;p>$$
+&lt;p>根据 Cauchy 收敛准则，$X_t$ 收敛的充要条件是：对于任意的 $\varepsilon>0$，存在 $N$，当 $n>N$ 时，我们有&lt;/p>
+$$
+\sup_{p\geq1}\|S_{n+p}-S_n\| &lt; \varepsilon
+$$&lt;p>我们要证明这个条件几乎处处成立。这等价于证明以下事件&lt;/p>
+$$
 A_{\varepsilon} := \bigcap_{n=1}^\infty A_{\varepsilon,n} = \bigcap_{n=1}^\infty\left\{\omega\colon\sup_{p\geq1}\left|\sum_{j=n+1}^{n+p}a_jY_{t-j}\right|\geq\varepsilon\right\}
-$$&lt;/p>
-&lt;p>总是零测集（而不论 $\varepsilon&amp;gt;0$ 的取值）。&lt;/p>
+$$&lt;p>总是零测集（而不论 $\varepsilon>0$ 的取值）。&lt;/p>
 &lt;p>有如下关系成立：&lt;/p>
-&lt;p>$$
+$$
 \begin{align*}
-\mathbb{P}(A_\varepsilon) &amp;amp;\leq \mathbb{P}(A_{\varepsilon,n}) \\
-&amp;amp;\leq \frac{1}{\varepsilon}\mathbb{E}\left[\sup_{p\geq1}\left|\sum_{j=n+1}^{n+p}a_jY_{t-j}\right|\right] \\
-&amp;amp;\leq \frac{1}{\varepsilon}\mathbb{E}\left[\sup_{p\geq1}\sum_{j=n+1}^{n+p}|a_j||Y_{t-j}|\right] \\
-&amp;amp;= \frac{1}{\varepsilon}\mathbb{E}\left[\lim_{p\to\infty}\sum_{j=n+1}^{n+p}|a_j||Y_{t-j}|\right] \\
-&amp;amp;= \frac{1}{\varepsilon}\lim_{p\to\infty}\mathbb{E}\left[\sum_{j=n+1}^{n+p}|a_j||Y_{t-j}|\right] \\
-&amp;amp;= \frac{1}{\varepsilon}\lim_{p\to\infty}\sum_{j=n+1}^{n+p}|a_j|\mathbb{E}|Y|
+\mathbb{P}(A_\varepsilon) &amp;\leq \mathbb{P}(A_{\varepsilon,n}) \\
+&amp;\leq \frac{1}{\varepsilon}\mathbb{E}\left[\sup_{p\geq1}\left|\sum_{j=n+1}^{n+p}a_jY_{t-j}\right|\right] \\
+&amp;\leq \frac{1}{\varepsilon}\mathbb{E}\left[\sup_{p\geq1}\sum_{j=n+1}^{n+p}|a_j||Y_{t-j}|\right] \\
+&amp;= \frac{1}{\varepsilon}\mathbb{E}\left[\lim_{p\to\infty}\sum_{j=n+1}^{n+p}|a_j||Y_{t-j}|\right] \\
+&amp;= \frac{1}{\varepsilon}\lim_{p\to\infty}\mathbb{E}\left[\sum_{j=n+1}^{n+p}|a_j||Y_{t-j}|\right] \\
+&amp;= \frac{1}{\varepsilon}\lim_{p\to\infty}\sum_{j=n+1}^{n+p}|a_j|\mathbb{E}|Y|
 \end{align*}
-$$&lt;/p>
-&lt;p>第二行来自 Markov 不等式；第三行来自三角不等式；第五行是单调收敛定理；第六行是积分的线性性。现在，再令 $n\to\infty$，由 $\sum |a_j|&amp;lt;\infty$，以及 $Y$ 绝对可积，进而得到 $\mathbb{P}(A_\varepsilon) = 0$。事实上，上述证明不仅表明 $X_t$ 是收敛的，还是绝对收敛的。&lt;/p>
+$$&lt;p>第二行来自 Markov 不等式；第三行来自三角不等式；第五行是单调收敛定理；第六行是积分的线性性。现在，再令 $n\to\infty$，由 $\sum |a_j|&lt;\infty$，以及 $Y$ 绝对可积，进而得到 $\mathbb{P}(A_\varepsilon) = 0$。事实上，上述证明不仅表明 $X_t$ 是收敛的，还是绝对收敛的。&lt;/p>
 &lt;/div>
 &lt;div class="thm-end-proof">
 &lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-2">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
@@ -675,50 +620,45 @@ Rating Matrix (Source: Yuejie Chi, 2018, Lecture Notes)
 2014)：&lt;em>矩阵分解法&lt;/em> 和 &lt;em>求解秩最小化问题法&lt;/em>。前者用两个低秩矩阵之积作为构造方式，可留待以后学习；后者是本文要讨论的内容。&lt;/p>
 &lt;h3 id="秩最小化问题的正式表述">秩最小化问题的正式表述&lt;/h3>
 &lt;p>假设真实矩阵是 $\bm{M}$，我们所观测到的元素集合是 $\{M_{i,j}\colon (i,j)\in\Omega\}$。秩最小化问题就表述为&lt;/p>
-&lt;p>$$
+$$
 \min_{\bm{X}}\ \text{rank}(\bm{X}) \quad \text{s.t. } X_{i,j} = M_{i,j},\ \text{for every }(i,j)\in\Omega
-$$&lt;/p>
-&lt;p>为方便起见，定义算子 $\mathcal{P}_{\Omega}$ 如下：&lt;/p>
-&lt;p>$$
+$$&lt;p>为方便起见，定义算子 $\mathcal{P}_{\Omega}$ 如下：&lt;/p>
+$$
 [\mathcal{P}_{\Omega}(\bm{X})]_{i,j} = \begin{cases}
-X_{i,j} &amp;amp; \text{if }(i,j)\in\Omega \\
-0 &amp;amp; \text{otherwise}
+X_{i,j} &amp; \text{if }(i,j)\in\Omega \\
+0 &amp; \text{otherwise}
 \end{cases}
-$$&lt;/p>
-&lt;p>换言之，$\mathcal{P}_{\Omega}$ 将任意矩阵正交投影到以指标集 $\Omega$ 作为支撑集的所有矩阵构成的空间上。&lt;/p>
+$$&lt;p>换言之，$\mathcal{P}_{\Omega}$ 将任意矩阵正交投影到以指标集 $\Omega$ 作为支撑集的所有矩阵构成的空间上。&lt;/p>
 &lt;p>于是，上述问题就可以方便地写为&lt;/p>
-&lt;p>$$
+$$
 \min_{\bm{X}}\ \text{rank}(\bm{X}) \quad \text{s.t. } \mathcal{P}_{\Omega}(\bm{X}) = \mathcal{P}_{\Omega}(\bm{M})
-$$&lt;/p>
-&lt;p>问题的解就是我们对真实矩阵 $\bm{M}$ 的估计或者近似。&lt;/p>
+$$&lt;p>问题的解就是我们对真实矩阵 $\bm{M}$ 的估计或者近似。&lt;/p>
 &lt;h4 id="仿射秩最小化">仿射秩最小化&lt;/h4>
 &lt;p>更一般地，我们不满足于普通的矩阵补全，而是以线性变换作为约束条件：&lt;/p>
-&lt;p>$$
+$$
 \min_{\bm{X}}\ \text{rank}(\bm{X}) \quad \text{s.t. } \mathcal{A}(\bm{X}) = \bm{b}
-$$&lt;/p>
-&lt;p>其中 $\mathcal{A}\colon\mathbb{R}^{m\times n}\to\mathbb{R}^p$ 是一个线性映射，向量 $\bm{b}\in\mathbb{R}^p$ 是给定的。这个问题被称为 &lt;em>仿射秩最小化 (affine rank minimization)&lt;/em>。&lt;/p>
+$$&lt;p>其中 $\mathcal{A}\colon\mathbb{R}^{m\times n}\to\mathbb{R}^p$ 是一个线性映射，向量 $\bm{b}\in\mathbb{R}^p$ 是给定的。这个问题被称为 &lt;em>仿射秩最小化 (affine rank minimization)&lt;/em>。&lt;/p>
 &lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
 &lt;div>&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/>&lt;/symbol>&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>&lt;/symbol>&lt;/svg>&lt;/div>&lt;div class="notice note" >
 &lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>矩阵空间上的线性变换本质上还是向量空间上的线性变换，$\mathcal{A}(\bm{X})$ 可以表述为
+&lt;/p>
 $$
 \mathcal{A}(\bm{X}) := \begin{bmatrix}
 \langle\bm{A}_1,\bm{X}\rangle_{\mathrm{F}} \\ \vdots \\ \langle\bm{A}_p,\bm{X}\rangle_{\mathrm{F}}
 \end{bmatrix}
-$$
+$$&lt;p>
 其中 $\langle\bm{A},\bm{B}\rangle_{\mathrm{F}} = \text{trace}(\bm{A}'\bm{B})$ 是矩阵的 Frobenius 内积。见 &lt;a href="https://math.stackexchange.com/questions/2592633/">Stack Exchange&lt;/a>。&lt;/p>&lt;/div>
 &lt;p>不难证明，$\mathcal{P}_{\Omega}$ 是一个线性变换，因而 $\mathcal{P}_{\Omega}(\bm{X}) = \mathcal{P}_{\Omega}(\bm{M})$ 构成仿射约束的一个特例。&lt;/p>
 &lt;h3 id="convex-relaxation">Convex relaxation&lt;/h3>
 &lt;p>遗憾的是，秩最小化问题不是一个凸优化问题，这不是我们所乐见的。原因是，秩函数（关于矩阵所有元素的函数）是非凸的。这无疑使得直接求解上述问题非常困难。我们希望找到作为替代的一个凸优化问题，它正是核范数最小化。&lt;/p>
 &lt;p>那么，什么是核范数呢？我们首先得了解 &lt;em>奇异值分解 (singular value decomposition, SVD)&lt;/em>。任何一个矩阵 $\bm{X}\in\mathbb{R}^{m\times n}$，都可以作如下分解：&lt;/p>
-&lt;p>$$
-\underset{(m\times n)}{\bm{X}} = \underset{(m\times r)}{\bm{U}}\,\underset{(r\times r)}{\bm{\Sigma}}\,\underset{(r\times n)}{\bm{V}&amp;rsquo;}
-$$&lt;/p>
-&lt;p>其中 $\bm{U}$ 和 $\bm{V}$ 各自的列是正交的：$\bm{U}'\bm{U}=\bm{I}_r=\bm{V}'\bm{V}$；$\bm{\Sigma}$ 是一个对角矩阵，对角线元素是从大到小排列的 &lt;em>奇异值&lt;/em>：$\sigma_1\geq\sigma_2\geq\dots\geq\sigma_r\geq 0$，它们都是非负的；$r = \min\{m,n\}$。&lt;/p>
+$$
+\underset{(m\times n)}{\bm{X}} = \underset{(m\times r)}{\bm{U}}\,\underset{(r\times r)}{\bm{\Sigma}}\,\underset{(r\times n)}{\bm{V}'}
+$$&lt;p>其中 $\bm{U}$ 和 $\bm{V}$ 各自的列是正交的：$\bm{U}'\bm{U}=\bm{I}_r=\bm{V}'\bm{V}$；$\bm{\Sigma}$ 是一个对角矩阵，对角线元素是从大到小排列的 &lt;em>奇异值&lt;/em>：$\sigma_1\geq\sigma_2\geq\dots\geq\sigma_r\geq 0$，它们都是非负的；$r = \min\{m,n\}$。&lt;/p>
 &lt;p>矩阵的奇异值和秩紧密相关，事实上，一个矩阵的秩等于它所有非零（因而严格正）奇异值的个数，即&lt;/p>
-&lt;p>$$
+$$
 \text{rank}(\bm{X}) = \sum_{i=1}^r\mathbb{1}\{\sigma_i\ne 0\}
-$$&lt;/p>
-&lt;p>如果我们用 $\bm{\sigma}$ 来代表所有奇异值构成的向量，那么上式就是 $\bm{\sigma}$ 的 $\ell_0$ 范数。这里离题一下，向量 $\ell_0$ 范数并不是一个真正的范数，而是 pseudo norm，因为它没有齐次性，但实际应用中仍普遍称之为「范数」，见 &lt;a href="https://en.wikipedia.org/wiki/Norm_(mathematics)#Hamming_distance_of_a_vector_from_zero">Wiki&lt;/a>。&lt;/p>
+$$&lt;p>如果我们用 $\bm{\sigma}$ 来代表所有奇异值构成的向量，那么上式就是 $\bm{\sigma}$ 的 $\ell_0$ 范数。这里离题一下，向量 $\ell_0$ 范数并不是一个真正的范数，而是 pseudo norm，因为它没有齐次性，但实际应用中仍普遍称之为「范数」，见 &lt;a href="https://en.wikipedia.org/wiki/Norm_(mathematics)#Hamming_distance_of_a_vector_from_zero">Wiki&lt;/a>。&lt;/p>
 &lt;p>现在，我们可以正式定义矩阵核范数：&lt;/p>
 &lt;div class="thm">
 &lt;p id="thm:nuclear" class="thm-title thm-definition">Definition 1.&lt;/p>
@@ -728,10 +668,9 @@ $$&lt;/p>
 &lt;/div>
 &lt;p>可以看到，矩阵的核范数等于其奇异值向量的 $\ell_1$ 范数。核范数是一个真正的范数（要证明这一点，特别是要证明它满足三角不等式，见 &lt;a href="https://math.stackexchange.com/questions/1142540">Stack Exchange 上的回答&lt;/a>）。&lt;/p>
 &lt;p>我们要做的替换就是将目标函数 $\text{rank}(\bm{X})$ 换为 $\lVert\bm{X}\rVert_*$，也就是我们考虑如下问题&lt;/p>
-&lt;p>$$
+$$
 \min_{\bm{X}}\ \lVert\bm{X}\rVert_* \quad \text{s.t. } \mathcal{A}(\bm{X}) = \bm{b}
-$$&lt;/p>
-&lt;p>这是一个凸优化问题，因为范数总是一个凸函数。核范数是秩函数的一个 &lt;em>convex relaxation&lt;/em>。&lt;/p>
+$$&lt;p>这是一个凸优化问题，因为范数总是一个凸函数。核范数是秩函数的一个 &lt;em>convex relaxation&lt;/em>。&lt;/p>
 &lt;div class="notice note" >
 &lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>可以类比 Lasso 的思想，想得到一个稀疏的向量（稀疏性以 $\ell_0$ 度量），用的是 $\ell_1$ 范数。现在是矩阵，度量矩阵列向量线性独立程度的正是秩（奇异值向量的 $\ell_0$ 范数），因而用核范数作为优化目标（奇异值向量的 $\ell_1$ 范数）可以得到低秩矩阵。&lt;/p>&lt;/div>
 &lt;h3 id="两种问题的等价性">两种问题的等价性&lt;/h3>
@@ -747,10 +686,9 @@ and Recht
 (2010) 将核范数最小化问题转变为一个 &lt;em>半定规划 (semidefinite programming)&lt;/em>，已有成熟的软件包用于解决这类问题（通常使用 primal-dual interior-point methods）。不过，这类方法在维度很高时速度很慢。&lt;/p>
 &lt;p>Cai &lt;i>et al.&lt;/i>
 (2010) 使用 &lt;em>近端次梯度下降法 (proximal subgradient descent)&lt;/em> 求解，此法特别适用于不可微分的凸优化，而且对于高维情形收敛速度也可令人满意。以普通的矩阵补全为例，此文事实上是求解&lt;/p>
-&lt;p>$$
+$$
 \min_{\bm{X}}\ \tau\lVert\bm{X}\rVert_* + \frac12\lVert\bm{X}\rVert_{\bm{F}}^2 \quad \text{s.t. } \mathcal{P}_{\Omega}(\bm{X}) = \mathcal{P}_{\Omega}(\bm{M})
-$$&lt;/p>
-&lt;p>当 $\tau$ 很大时，该问题的解可以作为最小化核范数问题解的近似。求解该问题是通过一个渐进程序实现的，本质上是梯度下降，这里不做介绍。&lt;/p>
+$$&lt;p>当 $\tau$ 很大时，该问题的解可以作为最小化核范数问题解的近似。求解该问题是通过一个渐进程序实现的，本质上是梯度下降，这里不做介绍。&lt;/p>
 &lt;h2 id="其他">其他&lt;/h2>
 &lt;p>Chandrasekaran &lt;i>et al.&lt;/i>
 (2012) 是一篇很好的文章，从几何角度揭示了范数的选择问题。具体到核范数，简单来说就是核范数是秩函数的凸包 （此概念在 &lt;em>&lt;a href="../bayesian-persuasion">之前的文章&lt;/a>&lt;/em> 中出现过），因而以核范数替代秩函数是 &lt;em>最紧的凸放松 (tightest convex relaxation)&lt;/em>。&lt;/p>
@@ -799,71 +737,61 @@ In: &lt;em>2014 IEEE Conference on Computer Vision and Pattern Recognition&lt;/e
 &lt;p>Ridge regression，中文译名「岭回归」，是一种利用 &lt;em>&lt;a href="https://en.wikipedia.org/wiki/Regularization_(mathematics)">正则化方法&lt;/a>&lt;/em> 处理 &lt;em>&lt;a href="https://en.wikipedia.org/wiki/Well-posed_problem">不适定问题&lt;/a>&lt;/em> 的技术。我们知道，使用 OLS 时是要求自变量之间不存在完全多重共线性的，即回归元矩阵必须是列满秩的，否则最小二乘问题没有唯一解；但如果某些变量间的相关性很高，甚至接近完全相关，OLS 估计量的方差将会相当大，估计精度大大下降。这个问题在待估参数很多时常常发生。岭回归通过对系数向量的 $L^2$ 范数（的平方）施加一个惩罚，控制系数的整体大小，达到以一定程度的偏误换取更低方差的目的（见 &lt;a href="https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff">bias-variance tradeoff&lt;/a>）。&lt;/p>
 &lt;h2 id="formulation">Formulation&lt;/h2>
 &lt;p>考虑线性模型：$y_i = \bm{x}_i^\prime\bm{\beta} + \varepsilon_i$，$i=1,\dots,N$。其中 $\bm{x}_i$ 和 $\bm{\beta}$ 都是 $p$ 维向量。我们更喜欢表示为矩阵形式：&lt;/p>
-&lt;p>$$
+$$
 \bm{Y} = \bm{X}\bm{\beta} + \bm{\mathcal{E}}
-$$&lt;/p>
-&lt;p>其中 $\bm{Y} = (y_1,\dots,y_N)^\prime$，$\bm{X} = (\bm{x}_1,\dots,\bm{x}_N)^\prime$，$\bm{\mathcal{E}} = (\varepsilon_1,\dots,\varepsilon_N)^\prime$。假设 $\mathbb{E}(\varepsilon_i|\bm{x}_i) = 0$ 以及 $\mathbb{E}(\varepsilon_i^2|\bm{x}_i) = \sigma^2$，并假设 $\{(\bm{x}_i,y_i)\}_{i=1}^n$ 是独立同分布的。&lt;/p>
+$$&lt;p>其中 $\bm{Y} = (y_1,\dots,y_N)^\prime$，$\bm{X} = (\bm{x}_1,\dots,\bm{x}_N)^\prime$，$\bm{\mathcal{E}} = (\varepsilon_1,\dots,\varepsilon_N)^\prime$。假设 $\mathbb{E}(\varepsilon_i|\bm{x}_i) = 0$ 以及 $\mathbb{E}(\varepsilon_i^2|\bm{x}_i) = \sigma^2$，并假设 $\{(\bm{x}_i,y_i)\}_{i=1}^n$ 是独立同分布的。&lt;/p>
 &lt;p>岭回归估计量 $\hat{\bm{\beta}}$ 来自如下带有惩罚项的最小二乘问题：&lt;/p>
-&lt;p>$$
+$$
 \min_{\bm{\beta}}\quad \frac1n(\bm{Y}-\bm{X}\bm{\beta})^\prime(\bm{Y}-\bm{X}\bm{\beta}) + \lambda\bm{\beta}^\prime\bm{\beta}
 \tag{$*$}
-$$&lt;/p>
-&lt;p>这里 $\lambda$ 是一个参数，它衡量了惩罚的大小。当 $\lambda=0$ 时，该问题就是 OLS；当 $\lambda\to\infty$ 时，$\bm{\beta} = \bm{0}$。事实上，这个问题等价于一个有约束的最小二乘：&lt;/p>
-&lt;p>$$
+$$&lt;p>这里 $\lambda$ 是一个参数，它衡量了惩罚的大小。当 $\lambda=0$ 时，该问题就是 OLS；当 $\lambda\to\infty$ 时，$\bm{\beta} = \bm{0}$。事实上，这个问题等价于一个有约束的最小二乘：&lt;/p>
+$$
 \min_{\bm{\beta}}\quad (\bm{Y}-\bm{X}\bm{\beta})^\prime(\bm{Y}-\bm{X}\bm{\beta}) \qquad \text{s.t.}\quad \bm{\beta}^\prime\bm{\beta} = c^2
-$$&lt;/p>
-&lt;p>其中 $c$ 为某个非负常数。可见我们是在 $p$ 维 Euclidean 空间中半径为 $c$ 的球面上寻找最小二乘估计量。&lt;/p>
+$$&lt;p>其中 $c$ 为某个非负常数。可见我们是在 $p$ 维 Euclidean 空间中半径为 $c$ 的球面上寻找最小二乘估计量。&lt;/p>
 &lt;p>由 $(*)$，一阶条件为 $n^{-1}(-2\bm{X}^\prime\bm{Y}+2\bm{X}^\prime\bm{X}\bm{\beta})+2\lambda\bm{\beta} = \bm{0}$，于是岭回归估计量&lt;/p>
-&lt;p>$$
+$$
 \hat{\bm{\beta}} = \left(\frac1n\bm{X}^\prime\bm{X}+\lambda\bm{I}_p\right)^{-1}\frac1n\bm{X}^\prime\bm{Y}
-$$&lt;/p>
-&lt;p>其中 $\bm{I}_p$ 是 $p$ 阶单位阵。&lt;/p>
+$$&lt;p>其中 $\bm{I}_p$ 是 $p$ 阶单位阵。&lt;/p>
 &lt;h2 id="渐进分布">渐进分布&lt;/h2>
 &lt;p>我们把 $\bm{Y} = \bm{X}\bm{\beta} + \bm{\mathcal{E}}$ 带入 $\hat{\bm{\beta}}$ 的表达式，并做适当整理变形，得到&lt;/p>
-&lt;p>$$
+$$
 \hat{\bm{\beta}} - \bm{\beta} = \left(\frac1n\bm{X}^\prime\bm{X}+\lambda\bm{I}_p\right)^{-1}\frac1n\bm{X}^\prime\bm{\mathcal{E}} - \left(\frac1n\bm{X}^\prime\bm{X}+\lambda\bm{I}_p\right)^{-1}\lambda\bm{\beta}
-$$&lt;/p>
-&lt;p>为简化符号，记 $\bm{B}_i = \bm{x}_i\bm{x}_i^\prime+\lambda\bm{I}_p$，$\bar{\bm{B}}_n = n^{-1}\sum_{i=1}^n\bm{B}_i$，其无条件期望 $\mathbb{E}(\bm{x}_i\bm{x}_i^\prime)+\lambda\bm{I}_p$ 记作 $\bm{B}$；此外，记 $\bm{Q} = \mathbb{E}(\bm{x}_i\bm{x}_i^\prime)$。&lt;/p>
+$$&lt;p>为简化符号，记 $\bm{B}_i = \bm{x}_i\bm{x}_i^\prime+\lambda\bm{I}_p$，$\bar{\bm{B}}_n = n^{-1}\sum_{i=1}^n\bm{B}_i$，其无条件期望 $\mathbb{E}(\bm{x}_i\bm{x}_i^\prime)+\lambda\bm{I}_p$ 记作 $\bm{B}$；此外，记 $\bm{Q} = \mathbb{E}(\bm{x}_i\bm{x}_i^\prime)$。&lt;/p>
 &lt;p>为应用中心极限定理（CLT），需要将上式整理成某个样本均值的形式。事实上，我们应当考虑构造一个更大的随机向量，导出其渐进分布，然后应用 &lt;a href="https://en.wikipedia.org/wiki/Cram%C3%A9r%E2%80%93Wold_theorem">Cramér–Wold device&lt;/a> 得到估计量的渐进分布。如果我们构造 $(\bm{x}_i^\prime\varepsilon_i,\lambda\bm{\beta}^\prime)^\prime$，则无法直接应用 CLT，因为该向量均值非零（除非 $\bm{\beta} = \bm{0}$）。正确的方式是作如下变形：&lt;/p>
-&lt;p>$$
+$$
 \begin{aligned}
-\hat{\bm{\beta}} - \bm{\beta} + \lambda\bm{B}^{-1}\bm{\beta} &amp;amp;= \bar{\bm{B}}_n^{-1}\left[\frac1n\bm{X}^\prime\bm{\mathcal{E}}-(\bm{I}_p-\bar{\bm{B}}_n\bm{B}^{-1})\lambda\bm{\beta}\right] \\
-&amp;amp;= \bar{\bm{B}}_n^{-1}\frac1n\sum_{i=1}^n\Bigl[\bm{x}_i\varepsilon_i-(\bm{I}_p-\bm{B}_i\bm{B}^{-1})\lambda\bm{\beta}\Bigr]
+\hat{\bm{\beta}} - \bm{\beta} + \lambda\bm{B}^{-1}\bm{\beta} &amp;= \bar{\bm{B}}_n^{-1}\left[\frac1n\bm{X}^\prime\bm{\mathcal{E}}-(\bm{I}_p-\bar{\bm{B}}_n\bm{B}^{-1})\lambda\bm{\beta}\right] \\
+&amp;= \bar{\bm{B}}_n^{-1}\frac1n\sum_{i=1}^n\Bigl[\bm{x}_i\varepsilon_i-(\bm{I}_p-\bm{B}_i\bm{B}^{-1})\lambda\bm{\beta}\Bigr]
 \end{aligned}
-$$&lt;/p>
-&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
+$$&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
 &lt;div>&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/>&lt;/symbol>&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>&lt;/symbol>&lt;/svg>&lt;/div>&lt;div class="notice note" >
 &lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>我们可以将 summand 视为一体，计算其均值和方差，然后直接应用 CLT，这本质上和 Cramér–Wold device 相同。&lt;/p>&lt;/div>
 &lt;p>考虑随机向量 $(\bm{c}_i^\prime,\bm{e}_i^\prime)^\prime$，其中 $\bm{c}_i = \bm{x}_i\varepsilon_i$，$\bm{e}_i = (\bm{I}_p-\bm{B}_i\bm{B}^{-1})\lambda\bm{\beta}$。易见 $\{(\bm{c}_i^\prime,\bm{e}_i^\prime)^\prime\}_{i=1}^n$ 是独立同分布的，均值为 $\bm{0}$，协方差矩阵&lt;/p>
-&lt;p>$$
+$$
 \bm{V} = \begin{pmatrix}
-\sigma^2\bm{Q} &amp;amp; \bm{0} \\
-\bm{0} &amp;amp; \lambda^2\bm{D}
+\sigma^2\bm{Q} &amp; \bm{0} \\
+\bm{0} &amp; \lambda^2\bm{D}
 \end{pmatrix}
-$$&lt;/p>
-&lt;p>其中 $\bm{D} = \mathbb{E}(\bm{B}_i\bm{B}^{-1}\bm{\beta\beta}^\prime\bm{B}^{-1}\bm{B}_i)-\bm{\beta}\bm{\beta}^\prime$。由 CLT，有&lt;/p>
-&lt;p>$$
+$$&lt;p>其中 $\bm{D} = \mathbb{E}(\bm{B}_i\bm{B}^{-1}\bm{\beta\beta}^\prime\bm{B}^{-1}\bm{B}_i)-\bm{\beta}\bm{\beta}^\prime$。由 CLT，有&lt;/p>
+$$
 \frac1{\sqrt{n}}\sum_{i=1}^n\begin{pmatrix}
 \bm{c}_i \\ \bm{e}_i
 \end{pmatrix} \to_d N(\bm{0},\bm{V})
-$$&lt;/p>
-&lt;p>于是，利用 Cramér–Wold device，有&lt;/p>
-&lt;p>$$
+$$&lt;p>于是，利用 Cramér–Wold device，有&lt;/p>
+$$
 \begin{aligned}
-\frac1{\sqrt{n}}\sum_{i=1}^n\Bigl[\bm{x}_i\varepsilon_i-(\bm{I}_p-\bm{B}_i\bm{B}^{-1})\lambda\bm{\beta}\Bigr] &amp;amp;= (1,-1)\frac1{\sqrt{n}}\sum_{i=1}^n\begin{pmatrix}
+\frac1{\sqrt{n}}\sum_{i=1}^n\Bigl[\bm{x}_i\varepsilon_i-(\bm{I}_p-\bm{B}_i\bm{B}^{-1})\lambda\bm{\beta}\Bigr] &amp;= (1,-1)\frac1{\sqrt{n}}\sum_{i=1}^n\begin{pmatrix}
 \bm{c}_i \\ \bm{e}_i
 \end{pmatrix} \begin{pmatrix}
 1 \\ -1
 \end{pmatrix}
 \\
-&amp;amp;\to_d N(\bm{0}, \sigma^2\bm{Q}+\lambda^2\bm{D})
+&amp;\to_d N(\bm{0}, \sigma^2\bm{Q}+\lambda^2\bm{D})
 \end{aligned}
-$$&lt;/p>
-&lt;p>最后，$\bar{\bm{B}}_n\to_p\bm{B}$，根据 Slutsky 定理，有&lt;/p>
-&lt;p>$$
+$$&lt;p>最后，$\bar{\bm{B}}_n\to_p\bm{B}$，根据 Slutsky 定理，有&lt;/p>
+$$
 \sqrt{n}(\hat{\bm{\beta}} - \bm{\beta} + \lambda\bm{B}^{-1}\bm{\beta}) \to_d N(\bm{0},\bm{\Omega})
-$$&lt;/p>
-&lt;p>其中 $\bm{\Omega} = \bm{B}^{-1}(\sigma^2\bm{Q}+\lambda^2\bm{D})\bm{B}^{-1}$。&lt;/p>
+$$&lt;p>其中 $\bm{\Omega} = \bm{B}^{-1}(\sigma^2\bm{Q}+\lambda^2\bm{D})\bm{B}^{-1}$。&lt;/p>
 &lt;div class="notice note" >
 &lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>值得一提，Knight and Fu (2000) 也给出了岭回归估计量的渐进分布，但其做法根本上是不同的，且不适用于我们这里的情形。由于他们并未在 $(*)$ 中第一项前添加 $1/n$，所以按照其文中定义，$\lambda_n = n\lambda$ 并非 $O(\sqrt{n})$，故其 Theorem 2 不能适用。&lt;/p>&lt;/div>
 &lt;h2 id="延伸思考">延伸思考&lt;/h2>
@@ -918,8 +846,7 @@ $$&lt;/p>
 &lt;ol>
 &lt;li>给定 $\pi$ 和每一个 realization $s$，接收者按照 Bayes 法则形成后验 $\mu(\omega|s)$，简记为 $\mu_s$，$\hat{a}(\mu_s)$ 最大化了接收者的后验期望效用：&lt;/li>
 &lt;/ol>
-&lt;p>$$\hat{a}(\mu_s)\in\arg\max_{a\in A}\mathbb{E}_{\mu_s}[u(a,\omega)]$$&lt;/p>
-&lt;ol start="2">
+$$\hat{a}(\mu_s)\in\arg\max_{a\in A}\mathbb{E}_{\mu_s}[u(a,\omega)]$$&lt;ol start="2">
 &lt;li>给定 $\hat{a}(\mu_s)$，$\pi$ 最大化了发送者事前期望效用（无条件期望）$\mathbb{E}[v(\hat{a}(\mu_s),\omega)]$。&lt;/li>
 &lt;/ol>
 &lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
@@ -932,22 +859,18 @@ $$&lt;/p>
 &lt;p>&lt;em>We can reexpress the problem of choosing an optimal signal as a search over distributions of posteriors subject to the constraint that the expected posterior is equal to the prior.&lt;/em>&lt;/p>
 &lt;/blockquote>
 &lt;p>简单来说，我们先条件于 $s$ 而不是 $\omega$，即&lt;/p>
-&lt;p>$$
+$$
 \mathbb{E}[v(\hat{a}(\mu_s),\omega)] = \mathbb{E}[\mathbb{E}[v(\hat{a}(\mu_s),\omega)|s]]
-$$&lt;/p>
-&lt;p>内层的条件期望在后验信念 $\mu(\omega|s)$ 下取得。发送者寻找最优信号 $\pi(s|\omega)$ 的目标等价于寻找最优后验信念 $\mu(\omega|s)$ 和 $s$ 的无条件分布 $\tau(s)$，随后可由 Bayes 法则恢复信号：&lt;/p>
-&lt;p>$$
+$$&lt;p>内层的条件期望在后验信念 $\mu(\omega|s)$ 下取得。发送者寻找最优信号 $\pi(s|\omega)$ 的目标等价于寻找最优后验信念 $\mu(\omega|s)$ 和 $s$ 的无条件分布 $\tau(s)$，随后可由 Bayes 法则恢复信号：&lt;/p>
+$$
 \pi(s|\omega) = \mu(\omega|s)\tau(s)/\mu_0(\omega)
-$$&lt;/p>
-&lt;p>这也必定保证了接收者按照 Bayes 法则更新自己的信念。当然，为保证概率和为 1，即 $\sum_s\pi(s|\omega) = 1$，我们要求 $\mu(\omega|s)$ 和 $\tau(s)$ 满足 $\int_s \mu(\omega|s)\thinspace d\tau(s) = \mu_0(\omega)$，这在文中被称为 &lt;em>&lt;strong>Bayes plausibility&lt;/strong>&lt;/em>。&lt;/p>
+$$&lt;p>这也必定保证了接收者按照 Bayes 法则更新自己的信念。当然，为保证概率和为 1，即 $\sum_s\pi(s|\omega) = 1$，我们要求 $\mu(\omega|s)$ 和 $\tau(s)$ 满足 $\int_s \mu(\omega|s)\thinspace d\tau(s) = \mu_0(\omega)$，这在文中被称为 &lt;em>&lt;strong>Bayes plausibility&lt;/strong>&lt;/em>。&lt;/p>
 &lt;p>不过，我们希望更进一步地简化问题，可能有一些 $s$，它们会导致相同的后验信念，这将意味着条件期望 $\mathbb{E}[v(\hat{a}(\mu_s),\omega)|s]$ 在这些 $s$ 间也是相同的，我们可以将这些 $s$ 视为同一类。这样，不同类可由它们导致的后验 $\mu$ 进行区分，从而得到 $\mu$ 的一个集合，我们再在此上定义概率空间。于是 $(\omega,s)$ 联合分布变成 $(\omega,\mu)$ 联合分布。我们仍用 $\tau$ 表示 $\mu$ 的无条件分布（或边缘分布）。具体而言，我们有&lt;/p>
-&lt;p>$$\tau(\mu)=\sum_{\{s\colon\mu_s=\mu\}}\tau(s)=\sum_{\{s\colon\mu_s=\mu\}}\sum_{\omega}\pi(s|\omega)\mu_0(\omega)$$&lt;/p>
-&lt;p>当然，如果 $\mu_s$ 和 $s$ 一一对应的话，我们只是换了一下记号而已。&lt;/p>
+$$\tau(\mu)=\sum_{\{s\colon\mu_s=\mu\}}\tau(s)=\sum_{\{s\colon\mu_s=\mu\}}\sum_{\omega}\pi(s|\omega)\mu_0(\omega)$$&lt;p>当然，如果 $\mu_s$ 和 $s$ 一一对应的话，我们只是换了一下记号而已。&lt;/p>
 &lt;p>这种整合并未改变无条件期望，即&lt;/p>
-&lt;p>$$
+$$
 \mathbb{E}[v(\hat{a}(\mu),\omega)] = \mathbb{E}[\mathbb{E}[v(\hat{a}(\mu),\omega)|\mu]] = \mathbb{E}_\tau[\mathbb{E}_\mu[v(\hat{a}(\mu),\omega)]]
-$$&lt;/p>
-&lt;p>我们将内层的条件期望记作 $\hat{v}(\mu)$，因此上述无条件期望就是 $\mathbb{E}_{\tau}\hat{v}(\mu)$。Bayes plausibility 要求 $\int_{\mu}\mu\thinspace d\tau(\mu) = \mu_0$。&lt;/p>
+$$&lt;p>我们将内层的条件期望记作 $\hat{v}(\mu)$，因此上述无条件期望就是 $\mathbb{E}_{\tau}\hat{v}(\mu)$。Bayes plausibility 要求 $\int_{\mu}\mu\thinspace d\tau(\mu) = \mu_0$。&lt;/p>
 &lt;div class="notice note" >
 &lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>以上的变换本质上是在压缩 realization space，似乎不是很有必要。我们可以假设每个 state 引致的后验都是不同的，即假设 $\mu_s$ 和 $s$ 一一对应。&lt;/p>&lt;/div>
 &lt;p>以上的分析已经足够我们理解本文的核心论断，即下一小节的 &lt;a href='#thm%3abestsig'>推论&lt;/a>，只是为了严谨，尚需处理一些细节问题。&lt;/p>
@@ -982,9 +905,8 @@ $$&lt;/p>
 &lt;p id="thm:bestsig" class="thm-title thm-corollary">Corollary 2.&lt;/p>
 &lt;div class="thm-inner thm-corollary">
 &lt;p>发送者可以从 persuation 中获益当且仅当存在一个 Bayes-plausible 分布 $\tau$ 使得&lt;/p>
-&lt;p>$$\mathbb{E}_{\tau}\hat{v}(\mu) &amp;gt; \hat{v}(\mu_0)$$&lt;/p>
-&lt;p>此外，最优信号的价值就是&lt;/p>
-&lt;p>$$\max_{\tau}\ \mathbb{E}_{\tau}\hat{v}(\mu) \quad \text{s.t.}\int\mu\thinspace d\tau(\mu) = \mu_0$$&lt;/p>
+$$\mathbb{E}_{\tau}\hat{v}(\mu) > \hat{v}(\mu_0)$$&lt;p>此外，最优信号的价值就是&lt;/p>
+$$\max_{\tau}\ \mathbb{E}_{\tau}\hat{v}(\mu) \quad \text{s.t.}\int\mu\thinspace d\tau(\mu) = \mu_0$$
 &lt;/div>
 &lt;/div>
 &lt;div class="thm">
@@ -1011,8 +933,7 @@ Concave Closure (Source: Kamenica and Gentzkow, 2011, Fig.2)
 &lt;/figcaption>
 &lt;/figure>
 &lt;p>易知两点连线总是在 $\hat{v}(\mu)$ 图像的凸包之内，因此我们取凸包的边界函数，称为 $\hat{v}$ 的&lt;strong>凹闭包&lt;/strong>（concave closure）：&lt;/p>
-&lt;p>$$V(\mu) \equiv \sup\{y\colon (\mu,y)\in\text{conv}(\hat{v})\}$$&lt;/p>
-&lt;p>这里 $\text{conv}(\hat{v})$ 表示 $\hat{v}$ 图像的凸包络集。$V(\mu)$ 必定是凹函数（因而称为凹闭包），并且是处处大于等于 $\hat{v}$ 的最小凹函数；它衡量了，当 state 的先验为 $\mu$ 时，发送者所能实现的最大价值，如 &lt;a href='#fig%3aconc'>上图&lt;/a> Panel C 所示。&lt;/p>
+$$V(\mu) \equiv \sup\{y\colon (\mu,y)\in\text{conv}(\hat{v})\}$$&lt;p>这里 $\text{conv}(\hat{v})$ 表示 $\hat{v}$ 图像的凸包络集。$V(\mu)$ 必定是凹函数（因而称为凹闭包），并且是处处大于等于 $\hat{v}$ 的最小凹函数；它衡量了，当 state 的先验为 $\mu$ 时，发送者所能实现的最大价值，如 &lt;a href='#fig%3aconc'>上图&lt;/a> Panel C 所示。&lt;/p>
 &lt;div class="notice note" >
 &lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>即便 action space 是无限集，我们也许只需要两个 realization，前提是它们与 $\mu = \mu_0$ 的交点位于 $V(\mu)$ 图像上。&lt;/p>&lt;/div>
 &lt;h3 id="一个例子">一个例子&lt;/h3>
@@ -1024,16 +945,14 @@ Concave Closure (Source: Kamenica and Gentzkow, 2011, Fig.2)
 &lt;li>法官若 &lt;em>convict&lt;/em>，则检方效用为 1，否则为 0。&lt;/li>
 &lt;/ul>
 &lt;p>试问，法官应该如何设定信号以最大化自己的效用？&lt;/p>
-&lt;p>首先，我们求法官的最优行动 $\hat{a}(\mu)$，这里 $\mu$ 表示关于被告是 &lt;em>guilty&lt;/em> 的信念。显然，当 $\mu &amp;lt; 0.5$ 时，法官最优行动是 &lt;em>acquit&lt;/em>，当 $\mu \geq 0.5$ 时是 &lt;em>convict&lt;/em>。因此，检方的后验效用就是：当 $\mu &amp;lt; 0.5$，$\hat{v}(\mu) = 0$；当 $\mu \geq 0.5$，$\hat{v}(\mu) = 1$，如 &lt;a href='#fig%3aconc'>上图&lt;/a> 所示。我们可以在其凹闭包上找到对应于先验 $\mu_0 = 0.3$ 的最大信号价值 $V(0.3) = 0.6$。$\tau$ 的支撑集显然是 $\{\mu_{s_1} = 0,\mu_{s_2}=0.5\}$。 随后根据 Bayes plausibility 确定 $\tau$：&lt;/p>
-&lt;p>$$0\cdot\tau(s_1)+0.5\cdot\tau(s_2)=0.3 \Rightarrow \tau(s_1)=0.4,\tau(s_2)=0.6$$&lt;/p>
-&lt;p>最后，恢复最优信号：&lt;/p>
-&lt;p>$$
+&lt;p>首先，我们求法官的最优行动 $\hat{a}(\mu)$，这里 $\mu$ 表示关于被告是 &lt;em>guilty&lt;/em> 的信念。显然，当 $\mu &lt; 0.5$ 时，法官最优行动是 &lt;em>acquit&lt;/em>，当 $\mu \geq 0.5$ 时是 &lt;em>convict&lt;/em>。因此，检方的后验效用就是：当 $\mu &lt; 0.5$，$\hat{v}(\mu) = 0$；当 $\mu \geq 0.5$，$\hat{v}(\mu) = 1$，如 &lt;a href='#fig%3aconc'>上图&lt;/a> 所示。我们可以在其凹闭包上找到对应于先验 $\mu_0 = 0.3$ 的最大信号价值 $V(0.3) = 0.6$。$\tau$ 的支撑集显然是 $\{\mu_{s_1} = 0,\mu_{s_2}=0.5\}$。 随后根据 Bayes plausibility 确定 $\tau$：&lt;/p>
+$$0\cdot\tau(s_1)+0.5\cdot\tau(s_2)=0.3 \Rightarrow \tau(s_1)=0.4,\tau(s_2)=0.6$$&lt;p>最后，恢复最优信号：&lt;/p>
+$$
 \begin{aligned}
-&amp;amp;\pi(s_1|\textit{guilty})=\mu(\textit{guilty}\thinspace|s_1)\tau(s_1)/\mu_0(\textit{guilty}) = 0 \\
-&amp;amp;\pi(s_1|\textit{innocent})=\mu(\textit{innocent}\thinspace|s_1)\tau(s_1)/\mu_0(\textit{innocent}) = 4/7
+&amp;\pi(s_1|\textit{guilty})=\mu(\textit{guilty}\thinspace|s_1)\tau(s_1)/\mu_0(\textit{guilty}) = 0 \\
+&amp;\pi(s_1|\textit{innocent})=\mu(\textit{innocent}\thinspace|s_1)\tau(s_1)/\mu_0(\textit{innocent}) = 4/7
 \end{aligned}
-$$&lt;/p>
-&lt;p>简单来说，分三步走：第一，确定 $\tau$ 的支撑集；第二，利用 Bayes plausibility 确定 $\tau$；第三，根据 Bayes 法则恢复最优信号。&lt;/p>
+$$&lt;p>简单来说，分三步走：第一，确定 $\tau$ 的支撑集；第二，利用 Bayes plausibility 确定 $\tau$；第三，根据 Bayes 法则恢复最优信号。&lt;/p>
 &lt;h2 id="参考">参考&lt;/h2>
 &lt;ul>
 &lt;li>Kamenica, Emir, and Matthew Gentzkow. 2011. &amp;ldquo;Bayesian Persuasion.&amp;rdquo; &lt;em>American Economic Review&lt;/em>, 101 (6): 2590-2615.&lt;/li>
