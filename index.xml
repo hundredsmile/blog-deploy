@@ -235,7 +235,8 @@ $$
 &lt;p>我们也可以像 &lt;a href="https://gaxu.xyz/posts/lasso/#coro:slowrate">推论 3&lt;/a> 那样用概率的形式表述，这里略去。&lt;/p>
 &lt;p>（未完待续～）&lt;/p>
 &lt;h2 id="参考">参考&lt;/h2>
-&lt;p>Alessandro Rinaldo&amp;rsquo;s Lecture Notes: &lt;a href="https://www.stat.cmu.edu/~arinaldo/Teaching/36710/F18/Scribed_Lectures/Oct17.pdf">Qct 17&lt;/a>, &lt;a href="https://www.stat.cmu.edu/~arinaldo/Teaching/36710/F18/Scribed_Lectures/Oct22.pdf">Oct 22&lt;/a>.&lt;/p>
+&lt;p>Alessandro Rinaldo&amp;rsquo;s Lecture Notes (2018): &lt;a href="https://www.stat.cmu.edu/~arinaldo/Teaching/36710/F18/Scribed_Lectures/Oct17.pdf">Oct 17&lt;/a>, &lt;a href="https://www.stat.cmu.edu/~arinaldo/Teaching/36710/F18/Scribed_Lectures/Oct22.pdf">Oct 22&lt;/a>.&lt;/p>
+&lt;p>Rigollet, Philippe, and Jan-Christian Hütter (2023). &amp;ldquo;High-Dimensional Statistics.&amp;rdquo; &lt;em>arXiv preprint&lt;/em>. &lt;a href="https://arxiv.org/pdf/2310.19244.pdf">arXiv:2310.19244&lt;/a>.&lt;/p>
 - https://gaxu.xyz/posts/lasso/ - 2023–2024 嘉树.</description></item><item><title>在 Mac 上管理多个 GitHub 账号</title><link>https://gaxu.xyz/posts/multiple-gh-accounts/</link><pubDate>Tue, 27 Aug 2024 19:29:37 +0800</pubDate><guid>https://gaxu.xyz/posts/multiple-gh-accounts/</guid><description>嘉树的世界 https://gaxu.xyz/posts/multiple-gh-accounts/ -&lt;h2 id="动机">动机&lt;/h2>
 &lt;p>我有两个 GitHub 账号，希望一个是面向工作，另一个则是私人的。那么，如何在一台 Mac 上无缝切换这个两个账号呢？本文列出了关键步骤。其他操作系统应当类似。&lt;/p>
 &lt;h2 id="生成-ssh-密钥">生成 SSH 密钥&lt;/h2>
