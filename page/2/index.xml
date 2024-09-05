@@ -1,4 +1,187 @@
-<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2024 嘉树.</copyright><lastBuildDate>Tue, 27 Aug 2024 19:29:37 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>计量复习笔记 (VII)：单位根序列的均值和趋势</title><link>https://gaxu.xyz/posts/ecmt-notes-fclt-means-trends/</link><pubDate>Sat, 29 Apr 2023 13:28:11 +0800</pubDate><guid>https://gaxu.xyz/posts/ecmt-notes-fclt-means-trends/</guid><description>嘉树的世界 https://gaxu.xyz/posts/ecmt-notes-fclt-means-trends/ -&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
+<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2024 嘉树.</copyright><lastBuildDate>Wed, 04 Sep 2024 13:33:52 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>计量复习笔记 (VIII)：自回归估计与 (A)DF 检验</title><link>https://gaxu.xyz/posts/ecmt-notes-ar-adf/</link><pubDate>Sun, 30 Apr 2023 12:02:47 +0800</pubDate><guid>https://gaxu.xyz/posts/ecmt-notes-ar-adf/</guid><description>嘉树的世界 https://gaxu.xyz/posts/ecmt-notes-ar-adf/ -&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
+&lt;div>&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/>&lt;/symbol>&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>&lt;/symbol>&lt;/svg>&lt;/div>&lt;div class="notice info" >
+&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#info-notice">&lt;/use>&lt;/svg>&lt;/span>Info&lt;/p>&lt;p>本系列是2023年春季学期《应用计量经济学》期末复习笔记，仅涵盖时间序列部分，对应 Hansen (2022) &lt;em>Econometrics&lt;/em> 第14和16章的内容。&lt;/p>&lt;/div>
+&lt;h2 id="内容提要">内容提要&lt;/h2>
+&lt;p>介绍了单位根假设下自回归系数的 OLS 估计量的渐进分布，以及由此而来的 (Augmented) Dicky-Fuller 单位根检验。&lt;/p>
+&lt;h2 id="ar1-的估计和单位根检验">AR(1) 的估计和单位根检验&lt;/h2>
+&lt;p>设 $Y_t$ 是一个 AR(1) 过程：$Y_t = \alpha Y_{t-1} + e_t$，为简化问题&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>，这里 $e_t$ 是平稳遍历的鞅差分，方差为 $\sigma_e^2$。&lt;/p>
+&lt;p>在平稳情形下，即 $\|\alpha\| &lt; 1$ 时，我们对 OLS 估计量 $\hat{\alpha}$ 以 $\sqrt{n}$ 作为 scaling，容易得到&lt;/p>
+$$
+\sqrt{n}(\hat{\alpha} - \alpha) = \sqrt{n}\frac{\sum_{t=2}^nY_{t-1}e_t}{\sum_{t=2}^nY_{t-1}^2} = \frac{n^{-1/2}\sum_{t=2}^nY_{t-1}e_t}{n^{-1}\sum_{t=2}^nY_{t-1}^2} \to_d N(0,1-\alpha^2)
+$$&lt;p>可见，当 $\alpha \to 1$，上式将依概率收敛到 0。这也说明，$\sqrt{n}$ 放缩对于单位根是不够的。&lt;/p>
+&lt;p>事实上，当 $\alpha = 1$，即单位根情形下&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>，应采用 $n$ 作为 scaling：&lt;/p>
+$$
+n(\hat{\alpha} - 1) = \frac{n^{-1}\sum_{t=2}^nY_{t-1}e_t}{n^{-2}\sum_{t=2}^nY_{t-1}^2}
+$$&lt;p>分母项的收敛利用前一讲的推导方法可以得到：&lt;/p>
+$$
+\begin{align*}
+\frac{1}{n^2}\sum_{t=2}^nY_{t-1}^2 &amp;= \frac1n\sum_{t=2}^n\left(\frac{Y_t}{\sqrt{n}}\right)^2 \\
+&amp;= \sum_{t=2}^n\int_{t/n}^{(t+1)/n}[Y_n(r)]^2\,dr \\
+&amp;= \int_0^1[Y_n(r)]^2\,dr + o_p(1) \\
+&amp;\to_d \int_0^1 [B(r)]^2\,dr
+\end{align*}
+$$&lt;p>分子项的收敛涉及到随机积分。&lt;/p>
+&lt;div class="thm">
+&lt;p id="def:stochint" class="thm-title thm-definition">Definition 1.&lt;/p>
+&lt;div class="thm-inner thm-definition">
+&lt;p>随机过程 $X(r)$ 关于 $Z(r)$ 在 $[0,1]$ 上的随机积分是一个概率极限：&lt;/p>
+$$
+\int_0^1X(r)\,dZ(r) := \mathop{\mathrm{plim}}\limits_{n\to\infty}\sum_{i=1}^{n-1}{\textstyle X\bigl(\frac{i}{n}\bigr)\left[Z\bigl(\frac{i+1}{n}\bigr)-Z\bigl(\frac{i}{n}\bigr)\right]}
+$$
+&lt;/div>
+&lt;/div>
+&lt;p>据此定义，我们有&lt;/p>
+$$
+\frac1n\sum_{t=2}^nY_{t-1}e_t = \sum_{t=2}^n\frac{Y_{t-1}}{\sqrt{n}}\frac{e_t}{\sqrt{n}} = \sum_{t=2}^{n}{\textstyle Y_n\bigl(\frac{t-1}{n}\bigr)\left[Y_n\bigl(\frac{t}{n}\bigr)-Y_n\bigl(\frac{t-1}{n}\bigr)\right]} = \int_0^1 Y_n(r)\,dY_n(r)
+$$&lt;p>尽管 $Y_n(r)\to_d B(r)$，但这不直接意味着上式依分布收敛到 $\int_0^1 B(r)\,dB(r)$，因为随机积分不是一个连续泛函，不能使用 CMT。不过我们确实有 $\int_0^1 Y_n(r)\,dY_n(r)\to_d\int_0^1 B(r)\,dB(r)$，其严格证明比较技术化。&lt;/p>
+&lt;p>另一种比较取巧的方式如下（简便起见，假设 $Y_0 = 0$）：&lt;/p>
+$$
+\begin{align*}
+\frac1n\textstyle\sum_{t=2}^nY_{t-1}e_t &amp;= \frac1n\textstyle\sum_{t=2}^n\left(\sum_{j=1}^{t-1}e_j\right)e_t \\
+&amp;= \frac12\left[\frac1n\left(\textstyle\sum_{j=1}^ne_j\right)^2-\frac1n\textstyle\sum_{j=1}^ne_j^2\right] \\
+&amp;\to_d \frac12[B(1)^2-\sigma_e^2] = \int_0^1B(r)\,dB(r)
+\end{align*}
+$$&lt;p>第一个等式由于我们假设了 $Y_0 = 0$ 而成立，$Y_0$ 当然可以为任意随机变量，这于最终结果只是一个 $o_p(1)$ 的影响。第二个等式使用了分步求和，很巧妙，因而只用普通 CLT 就可得到收敛性，注意 $B(1)\sim N(0,\sigma_e^2)$。最后一个等式是 Itô 积分。&lt;/p>
+&lt;div class="notice note" >
+&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>如果 $e_t$ 是弱相关序列，那么长期方差 $\gamma^2=\sigma_e^2 + 2\lambda$，$\int_0^1B(r)\,dB(r) = \frac12[B(1)^2-\gamma^2]$，最后的极限分布将是 $\int_0^1B(r)\,B(r)+\lambda$。&lt;/p>&lt;/div>
+&lt;p>综上所述，我们得到最终结果：&lt;/p>
+$$
+n(\hat{\alpha} - 1) \to_d \frac{\int_0^1B(r)\,dB(r)}{\int_0^1 [B(r)]^2\,dr} = \frac{\int_0^1W\,dW}{\int_0^1 W^2}
+$$&lt;p>其中 $W(r)$ 是标准布朗运动，即 $W(1)\sim N(0,1)$。注意，这里还是使用了 CMT，因为分子部分等于 $\frac12W(1)^2-\frac12$ 相当于一个常数（不考虑随机性时），而分母部分是连续泛函。&lt;/p>
+&lt;h3 id="dickey-fuller-单位根检验">Dickey-Fuller 单位根检验&lt;/h3>
+&lt;p>DF 检验统计量和经典的 t-statistic 形式相同：&lt;/p>
+$$
+\text{DF t-stat }= \frac{\hat{\alpha}-1}{\text{se}(\hat{\alpha})} = \frac{\sum y_{t-1}e_t/\sum y_{t-1}^2}{\hat{\sigma}_e\Big/\sqrt{\sum y_{t-1}^2}} = \frac{n^{-1}\sum y_{t-1}e_t}{\hat{\sigma}_e\sqrt{n^{-2}\sum y_{t-1}^2}} \to_d \frac{\int_0^1 W\,dW}{\bigl(\int_0^1 W^2\bigr)^{1/2}}
+$$&lt;p>可以看到，在原假设 $\alpha=1$ 下，DF 检验统计量并不服从正态分布，其分布没有解析表达式而只能通过模拟得到，是一个非对称分布。&lt;/p>
+&lt;h3 id="带截距项回归">带截距项回归&lt;/h3>
+&lt;p>设 $Y_t$ 是一个带截距项的单位根 $Y_t = \mu + \alpha Y_{t-1} + e_t$。根据 Frisch-Waugh-Lovell (FWL) 定理，$\hat{\alpha}$ 可由除均值序列 $Y_t^* = Y_t-\frac1n\sum_{\tau=1}^{n-1}Y_\tau$ 自回归得到，于是根据上一讲的内容，我们可以推出&lt;/p>
+$$
+n(\hat{\alpha} - 1) = \frac{n^{-1}\sum_{t=2}^nY_{t-1}^{*}e_t}{n^{-2}\sum_{t=2}^n(Y_{t-1}^{*})^2} \to_d \frac{\int_0^1W^{*}\,dW}{\int_0^1 (W^{*})^2}
+$$&lt;p>其中 $W^*(r) = W(r) - \int_0^1W$。&lt;/p>
+&lt;p>对应的 DF 检验统计量在原假设下的极限具有和无截距项时相似的表达式。&lt;/p>
+&lt;h3 id="带时间趋势项回归">带时间趋势项回归&lt;/h3>
+&lt;p>设 $Y_t = \mu + \beta t + \alpha Y_{t-1} + e_t$。依然由 FWL 定理，$\hat{\alpha}$ 可由除趋势序列 $Y_t^{**}$ 自回归得到，因此&lt;/p>
+$$
+n(\hat{\alpha} - 1) = \frac{n^{-1}\sum_{t=2}^nY_{t-1}^{**}e_t}{n^{-2}\sum_{t=2}^n(Y_{t-1}^{**})^2} \to_d \frac{\int_0^1W^{**}\,dW}{\int_0^1 (W^{**})^2}
+$$&lt;p>其中 $W^{**} = W - \bm{X}'\bigl(\int_0^1\bm{X}\bm{X}'\bigr)^{-1}\int_0^1\bm{X}W$。&lt;/p>
+&lt;h2 id="arp-的估计和单位根检验">AR(p) 的估计和单位根检验&lt;/h2>
+&lt;p>假设 $Y_t$ 是一个 AR($p$) 过程：$a(L)Y_t=e_t$，$e_t$ 仍为一个平稳遍历的鞅差分，方差 $\sigma_e^2$；$a(z)$ 是一个可逆的 $p$ 阶多项式。&lt;/p>
+&lt;p>假设 $a(z)$ 有一个单位根，换言之，$a(z) = (1-z)\tilde{a}(z)$，$\tilde{a}(z)$ 是一个可逆 $p-1$ 阶多项式。这意味着&lt;/p>
+$$
+\tilde{a}(L)\Delta Y_t = e_t \Rightarrow Y_t = Y_{t-1} + \tilde{b}(L)e_t
+$$&lt;p>即 $Y_t$ 本身就是一个随机游走。我们可通过 Beveridge-Nelson 分解得到其均值和趋势的极限分布，但现在我们关心的是估计和检验的问题。&lt;/p>
+&lt;p>首先注意到 $Y_t$ 可以写成&lt;/p>
+$$
+Y_t = a_1Y_{t-1} + \dots + a_pY_{t-p} + e_t
+$$&lt;p>其中必有 $a_1+\dots+a_p = 1$，因为单位根的存在。或者表述成更紧凑的形式&lt;/p>
+$$
+Y_t = \bm{a}'\bm{W}_{t-1} + e_t \quad\text{where }\bm{a} = (a_1,\dots,a_p)', \bm{W}_{t-1} = (Y_{t-1},\dots,Y_{t-p})'
+$$&lt;p>然后，我们使用矩阵做一点小小的变换：&lt;/p>
+$$
+Y_t = (\bm{B}\bm{a})'(\bm{B}')^{-1}\bm{W}_{t-1} + e_t = (\rho,\bm{\beta}')(Y_{t-1},\bm{X}'_{t-1})' + e_t
+$$&lt;p>其中变换矩阵 $\bm{B}$ 和其逆矩阵的转置（取 $p=3$）形如&lt;/p>
+$$
+\bm{B} =
+\begin{pmatrix}
+1 &amp; 1 &amp; 1 \\
+0 &amp; -1 &amp; -1 \\
+0 &amp; 0 &amp; -1
+\end{pmatrix}\quad
+(\bm{B}')^{-1} =
+\begin{pmatrix}
+1 &amp; 0 &amp; 0 \\
+1 &amp; -1 &amp; 0 \\
+0 &amp; 1 &amp; -1
+\end{pmatrix}
+$$&lt;p>因此 $\rho = a_1+\dots+a_p=1$，$\bm{X}_{t-1} = (\Delta Y_{t-1},\dots,\Delta Y_{t-p+1})$。我们实际上在将 $Y_t$ 写为&lt;/p>
+$$
+Y_t = \rho Y_{t-1} + \beta_1\Delta Y_{t-1} + \dots + \beta_{p-1}\Delta Y_{t-p+1} + e_t
+$$&lt;p>这方便我们做回归并直接检验 $\rho = 1$ 而不必做联合检验。这种手法在初级计量接触过。此外，上述变换将回归元分为单位根部分 $Y_{t-1}$ 和平稳部分 $\bm{X}_{t-1}$。&lt;/p>
+&lt;p>于是，我们为 $\hat{\rho}$ 和 $\hat{\bm{\beta}}$ 选择不同的 scaling：&lt;/p>
+$$
+\begin{pmatrix}
+n(\hat{\rho}-1) \\ \sqrt{n}(\hat{\bm{\beta}}-\bm{\beta})
+\end{pmatrix} =
+\begin{bmatrix}
+\displaystyle
+\frac{1}{n^2}\sum_{t=1+p}^nY_{t-1}^2 &amp; \displaystyle\frac{1}{n^{3/2}}\sum_{t=1+p}^nY_{t-1}\bm{X}_{t-1}' \\
+\displaystyle\frac{1}{n^{3/2}}\sum_{t=1+p}^n\bm{X}_{t-1}Y_{t-1} &amp; \displaystyle\frac{1}{n}\sum_{t=1+p}^n\bm{X}_{t-1}\bm{X}_{t-1}'
+\end{bmatrix}^{-1}
+\begin{bmatrix}
+\displaystyle
+\frac1n\sum_{t=1+p}^nY_{t-1}e_t \\
+\displaystyle
+\frac1{\sqrt{n}}\sum_{t=1+p}^n\bm{X}_{t-1}e_t
+\end{bmatrix}
+$$&lt;p>我们依次对各项进行分析。首先根据 Beveridge-Nelson 分解我们知道 $Y_n(r)\to_d B(r)$，单位时间方差 $\sigma_y^2=\sigma_e^2/a(1)^2$，因此&lt;/p>
+$$
+\frac{1}{n^2}\sum_{t=1+p}^nY_{t-1}^2 \to_d \frac{\sigma_e^2}{a(1)^2}\int_0^1W^2
+$$&lt;p>交叉项是一个 $p-1$ 维向量，我们分析其中一个分量，例如第一个分量&lt;/p>
+$$
+\frac{1}{n^{3/2}}\sum_{t=1+p}^nY_{t-1}\Delta Y_{t-1} = \frac{1}{\sqrt{n}}\frac1n\sum_{t=1+p}^n(Y_{t-1}^2-Y_{t-1}Y_{t-2}) = \frac{1}{\sqrt{n}} O_p(1) = o_p(1)
+$$&lt;p>类似可证明其他分量也是 $o_p(1)$。&lt;/p>
+&lt;p>$\bm{X}_{t-1}$ 是平稳遍历的，因此遍历定理表明 $n^{-1}\sum\bm{X}_{t-1}\bm{X}_{t-1}'\to_p\bm{Q}=\mathbb{E}(\bm{X}\bm{X}')$。此外，$\bm{X}_{t-1}e_t$ 是平稳弱相关的（但不再是鞅差分，因而无法使用鞅差分 CLT），采用对应的 CLT（课本定理 14.15），我们有&lt;/p>
+$$
+\frac1{\sqrt{n}}\sum_{t=1+p}^n\bm{X}_{t-1}e_t \to_d N(\bm{0},\bm{\Omega}) \quad\text{where } \bm{\Omega}=\mathbb{E}(\bm{X}_{t-1}\bm{X}_{t-1}'e_t^2)
+$$&lt;p>最后，$\frac1n\sum_{t=1+p}^nY_{t-1}e_t$ 的极限分布&lt;/p>
+$$
+\frac1n\sum_{t=1+p}^nY_{t-1}e_t \to_d \int_0^1B_y(r)\,B_e(r) = \sigma_y\sigma_e\int_0^1W\,dW
+$$&lt;p>注意 $B_y$ 和 $B_e$ 是完全相关的两个布朗运动，它们标准化后是同一个标准布朗运动。&lt;/p>
+&lt;p>综合以上分析，我们有&lt;/p>
+$$
+\begin{pmatrix}
+n(\hat{\rho}-1) \\ \sqrt{n}(\hat{\bm{\beta}}-\bm{\beta})
+\end{pmatrix}\to_d
+\begin{pmatrix}
+\sigma_y^2\int_0^1W^2 &amp; 0 \\ 0 &amp; \bm{Q}
+\end{pmatrix}^{-1}
+\begin{pmatrix}
+\sigma_y\sigma_e\int_0^1W\,dW \\ N(\bm{0},\bm{\Omega})
+\end{pmatrix} =
+\begin{pmatrix}
+a(1)\frac{\int_0^1W\,dW}{\int_0^1W^2} \\ N(\bm{0},\bm{Q}^{-1}\bm{\Omega}\bm{Q}^{-1})
+\end{pmatrix}
+$$&lt;p>可见，在渐进分布中，平稳部分和非平稳部分是不相干的。&lt;/p>
+&lt;p>若要恢复对原模型的估计，只需要做逆变换 $\bm{a} = \bm{B}^{-1}(\rho,\bm{\beta}')'$，我们有&lt;/p>
+$$
+\sqrt{n}(\hat{\bm{a}}-\bm{a}) = \sqrt{n}\bm{B}^{-1}
+\begin{pmatrix}
+n^{-1} &amp; 0 \\ 0 &amp; n^{-1/2}
+\end{pmatrix}
+\begin{pmatrix}
+n(\hat{\rho}-1) \\ \sqrt{n}(\hat{\bm{\beta}}-\bm{\beta})
+\end{pmatrix}\to_d
+\bm{B}^{-1}
+\begin{pmatrix}
+o_p(1) \\ N(\bm{0},\bm{Q}^{-1}\bm{\Omega}\bm{Q}^{-1})
+\end{pmatrix}
+$$&lt;p>令 $\bm{G} = \bm{B}^{-1}(:,2:p)$，则&lt;/p>
+$$
+\sqrt{n}(\hat{\bm{a}}-\bm{a}) \to_d N(\bm{0},\bm{G}\bm{Q}^{-1}\bm{\Omega}\bm{Q}^{-1}\bm{G}')
+$$&lt;p>可见单位根的存在完全不影响对原 AR 模型的估计和检验，我们可以假装看不见而采用经典的估计和检验方法。这本质上是因为单位根部分以 $O_p(n^{-1})$ 的速率收敛，在寻常的 $\sqrt{n}$ 缩放下依然是收敛的。&lt;/p>
+&lt;h3 id="augmented-dickey-fuller-检验">Augmented Dickey-Fuller 检验&lt;/h3>
+&lt;p>依照上述推导，ADF 检验 $H_0\colon\rho=1$ vs. $H_1\colon\rho&lt;1$，检验统计量及分布：&lt;/p>
+$$
+\text{ADF t-stat }= \frac{\hat{\rho}-1}{\text{se}(\hat{\rho})} = \to_d \frac{\int_0^1 W\,dW}{\bigl(\int_0^1 W^2\bigr)^{1/2}}
+$$&lt;p>此外，还有带截距项、带趋势项回归的检验，统计量和分布可比照 AR(1) 情形。&lt;/p>
+&lt;h2 id="参考">参考&lt;/h2>
+&lt;p>Hansen, Bruce (2022). &lt;em>Econometrics&lt;/em>. Princeton University Press.&lt;/p>
+&lt;p>Phillips, Peter C.B. (1987). &amp;ldquo;Time Series Regression with a Unit Root.&amp;rdquo; &lt;em>Econometrica&lt;/em>, 55(2), 277-301.&lt;/p>
+&lt;p>Phillips, Peter C.B. and Xiao, Zhijie (1998). &amp;ldquo;A Primer on Unit Root Testing.&amp;rdquo; &lt;em>Journal of Economic Surveys&lt;/em>, 12(5), 423-470.&lt;/p>
+&lt;p>Xiao, Zhijie (2014). &amp;ldquo;Unit Roots: A Selective Review of the Contributions of Peter C.B. Phillips.&amp;rdquo; &lt;em>Econometric Theory&lt;/em>, 30(4), 775-814.&lt;/p>
+&lt;br>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>$e_t$ 可以是平稳弱相关序列，这会导致后文极限分布表达式中包含 $e_t$ 的长期协方差，例如，见 Xiao (2014) 或文中 Note。&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>对于 $\alpha = -1$，我们有 $Y_t = Y_{t-2} + \Delta e_t$，令 $X_{t-j} = Y_{t-2j}$，则 $X_t$ 是一个随机游走。因此分析 $\alpha = 1$ 不失一般性。&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div>
+- https://gaxu.xyz/posts/ecmt-notes-ar-adf/ - 2023–2024 嘉树.</description></item><item><title>计量复习笔记 (VII)：单位根序列的均值和趋势</title><link>https://gaxu.xyz/posts/ecmt-notes-fclt-means-trends/</link><pubDate>Sat, 29 Apr 2023 13:28:11 +0800</pubDate><guid>https://gaxu.xyz/posts/ecmt-notes-fclt-means-trends/</guid><description>嘉树的世界 https://gaxu.xyz/posts/ecmt-notes-fclt-means-trends/ -&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
 &lt;div>&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/>&lt;/symbol>&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>&lt;/symbol>&lt;/svg>&lt;/div>&lt;div class="notice info" >
 &lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#info-notice">&lt;/use>&lt;/svg>&lt;/span>Info&lt;/p>&lt;p>本系列是2023年春季学期《应用计量经济学》期末复习笔记，仅涵盖时间序列部分，对应 Hansen (2022) &lt;em>Econometrics&lt;/em> 第14和16章的内容。&lt;/p>&lt;/div>
 &lt;h2 id="内容提要">内容提要&lt;/h2>
@@ -814,156 +997,4 @@ $$&lt;p>其中 $\bm{\Omega} = \bm{B}^{-1}(\sigma^2\bm{Q}+\lambda^2\bm{D})\bm{B}^
 &lt;li>Knight, Keith and Wenjiang Fu. 2000. &amp;ldquo;Asymptotics for Lasso-type Estimators.&amp;rdquo; &lt;em>The Annals of Statistics&lt;/em>, 28 (5): 1356-1378.&lt;/li>
 &lt;li>Hansen, Bruce. 2022. &lt;em>Econometrics&lt;/em>. Princeton University Press.&lt;/li>
 &lt;/ol>
-- https://gaxu.xyz/posts/ridge-regression/ - 2023–2024 嘉树.</description></item><item><title>Bayesian Persuasion</title><link>https://gaxu.xyz/posts/bayesian-persuasion/</link><pubDate>Wed, 08 Mar 2023 22:25:46 +0800</pubDate><guid>https://gaxu.xyz/posts/bayesian-persuasion/</guid><description>嘉树的世界 https://gaxu.xyz/posts/bayesian-persuasion/ -&lt;h2 id="内容提要">内容提要&lt;/h2>
-&lt;p>本文是基于 Kamenica and Gentzkow (2011) 的学习笔记，仅对微观课上覆盖的内容做了分析，目的只是通过考试，并不是对文章的全面剖析，但由于上课时一头雾水，为了彻底理解均衡的概念，有必要深入学习。以下分为两节，第一节直接介绍模型框架和重要推论，第二节给出解题的一般方法，此方法是几何直观的，依赖于第一节的分析。&lt;/p>
-&lt;p>相比于普通的信号博弈，Bayesian persuasion 中的信号发送者表现得既像 informed，又像 uninformed。其 informed 的地方在于，发送者所发送的信号是条件于 state 的；其 uninformed 的地方在于，发送者最大化事前的期望效用（无条件期望）。此外，信号结构并非是给定的，而全由发送者决定，即内生化了。&lt;/p>
-&lt;p>如前所示，由于信号发送者全权决定信号结构，他可以将信号设计得非常复杂，为简化分析，我们作出一个重要假设：发送者必须如实地告知接收者信号的实现结果。这基本上是在假设信号只有一层。&lt;/p>
-&lt;h2 id="一般模型框架">一般模型框架&lt;/h2>
-&lt;blockquote>
-&lt;p>信号发送者（简称「发送者」）所发送的具体内容是什么并不重要，重要的是，其发送的信号是一个（条件）分布，条件于 state，state 不同则分布不同，这种分布上的差异传递出了关于 state 的信息，迫使一个（贝叶斯式的）信号接收者（简称「接收者」）更新自己的信念，反而采取有利于发送者的行动。&lt;/p>
-&lt;/blockquote>
-&lt;h3 id="模型设定">模型设定&lt;/h3>
-&lt;p>基本的模型设定如下：&lt;/p>
-&lt;ul>
-&lt;li>State space $\Omega$ 是一个有限集；&lt;/li>
-&lt;li>接收者的 action space $A$ 是一个紧集；&lt;/li>
-&lt;li>发送者有定义在 $A\times\Omega$ 上的（关于 $a$）连续效用函数 $v(a,\omega)$；&lt;/li>
-&lt;li>接收者有定义在 $A\times\Omega$ 上的（关于 $a$）连续效用函数 $u(a,\omega)$；&lt;/li>
-&lt;li>发送者和接收者具有共同的关于 state 的先验信念 $\mu_0$，它是 $\Omega$ 上的概率测度，且严格为正（为了应用 Bayes 法则）；&lt;/li>
-&lt;li>一个信号 $\pi$ 是条件于 $\omega$ 的概率测度的集合：$\{\pi(\cdot|\omega)\}_{\omega\in\Omega}$，每个概率测度都定义在同一 realization space $S$ 上，$S$ 由发送者内生决定。&lt;/li>
-&lt;/ul>
-&lt;p>以概率论的视角来看，由于我们引入了条件概率 $\pi(s|\omega)$，$(\omega,s)$ 将有 $\Omega\times S$ 上的联合分布。&lt;/p>
-&lt;h3 id="timing">Timing&lt;/h3>
-&lt;p>博弈的 timing 如下：&lt;/p>
-&lt;ol>
-&lt;li>Nature 从分布 $\mu_0$ 中选择一个 state；&lt;/li>
-&lt;li>发送者选择一个信号；&lt;/li>
-&lt;li>接收者观察到信号结构和信号的 realization，选择一个行动。&lt;/li>
-&lt;/ol>
-&lt;p>整个 timing 和普通的信号模型本质上并无不同，本质上不同的还是信号结构的内生以及发送者 informed 的程度。&lt;/p>
-&lt;h3 id="均衡的定义">均衡的定义&lt;/h3>
-&lt;p>称 $(\pi,\hat{a}(\mu_s))$ 为一个&lt;strong>有利于发送者的子博弈完美均衡&lt;/strong>（sender-preferred subgame perfect equilibrium）若&lt;/p>
-&lt;ol>
-&lt;li>给定 $\pi$ 和每一个 realization $s$，接收者按照 Bayes 法则形成后验 $\mu(\omega|s)$，简记为 $\mu_s$，$\hat{a}(\mu_s)$ 最大化了接收者的后验期望效用：&lt;/li>
-&lt;/ol>
-$$\hat{a}(\mu_s)\in\arg\max_{a\in A}\mathbb{E}_{\mu_s}[u(a,\omega)]$$&lt;ol start="2">
-&lt;li>给定 $\hat{a}(\mu_s)$，$\pi$ 最大化了发送者事前期望效用（无条件期望）$\mathbb{E}[v(\hat{a}(\mu_s),\omega)]$。&lt;/li>
-&lt;/ol>
-&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
-&lt;div>&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/>&lt;/symbol>&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>&lt;/symbol>&lt;/svg>&lt;/div>&lt;div class="notice note" >
-&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>这里最重要的设定是发送者最大化&lt;strong>事前&lt;/strong>无条件期望，而不是像一般的发信号模型那样，每个 type 的发送者分别最大化自己的期望效用（即条件于 type）。但信号又条件于 state，此意义上讲，发送者似有多个信息集。这也是为什么我在本文开头说，此模型中的信号发送者表现得既像 informed，又像 uninformed。对此，我的解释是，发送者所设计的信号是 state-contingent，当 state 实现，这个信号就会坍缩为相应的子信号，也就是条件于 state 的一个分布。&lt;/p>&lt;/div>
-&lt;p>为方便起见，定义信号的&lt;strong>价值&lt;/strong>为上述无条件期望。定义信号的&lt;strong>增益&lt;/strong>为其价值和当接收者没有获得任何信息情况下 $v(a,\omega)$ 的期望（即 $\mathbb{E}[v(\hat{a}(\mu_0),\omega)]$）之间的差值（简单来说就是一个信号相比无信息信号能带来多大的期望效用增益）。如果增益严格为正，那么我们说接收者从 persuation 中获益（benefits from persuasion）。最优信号指的是实现了最大增益的信号。显然，在均衡中发送者会选择最优信号。&lt;/p>
-&lt;p>无条件期望可以根据迭代期望法则写为：$\mathbb{E}[\mathbb{E}[v(\hat{a}(\mu_s),\omega)|\omega]]$，其中内层的条件期望即是在 $\pi(s|\omega)$ 下取得，外层的期望则是在 $\mu_0(\omega)$ 下取得。直接求解最优的条件分布无疑是很困难的，主要有两个原因：第一，realization space 的选择是内生的而非给定的；第二，即便我们能缩小 realization space 的选择范围，也很难有一种直观上的方式求解 $\pi$。如果我们能转换思路，先求最优后验信念 $\mu(\omega|s)$，再恢复 $\pi$，事情将好办很多。这就是下一小节的内容。&lt;/p>
-&lt;h3 id="对发送者最优化问题的变换">对发送者最优化问题的变换&lt;/h3>
-&lt;blockquote>
-&lt;p>&lt;em>We can reexpress the problem of choosing an optimal signal as a search over distributions of posteriors subject to the constraint that the expected posterior is equal to the prior.&lt;/em>&lt;/p>
-&lt;/blockquote>
-&lt;p>简单来说，我们先条件于 $s$ 而不是 $\omega$，即&lt;/p>
-$$
-\mathbb{E}[v(\hat{a}(\mu_s),\omega)] = \mathbb{E}[\mathbb{E}[v(\hat{a}(\mu_s),\omega)|s]]
-$$&lt;p>内层的条件期望在后验信念 $\mu(\omega|s)$ 下取得。发送者寻找最优信号 $\pi(s|\omega)$ 的目标等价于寻找最优后验信念 $\mu(\omega|s)$ 和 $s$ 的无条件分布 $\tau(s)$，随后可由 Bayes 法则恢复信号：&lt;/p>
-$$
-\pi(s|\omega) = \mu(\omega|s)\tau(s)/\mu_0(\omega)
-$$&lt;p>这也必定保证了接收者按照 Bayes 法则更新自己的信念。当然，为保证概率和为 1，即 $\sum_s\pi(s|\omega) = 1$，我们要求 $\mu(\omega|s)$ 和 $\tau(s)$ 满足 $\int_s \mu(\omega|s)\thinspace d\tau(s) = \mu_0(\omega)$，这在文中被称为 &lt;em>&lt;strong>Bayes plausibility&lt;/strong>&lt;/em>。&lt;/p>
-&lt;p>不过，我们希望更进一步地简化问题，可能有一些 $s$，它们会导致相同的后验信念，这将意味着条件期望 $\mathbb{E}[v(\hat{a}(\mu_s),\omega)|s]$ 在这些 $s$ 间也是相同的，我们可以将这些 $s$ 视为同一类。这样，不同类可由它们导致的后验 $\mu$ 进行区分，从而得到 $\mu$ 的一个集合，我们再在此上定义概率空间。于是 $(\omega,s)$ 联合分布变成 $(\omega,\mu)$ 联合分布。我们仍用 $\tau$ 表示 $\mu$ 的无条件分布（或边缘分布）。具体而言，我们有&lt;/p>
-$$\tau(\mu)=\sum_{\{s\colon\mu_s=\mu\}}\tau(s)=\sum_{\{s\colon\mu_s=\mu\}}\sum_{\omega}\pi(s|\omega)\mu_0(\omega)$$&lt;p>当然，如果 $\mu_s$ 和 $s$ 一一对应的话，我们只是换了一下记号而已。&lt;/p>
-&lt;p>这种整合并未改变无条件期望，即&lt;/p>
-$$
-\mathbb{E}[v(\hat{a}(\mu),\omega)] = \mathbb{E}[\mathbb{E}[v(\hat{a}(\mu),\omega)|\mu]] = \mathbb{E}_\tau[\mathbb{E}_\mu[v(\hat{a}(\mu),\omega)]]
-$$&lt;p>我们将内层的条件期望记作 $\hat{v}(\mu)$，因此上述无条件期望就是 $\mathbb{E}_{\tau}\hat{v}(\mu)$。Bayes plausibility 要求 $\int_{\mu}\mu\thinspace d\tau(\mu) = \mu_0$。&lt;/p>
-&lt;div class="notice note" >
-&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>以上的变换本质上是在压缩 realization space，似乎不是很有必要。我们可以假设每个 state 引致的后验都是不同的，即假设 $\mu_s$ 和 $s$ 一一对应。&lt;/p>&lt;/div>
-&lt;p>以上的分析已经足够我们理解本文的核心论断，即下一小节的 &lt;a href='#thm%3abestsig'>推论&lt;/a>，只是为了严谨，尚需处理一些细节问题。&lt;/p>
-&lt;h3 id="技术补充">技术补充$^*$&lt;/h3>
-&lt;p>现在有两个问题，第一，发送者可以选择十分复杂的信号结构，换言之，信号的 realization space 可能大于接收者的 action space。这种情况实际上可以得到简化，我们最终只需考虑和 action space 形成一一对应的 realization space。我们将 realization space 的势不大于 action space 的势的那些信号称为&lt;strong>简单信号&lt;/strong>（straightforward signal&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>）。第二个问题是，给定满足 Bayes plausibility 的 $\mu$ 和 $\tau$，其背后是否一定有 well-defined 之信号 $\pi$？尽管 Bayes 法则能用于离散和连续情况，但我们希望对于一般的情况进行证明。&lt;/p>
-&lt;p>我们可以证明如下命题：&lt;/p>
-&lt;div class="thm">
-&lt;p id="thm:equiv" class="thm-title thm-proposition">Proposition 1.&lt;/p>
-&lt;div class="thm-inner thm-proposition">
-&lt;p>以下表述等价：&lt;/p>
-&lt;ol>
-&lt;li>存在某个信号，其价值为 $v^*$；&lt;/li>
-&lt;li>存在简单信号，其价值为 $v^*$;&lt;/li>
-&lt;li>存在 Bayes-plausible 分布 $\tau$，使得 $\mathbb{E}_{\tau}\hat{v}(\mu) = v^*$。&lt;/li>
-&lt;/ol>
-&lt;/div>
-&lt;/div>
-&lt;div class="thm">
-&lt;button type="button" class="collapsible">&lt;div id="thm-proof-1" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
-&lt;div class="proof-content">
-&lt;div class="thm-inner-proof">
-&lt;p>根据定义，易知命题 2 可导出命题 1 和 3。现在证明命题 1 可导出命题 2。对于一个信号 $\pi$，假设其价值为 $v^*$，令 $S^a = \{s\colon\hat{a}(\mu_s)=a\}$，也就是说，我们把使得接收者的最优行动为 $a$ 的信号 realization 都收集起来构成一个集合。我们可以据此构造一个新的信号：其 realization space 和接收者的 action space一一对应，即 $S^\prime \leftrightarrow A$，定义 $\pi^\prime(\alpha|\omega) = \sum_{s\in S^a}\pi(s|\omega)$。简单来说，我们对原来的 realization space 按照其引致的 action 做了一个分割，然后将每个子集上的概率加总得到一个新的概率，新的 realization space 则和 action space 构成一一映射（$\alpha$ 和 $a$）。因为 $a$ 对每个 $s\in S^a$ 都是接收者的最优行动，对于 $\alpha\in S^\prime$，$a$ 也必定是最优行动。如果要严格证明这一点，只需注意到 $\mu(\omega|\alpha) \propto \pi(\alpha|\omega)\mu_0(\omega) = \sum_{s\in S^a}\pi(s|\omega)\mu_0(\omega)$，而 $\mathbb{E}_{\mu_s}[u(a,\omega)] \propto \sum_{\omega\in\Omega}\pi(s|\omega)\mu_0(\omega)u(a,\omega)$。这种构造意味着，条件于 $\omega$，最优行动在 $\pi^\prime$ 下的分布和在 $\pi$ 下的分布相同；具体而言，在 $\pi^\prime$ 下，最优行动取 $a$ 的条件概率为 $\pi(\alpha|\omega)$，在 $\pi$ 下，取 $a$ 的条件概率为 $\sum_{s\in S^a}\pi(s|\omega) = \pi(\alpha|\omega)$。这意味着 $\mathbb{E}[v(\hat{a}_s,\omega)|\omega] = \mathbb{E}[v(\hat{a}_\alpha,\omega)|\omega]$，从而其无条件期望相等，也就是两种信号的价值都为 $v^*$。&lt;/p>
-&lt;p>现在证明命题 3 可导出命题 1。注意，我们不能直接根据 $\tau$ 来构造信号，因为 $\tau$ 的支撑集可能是无限集，从而构造的信号为零概率（似乎可以将 $\tau$ 视为概率密度来构造信号的密度，不过这并不能涵盖任意分布）。由于 $\Omega$ 是有限集（假设有 $d$ 个元素），这意味着 $\hat{v}(\mu)$ 可视作 $(\mu_s(\omega_1),\dots,\mu_s(\omega_{d-1}))$ 的函数。于是，我们得到了 $\mathbb{R}^d$ 空间内的一系列点：$(\mu_s(\omega_1),\dots,\mu_s(\omega_{d-1}),\hat{v})\in\mathbb{R}^d$。这样一来，$\mathbb{E}_{\tau}\hat{v}(\mu) = v^*$ 也是 $\mathbb{R}^d$ 空间内的一点：$(\mu_0(\omega_1),\dots,\mu_0(\omega_{d-1}),v^*)$，更重要的是，它位于前述那些点构成的 &lt;a href="https://en.wikipedia.org/wiki/Convex_hull">凸包络集（或凸包）&lt;/a> 之内。因此，应用 &lt;a href="https://en.wikipedia.org/wiki/Carath%C3%A9odory%27s_theorem_%28convex_hull%29">Carathéodory 定理&lt;/a>，它一定可以表述为该凸包络集内&lt;strong>有限&lt;/strong>个点的凸组合，换言之，存在一个支撑集为&lt;strong>有限&lt;/strong>集的 Bayes-plausible 分布 $\tau^*$，使得 $\mathbb{E}_{\tau^*}\hat{v}(\mu) = v^*$。据此，我们可以定义信号的 realization space 为 $\{s\colon\mu_s\in\text{Supp}(\tau^*)\}$，进而定义信号 $\pi(s|\omega) = \mu(\omega|s)\tau^*(\mu_s)/\mu_0(\omega)$，这个信号将引致 $\tau^*$，从而具有价值 $v^*$。&lt;/p>
-&lt;/div>
-&lt;div class="thm-end-proof">
-&lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-1">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
-&lt;/div>
-&lt;/div>
-&lt;/div>
-&lt;p>从以上定理我们可以绕过对最优信号的直接求解，而是先求 $\tau$ 和相应的支撑集，再按照 Bayes 法则恢复出 $\pi$，这已经被证明一定可以做到。我们立即有如下推论：&lt;/p>
-&lt;div class="thm">
-&lt;p id="thm:bestsig" class="thm-title thm-corollary">Corollary 2.&lt;/p>
-&lt;div class="thm-inner thm-corollary">
-&lt;p>发送者可以从 persuation 中获益当且仅当存在一个 Bayes-plausible 分布 $\tau$ 使得&lt;/p>
-$$\mathbb{E}_{\tau}\hat{v}(\mu) > \hat{v}(\mu_0)$$&lt;p>此外，最优信号的价值就是&lt;/p>
-$$\max_{\tau}\ \mathbb{E}_{\tau}\hat{v}(\mu) \quad \text{s.t.}\int\mu\thinspace d\tau(\mu) = \mu_0$$
-&lt;/div>
-&lt;/div>
-&lt;div class="thm">
-&lt;button type="button" class="collapsible">&lt;div id="thm-proof-2" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
-&lt;div class="proof-content">
-&lt;div class="thm-inner-proof">
-显然，略。
-&lt;/div>
-&lt;div class="thm-end-proof">
-&lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-2">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
-&lt;/div>
-&lt;/div>
-&lt;/div>
-&lt;p>值得一提，根据 &lt;a href='#thm%3aequiv'>命题 1&lt;/a>，我们只需关注 realization space 和 action space 等势的情况。&lt;/p>
-&lt;h2 id="一般问题中的求解方式">一般问题中的求解方式&lt;/h2>
-&lt;p>在一般问题中，我们如何求解最优信号及其价值呢？事实上，&lt;a href='#thm%3abestsig'>上述推论&lt;/a> 意味着我们可以有一种几何上非常直观的方式。&lt;/p>
-&lt;p>假设 action space 有两个元素，那么我们只用考虑 realization space 有两个元素的情况（假设 $s_1$ 和 $s_2$）。因此，$\pi$ 和 $\tau$ 都是二项分布（再次回忆，$\pi$ 是 $s$ 的条件分布，而 $\tau$ 实质上是 $s$ 的无条件分布）。此外，假设 state space 也只有两个元素，这样，我们就可以用一个维度代表后验，例如，$\mu(\omega_1|s)$，不妨简记为 $\mu_s$。按照 &lt;a href='#thm%3abestsig'>推论&lt;/a>，信号 $\pi$ 的价值就是在 $\mu$-$\hat{v}(\mu)$ 图像上的 $(\mu_{s_1},\hat{v}(\mu_{s_1}))$ 和 $(\mu_{s_2},\hat{v}(\mu_{s_2}))$ 两点和直线 $\mu=\mu_0$ 交点的纵坐标；交点就是这两点的加权中点，权重就是 $\tau$。需要注意，当两点连线和 $\mu=\mu_0$ 无交点时，说明以这两点为支撑集的任何 $\tau$ 都不是 Bayes-plausible，也就无法实现增益；当然，给定先验，我们总能找到 Bayes-plausible 分布（在 $\mu=\mu_0$ 两边取点即可）。见下图中 Panel B。&lt;/p>
-&lt;figure id = "fig:conc" align="" role="group" aria-describedby="caption-1d1df851cd07aac8d754ff14a72c4cf1">
-&lt;a href="https://gaxu.xyz/posts/bayesian-persuasion/images/concave-closure.png" class="img-link">
-&lt;img src="https://gaxu.xyz/posts/bayesian-persuasion/images/concave-closure.png" style="width: 80%;">
-&lt;/a>
-&lt;figcaption id="caption-1d1df851cd07aac8d754ff14a72c4cf1">
-Concave Closure (Source: Kamenica and Gentzkow, 2011, Fig.2)
-&lt;/figcaption>
-&lt;/figure>
-&lt;p>易知两点连线总是在 $\hat{v}(\mu)$ 图像的凸包之内，因此我们取凸包的边界函数，称为 $\hat{v}$ 的&lt;strong>凹闭包&lt;/strong>（concave closure）：&lt;/p>
-$$V(\mu) \equiv \sup\{y\colon (\mu,y)\in\text{conv}(\hat{v})\}$$&lt;p>这里 $\text{conv}(\hat{v})$ 表示 $\hat{v}$ 图像的凸包络集。$V(\mu)$ 必定是凹函数（因而称为凹闭包），并且是处处大于等于 $\hat{v}$ 的最小凹函数；它衡量了，当 state 的先验为 $\mu$ 时，发送者所能实现的最大价值，如 &lt;a href='#fig%3aconc'>上图&lt;/a> Panel C 所示。&lt;/p>
-&lt;div class="notice note" >
-&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>即便 action space 是无限集，我们也许只需要两个 realization，前提是它们与 $\mu = \mu_0$ 的交点位于 $V(\mu)$ 图像上。&lt;/p>&lt;/div>
-&lt;h3 id="一个例子">一个例子&lt;/h3>
-&lt;p>现在用一个简单例子阐述求解过程。假设在一例案件中，检方（发送者）想要说服法官（接收者）对被告作出有罪判决，具体设定如下：&lt;/p>
-&lt;ul>
-&lt;li>有两种状态：被告是 &lt;em>guilty&lt;/em> 或者 &lt;em>innocent&lt;/em>，先验信念 $\mu_0(\textit{guilty}) = 0.3$；&lt;/li>
-&lt;li>法官（接收者）有两种行动：&lt;em>acquit&lt;/em> 或 &lt;em>convict&lt;/em>；&lt;/li>
-&lt;li>法官若作出正确判决，则法官效用为 1，否则为 0；&lt;/li>
-&lt;li>法官若 &lt;em>convict&lt;/em>，则检方效用为 1，否则为 0。&lt;/li>
-&lt;/ul>
-&lt;p>试问，法官应该如何设定信号以最大化自己的效用？&lt;/p>
-&lt;p>首先，我们求法官的最优行动 $\hat{a}(\mu)$，这里 $\mu$ 表示关于被告是 &lt;em>guilty&lt;/em> 的信念。显然，当 $\mu &lt; 0.5$ 时，法官最优行动是 &lt;em>acquit&lt;/em>，当 $\mu \geq 0.5$ 时是 &lt;em>convict&lt;/em>。因此，检方的后验效用就是：当 $\mu &lt; 0.5$，$\hat{v}(\mu) = 0$；当 $\mu \geq 0.5$，$\hat{v}(\mu) = 1$，如 &lt;a href='#fig%3aconc'>上图&lt;/a> 所示。我们可以在其凹闭包上找到对应于先验 $\mu_0 = 0.3$ 的最大信号价值 $V(0.3) = 0.6$。$\tau$ 的支撑集显然是 $\{\mu_{s_1} = 0,\mu_{s_2}=0.5\}$。 随后根据 Bayes plausibility 确定 $\tau$：&lt;/p>
-$$0\cdot\tau(s_1)+0.5\cdot\tau(s_2)=0.3 \Rightarrow \tau(s_1)=0.4,\tau(s_2)=0.6$$&lt;p>最后，恢复最优信号：&lt;/p>
-$$
-\begin{aligned}
-&amp;\pi(s_1|\textit{guilty})=\mu(\textit{guilty}\thinspace|s_1)\tau(s_1)/\mu_0(\textit{guilty}) = 0 \\
-&amp;\pi(s_1|\textit{innocent})=\mu(\textit{innocent}\thinspace|s_1)\tau(s_1)/\mu_0(\textit{innocent}) = 4/7
-\end{aligned}
-$$&lt;p>简单来说，分三步走：第一，确定 $\tau$ 的支撑集；第二，利用 Bayes plausibility 确定 $\tau$；第三，根据 Bayes 法则恢复最优信号。&lt;/p>
-&lt;h2 id="参考">参考&lt;/h2>
-&lt;ul>
-&lt;li>Kamenica, Emir, and Matthew Gentzkow. 2011. &amp;ldquo;Bayesian Persuasion.&amp;rdquo; &lt;em>American Economic Review&lt;/em>, 101 (6): 2590-2615.&lt;/li>
-&lt;/ul>
-&lt;br>
-&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>原文定义 $S\subseteq A$ 的那些信号为简单信号，这里采用更具一般性的定义。&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div>
-- https://gaxu.xyz/posts/bayesian-persuasion/ - 2023–2024 嘉树.</description></item></channel></rss>
+- https://gaxu.xyz/posts/ridge-regression/ - 2023–2024 嘉树.</description></item></channel></rss>

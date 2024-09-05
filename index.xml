@@ -1,4 +1,242 @@
-<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2024 嘉树.</copyright><lastBuildDate>Tue, 27 Aug 2024 19:29:37 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>在 Mac 上管理多个 GitHub 账号</title><link>https://gaxu.xyz/posts/multiple-gh-accounts/</link><pubDate>Tue, 27 Aug 2024 19:29:37 +0800</pubDate><guid>https://gaxu.xyz/posts/multiple-gh-accounts/</guid><description>嘉树的世界 https://gaxu.xyz/posts/multiple-gh-accounts/ -&lt;h2 id="动机">动机&lt;/h2>
+<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2024 嘉树.</copyright><lastBuildDate>Wed, 04 Sep 2024 13:33:52 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>LASSO 的收敛</title><link>https://gaxu.xyz/posts/lasso/</link><pubDate>Wed, 04 Sep 2024 13:33:52 +0800</pubDate><guid>https://gaxu.xyz/posts/lasso/</guid><description>嘉树的世界 https://gaxu.xyz/posts/lasso/ -&lt;h2 id="线性模型">线性模型&lt;/h2>
+&lt;p>通篇考虑线性模型
+&lt;/p>
+$$
+\bm{Y} = \bm{X}\bm{\beta}^* + \bm{\varepsilon}
+$$&lt;p>
+其中 $\bm{\varepsilon}\in\text{subG}_n(\sigma^2)$，这表示对任意 $\bm{v}\in\mathbb{R}^n$ 且 $\|\bm{v}\|_2\leq1$，$\bm{v}'\bm{\varepsilon}\in\text{subG}(\sigma^2)$。此外，假设 $\bm{X}$ 是固定的。&lt;/p>
+&lt;h2 id="损失函数的收敛">损失函数的收敛&lt;/h2>
+&lt;p>LASSO 估计量就是
+&lt;/p>
+$$
+\hat{\bm{\beta}} := \arg\min_{\bm{\beta}\in\mathbb{R}^p} \frac{1}{2n}\|\bm{Y}-\bm{X}\bm{\beta}\|_2^2 + \lambda_n\|\bm{\beta}\|_1
+$$&lt;p>
+$\ell_1$ 范数作为惩罚项使得解具有稀疏性 (sparsity)。&lt;/p>
+&lt;p>记事件 $A := \{\lambda_n \geq \frac1n\|\bm{X}'\bm{\varepsilon}\|_{\infty}\}$。&lt;/p>
+&lt;div class="thm">
+&lt;p id="thm:consistency" class="thm-title thm-theorem">Theorem 1.&lt;/p>
+&lt;div class="thm-inner thm-theorem">
+&lt;p>若事件 $A$ 成立，则
+&lt;/p>
+$$
+\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \leq 4\|\bm{\beta}^*\|_1\lambda_n
+$$
+&lt;/div>
+&lt;/div>
+&lt;div class="thm">
+&lt;button type="button" class="collapsible">&lt;div id="thm-proof-1" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
+&lt;div class="proof-content">
+&lt;div class="thm-inner-proof">
+&lt;p>首先，我们证明如下基本不等式：
+&lt;/p>
+$$
+\frac{1}{2n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \leq \frac{1}{n}\bm{\varepsilon}'\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*) + \lambda_n(\|\bm{\beta}^*\|_1-\|\hat{\bm{\beta}}\|_1)
+$$&lt;p>
+此不等式事实上直接来自于
+&lt;/p>
+$$
+\frac{1}{2n}\|\bm{Y}-\bm{X}\hat{\bm{\beta}}\|_2^2 + \lambda_n\|\hat{\bm{\beta}}\|_1 \leq \frac{1}{2n}\|\bm{Y}-\bm{X}\bm{\beta}^*\|_2^2 + \lambda_n\|\bm{\beta}^*\|_1
+$$&lt;p>
+只需将 $\bm{Y} = \bm{X}\bm{\beta}^* + \bm{\varepsilon}$ 代入即可得到。&lt;/p>
+&lt;p>以下给出 $\frac{1}{2n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2$ 的界：
+&lt;/p>
+$$
+\begin{align*}
+\frac{1}{2n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 &amp;\leq \frac{1}{n}\bm{\varepsilon}'\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*) + \lambda_n(\|\bm{\beta}^*\|_1-\|\hat{\bm{\beta}}\|_1) \\
+&amp;\leq \frac{1}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty\|\hat{\bm{\beta}}-\bm{\beta}^*\|_1 + \lambda_n(\|\bm{\beta}^*\|_1-\|\hat{\bm{\beta}}\|_1) \\
+&amp;\leq \frac{1}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty\|(\|\hat{\bm{\beta}}\|_1+\|\bm{\beta}\|_1) + \lambda_n(\|\bm{\beta}^*\|_1-\|\hat{\bm{\beta}}\|_1) \\
+&amp;= \|\hat{\bm{\beta}}\|_1\biggl(\frac{1}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty-\lambda_n\biggr) + \|\bm{\beta}^*\|_1\biggl(\frac{1}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty+\lambda_n\biggr) \\
+&amp;\leq 2\lambda_n\|\bm{\beta}^*\|_1
+\end{align*}
+$$&lt;p>
+第二行使用了 Hölder 不等式，第三行使用了三角不等式，最后一行是因为事件 $A$ 成立。&lt;/p>
+&lt;/div>
+&lt;div class="thm-end-proof">
+&lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-1">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;p>关于此定理有几点需要注意：&lt;/p>
+&lt;ol>
+&lt;li>不等式所给出的界取决于调谐参数 $\lambda_n$，而它又取决于样本量 $n$。&lt;/li>
+&lt;li>此不等式在事件 $A$ 上成立，因此如果事件 $A$ 有很大概率发生，则此不等式也有很大概率发生（不低于事件 $A$ 发生的概率）。&lt;/li>
+&lt;/ol>
+&lt;h2 id="lambda_n-的选取和-lasso-的慢率">$\lambda_n$ 的选取和 LASSO 的慢率&lt;/h2>
+&lt;p>我们当然希望 $\lambda_n$ 越小越好，但是我们又要保证事件 $A$ 发生的概率。为此，我们施加一个额外的假设。&lt;/p>
+&lt;div class="thm">
+&lt;p id="assump:max" class="thm-title thm-assumption">Assumption 2.&lt;/p>
+&lt;div class="thm-inner thm-assumption">
+设 $\max_j\|\bm{X}_j\|\leq\sqrt{Cn}$ 对某个 $C>0$ 成立，这里 $\bm{X}_j$ 是 $\bm{X}$ 的第 $j$ 列。
+&lt;/div>
+&lt;/div>
+&lt;p>在这个假设下，对任意 $t>0$ 我们有
+&lt;/p>
+$$
+\begin{align*}
+\mathbb{P}\biggl\{\frac{1}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty\geq t\biggr\} &amp;= \mathbb{P}\biggl\{\frac{1}{n}\max_j|\bm{X}_j'\bm{\varepsilon}|\geq t\biggr\} \\
+&amp;\leq \sum_j \mathbb{P}\biggl\{\frac{1}{n}|\bm{X}_j'\bm{\varepsilon}|\geq t\biggr\} \\
+&amp;\leq \sum_j \mathbb{P}\biggl\{\frac{|\bm{X}_j'\bm{\varepsilon}|}{n\|\bm{X}_j\|_2}\geq\frac{t}{\|\bm{X}_j\|_2}\biggr\} \\
+&amp;\leq 2p\exp\biggl(-\frac{t^2n}{2\sigma^2C}\biggr)
+\end{align*}
+$$&lt;p>
+最后一行利用了 sub-Gaussian 的性质：如果 $X\in\text{subG}(\sigma^2)$，则对任意 $t>0$ 有
+&lt;/p>
+$$
+\mathbb{P}\{X\geq t\} \leq \exp\biggl(-\frac{t^2}{2\sigma^2}\biggr)
+$$&lt;p>给定一个 $\delta>0$，我们选择
+&lt;/p>
+$$
+t = \sqrt{\frac{2\sigma^2C}{n}[\log(1/\sigma)+\log(2p)]}
+$$&lt;p>
+那么以上概率就会
+&lt;/p>
+$$
+\mathbb{P}\biggl\{\frac{1}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty\geq t\biggr\} \leq 2p\exp\biggl(-\frac{t^2n}{2\sigma^2C}\biggr) \leq \delta
+$$&lt;p>也就是说，我们取 $\lambda_n$ 为上述 $t$ 值，那么事件 $A$ 发生的概率就至少是 $1-\delta$。我们有以下推论。&lt;/p>
+&lt;div class="thm">
+&lt;p id="coro:slowrate" class="thm-title thm-corollary">Corollary 3 (Slow rate for the LASSO).&lt;/p>
+&lt;div class="thm-inner thm-corollary">
+&lt;p>至少以概率 $1-\delta$，我们有
+&lt;/p>
+$$
+\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \leq 4\|\bm{\beta}^*\|_1\sigma\sqrt{\frac{2C}{n}[\log(1/\sigma)+\log(2p)]}
+$$
+&lt;/div>
+&lt;/div>
+&lt;p>为什么叫 slow rate？在最优子集选择 (best subset selection) 中，我们可以推出 (reference?)
+&lt;/p>
+$$
+\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \lesssim \|\bm{\beta}\|_0\sigma^2\frac{\log n+\log p}{n}
+$$&lt;p>
+而在上述推论中，如果我们选择 $\delta=1/n$，则会得到
+&lt;/p>
+$$
+\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \lesssim \|\bm{\beta}^*\|_1\sigma\sqrt{\frac{\log n+\log p}{n}}
+$$&lt;p>
+这多了一个根号，因此比最优子集选择的收敛率要慢。&lt;/p>
+&lt;h2 id="lasso-的快率">LASSO 的快率&lt;/h2>
+&lt;p>我们是否能改进前述收敛速率呢？注意到如果 $\mu_{\min}(\bm{X}'\bm{X})\geq\gamma_n>0$，则有
+&lt;/p>
+$$
+\|\hat{\bm{\beta}}-\bm{\beta}^*\|_2 \leq \frac{1}{\gamma_n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2
+$$&lt;p>
+而当 $p>n$ 时，$\mu_{\min}(\bm{X}'\bm{X})=0$，此时我们无法得到 $\|\hat{\bm{\beta}}-\bm{\beta}^*\|_2$ 的收敛。我们需要对 $\bm{X}$ 施加额外的假设，有很多种方式，但基本思想就一个：让 $\gamma_n$ 和零保持距离。&lt;/p>
+&lt;p>以下介绍一种广泛使用的假设：受限特征值条件 (restricted eigenvalue condition, RE)。&lt;/p>
+&lt;div class="thm">
+&lt;p id="def:re" class="thm-title thm-definition">Definition 4 (Restricted Eigenvalue).&lt;/p>
+&lt;div class="thm-inner thm-definition">
+&lt;p>给定 $\alpha\geq1$ 和 $S\subseteq\{1,\dots,p\}$ 且 $S\neq\emptyset$，令
+&lt;/p>
+$$
+\mathcal{C}_\alpha(S) = \{\bm{\Delta}\in\mathbb{R}^p\colon\|\bm{\Delta}_{S^\complement}\|_1\leq\alpha\|\bm{\Delta}_S\|_1\}
+$$&lt;p>
+其中 $S^\complement = \{1,\dots,p\}\backslash S$，$\bm{\Delta}_{S}=(\Delta_j)_{j\in S}$。&lt;/p>
+&lt;p>如果存在某个 $\alpha\geq1$ 和 $\kappa>0$，对任意的 $\bm{\Delta}\in\mathcal{C}_\alpha(S)$ 都有
+&lt;/p>
+$$
+\frac{1}{n}\|\bm{X}\bm{\Delta}\|_2^2 \geq \kappa\|\bm{\Delta}\|_2^2
+$$&lt;p>
+则称 $n\times p$ 的矩阵 $\bm{X}$ 满足 $\text{RE}(\alpha,\kappa)$ 条件。&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;p>下面我们花一些篇幅来从直觉上理解这一条件。&lt;/p>
+&lt;p>取 $\bm{\Delta}=\hat{\bm{\beta}}-\bm{\beta}^*$。前面我们已经证明了 $\frac1n\|\bm{X}\bm{\Delta}\|_2^2$ 能够以大概率取很小的值，但这不意味着 $\|\bm{\Delta}\|_2^2$ 也可以很小，因为函数 $\bm{\Delta}\mapsto\frac1n\|\bm{X}\bm{\Delta}\|_2^2$ 在 $\hat{\bm{\beta}}-\bm{\beta}^*$ 附近可能很平坦，也就是说，在较宽的一个范围内我们都能得到较小的损失函数值。&lt;/p>
+&lt;p>如果 $\mu_{\min}(\bm{X}'\bm{X})/n$ 和零保持一定距离，譬如
+&lt;/p>
+$$
+\kappa\|\bm{\Delta}\|_2^2 \leq \frac{1}{n}\|\bm{X}\bm{\Delta}\|_2^2
+$$&lt;p>
+这将意味着 $\bm{\Delta}\mapsto\frac1n\|\bm{X}\bm{\Delta}\|_2^2$ 有足够的曲率（不是平坦的曲线）。我们只需要这个条件对某些 $\bm{\Delta}$ 成立，即 RE 所表述的那样。这些 $\bm{\Delta}$ 被集合 $\mathcal{C}_\alpha(S)$ 所刻画，它是这样一个集合：指标集 $S$ 所对应的那些系数要充分大于非 $S$ 对应的系数。这直觉上规定了 $S$ 和 $S^\complement$ 对应的系数值能被区分开的一类系数向量。&lt;/p>
+&lt;p>令 $S = \{\beta_j^*\colon\beta_j^*\neq0\}$ 是非零系数的集合，$s=|S|$ 是非零系数的个数，或者称之为&lt;em>稀疏性&lt;/em>。在 RE 条件下，有如下定理。&lt;/p>
+&lt;div class="thm">
+&lt;p id="thm:fast" class="thm-title thm-theorem">Theorem 5 (Fast rate of the LASSO).&lt;/p>
+&lt;div class="thm-inner thm-theorem">
+&lt;p>设存在某个 $\kappa>0$ 使得 $\bm{X}$ 满足 $\text{RE}(3,\kappa)$ 条件。若
+&lt;/p>
+$$
+\lambda_n \geq \frac{2}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty
+$$&lt;p>
+则 LASSO 估计量 $\hat{\beta}$ 满足
+&lt;/p>
+$$
+\begin{align*}
+\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 &amp;\leq \frac{9s\lambda_n^2}{\kappa} \\
+\|\hat{\bm{\beta}}-\bm{\beta}^*\|_2 &amp;\leq \frac{3\sqrt{s}\lambda_n}{\kappa}
+\end{align*}
+$$
+&lt;/div>
+&lt;/div>
+&lt;div class="thm">
+&lt;button type="button" class="collapsible">&lt;div id="thm-proof-2" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
+&lt;div class="proof-content">
+&lt;div class="thm-inner-proof">
+&lt;p>首先证明，当 $\lambda_n$ 满足上述定理的条件时，有 $\hat{\bm{\Delta}}=\hat{\bm{\beta}}-\bm{\beta}^*\in\mathcal{C}_3(S)$。&lt;/p>
+&lt;p>因 $\hat{\bm{\beta}}$ 是最小化问题的解，有
+&lt;/p>
+$$
+\frac{1}{2n}\|\bm{Y}-\bm{X}\hat{\bm{\beta}}\|_2^2 + \lambda_n\|\hat{\bm{\beta}}\|_1 \leq \frac{1}{2n}\|\bm{Y}-\bm{X}\bm{\beta}^*\|_2^2 + \lambda_n\|\bm{\beta}^*\|_1
+$$&lt;p>
+代入 $\bm{Y} = \bm{X}\bm{\beta}^* + \bm{\varepsilon}$，整理得到
+&lt;/p>
+$$
+0 \leq \frac{1}{2n}\|\bm{X}\hat{\bm{\Delta}}\|_2^2 \leq \frac1n\bm{\varepsilon}'\bm{X}\hat{\bm{\Delta}} + \lambda_n(\|\bm{\beta}^*\|_1-\|\hat{\bm{\beta}}\|_1)
+$$&lt;p>
+根据 $S$ 的定义，$\|\bm{\beta}^*\|_1 = \|\bm{\beta}_S^*\|_1$。另外，可将 $\|\hat{\bm{\beta}}\|_1$ 写为
+&lt;/p>
+$$
+\|\hat{\bm{\beta}}\|_1 = \|\hat{\bm{\beta}}_S\|_1 + \|\hat{\bm{\beta}}_{S^\complement}\|_1 = \|\bm{\beta}_S^*+\hat{\bm{\Delta}}_S\|_1 + \|\hat{\bm{\Delta}}_{S^\complement}\|_1
+$$&lt;p>
+带入到前面的不等式得到
+&lt;/p>
+$$
+\begin{align*}
+0 \leq \frac{1}{2n}\|\bm{X}\hat{\bm{\Delta}}\|_2^2 &amp;\leq \frac1n\bm{\varepsilon}'\bm{X}\hat{\bm{\Delta}} + \lambda_n(\|\bm{\beta}_S^*\|_1-\|\bm{\beta}_S^*+\hat{\bm{\Delta}}_S\|_1 - \|\hat{\bm{\beta}}_{S^\complement}\|_1) \\
+&amp;\leq \frac{1}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty\|\hat{\bm{\Delta}}\|_1 + \lambda_n(\|\bm{\beta}_S^*\|_1-\|\bm{\beta}_S^*+\hat{\bm{\Delta}}_S\|_1 - \|\hat{\bm{\Delta}}_{S^\complement}\|_1) \\
+&amp;\leq \frac{1}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty\|\hat{\bm{\Delta}}\|_1 + \lambda_n(\|\hat{\bm{\Delta}}_S\|_1 - \|\hat{\bm{\Delta}}_{S^\complement}\|_1) \\
+&amp;\leq \frac12\lambda_n\|\hat{\bm{\Delta}}\|_1 + \lambda_n(\|\hat{\bm{\Delta}}_S\|_1 - \|\hat{\bm{\Delta}}_{S^\complement}\|_1) \\
+&amp;= \frac12\lambda_n\|\hat{\bm{\Delta}}_S\|_1 + \frac12\lambda_n\|\hat{\bm{\Delta}}_{S^\complement}\|_1 + \lambda_n(\|\hat{\bm{\Delta}}_S\|_1 - \|\hat{\bm{\Delta}}_{S^\complement}\|_1) \\
+&amp;= \frac{3}{2}\lambda_n\|\hat{\bm{\Delta}}_S\|_1 - \frac12\lambda_n\|\hat{\bm{\Delta}}_{S^\complement}\|_1
+\end{align*}
+$$&lt;p>
+第二行使用了 Hölder 不等式，第三行使用了三角不等式，第四行使用了条件 $\lambda_n \geq \frac{2}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty$。这就导致了 $\|\hat{\bm{\Delta}}_{S^\complement}\|_1 \leq 3\|\hat{\bm{\Delta}}_S\|_1$，也就证明了 $\hat{\bm{\Delta}}\in\mathcal{C}_3(S)$。&lt;/p>
+&lt;p>第二步，我们将使用 RE 条件。注意到
+&lt;/p>
+$$
+\lambda_n(3\|\hat{\bm{\Delta}}_S\|_1-\|\hat{\bm{\Delta}}_{S^\complement}\|_1) \leq 3\lambda_n\|\hat{\bm{\Delta}}_S\|_1 \leq 3\lambda_n\sqrt{s}\|\hat{\bm{\Delta}}_S\|_2 \leq 3\lambda_n\sqrt{s}\|\hat{\bm{\Delta}}\|_2
+$$&lt;p>
+这里使用了 $\ell_1$ 和 $\ell_2$ 范数之间的关系：对 $\bm{x}\in\mathbb{R}^d$，有 $\|\bm{x}\|_2\leq\|\bm{x}\|_1\leq\sqrt{d}\|\bm{x}\|_2$，这可通过数形结合来理解。从而
+&lt;/p>
+$$
+\begin{align*}
+\frac{1}{n}\|\bm{X}\hat{\bm{\Delta}}\|_2^2 &amp;\leq \lambda_n(3\|\hat{\bm{\Delta}}_S\|_1-\|\hat{\bm{\Delta}}_{S^\complement}\|_1) \\
+&amp;\leq 3\lambda_n\sqrt{s}\|\hat{\bm{\Delta}}\|_2 \\
+&amp;\leq 3\lambda_n\sqrt{s}\frac{\|\bm{X}\hat{\bm{\Delta}}\|_2}{\sqrt{n\kappa}}
+\end{align*}
+$$&lt;p>
+最后一行用了 RE 条件。整理后就得到
+&lt;/p>
+$$
+\frac{1}{n}\|\bm{X}\hat{\bm{\Delta}}\|_2^2 \leq \frac{9s\lambda_n^2}{\kappa}
+$$&lt;p>
+使用此结论和 RE 就有第二个收敛
+&lt;/p>
+$$
+\begin{align*}
+\|\hat{\bm{\Delta}}\|_2 \leq \frac{\|\bm{X}\hat{\bm{\Delta}}\|_2}{\sqrt{n\kappa}} \leq \sqrt{\frac{9s\lambda_n^2}{\kappa^2}} = \frac{3\sqrt{s}\lambda_n}{\kappa}
+\end{align*}
+$$
+&lt;/div>
+&lt;div class="thm-end-proof">
+&lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-2">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;p>很显然，相比于 &lt;a href="https://gaxu.xyz/posts/lasso/#thm:consistency">定理 1&lt;/a>，我们把不等式右边的界的收敛速度提升了（$\lambda_n$ 提升到 $\lambda_n^2$），此外还得到了 $\|\hat{\bm{\beta}}-\bm{\beta}^*\|$ 的收敛，所以称之为 LASSO 的快率。&lt;/p>
+&lt;p>我们也可以像 &lt;a href="https://gaxu.xyz/posts/lasso/#coro:slowrate">推论 3&lt;/a> 那样用概率的形式表述，这里略去。&lt;/p>
+&lt;p>（未完待续～）&lt;/p>
+&lt;h2 id="参考">参考&lt;/h2>
+&lt;p>&lt;a href="https://www.stat.cmu.edu/~arinaldo/Teaching/36710/F18/Scribed_Lectures/Oct17.pdf">Alessandro Rinaldo&amp;rsquo;s Lecture Notes.&lt;/a>&lt;/p>
+- https://gaxu.xyz/posts/lasso/ - 2023–2024 嘉树.</description></item><item><title>在 Mac 上管理多个 GitHub 账号</title><link>https://gaxu.xyz/posts/multiple-gh-accounts/</link><pubDate>Tue, 27 Aug 2024 19:29:37 +0800</pubDate><guid>https://gaxu.xyz/posts/multiple-gh-accounts/</guid><description>嘉树的世界 https://gaxu.xyz/posts/multiple-gh-accounts/ -&lt;h2 id="动机">动机&lt;/h2>
 &lt;p>我有两个 GitHub 账号，希望一个是面向工作，另一个则是私人的。那么，如何在一台 Mac 上无缝切换这个两个账号呢？本文列出了关键步骤。其他操作系统应当类似。&lt;/p>
 &lt;h2 id="生成-ssh-密钥">生成 SSH 密钥&lt;/h2>
 &lt;p>GitHub 提供了两种方式与远程仓库建立联系：SSH 和 HTTPS。简单来说，当我们向远程仓库 push 代码时，HTTPS 每次都需要提供所谓的 access token（当然这个活其实也只是第一次 push 的时候需要，因为 Mac 会把这个 token 存放在钥匙串里面，以后就不需要手动输入了），而 SSH 使用一对公钥和私钥取得认证（事先生成，然后本地和远程分别拿着私钥和公钥），不需要记住用户名和 token。就我们的目的而言，只能用 SSH 来实现。&lt;/p>
@@ -574,187 +812,4 @@ $$
 &amp;= \int_0^1[a(b-1)-1]q(v)F(v)\,dv - u_s(1)\geq0.
 \end{align*}
 $$&lt;p>If $a(b-1)&lt;1$, then any $q(v)\geq 0$ would not make trade happen with a positive probability. If $a(b-1)\geq 1$, then $q(v) = 1$ with $u_s(1) = 0$ would make trade happen for sure and so is the optimal allocation rule. Hence, we derive $H(a,b) = \mathbb{1}\{a(b-1)\geq1\}$.&lt;/p>
-- https://gaxu.xyz/posts/micro-qe-preparation/ - 2023–2024 嘉树.</description></item><item><title>计量复习笔记 (VIII)：自回归估计与 (A)DF 检验</title><link>https://gaxu.xyz/posts/ecmt-notes-ar-adf/</link><pubDate>Sun, 30 Apr 2023 12:02:47 +0800</pubDate><guid>https://gaxu.xyz/posts/ecmt-notes-ar-adf/</guid><description>嘉树的世界 https://gaxu.xyz/posts/ecmt-notes-ar-adf/ -&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
-&lt;div>&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/>&lt;/symbol>&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>&lt;/symbol>&lt;/svg>&lt;/div>&lt;div class="notice info" >
-&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#info-notice">&lt;/use>&lt;/svg>&lt;/span>Info&lt;/p>&lt;p>本系列是2023年春季学期《应用计量经济学》期末复习笔记，仅涵盖时间序列部分，对应 Hansen (2022) &lt;em>Econometrics&lt;/em> 第14和16章的内容。&lt;/p>&lt;/div>
-&lt;h2 id="内容提要">内容提要&lt;/h2>
-&lt;p>介绍了单位根假设下自回归系数的 OLS 估计量的渐进分布，以及由此而来的 (Augmented) Dicky-Fuller 单位根检验。&lt;/p>
-&lt;h2 id="ar1-的估计和单位根检验">AR(1) 的估计和单位根检验&lt;/h2>
-&lt;p>设 $Y_t$ 是一个 AR(1) 过程：$Y_t = \alpha Y_{t-1} + e_t$，为简化问题&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>，这里 $e_t$ 是平稳遍历的鞅差分，方差为 $\sigma_e^2$。&lt;/p>
-&lt;p>在平稳情形下，即 $\|\alpha\| &lt; 1$ 时，我们对 OLS 估计量 $\hat{\alpha}$ 以 $\sqrt{n}$ 作为 scaling，容易得到&lt;/p>
-$$
-\sqrt{n}(\hat{\alpha} - \alpha) = \sqrt{n}\frac{\sum_{t=2}^nY_{t-1}e_t}{\sum_{t=2}^nY_{t-1}^2} = \frac{n^{-1/2}\sum_{t=2}^nY_{t-1}e_t}{n^{-1}\sum_{t=2}^nY_{t-1}^2} \to_d N(0,1-\alpha^2)
-$$&lt;p>可见，当 $\alpha \to 1$，上式将依概率收敛到 0。这也说明，$\sqrt{n}$ 放缩对于单位根是不够的。&lt;/p>
-&lt;p>事实上，当 $\alpha = 1$，即单位根情形下&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>，应采用 $n$ 作为 scaling：&lt;/p>
-$$
-n(\hat{\alpha} - 1) = \frac{n^{-1}\sum_{t=2}^nY_{t-1}e_t}{n^{-2}\sum_{t=2}^nY_{t-1}^2}
-$$&lt;p>分母项的收敛利用前一讲的推导方法可以得到：&lt;/p>
-$$
-\begin{align*}
-\frac{1}{n^2}\sum_{t=2}^nY_{t-1}^2 &amp;= \frac1n\sum_{t=2}^n\left(\frac{Y_t}{\sqrt{n}}\right)^2 \\
-&amp;= \sum_{t=2}^n\int_{t/n}^{(t+1)/n}[Y_n(r)]^2\,dr \\
-&amp;= \int_0^1[Y_n(r)]^2\,dr + o_p(1) \\
-&amp;\to_d \int_0^1 [B(r)]^2\,dr
-\end{align*}
-$$&lt;p>分子项的收敛涉及到随机积分。&lt;/p>
-&lt;div class="thm">
-&lt;p id="def:stochint" class="thm-title thm-definition">Definition 1.&lt;/p>
-&lt;div class="thm-inner thm-definition">
-&lt;p>随机过程 $X(r)$ 关于 $Z(r)$ 在 $[0,1]$ 上的随机积分是一个概率极限：&lt;/p>
-$$
-\int_0^1X(r)\,dZ(r) := \mathop{\mathrm{plim}}\limits_{n\to\infty}\sum_{i=1}^{n-1}{\textstyle X\bigl(\frac{i}{n}\bigr)\left[Z\bigl(\frac{i+1}{n}\bigr)-Z\bigl(\frac{i}{n}\bigr)\right]}
-$$
-&lt;/div>
-&lt;/div>
-&lt;p>据此定义，我们有&lt;/p>
-$$
-\frac1n\sum_{t=2}^nY_{t-1}e_t = \sum_{t=2}^n\frac{Y_{t-1}}{\sqrt{n}}\frac{e_t}{\sqrt{n}} = \sum_{t=2}^{n}{\textstyle Y_n\bigl(\frac{t-1}{n}\bigr)\left[Y_n\bigl(\frac{t}{n}\bigr)-Y_n\bigl(\frac{t-1}{n}\bigr)\right]} = \int_0^1 Y_n(r)\,dY_n(r)
-$$&lt;p>尽管 $Y_n(r)\to_d B(r)$，但这不直接意味着上式依分布收敛到 $\int_0^1 B(r)\,dB(r)$，因为随机积分不是一个连续泛函，不能使用 CMT。不过我们确实有 $\int_0^1 Y_n(r)\,dY_n(r)\to_d\int_0^1 B(r)\,dB(r)$，其严格证明比较技术化。&lt;/p>
-&lt;p>另一种比较取巧的方式如下（简便起见，假设 $Y_0 = 0$）：&lt;/p>
-$$
-\begin{align*}
-\frac1n\textstyle\sum_{t=2}^nY_{t-1}e_t &amp;= \frac1n\textstyle\sum_{t=2}^n\left(\sum_{j=1}^{t-1}e_j\right)e_t \\
-&amp;= \frac12\left[\frac1n\left(\textstyle\sum_{j=1}^ne_j\right)^2-\frac1n\textstyle\sum_{j=1}^ne_j^2\right] \\
-&amp;\to_d \frac12[B(1)^2-\sigma_e^2] = \int_0^1B(r)\,dB(r)
-\end{align*}
-$$&lt;p>第一个等式由于我们假设了 $Y_0 = 0$ 而成立，$Y_0$ 当然可以为任意随机变量，这于最终结果只是一个 $o_p(1)$ 的影响。第二个等式使用了分步求和，很巧妙，因而只用普通 CLT 就可得到收敛性，注意 $B(1)\sim N(0,\sigma_e^2)$。最后一个等式是 Itô 积分。&lt;/p>
-&lt;div class="notice note" >
-&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>如果 $e_t$ 是弱相关序列，那么长期方差 $\gamma^2=\sigma_e^2 + 2\lambda$，$\int_0^1B(r)\,dB(r) = \frac12[B(1)^2-\gamma^2]$，最后的极限分布将是 $\int_0^1B(r)\,B(r)+\lambda$。&lt;/p>&lt;/div>
-&lt;p>综上所述，我们得到最终结果：&lt;/p>
-$$
-n(\hat{\alpha} - 1) \to_d \frac{\int_0^1B(r)\,dB(r)}{\int_0^1 [B(r)]^2\,dr} = \frac{\int_0^1W\,dW}{\int_0^1 W^2}
-$$&lt;p>其中 $W(r)$ 是标准布朗运动，即 $W(1)\sim N(0,1)$。注意，这里还是使用了 CMT，因为分子部分等于 $\frac12W(1)^2-\frac12$ 相当于一个常数（不考虑随机性时），而分母部分是连续泛函。&lt;/p>
-&lt;h3 id="dickey-fuller-单位根检验">Dickey-Fuller 单位根检验&lt;/h3>
-&lt;p>DF 检验统计量和经典的 t-statistic 形式相同：&lt;/p>
-$$
-\text{DF t-stat }= \frac{\hat{\alpha}-1}{\text{se}(\hat{\alpha})} = \frac{\sum y_{t-1}e_t/\sum y_{t-1}^2}{\hat{\sigma}_e\Big/\sqrt{\sum y_{t-1}^2}} = \frac{n^{-1}\sum y_{t-1}e_t}{\hat{\sigma}_e\sqrt{n^{-2}\sum y_{t-1}^2}} \to_d \frac{\int_0^1 W\,dW}{\bigl(\int_0^1 W^2\bigr)^{1/2}}
-$$&lt;p>可以看到，在原假设 $\alpha=1$ 下，DF 检验统计量并不服从正态分布，其分布没有解析表达式而只能通过模拟得到，是一个非对称分布。&lt;/p>
-&lt;h3 id="带截距项回归">带截距项回归&lt;/h3>
-&lt;p>设 $Y_t$ 是一个带截距项的单位根 $Y_t = \mu + \alpha Y_{t-1} + e_t$。根据 Frisch-Waugh-Lovell (FWL) 定理，$\hat{\alpha}$ 可由除均值序列 $Y_t^* = Y_t-\frac1n\sum_{\tau=1}^{n-1}Y_\tau$ 自回归得到，于是根据上一讲的内容，我们可以推出&lt;/p>
-$$
-n(\hat{\alpha} - 1) = \frac{n^{-1}\sum_{t=2}^nY_{t-1}^{*}e_t}{n^{-2}\sum_{t=2}^n(Y_{t-1}^{*})^2} \to_d \frac{\int_0^1W^{*}\,dW}{\int_0^1 (W^{*})^2}
-$$&lt;p>其中 $W^*(r) = W(r) - \int_0^1W$。&lt;/p>
-&lt;p>对应的 DF 检验统计量在原假设下的极限具有和无截距项时相似的表达式。&lt;/p>
-&lt;h3 id="带时间趋势项回归">带时间趋势项回归&lt;/h3>
-&lt;p>设 $Y_t = \mu + \beta t + \alpha Y_{t-1} + e_t$。依然由 FWL 定理，$\hat{\alpha}$ 可由除趋势序列 $Y_t^{**}$ 自回归得到，因此&lt;/p>
-$$
-n(\hat{\alpha} - 1) = \frac{n^{-1}\sum_{t=2}^nY_{t-1}^{**}e_t}{n^{-2}\sum_{t=2}^n(Y_{t-1}^{**})^2} \to_d \frac{\int_0^1W^{**}\,dW}{\int_0^1 (W^{**})^2}
-$$&lt;p>其中 $W^{**} = W - \bm{X}'\bigl(\int_0^1\bm{X}\bm{X}'\bigr)^{-1}\int_0^1\bm{X}W$。&lt;/p>
-&lt;h2 id="arp-的估计和单位根检验">AR(p) 的估计和单位根检验&lt;/h2>
-&lt;p>假设 $Y_t$ 是一个 AR($p$) 过程：$a(L)Y_t=e_t$，$e_t$ 仍为一个平稳遍历的鞅差分，方差 $\sigma_e^2$；$a(z)$ 是一个可逆的 $p$ 阶多项式。&lt;/p>
-&lt;p>假设 $a(z)$ 有一个单位根，换言之，$a(z) = (1-z)\tilde{a}(z)$，$\tilde{a}(z)$ 是一个可逆 $p-1$ 阶多项式。这意味着&lt;/p>
-$$
-\tilde{a}(L)\Delta Y_t = e_t \Rightarrow Y_t = Y_{t-1} + \tilde{b}(L)e_t
-$$&lt;p>即 $Y_t$ 本身就是一个随机游走。我们可通过 Beveridge-Nelson 分解得到其均值和趋势的极限分布，但现在我们关心的是估计和检验的问题。&lt;/p>
-&lt;p>首先注意到 $Y_t$ 可以写成&lt;/p>
-$$
-Y_t = a_1Y_{t-1} + \dots + a_pY_{t-p} + e_t
-$$&lt;p>其中必有 $a_1+\dots+a_p = 1$，因为单位根的存在。或者表述成更紧凑的形式&lt;/p>
-$$
-Y_t = \bm{a}'\bm{W}_{t-1} + e_t \quad\text{where }\bm{a} = (a_1,\dots,a_p)', \bm{W}_{t-1} = (Y_{t-1},\dots,Y_{t-p})'
-$$&lt;p>然后，我们使用矩阵做一点小小的变换：&lt;/p>
-$$
-Y_t = (\bm{B}\bm{a})'(\bm{B}')^{-1}\bm{W}_{t-1} + e_t = (\rho,\bm{\beta}')(Y_{t-1},\bm{X}'_{t-1})' + e_t
-$$&lt;p>其中变换矩阵 $\bm{B}$ 和其逆矩阵的转置（取 $p=3$）形如&lt;/p>
-$$
-\bm{B} =
-\begin{pmatrix}
-1 &amp; 1 &amp; 1 \\
-0 &amp; -1 &amp; -1 \\
-0 &amp; 0 &amp; -1
-\end{pmatrix}\quad
-(\bm{B}')^{-1} =
-\begin{pmatrix}
-1 &amp; 0 &amp; 0 \\
-1 &amp; -1 &amp; 0 \\
-0 &amp; 1 &amp; -1
-\end{pmatrix}
-$$&lt;p>因此 $\rho = a_1+\dots+a_p=1$，$\bm{X}_{t-1} = (\Delta Y_{t-1},\dots,\Delta Y_{t-p+1})$。我们实际上在将 $Y_t$ 写为&lt;/p>
-$$
-Y_t = \rho Y_{t-1} + \beta_1\Delta Y_{t-1} + \dots + \beta_{p-1}\Delta Y_{t-p+1} + e_t
-$$&lt;p>这方便我们做回归并直接检验 $\rho = 1$ 而不必做联合检验。这种手法在初级计量接触过。此外，上述变换将回归元分为单位根部分 $Y_{t-1}$ 和平稳部分 $\bm{X}_{t-1}$。&lt;/p>
-&lt;p>于是，我们为 $\hat{\rho}$ 和 $\hat{\bm{\beta}}$ 选择不同的 scaling：&lt;/p>
-$$
-\begin{pmatrix}
-n(\hat{\rho}-1) \\ \sqrt{n}(\hat{\bm{\beta}}-\bm{\beta})
-\end{pmatrix} =
-\begin{bmatrix}
-\displaystyle
-\frac{1}{n^2}\sum_{t=1+p}^nY_{t-1}^2 &amp; \displaystyle\frac{1}{n^{3/2}}\sum_{t=1+p}^nY_{t-1}\bm{X}_{t-1}' \\
-\displaystyle\frac{1}{n^{3/2}}\sum_{t=1+p}^n\bm{X}_{t-1}Y_{t-1} &amp; \displaystyle\frac{1}{n}\sum_{t=1+p}^n\bm{X}_{t-1}\bm{X}_{t-1}'
-\end{bmatrix}^{-1}
-\begin{bmatrix}
-\displaystyle
-\frac1n\sum_{t=1+p}^nY_{t-1}e_t \\
-\displaystyle
-\frac1{\sqrt{n}}\sum_{t=1+p}^n\bm{X}_{t-1}e_t
-\end{bmatrix}
-$$&lt;p>我们依次对各项进行分析。首先根据 Beveridge-Nelson 分解我们知道 $Y_n(r)\to_d B(r)$，单位时间方差 $\sigma_y^2=\sigma_e^2/a(1)^2$，因此&lt;/p>
-$$
-\frac{1}{n^2}\sum_{t=1+p}^nY_{t-1}^2 \to_d \frac{\sigma_e^2}{a(1)^2}\int_0^1W^2
-$$&lt;p>交叉项是一个 $p-1$ 维向量，我们分析其中一个分量，例如第一个分量&lt;/p>
-$$
-\frac{1}{n^{3/2}}\sum_{t=1+p}^nY_{t-1}\Delta Y_{t-1} = \frac{1}{\sqrt{n}}\frac1n\sum_{t=1+p}^n(Y_{t-1}^2-Y_{t-1}Y_{t-2}) = \frac{1}{\sqrt{n}} O_p(1) = o_p(1)
-$$&lt;p>类似可证明其他分量也是 $o_p(1)$。&lt;/p>
-&lt;p>$\bm{X}_{t-1}$ 是平稳遍历的，因此遍历定理表明 $n^{-1}\sum\bm{X}_{t-1}\bm{X}_{t-1}'\to_p\bm{Q}=\mathbb{E}(\bm{X}\bm{X}')$。此外，$\bm{X}_{t-1}e_t$ 是平稳弱相关的（但不再是鞅差分，因而无法使用鞅差分 CLT），采用对应的 CLT（课本定理 14.15），我们有&lt;/p>
-$$
-\frac1{\sqrt{n}}\sum_{t=1+p}^n\bm{X}_{t-1}e_t \to_d N(\bm{0},\bm{\Omega}) \quad\text{where } \bm{\Omega}=\mathbb{E}(\bm{X}_{t-1}\bm{X}_{t-1}'e_t^2)
-$$&lt;p>最后，$\frac1n\sum_{t=1+p}^nY_{t-1}e_t$ 的极限分布&lt;/p>
-$$
-\frac1n\sum_{t=1+p}^nY_{t-1}e_t \to_d \int_0^1B_y(r)\,B_e(r) = \sigma_y\sigma_e\int_0^1W\,dW
-$$&lt;p>注意 $B_y$ 和 $B_e$ 是完全相关的两个布朗运动，它们标准化后是同一个标准布朗运动。&lt;/p>
-&lt;p>综合以上分析，我们有&lt;/p>
-$$
-\begin{pmatrix}
-n(\hat{\rho}-1) \\ \sqrt{n}(\hat{\bm{\beta}}-\bm{\beta})
-\end{pmatrix}\to_d
-\begin{pmatrix}
-\sigma_y^2\int_0^1W^2 &amp; 0 \\ 0 &amp; \bm{Q}
-\end{pmatrix}^{-1}
-\begin{pmatrix}
-\sigma_y\sigma_e\int_0^1W\,dW \\ N(\bm{0},\bm{\Omega})
-\end{pmatrix} =
-\begin{pmatrix}
-a(1)\frac{\int_0^1W\,dW}{\int_0^1W^2} \\ N(\bm{0},\bm{Q}^{-1}\bm{\Omega}\bm{Q}^{-1})
-\end{pmatrix}
-$$&lt;p>可见，在渐进分布中，平稳部分和非平稳部分是不相干的。&lt;/p>
-&lt;p>若要恢复对原模型的估计，只需要做逆变换 $\bm{a} = \bm{B}^{-1}(\rho,\bm{\beta}')'$，我们有&lt;/p>
-$$
-\sqrt{n}(\hat{\bm{a}}-\bm{a}) = \sqrt{n}\bm{B}^{-1}
-\begin{pmatrix}
-n^{-1} &amp; 0 \\ 0 &amp; n^{-1/2}
-\end{pmatrix}
-\begin{pmatrix}
-n(\hat{\rho}-1) \\ \sqrt{n}(\hat{\bm{\beta}}-\bm{\beta})
-\end{pmatrix}\to_d
-\bm{B}^{-1}
-\begin{pmatrix}
-o_p(1) \\ N(\bm{0},\bm{Q}^{-1}\bm{\Omega}\bm{Q}^{-1})
-\end{pmatrix}
-$$&lt;p>令 $\bm{G} = \bm{B}^{-1}(:,2:p)$，则&lt;/p>
-$$
-\sqrt{n}(\hat{\bm{a}}-\bm{a}) \to_d N(\bm{0},\bm{G}\bm{Q}^{-1}\bm{\Omega}\bm{Q}^{-1}\bm{G}')
-$$&lt;p>可见单位根的存在完全不影响对原 AR 模型的估计和检验，我们可以假装看不见而采用经典的估计和检验方法。这本质上是因为单位根部分以 $O_p(n^{-1})$ 的速率收敛，在寻常的 $\sqrt{n}$ 缩放下依然是收敛的。&lt;/p>
-&lt;h3 id="augmented-dickey-fuller-检验">Augmented Dickey-Fuller 检验&lt;/h3>
-&lt;p>依照上述推导，ADF 检验 $H_0\colon\rho=1$ vs. $H_1\colon\rho&lt;1$，检验统计量及分布：&lt;/p>
-$$
-\text{ADF t-stat }= \frac{\hat{\rho}-1}{\text{se}(\hat{\rho})} = \to_d \frac{\int_0^1 W\,dW}{\bigl(\int_0^1 W^2\bigr)^{1/2}}
-$$&lt;p>此外，还有带截距项、带趋势项回归的检验，统计量和分布可比照 AR(1) 情形。&lt;/p>
-&lt;h2 id="参考">参考&lt;/h2>
-&lt;p>Hansen, Bruce (2022). &lt;em>Econometrics&lt;/em>. Princeton University Press.&lt;/p>
-&lt;p>Phillips, Peter C.B. (1987). &amp;ldquo;Time Series Regression with a Unit Root.&amp;rdquo; &lt;em>Econometrica&lt;/em>, 55(2), 277-301.&lt;/p>
-&lt;p>Phillips, Peter C.B. and Xiao, Zhijie (1998). &amp;ldquo;A Primer on Unit Root Testing.&amp;rdquo; &lt;em>Journal of Economic Surveys&lt;/em>, 12(5), 423-470.&lt;/p>
-&lt;p>Xiao, Zhijie (2014). &amp;ldquo;Unit Roots: A Selective Review of the Contributions of Peter C.B. Phillips.&amp;rdquo; &lt;em>Econometric Theory&lt;/em>, 30(4), 775-814.&lt;/p>
-&lt;br>
-&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>$e_t$ 可以是平稳弱相关序列，这会导致后文极限分布表达式中包含 $e_t$ 的长期协方差，例如，见 Xiao (2014) 或文中 Note。&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;li id="fn:2">
-&lt;p>对于 $\alpha = -1$，我们有 $Y_t = Y_{t-2} + \Delta e_t$，令 $X_{t-j} = Y_{t-2j}$，则 $X_t$ 是一个随机游走。因此分析 $\alpha = 1$ 不失一般性。&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div>
-- https://gaxu.xyz/posts/ecmt-notes-ar-adf/ - 2023–2024 嘉树.</description></item></channel></rss>
+- https://gaxu.xyz/posts/micro-qe-preparation/ - 2023–2024 嘉树.</description></item></channel></rss>
