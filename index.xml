@@ -5,13 +5,19 @@ $$
 \bm{Y} = \bm{X}\bm{\beta}^* + \bm{\varepsilon}
 $$&lt;p>
 其中 $\bm{\varepsilon}\in\text{subG}_n(\sigma^2)$，这表示对任意 $\bm{v}\in\mathbb{R}^n$ 且 $\|\bm{v}\|_2\leq1$，$\bm{v}'\bm{\varepsilon}\in\text{subG}(\sigma^2)$。此外，假设 $\bm{X}$ 是固定的。&lt;/p>
-&lt;h2 id="损失函数的收敛">损失函数的收敛&lt;/h2>
 &lt;p>LASSO 估计量就是
 &lt;/p>
 $$
 \hat{\bm{\beta}} := \arg\min_{\bm{\beta}\in\mathbb{R}^p} \frac{1}{2n}\|\bm{Y}-\bm{X}\bm{\beta}\|_2^2 + \lambda_n\|\bm{\beta}\|_1
 $$&lt;p>
 $\ell_1$ 范数作为惩罚项使得解具有稀疏性 (sparsity)。&lt;/p>
+&lt;h2 id="预测误差的界">预测误差的界&lt;/h2>
+&lt;p>我们考察均方预测误差 (mean squared prediction error, MSPE)：
+&lt;/p>
+$$
+\text{MSPE} = \frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2
+$$&lt;p>
+下面我们会给出它的界。&lt;/p>
 &lt;p>记事件 $A := \{\lambda_n \geq \frac1n\|\bm{X}'\bm{\varepsilon}\|_{\infty}\}$。&lt;/p>
 &lt;div class="thm">
 &lt;p id="thm:consistency" class="thm-title thm-theorem">Theorem 1.&lt;/p>
@@ -62,7 +68,7 @@ $$&lt;p>
 &lt;li>此不等式在事件 $A$ 上成立，因此如果事件 $A$ 有很大概率发生，则此不等式也有很大概率发生（不低于事件 $A$ 发生的概率）。&lt;/li>
 &lt;/ol>
 &lt;h2 id="lambda_n-的选取和-lasso-的慢率">$\lambda_n$ 的选取和 LASSO 的慢率&lt;/h2>
-&lt;p>我们当然希望 $\lambda_n$ 越小越好，但是我们又要保证事件 $A$ 发生的概率。为此，我们施加一个额外的假设。&lt;/p>
+&lt;p>我们当然希望 $\lambda_n$ 越小越好，我们特别希望 $\lambda_n\|\bm{\beta}^*\|=o(1)$，因为这样预测误差就会收敛。但是我们又要保证事件 $A$ 发生的概率，所以 $\lambda_n$ 又不能过小，或者说我们要限制 $\frac1n\|\bm{X}'\bm{\varepsilon}\|_{\infty}$。为此，我们对 $\bm{X}$ 施加一个额外的假设。&lt;/p>
 &lt;div class="thm">
 &lt;p id="assump:max" class="thm-title thm-assumption">Assumption 2.&lt;/p>
 &lt;div class="thm-inner thm-assumption">
@@ -86,7 +92,7 @@ $$
 $$&lt;p>给定一个 $\delta>0$，我们选择
 &lt;/p>
 $$
-t = \sqrt{\frac{2\sigma^2C}{n}[\log(1/\sigma)+\log(2p)]}
+t = \sqrt{\frac{2\sigma^2C}{n}[\log(1/\delta)+\log(2p)]}
 $$&lt;p>
 那么以上概率就会
 &lt;/p>
@@ -99,23 +105,28 @@ $$&lt;p>也就是说，我们取 $\lambda_n$ 为上述 $t$ 值，那么事件 $A
 &lt;p>至少以概率 $1-\delta$，我们有
 &lt;/p>
 $$
-\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \leq 4\|\bm{\beta}^*\|_1\sigma\sqrt{\frac{2C}{n}[\log(1/\sigma)+\log(2p)]}
+\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \leq 4\|\bm{\beta}^*\|_1\sigma\sqrt{\frac{2C}{n}[\log(1/\delta)+\log(2p)]}
 $$
 &lt;/div>
 &lt;/div>
-&lt;p>为什么叫 slow rate？在最优子集选择 (best subset selection) 中，我们可以推出 (reference?)
+&lt;p>可见，当我们取 $\delta=1/n$，并假设 $\|\bm{\beta}^*\|=o(\sqrt{n/\log(p\vee n)})$，我们就得到了随 $n\to\infty$ 时预测误差的收敛。&lt;/p>
+&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
+&lt;div>&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/>&lt;/symbol>&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>&lt;/symbol>&lt;/svg>&lt;/div>&lt;div class="notice note" >
+&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>为什么叫 slow rate？在最优子集选择 (best subset selection) 中，我们可以推出 (reference?)
 &lt;/p>
 $$
-\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \lesssim \|\bm{\beta}\|_0\sigma^2\frac{\log n+\log p}{n}
+\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \lesssim \|\bm{\beta}\|_0\frac{\log n+\log p}{n}
 $$&lt;p>
 而在上述推论中，如果我们选择 $\delta=1/n$，则会得到
 &lt;/p>
 $$
-\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \lesssim \|\bm{\beta}^*\|_1\sigma\sqrt{\frac{\log n+\log p}{n}}
+\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \lesssim \|\bm{\beta}^*\|_1\sqrt{\frac{\log n+\log p}{n}}
 $$&lt;p>
-这多了一个根号，因此比最优子集选择的收敛率要慢。&lt;/p>
+这多了一个根号，因此比最优子集选择的收敛率要慢。&lt;/p>&lt;/div>
 &lt;h2 id="lasso-的快率">LASSO 的快率&lt;/h2>
-&lt;p>我们是否能改进前述收敛速率呢？注意到如果 $\mu_{\min}(\bm{X}'\bm{X})\geq\gamma_n>0$，则有
+&lt;p>我们是否能改进前述收敛速率呢？另外，有没有可能得到 $\hat{\bm{\beta}}$ 本身的一致性呢？答案是可以的。&lt;/p>
+&lt;h3 id="restricted-eigenvalue">Restricted Eigenvalue&lt;/h3>
+&lt;p>注意到如果 $\mu_{\min}(\bm{X}'\bm{X})\geq\gamma_n>0$，则有
 &lt;/p>
 $$
 \|\hat{\bm{\beta}}-\bm{\beta}^*\|_2 \leq \frac{1}{\gamma_n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2
@@ -136,7 +147,7 @@ $$&lt;p>
 $$
 \frac{1}{n}\|\bm{X}\bm{\Delta}\|_2^2 \geq \kappa\|\bm{\Delta}\|_2^2
 $$&lt;p>
-则称 $n\times p$ 的矩阵 $\bm{X}$ 满足 $\text{RE}(\alpha,\kappa)$ 条件。&lt;/p>
+则称 $n\times p$ 的矩阵 $\bm{X}$ 满足 $S$ 上的 $\text{RE}(\alpha,\kappa)$ 条件。&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;p>下面我们花一些篇幅来从直觉上理解这一条件。&lt;/p>
@@ -147,11 +158,11 @@ $$
 \kappa\|\bm{\Delta}\|_2^2 \leq \frac{1}{n}\|\bm{X}\bm{\Delta}\|_2^2
 $$&lt;p>
 这将意味着 $\bm{\Delta}\mapsto\frac1n\|\bm{X}\bm{\Delta}\|_2^2$ 有足够的曲率（不是平坦的曲线）。我们只需要这个条件对某些 $\bm{\Delta}$ 成立，即 RE 所表述的那样。这些 $\bm{\Delta}$ 被集合 $\mathcal{C}_\alpha(S)$ 所刻画，它是这样一个集合：指标集 $S$ 所对应的那些系数要充分大于非 $S$ 对应的系数。这直觉上规定了 $S$ 和 $S^\complement$ 对应的系数值能被区分开的一类系数向量。&lt;/p>
-&lt;p>令 $S = \{\beta_j^*\colon\beta_j^*\neq0\}$ 是非零系数的集合，$s=|S|$ 是非零系数的个数，或者称之为&lt;em>稀疏性&lt;/em>。在 RE 条件下，有如下定理。&lt;/p>
+&lt;p>令 $S = \{j^*\colon\beta_j^*\neq0\}$ 是非零系数的指标集，称之为 &lt;em>active set&lt;/em>，$s=|S|$ 是非零系数的个数，称之为&lt;em>稀疏性&lt;/em>。在 RE 条件下，有如下定理。&lt;/p>
 &lt;div class="thm">
 &lt;p id="thm:fast" class="thm-title thm-theorem">Theorem 5 (Fast rate of the LASSO).&lt;/p>
 &lt;div class="thm-inner thm-theorem">
-&lt;p>设存在某个 $\kappa>0$ 使得 $\bm{X}$ 满足 $\text{RE}(3,\kappa)$ 条件。若
+&lt;p>设存在某个 $\kappa>0$ 使得 $\bm{X}$ 满足 $S$ 上的 $\text{RE}(3,\kappa)$ 条件。若
 &lt;/p>
 $$
 \lambda_n \geq \frac{2}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty
@@ -231,11 +242,32 @@ $$
 &lt;/div>
 &lt;/div>
 &lt;/div>
-&lt;p>很显然，相比于 &lt;a href="https://gaxu.xyz/posts/lasso/#thm:consistency">定理 1&lt;/a>，我们把不等式右边的界的收敛速度提升了（$\lambda_n$ 提升到 $\lambda_n^2$），此外还得到了 $\|\hat{\bm{\beta}}-\bm{\beta}^*\|$ 的收敛，所以称之为 LASSO 的快率。&lt;/p>
+&lt;p>很显然，相比于 &lt;a href="https://gaxu.xyz/posts/lasso/#thm:consistency">定理 1&lt;/a>，我们把不等式右边的界的收敛速度提升了（$\lambda_n$ 提升到 $\lambda_n^2$），此外还得到了 $\|\hat{\bm{\beta}}-\bm{\beta}^*\|_2$ 的收敛，所以称之为 LASSO 的快率。&lt;/p>
 &lt;p>我们也可以像 &lt;a href="https://gaxu.xyz/posts/lasso/#coro:slowrate">推论 3&lt;/a> 那样用概率的形式表述，这里略去。&lt;/p>
-&lt;p>（未完待续～）&lt;/p>
+&lt;h3 id="oracle-inequalities">Oracle Inequalities&lt;/h3>
+&lt;div class="notice info" >
+&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#info-notice">&lt;/use>&lt;/svg>&lt;/span>Info&lt;/p>&lt;p>在英文里面，“oracle” 一词的含义是神的使者，向（愚昧）的人类传达神的旨意和预言，引申为提供智慧、知识或真理的源头。而在统计学中，这一词被借用来指代理论上所能达到的最佳表现，如同有一个神使向我们传达了真理。Oracle inequalities，「神谕不等式」，就描述了一个估计量的性能如何接近理论上最佳的性能。&lt;/p>&lt;/div>
+&lt;p>我们知道，当 $p\leq n$ 且误差项 $\bm{\varepsilon}\sim N(0,\sigma^2\bm{I}_n)$ 时，OLS 是最优线性无偏估计量，它可以作为一个最优的标杆。由于 $\|\bm{X}(\hat{\bm{\beta}}^{\text{OLS}}-\bm{\beta}^*)\|_2^2/$ 服从 $\chi^2(p)$ 分布，因此期望预测误差
+&lt;/p>
+$$
+\mathbb{E}\biggl(\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}^{\text{OLS}}-\bm{\beta}^*)\|_2^2\biggr) = \frac{\sigma^2p}{n}
+$$&lt;p>
+这表明，每个系数的估计精度是 $\sigma^2/n$，所以总体的估计精度就是 $(\sigma^2/n)\cdot p$。&lt;/p>
+&lt;p>当 $p>n$ 时，OLS 不再适用，但假设我们知道了 $\bm{\beta}^*$ 的稀疏度 $s$，按照上面的公式，能达到的最佳估计精度就应该是 $(\sigma^2/n)\cdot s$。那么，LASSO 是否达到了或接近了这一理想呢？在 &lt;a href="https://gaxu.xyz/posts/lasso/#thm:fast">前一节的定理&lt;/a> 中，LASSO 的预测误差的界是
+&lt;/p>
+$$
+\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \leq \frac{9s\lambda_n^2}{\kappa}
+$$&lt;p>
+如果我们采取前文所选取的 $\lambda_n$，那么我们就有
+&lt;/p>
+$$
+\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \lesssim \sigma^2\frac{s\log p}{n}
+$$&lt;p>
+相比于理想中的最佳估计精度，我们多了一个因子 $\log p$，这可以被看作不知道哪些系数非零所付出的成本。这就是 LASSO 的神谕不等式。&lt;/p>
 &lt;h2 id="参考">参考&lt;/h2>
 &lt;p>Alessandro Rinaldo&amp;rsquo;s Lecture Notes (2018): &lt;a href="https://www.stat.cmu.edu/~arinaldo/Teaching/36710/F18/Scribed_Lectures/Oct17.pdf">Oct 17&lt;/a>, &lt;a href="https://www.stat.cmu.edu/~arinaldo/Teaching/36710/F18/Scribed_Lectures/Oct22.pdf">Oct 22&lt;/a>.&lt;/p>
+&lt;p>&lt;a href="https://www.stt.msu.edu/users/wangho16/lasso.pdf">Honglang Wang&amp;rsquo;s Tutorial on Lasso&lt;/a>.&lt;/p>
+&lt;p>Bühlmann, Peter, and Sara van de Geer (2011). &lt;em>Statistics for High-Dimensional Data: Methods, Theory and Applications.&lt;/em> Springer Science &amp;amp; Business Media.&lt;/p>
 &lt;p>Rigollet, Philippe, and Jan-Christian Hütter (2023). &amp;ldquo;High-Dimensional Statistics.&amp;rdquo; &lt;em>arXiv preprint&lt;/em>. &lt;a href="https://arxiv.org/pdf/2310.19244.pdf">arXiv:2310.19244&lt;/a>.&lt;/p>
 - https://gaxu.xyz/posts/lasso/ - 2023–2024 嘉树.</description></item><item><title>在 Mac 上管理多个 GitHub 账号</title><link>https://gaxu.xyz/posts/multiple-gh-accounts/</link><pubDate>Tue, 27 Aug 2024 19:29:37 +0800</pubDate><guid>https://gaxu.xyz/posts/multiple-gh-accounts/</guid><description>嘉树的世界 https://gaxu.xyz/posts/multiple-gh-accounts/ -&lt;h2 id="动机">动机&lt;/h2>
 &lt;p>我有两个 GitHub 账号，希望一个是面向工作，另一个则是私人的。那么，如何在一台 Mac 上无缝切换这个两个账号呢？本文列出了关键步骤。其他操作系统应当类似。&lt;/p>
