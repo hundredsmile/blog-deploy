@@ -332,7 +332,8 @@
 
 .heti h3 {
     font-size: 20px;
-    line-height:36px
+    /* line-height:36px */
+    line-height: 150%;
 }
 
 .heti h4 {
