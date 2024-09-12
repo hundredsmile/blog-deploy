@@ -33,7 +33,32 @@ $$&lt;p>
 
 
 &lt;div class="thm">
- &lt;p id="thm:consistency" class="thm-title thm-theorem">Theorem 1.&lt;/p></description></item><item><title>集中不等式 (I)：Hoeffding 不等式</title><link>https://gaxu.xyz/posts/conctr-ineq-hoeffding/</link><pubDate>Sun, 11 Aug 2024 15:30:25 +0800</pubDate><guid>https://gaxu.xyz/posts/conctr-ineq-hoeffding/</guid><description>&lt;h2 id="内容提要">内容提要&lt;/h2>
+ &lt;p id="thm:consistency" class="thm-title thm-theorem">Theorem 1.&lt;/p>
+ &lt;div class="thm-inner thm-theorem">
+ &lt;p>若事件 $A$ 成立，则
+&lt;/p>
+$$
+\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \leq 4\|\bm{\beta}^*\|_1\lambda_n
+$$
+ &lt;/div>
+&lt;/div>
+
+
+&lt;div class="thm">
+ &lt;button type="button" class="collapsible">&lt;div id="thm-proof-1" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
+ &lt;div class="proof-content">
+ &lt;div class="thm-inner-proof">
+ &lt;p>首先，我们证明如下基本不等式：
+&lt;/p>
+$$
+\frac{1}{2n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \leq \frac{1}{n}\bm{\varepsilon}'\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*) + \lambda_n(\|\bm{\beta}^*\|_1-\|\hat{\bm{\beta}}\|_1)
+$$&lt;p>
+此不等式事实上直接来自于
+&lt;/p>
+$$
+\frac{1}{2n}\|\bm{Y}-\bm{X}\hat{\bm{\beta}}\|_2^2 + \lambda_n\|\hat{\bm{\beta}}\|_1 \leq \frac{1}{2n}\|\bm{Y}-\bm{X}\bm{\beta}^*\|_2^2 + \lambda_n\|\bm{\beta}^*\|_1
+$$&lt;p>
+只需将 $\bm{Y} = \bm{X}\bm{\beta}^* + \bm{\varepsilon}$ 代入即可得到。&lt;/p></description></item><item><title>集中不等式 (I)：Hoeffding 不等式</title><link>https://gaxu.xyz/posts/conctr-ineq-hoeffding/</link><pubDate>Sun, 11 Aug 2024 15:30:25 +0800</pubDate><guid>https://gaxu.xyz/posts/conctr-ineq-hoeffding/</guid><description>&lt;h2 id="内容提要">内容提要&lt;/h2>
 &lt;p>介绍了集中不等式的概念，引入了 Chernoff 界方法，并以此证明了 Hoeffding 不等式。&lt;/p>
 &lt;h2 id="什么是集中不等式">什么是集中不等式？&lt;/h2>
 &lt;p>Concentration inequalities，中文译作「集中不等式」，是概率论中的一类不等式，描述了一个随机变量的取值是否集中在某个特定的值附近，换句话说，相对于这个特定值偏离了多少，从概率上讲这个偏离的可能性又如何量化。这个特定的值通常取的是总体均值。数学上，这类不等式的形式可写作&lt;/p>
@@ -60,4 +85,24 @@ $$&lt;p>这个不等式当然是很一般的──我们只要求方差有限，
 &lt;div class="thm">
  &lt;p id="prop:normal" class="thm-title thm-proposition">Proposition 1.&lt;/p>
  &lt;div class="thm-inner thm-proposition">
- &lt;p>若 $Z\sim\mathcal{N}(0,1)$，则对任意 $t>0$，都有&lt;/p></description></item></channel></rss>
+ &lt;p>若 $Z\sim\mathcal{N}(0,1)$，则对任意 $t>0$，都有&lt;/p>
+$$
+\biggl(\frac1t-\frac{1}{t^3}\biggr)\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2} \leq \mathbb{P}\{Z\geq t\} \leq \frac{1}{t}\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2}
+$$
+ &lt;/div>
+&lt;/div>
+
+
+&lt;div class="thm">
+ &lt;button type="button" class="collapsible">&lt;div id="thm-proof-1" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
+ &lt;div class="proof-content">
+ &lt;div class="thm-inner-proof">
+ &lt;p>对于上界，有&lt;/p>
+$$
+\begin{align*}
+\mathbb{P}\{Z\geq t\} &amp;= \frac{1}{\sqrt{2\pi}}\int_t^\infty e^{-x^2/2}\,dx \\
+&amp;\leq \frac{1}{\sqrt{2\pi}}\int_t^\infty \frac{x}{t}e^{-x^2/2}\,dx \\
+&amp;= \frac{1}{t\sqrt{2\pi}} \int_t^\infty -\frac{\partial}{\partial x}e^{-x^2/2}\,dx \\
+&amp;= \frac{1}{t}\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2}
+\end{align*}
+$$&lt;p>对于下界，利用等式&lt;/p></description></item></channel></rss>

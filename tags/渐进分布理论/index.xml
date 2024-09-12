@@ -11,4 +11,7 @@ $$&lt;p>其中 $\bm{Y} = (y_1,\dots,y_N)^\prime$，$\bm{X} = (\bm{x}_1,\dots,\bm
 $$
 \min_{\bm{\beta}}\quad \frac1n(\bm{Y}-\bm{X}\bm{\beta})^\prime(\bm{Y}-\bm{X}\bm{\beta}) + \lambda\bm{\beta}^\prime\bm{\beta}
 \tag{$*$}
-$$&lt;p>这里 $\lambda$ 是一个参数，它衡量了惩罚的大小。当 $\lambda=0$ 时，该问题就是 OLS；当 $\lambda\to\infty$ 时，$\bm{\beta} = \bm{0}$。事实上，这个问题等价于一个有约束的最小二乘：&lt;/p></description></item></channel></rss>
+$$&lt;p>这里 $\lambda$ 是一个参数，它衡量了惩罚的大小。当 $\lambda=0$ 时，该问题就是 OLS；当 $\lambda\to\infty$ 时，$\bm{\beta} = \bm{0}$。事实上，这个问题等价于一个有约束的最小二乘：&lt;/p>
+$$
+\min_{\bm{\beta}}\quad (\bm{Y}-\bm{X}\bm{\beta})^\prime(\bm{Y}-\bm{X}\bm{\beta}) \qquad \text{s.t.}\quad \bm{\beta}^\prime\bm{\beta} = c^2
+$$&lt;p>其中 $c$ 为某个非负常数。可见我们是在 $p$ 维 Euclidean 空间中半径为 $c$ 的球面上寻找最小二乘估计量。&lt;/p></description></item></channel></rss>

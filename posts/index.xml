@@ -33,7 +33,32 @@ $$&lt;p>
 
 
 &lt;div class="thm">
- &lt;p id="thm:consistency" class="thm-title thm-theorem">Theorem 1.&lt;/p></description></item><item><title>在 Mac 上管理多个 GitHub 账号</title><link>https://gaxu.xyz/posts/multiple-gh-accounts/</link><pubDate>Tue, 27 Aug 2024 19:29:37 +0800</pubDate><guid>https://gaxu.xyz/posts/multiple-gh-accounts/</guid><description>&lt;h2 id="动机">动机&lt;/h2>
+ &lt;p id="thm:consistency" class="thm-title thm-theorem">Theorem 1.&lt;/p>
+ &lt;div class="thm-inner thm-theorem">
+ &lt;p>若事件 $A$ 成立，则
+&lt;/p>
+$$
+\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \leq 4\|\bm{\beta}^*\|_1\lambda_n
+$$
+ &lt;/div>
+&lt;/div>
+
+
+&lt;div class="thm">
+ &lt;button type="button" class="collapsible">&lt;div id="thm-proof-1" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
+ &lt;div class="proof-content">
+ &lt;div class="thm-inner-proof">
+ &lt;p>首先，我们证明如下基本不等式：
+&lt;/p>
+$$
+\frac{1}{2n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \leq \frac{1}{n}\bm{\varepsilon}'\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*) + \lambda_n(\|\bm{\beta}^*\|_1-\|\hat{\bm{\beta}}\|_1)
+$$&lt;p>
+此不等式事实上直接来自于
+&lt;/p>
+$$
+\frac{1}{2n}\|\bm{Y}-\bm{X}\hat{\bm{\beta}}\|_2^2 + \lambda_n\|\hat{\bm{\beta}}\|_1 \leq \frac{1}{2n}\|\bm{Y}-\bm{X}\bm{\beta}^*\|_2^2 + \lambda_n\|\bm{\beta}^*\|_1
+$$&lt;p>
+只需将 $\bm{Y} = \bm{X}\bm{\beta}^* + \bm{\varepsilon}$ 代入即可得到。&lt;/p></description></item><item><title>在 Mac 上管理多个 GitHub 账号</title><link>https://gaxu.xyz/posts/multiple-gh-accounts/</link><pubDate>Tue, 27 Aug 2024 19:29:37 +0800</pubDate><guid>https://gaxu.xyz/posts/multiple-gh-accounts/</guid><description>&lt;h2 id="动机">动机&lt;/h2>
 &lt;p>我有两个 GitHub 账号，希望一个是面向工作，另一个则是私人的。那么，如何在一台 Mac 上无缝切换这个两个账号呢？本文列出了关键步骤。其他操作系统应当类似。&lt;/p>
 &lt;h2 id="生成-ssh-密钥">生成 SSH 密钥&lt;/h2>
 &lt;p>GitHub 提供了两种方式与远程仓库建立联系：SSH 和 HTTPS。简单来说，当我们向远程仓库 push 代码时，HTTPS 每次都需要提供所谓的 access token（当然这个活其实也只是第一次 push 的时候需要，因为 Mac 会把这个 token 存放在钥匙串里面，以后就不需要手动输入了），而 SSH 使用一对公钥和私钥取得认证（事先生成，然后本地和远程分别拿着私钥和公钥），不需要记住用户名和 token。就我们的目的而言，只能用 SSH 来实现。&lt;/p>
@@ -41,7 +66,20 @@ $$&lt;p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#81a1c1">cd&lt;/span> ~/.ssh
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ssh-keygen -t rsa -C &lt;span style="color:#a3be8c">&amp;#34;email@personal.com&amp;#34;&lt;/span> -f &lt;span style="color:#a3be8c">&amp;#34;gh-personal&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ssh-keygen -t rsa -C &lt;span style="color:#a3be8c">&amp;#34;email@work.com&amp;#34;&lt;/span> -f &lt;span style="color:#a3be8c">&amp;#34;gh-work&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>运行完了之后，在 &lt;code>.ssh&lt;/code> 文件夹下我们得到了四个文件：&lt;/p></description></item><item><title>半日杂记</title><link>https://gaxu.xyz/posts/half-day-diary/</link><pubDate>Sun, 25 Aug 2024 23:08:09 +0800</pubDate><guid>https://gaxu.xyz/posts/half-day-diary/</guid><description>&lt;p>师弟在我提出要去理发时向我强烈推荐了一家，我狐疑，追问之下原来是：他在此店被忽悠办了会员充了值，害怕店长哪天卷钱跑路了，希望尽快消费完。啊哈，那这个忙我当然要帮。&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>运行完了之后，在 &lt;code>.ssh&lt;/code> 文件夹下我们得到了四个文件：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>gh-personal&lt;/code>&lt;/li>
+&lt;li>&lt;code>gh-personal.pub&lt;/code>&lt;/li>
+&lt;li>&lt;code>gh-work&lt;/code>&lt;/li>
+&lt;li>&lt;code>gh-work.pub&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>其中带 &lt;code>.pub&lt;/code> 扩展名的是存公钥的，不带的是存私钥的。&lt;/p>
+&lt;h2 id="分配私钥和公钥">分配私钥和公钥&lt;/h2>
+&lt;h3 id="将私钥加入-ssh-agent">将私钥加入 SSH Agent&lt;/h3>
+&lt;p>上一步只是生成了密钥，还需要把私钥加入 Mac 的钥匙串 (keychain)，也就是保存密码。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>ssh-add --apple-use-keychain ~/.ssh/gh-personal
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ssh-add --apple-use-keychain ~/.ssh/gh-work
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>选项 &lt;code>--apple-use-keychain&lt;/code> 就明确声明使用 Mac 的钥匙串系统存放密钥。&lt;/p></description></item><item><title>半日杂记</title><link>https://gaxu.xyz/posts/half-day-diary/</link><pubDate>Sun, 25 Aug 2024 23:08:09 +0800</pubDate><guid>https://gaxu.xyz/posts/half-day-diary/</guid><description>&lt;p>师弟在我提出要去理发时向我强烈推荐了一家，我狐疑，追问之下原来是：他在此店被忽悠办了会员充了值，害怕店长哪天卷钱跑路了，希望尽快消费完。啊哈，那这个忙我当然要帮。&lt;/p>
 &lt;p>去了之后发现，这哪像会倒闭的样子！生意红火好嘛。当然也不排除有周日的加持。托尼老师很热情地向我推销卷烫染套餐，被我热情地回绝了。&lt;/p>
 &lt;p>剪完之后就在商场里闲逛，溜进一家「西西弗书店」，随意翻看能引起我兴趣的书，还真是颇有收获。试举几例：&lt;/p>
 &lt;ul>
@@ -79,7 +117,27 @@ $$&lt;p>这个不等式当然是很一般的──我们只要求方差有限，
 &lt;div class="thm">
  &lt;p id="prop:normal" class="thm-title thm-proposition">Proposition 1.&lt;/p>
  &lt;div class="thm-inner thm-proposition">
- &lt;p>若 $Z\sim\mathcal{N}(0,1)$，则对任意 $t>0$，都有&lt;/p></description></item><item><title>来个任意门吧</title><link>https://gaxu.xyz/posts/anywhere-door/</link><pubDate>Fri, 09 Aug 2024 10:31:47 +0800</pubDate><guid>https://gaxu.xyz/posts/anywhere-door/</guid><description>&lt;p>这几天实在太热了🥵🥵，每次往返学校都流一身汗，不想去学校了，但是呆家里就容易躺。两难呐😑&lt;/p>
+ &lt;p>若 $Z\sim\mathcal{N}(0,1)$，则对任意 $t>0$，都有&lt;/p>
+$$
+\biggl(\frac1t-\frac{1}{t^3}\biggr)\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2} \leq \mathbb{P}\{Z\geq t\} \leq \frac{1}{t}\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2}
+$$
+ &lt;/div>
+&lt;/div>
+
+
+&lt;div class="thm">
+ &lt;button type="button" class="collapsible">&lt;div id="thm-proof-1" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
+ &lt;div class="proof-content">
+ &lt;div class="thm-inner-proof">
+ &lt;p>对于上界，有&lt;/p>
+$$
+\begin{align*}
+\mathbb{P}\{Z\geq t\} &amp;= \frac{1}{\sqrt{2\pi}}\int_t^\infty e^{-x^2/2}\,dx \\
+&amp;\leq \frac{1}{\sqrt{2\pi}}\int_t^\infty \frac{x}{t}e^{-x^2/2}\,dx \\
+&amp;= \frac{1}{t\sqrt{2\pi}} \int_t^\infty -\frac{\partial}{\partial x}e^{-x^2/2}\,dx \\
+&amp;= \frac{1}{t}\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2}
+\end{align*}
+$$&lt;p>对于下界，利用等式&lt;/p></description></item><item><title>来个任意门吧</title><link>https://gaxu.xyz/posts/anywhere-door/</link><pubDate>Fri, 09 Aug 2024 10:31:47 +0800</pubDate><guid>https://gaxu.xyz/posts/anywhere-door/</guid><description>&lt;p>这几天实在太热了🥵🥵，每次往返学校都流一身汗，不想去学校了，但是呆家里就容易躺。两难呐😑&lt;/p>
 &lt;p>要是有个任意门就好了，可以舒心往返，两难自解🥹&lt;/p></description></item><item><title>拒绝完美主义</title><link>https://gaxu.xyz/posts/noperfect/</link><pubDate>Thu, 08 Aug 2024 22:20:20 +0800</pubDate><guid>https://gaxu.xyz/posts/noperfect/</guid><description>&lt;p>很多时候我都很难开始做一件事，总是觉得没准备好就不能开始，一来二去就浪费了很多时间。作为J人就这点不好，虽然每次都要搞个计划，但着实难以实施──总是在完善计划。其实我也知道，这是完美主义在作祟，拖延只是其导致的现象。&lt;/p>
 &lt;p>这种心理偏执是一种相当的阻碍。以前我一直以为，要开始做研究，那必然是先要尽可能把「所有」相关的基础知识都吃透，然后才能游刃有余。且不说是不是真的吃透了就一定能融会贯通，但就说吃透这些知识的时间成本就很巨大，那么要开始一个项目，得准备多少光阴？现在我意识到，在具备必要的基础知识之后，就可以边学边做了，这是「干中学」。这个方法不仅杜绝了前期漫长准备带来的时间上的不确定性，而且效率其实是很高的。另外也不要追求一次成功，第一次尝试能有一个还不错的结果能证明可行性就足够了。&lt;/p>
 &lt;p>说到底完美主义背后可能还是缺了自信，因为如果足够自信，就不会怀疑对过程的把控能力，同时对于结果也有一个理性的认知，那么就不会停留于准备阶段。大胆地开始，小心地推进，追求一个可接受的初步结果，然后逐步完善，这种态度才是不伤身心的。&lt;/p></description></item><item><title>Macro QE 备考 (II): 新古典增长和世代交叠模型</title><link>https://gaxu.xyz/posts/macro-qe-preparation-ngm-olg/</link><pubDate>Tue, 27 Jun 2023 15:08:53 +0800</pubDate><guid>https://gaxu.xyz/posts/macro-qe-preparation-ngm-olg/</guid><description>&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
@@ -140,7 +198,22 @@ $$&lt;p>where $n$ is some finite number greater than 1. Let $F_1$ and $F_2$ deno
  Rating Matrix (Source: Yuejie Chi, 2018, Lecture Notes)
  &lt;/figcaption>
 &lt;/figure>
-&lt;p>那么，这和低秩又有什么关系呢？很显然，在没有任何限制条件下去补全那些未知的项，我们有无数种填充方式。想要唯一地重建一个矩阵，这个矩阵必须有些特殊的结构作为限制，而低秩就是一个合理的结构。低秩意味着，矩阵的列向量高度线性相关──它们扩展形成的线性空间是低维的。说得更加人话就是，数据中的大部分波动都由少数几个因子驱动。&lt;/p></description></item><item><title>Ridge Regression</title><link>https://gaxu.xyz/posts/ridge-regression/</link><pubDate>Fri, 17 Mar 2023 13:37:45 +0800</pubDate><guid>https://gaxu.xyz/posts/ridge-regression/</guid><description>&lt;h2 id="内容提要">内容提要&lt;/h2>
+&lt;p>那么，这和低秩又有什么关系呢？很显然，在没有任何限制条件下去补全那些未知的项，我们有无数种填充方式。想要唯一地重建一个矩阵，这个矩阵必须有些特殊的结构作为限制，而低秩就是一个合理的结构。低秩意味着，矩阵的列向量高度线性相关──它们扩展形成的线性空间是低维的。说得更加人话就是，数据中的大部分波动都由少数几个因子驱动。&lt;/p>
+&lt;p>现在可能又要问了，低秩在实践中是一个合理的假设吗？以 Netflix 评分矩阵为例，直觉上，同一类用户群体的行为、特征有很高的相似性，因此他们的潜在评分高度一致，这样评分矩阵的「主成分」实际上就是几个群体的评价，从而是低秩的。&lt;/p>
+&lt;h2 id="核范数最小化">核范数最小化&lt;/h2>
+&lt;p>低秩矩阵的补全可分为两类方法 (Gu &lt;i>et al.&lt;/i>
+2014)：&lt;em>矩阵分解法&lt;/em> 和 &lt;em>求解秩最小化问题法&lt;/em>。前者用两个低秩矩阵之积作为构造方式，可留待以后学习；后者是本文要讨论的内容。&lt;/p>
+&lt;h3 id="秩最小化问题的正式表述">秩最小化问题的正式表述&lt;/h3>
+&lt;p>假设真实矩阵是 $\bm{M}$，我们所观测到的元素集合是 $\{M_{i,j}\colon (i,j)\in\Omega\}$。秩最小化问题就表述为&lt;/p>
+$$
+\min_{\bm{X}}\ \text{rank}(\bm{X}) \quad \text{s.t. } X_{i,j} = M_{i,j},\ \text{for every }(i,j)\in\Omega
+$$&lt;p>为方便起见，定义算子 $\mathcal{P}_{\Omega}$ 如下：&lt;/p>
+$$
+[\mathcal{P}_{\Omega}(\bm{X})]_{i,j} = \begin{cases}
+X_{i,j} &amp; \text{if }(i,j)\in\Omega \\
+0 &amp; \text{otherwise}
+\end{cases}
+$$&lt;p>换言之，$\mathcal{P}_{\Omega}$ 将任意矩阵正交投影到以指标集 $\Omega$ 作为支撑集的所有矩阵构成的空间上。&lt;/p></description></item><item><title>Ridge Regression</title><link>https://gaxu.xyz/posts/ridge-regression/</link><pubDate>Fri, 17 Mar 2023 13:37:45 +0800</pubDate><guid>https://gaxu.xyz/posts/ridge-regression/</guid><description>&lt;h2 id="内容提要">内容提要&lt;/h2>
 &lt;p>一周以前（3月7日）考计量期中，第一题是证明岭回归估计量的渐进分布的，我没有完整地写出来，这里面还是有些技巧，之前我并不熟悉，现在总结在这里。&lt;/p>
 &lt;h2 id="岭回归简介">岭回归简介&lt;/h2>
 &lt;p>Ridge regression，中文译名「岭回归」，是一种利用 &lt;em>&lt;a href="https://en.wikipedia.org/wiki/Regularization_(mathematics)">正则化方法&lt;/a>&lt;/em> 处理 &lt;em>&lt;a href="https://en.wikipedia.org/wiki/Well-posed_problem">不适定问题&lt;/a>&lt;/em> 的技术。我们知道，使用 OLS 时是要求自变量之间不存在完全多重共线性的，即回归元矩阵必须是列满秩的，否则最小二乘问题没有唯一解；但如果某些变量间的相关性很高，甚至接近完全相关，OLS 估计量的方差将会相当大，估计精度大大下降。这个问题在待估参数很多时常常发生。岭回归通过对系数向量的 $L^2$ 范数（的平方）施加一个惩罚，控制系数的整体大小，达到以一定程度的偏误换取更低方差的目的（见 &lt;a href="https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff">bias-variance tradeoff&lt;/a>）。&lt;/p>
@@ -153,7 +226,10 @@ $$&lt;p>其中 $\bm{Y} = (y_1,\dots,y_N)^\prime$，$\bm{X} = (\bm{x}_1,\dots,\bm
 $$
 \min_{\bm{\beta}}\quad \frac1n(\bm{Y}-\bm{X}\bm{\beta})^\prime(\bm{Y}-\bm{X}\bm{\beta}) + \lambda\bm{\beta}^\prime\bm{\beta}
 \tag{$*$}
-$$&lt;p>这里 $\lambda$ 是一个参数，它衡量了惩罚的大小。当 $\lambda=0$ 时，该问题就是 OLS；当 $\lambda\to\infty$ 时，$\bm{\beta} = \bm{0}$。事实上，这个问题等价于一个有约束的最小二乘：&lt;/p></description></item><item><title>Bayesian Persuasion</title><link>https://gaxu.xyz/posts/bayesian-persuasion/</link><pubDate>Wed, 08 Mar 2023 22:25:46 +0800</pubDate><guid>https://gaxu.xyz/posts/bayesian-persuasion/</guid><description>&lt;h2 id="内容提要">内容提要&lt;/h2>
+$$&lt;p>这里 $\lambda$ 是一个参数，它衡量了惩罚的大小。当 $\lambda=0$ 时，该问题就是 OLS；当 $\lambda\to\infty$ 时，$\bm{\beta} = \bm{0}$。事实上，这个问题等价于一个有约束的最小二乘：&lt;/p>
+$$
+\min_{\bm{\beta}}\quad (\bm{Y}-\bm{X}\bm{\beta})^\prime(\bm{Y}-\bm{X}\bm{\beta}) \qquad \text{s.t.}\quad \bm{\beta}^\prime\bm{\beta} = c^2
+$$&lt;p>其中 $c$ 为某个非负常数。可见我们是在 $p$ 维 Euclidean 空间中半径为 $c$ 的球面上寻找最小二乘估计量。&lt;/p></description></item><item><title>Bayesian Persuasion</title><link>https://gaxu.xyz/posts/bayesian-persuasion/</link><pubDate>Wed, 08 Mar 2023 22:25:46 +0800</pubDate><guid>https://gaxu.xyz/posts/bayesian-persuasion/</guid><description>&lt;h2 id="内容提要">内容提要&lt;/h2>
 &lt;p>本文是基于 Kamenica and Gentzkow (2011) 的学习笔记，仅对微观课上覆盖的内容做了分析，目的只是通过考试，并不是对文章的全面剖析，但由于上课时一头雾水，为了彻底理解均衡的概念，有必要深入学习。以下分为两节，第一节直接介绍模型框架和重要推论，第二节给出解题的一般方法，此方法是几何直观的，依赖于第一节的分析。&lt;/p>
 &lt;p>相比于普通的信号博弈，Bayesian persuasion 中的信号发送者表现得既像 informed，又像 uninformed。其 informed 的地方在于，发送者所发送的信号是条件于 state 的；其 uninformed 的地方在于，发送者最大化事前的期望效用（无条件期望）。此外，信号结构并非是给定的，而全由发送者决定，即内生化了。&lt;/p>
 &lt;p>如前所示，由于信号发送者全权决定信号结构，他可以将信号设计得非常复杂，为简化分析，我们作出一个重要假设：发送者必须如实地告知接收者信号的实现结果。这基本上是在假设信号只有一层。&lt;/p>

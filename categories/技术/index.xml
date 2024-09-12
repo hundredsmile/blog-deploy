@@ -6,4 +6,17 @@
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#81a1c1">cd&lt;/span> ~/.ssh
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ssh-keygen -t rsa -C &lt;span style="color:#a3be8c">&amp;#34;email@personal.com&amp;#34;&lt;/span> -f &lt;span style="color:#a3be8c">&amp;#34;gh-personal&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ssh-keygen -t rsa -C &lt;span style="color:#a3be8c">&amp;#34;email@work.com&amp;#34;&lt;/span> -f &lt;span style="color:#a3be8c">&amp;#34;gh-work&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>运行完了之后，在 &lt;code>.ssh&lt;/code> 文件夹下我们得到了四个文件：&lt;/p></description></item></channel></rss>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>运行完了之后，在 &lt;code>.ssh&lt;/code> 文件夹下我们得到了四个文件：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>gh-personal&lt;/code>&lt;/li>
+&lt;li>&lt;code>gh-personal.pub&lt;/code>&lt;/li>
+&lt;li>&lt;code>gh-work&lt;/code>&lt;/li>
+&lt;li>&lt;code>gh-work.pub&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>其中带 &lt;code>.pub&lt;/code> 扩展名的是存公钥的，不带的是存私钥的。&lt;/p>
+&lt;h2 id="分配私钥和公钥">分配私钥和公钥&lt;/h2>
+&lt;h3 id="将私钥加入-ssh-agent">将私钥加入 SSH Agent&lt;/h3>
+&lt;p>上一步只是生成了密钥，还需要把私钥加入 Mac 的钥匙串 (keychain)，也就是保存密码。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>ssh-add --apple-use-keychain ~/.ssh/gh-personal
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ssh-add --apple-use-keychain ~/.ssh/gh-work
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>选项 &lt;code>--apple-use-keychain&lt;/code> 就明确声明使用 Mac 的钥匙串系统存放密钥。&lt;/p></description></item></channel></rss>

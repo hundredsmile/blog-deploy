@@ -33,4 +33,29 @@ $$&lt;p>
 
 
 &lt;div class="thm">
- &lt;p id="thm:consistency" class="thm-title thm-theorem">Theorem 1.&lt;/p></description></item></channel></rss>
+ &lt;p id="thm:consistency" class="thm-title thm-theorem">Theorem 1.&lt;/p>
+ &lt;div class="thm-inner thm-theorem">
+ &lt;p>若事件 $A$ 成立，则
+&lt;/p>
+$$
+\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \leq 4\|\bm{\beta}^*\|_1\lambda_n
+$$
+ &lt;/div>
+&lt;/div>
+
+
+&lt;div class="thm">
+ &lt;button type="button" class="collapsible">&lt;div id="thm-proof-1" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
+ &lt;div class="proof-content">
+ &lt;div class="thm-inner-proof">
+ &lt;p>首先，我们证明如下基本不等式：
+&lt;/p>
+$$
+\frac{1}{2n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \leq \frac{1}{n}\bm{\varepsilon}'\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*) + \lambda_n(\|\bm{\beta}^*\|_1-\|\hat{\bm{\beta}}\|_1)
+$$&lt;p>
+此不等式事实上直接来自于
+&lt;/p>
+$$
+\frac{1}{2n}\|\bm{Y}-\bm{X}\hat{\bm{\beta}}\|_2^2 + \lambda_n\|\hat{\bm{\beta}}\|_1 \leq \frac{1}{2n}\|\bm{Y}-\bm{X}\bm{\beta}^*\|_2^2 + \lambda_n\|\bm{\beta}^*\|_1
+$$&lt;p>
+只需将 $\bm{Y} = \bm{X}\bm{\beta}^* + \bm{\varepsilon}$ 代入即可得到。&lt;/p></description></item></channel></rss>
