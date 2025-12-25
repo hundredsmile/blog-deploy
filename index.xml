@@ -1,51 +1,279 @@
-<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2024 嘉树.</copyright><lastBuildDate>Wed, 04 Sep 2024 13:33:52 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>LASSO 的收敛</title><link>https://gaxu.xyz/posts/lasso/</link><pubDate>Wed, 04 Sep 2024 13:33:52 +0800</pubDate><guid>https://gaxu.xyz/posts/lasso/</guid><description>嘉树的世界 https://gaxu.xyz/posts/lasso/ -&lt;h2 id="线性模型">线性模型&lt;/h2>
-&lt;p>通篇考虑线性模型
-&lt;/p>
+<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Thu, 25 Dec 2025 13:21:12 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>非参数识别</title><link>https://gaxu.xyz/posts/nonparam-ident/</link><pubDate>Thu, 25 Dec 2025 13:21:12 +0800</pubDate><guid>https://gaxu.xyz/posts/nonparam-ident/</guid><description>嘉树的世界 https://gaxu.xyz/posts/nonparam-ident/ -&lt;p&gt;这篇是阅读 Matzkin (2007) 的笔记，简要介绍了非参数识别的理论。这里只摘录可加模型和不可加模型的函数形式的识别，其他泛函形式（诸如导数和差值）和更多非参模型的识别请参考原文。&lt;/p&gt;
+&lt;p&gt;当我们在估计一个模型中的元素时，要做的第一件事就是确定此元素的可识别性，换句话说，我们要确定这个元素是否可以被唯一地确定出来。在参数模型中，这个问题相对简单，因为我们的目标事实上就是这些参数，我们可以对模型中的函数和分布施加参数化的限制，从而保证参数的唯一性，这在没有大数据集和计算机的能力没那么强的年代是一个标准做法。然而，随着计算机能力的提升和大数据的普及，我们不再满足于参数化的方法，考虑非参数的更复杂的函数和分布成为可能。此时，要问的问题不再是某几个参数是不是能被识别的，而是模型中的函数和分布在一个函数族或分布族中是不是能被识别的。&lt;/p&gt;
+&lt;h2 id="计量模型"&gt;计量模型&lt;/h2&gt;
+&lt;h3 id="从经济模型到计量模型"&gt;从经济模型到计量模型&lt;/h3&gt;
+&lt;p&gt;一个经济模型，通常描述了经济代理人 (agents) 及其目标函数、信息集和他们之间的交互作用。当我们计量人试图用这个模型去拟合现实数据时，需要确定哪些变量是可观测的和不可观测的，哪些变量是内生的和外生的。我们用 $X$ 表示所有的&lt;em&gt;外生可观测变量&lt;/em&gt;，其长度为 $K$，用 $\varepsilon$ 表示所有的&lt;em&gt;外生不可观测变量&lt;/em&gt;，其长度为 $L$，用 $Y$ 表示所有的&lt;em&gt;内生可观测变量&lt;/em&gt;，其长度为 $G$，用 $\Upsilon$ 表示所有的&lt;em&gt;内生不可观测变量&lt;/em&gt;，其长度为 $G^\Upsilon$。&lt;/p&gt;
+&lt;p&gt;除此之外，一个经济模型通常还包含了一些函数和分布，其中有一些函数和分布是基本的 (primitive)，意思是它们被决定于模型之外。令 $\underline{h}$ 表示所有基本的函数，$\underline{F}$ 表示所有基本的分布。我们将这些基本函数和分布同前述变量的内在联系通过一个已知向量函数 $v$ 及如下方程（组）刻画：
+&lt;/p&gt;
+$$
+v(Y,\Upsilon,X,\varepsilon;\underline{h},\underline{F}) = 0
+$$&lt;p&gt;
+此方程可用于导出可观测变量 $(Y,X)$ 的联合分布，作为模型的基本要素 $(\underline{h},\underline{F})$ 的函数。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="def:primitive" class="thm-title thm-example"&gt;Example 1.&lt;/p&gt;
+&lt;div class="thm-inner thm-example"&gt;
+&lt;p&gt;考虑一个简单的需求模型，有两种商品，一种消费品和一种复合商品。令 $I$ 表示消费者收入，复合商品的价格为 1 而消费品的价格为 $p$。用 $y$ 和 $z$ 表示消费者对消费品和复合商品的需求量。假设经济模型描述了消费者的目标是在不花费超过其收入的情况下最大化其效用 $U$。这里 $U$ 是严格递增的、严格凹的、两次可导的，并且除了 $(y,z)$ 之外，$U$ 还依赖于消费者的可观测的其他社会经济特征，诸如年龄、婚姻状况等，这些因素记作 $w$，以及其他的观测不到的影响偏好的因素，记作 $\varepsilon$。那么，所观测到的需求 $(y,z)$ 满足
+&lt;/p&gt;
+$$
+(y,z) = \arg\max_{\tilde{y},\tilde{z}} \{U(\tilde{y},\tilde{z},w,\varepsilon) \mid p\tilde{y}+\tilde{z} \leq I\}
+$$&lt;p&gt;
+由单调性，所有的收入都会被花光，因此有
+&lt;/p&gt;
+$$
+\begin{align*}
+y &amp;= \arg\max_{\tilde{y}} \{U(\tilde{y},I-p\tilde{y},w,\varepsilon) \mid \tilde{y} \leq I/p\} \\
+z &amp;= I-p\tilde{y}
+\end{align*}
+$$&lt;p&gt;
+再根据可微性、严格凹性和最优性，我们得到
+&lt;/p&gt;
+$$
+U_{\tilde{y}}(y,I-py,w,\varepsilon) - pU_{\tilde{z}}(y,I-py,w,\varepsilon) = 0
+$$&lt;p&gt;
+在这个模型中，收入 $I$、特征 $w$ 和价格 $p$ 是外生可观测变量，而 $\varepsilon$ 是外生不可观测变量，需求量 $y$ 和 $z$ 则是内生可观测变量。效用函数 $U$ 是未知基本函数，而 $(p,I,w,\varepsilon)$ 是未知基本分布。给定任意满足可微性、单调性和凹性的效用函数 $U$，并给定任意 $(p,I,w,\varepsilon)$ 的分布，我们可以用以上方程导出可观测变量 $(y,z,p,I,w)$ 的联合分布:
+&lt;/p&gt;
+$$
+\begin{align*}
+v(Y,X,\varepsilon) &amp;= v(y,z,p,I,w,\varepsilon) \\
+&amp;= U_y(y,I-py,w,\varepsilon) - pU_z(y,I-py,w,\varepsilon) \\
+&amp;= 0
+\end{align*}
+$$&lt;p&gt;
+显然，对于给定的 $(p,I,w,\varepsilon)$，满足以上方程的 $y$ 是唯一的。用 $m(p,I,w,\varepsilon)$ 表示这个映射，它就是需求函数。我们将需求模型
+&lt;/p&gt;
+$$
+Y = m(p,I,w,\varepsilon)
+$$&lt;p&gt;
+称为 reduced form 模型，它将可观测和不可观测的外生变量映射到可观测的内生变量。这个表达不需要表明它背后所依赖的均衡条件，因此它被称为 reduced form。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2 id="识别"&gt;识别&lt;/h2&gt;
+&lt;p&gt;我们将满足一个模型所施加限制的所有函数和分布的集合记作 $S$，将 $S$ 中的任意元素记作 $\zeta$，其真实值我们用 $\zeta^*$ 表示。对 $\zeta\in S$，将 $\zeta$ 所引致的可观测变量的分布记作 $F_{Y,X}(\cdot,\cdot;\zeta)$，而由 $\zeta^*$ 引致的可观测变量的分布 $F_{Y,X}(\cdot,\cdot;\zeta^*)$ 有时我们就简写作 $F_{Y,X}$。&lt;/p&gt;
+&lt;p&gt;给定一个模型和相应的 $\zeta^*$，以及一个满足了 $\zeta^*$ 被要求满足的所有限制的函数和分布向量的集合 $S$，我们想知道 $\zeta^*$ 中的哪些元素可以被 $F_{Y,X}$ 唯一地确定。更一般地，我们想知道 $\zeta^*$ 的哪些特征 (features) 可以被 $F_{Y,X}$ 唯一地确定。这里“特征”的意思是任意函数 $\Psi\colon S\to\Omega$，其中 $\Omega$ 是一个任意的集合。它可以是 $\zeta$ 的一个元素，也可以是某一个性质，例如 $\zeta^*$ 中某个函数的导数的符号。令 $\psi^* = \Psi(\zeta^*)$ 表示 $\zeta^*$ 的特征的真实值。由于 $\zeta\in S$，我们用 $\Psi(S)$ 表示所有可能的特征的集合。对于 $\psi\in\Psi(S)$，定义
+&lt;/p&gt;
+$$
+\Gamma_{Y,X}(\psi,S) = \{F_{Y,X}(\cdot,\cdot;\zeta) \mid \zeta\in S, \Psi(\zeta) = \psi\}
+$$&lt;p&gt;
+它表示所有满足 $\Psi(\zeta) = \psi$ 的 $\zeta$ 所引致的可观测变量的分布的集合。&lt;/p&gt;
+&lt;p&gt;一个重要的概念是&lt;em&gt;观测等价 (observational equivalence)&lt;/em&gt;。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="def:observational-equivalence" class="thm-title thm-definition"&gt;Definition 2.&lt;/p&gt;
+&lt;div class="thm-inner thm-definition"&gt;
+称特征 $\psi,\psi'\in\Omega$ 在模型 $S$ 中是观测等价的 (observationally equivalent)，如果 $\Gamma_{Y,X}(\psi,S) \cup \Gamma_{Y,X}(\psi',S) \neq \emptyset$。
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;相对地，当没有观测等价时，我们就说 $\psi^*$ 是&lt;em&gt;被识别的 (identified)&lt;/em&gt;。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="def:identified" class="thm-title thm-definition"&gt;Definition 3.&lt;/p&gt;
+&lt;div class="thm-inner thm-definition"&gt;
+称特征 $\psi^*\in\Omega$ 在模型 $S$ 中是被识别的 (identified)，如果对任意 $\psi\in\Omega$ 且 $\psi\neq\psi^*$，都有 $\Gamma_{Y,X}(\psi,S) \cup \Gamma_{Y,X}(\psi^*,S) = \emptyset$。
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3 id="可加模型的识别"&gt;可加模型的识别&lt;/h3&gt;
+&lt;p&gt;考虑模型
+&lt;/p&gt;
+$$
+Y = g^*(X) + \varepsilon
+$$&lt;p&gt;
+其中 $g^*$ 是一个未知的连续函数，$X\in\mathbb{R}^K$ 是可观测解释变量，$\varepsilon$ 是不可观测解释变量。&lt;/p&gt;
+&lt;p&gt;假设我们感兴趣的对象是 $g^*(\bar{x})$，其中 $\bar{x}$ 是 $X$ 的一个特定的值。对任意 $(\varepsilon,X)$ 的分布 $\tilde{F}_{\varepsilon,X}$，记 $\mathbb{E}[\varepsilon \mid X=x;\tilde{F}_{\varepsilon,X}]$ 为在给定 $X=x$ 时以 $\tilde{F}_{\varepsilon,X}$ 计算的 $\varepsilon$ 的条件期望。记 $\tilde{f}_X$ 为边缘分布 $\tilde{F}_X$ 的密度函数。函数 $g$ 是一个连续函数，分布 $\tilde{F}_{\varepsilon,X}$ 满足：(i) $\tilde{f}_X(\bar{x}) &gt; 0$ 且 $\tilde{f}_X$ 在 $\bar{x}$ 处连续；(ii) $\mathbb{E}[\varepsilon \mid X=\bar{x};\tilde{F}_{\varepsilon,X}] = 0$ 且 $\mathbb{E}[\varepsilon\mid X=x;\tilde{F}_{\varepsilon,X}]$ 在 $\bar{x}$ 处连续。将满足上述限制的函数和分布的集合记作 $S$。令 $\Omega$ 表示 $\psi^* = g^*(\bar{x})$ 所有可能取值的集合。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="prop:additive-model" class="thm-title thm-proposition"&gt;Proposition 4.&lt;/p&gt;
+&lt;div class="thm-inner thm-proposition"&gt;
+$\psi^* = g^*(\bar{x})$ 在模型 $S$ 中是被识别的。
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="thm"&gt;
+&lt;button type="button" class="collapsible"&gt;&lt;div id="thm-proof-1" class="thm-title-proof"&gt;Proof.&lt;/div&gt;&lt;/button&gt;
+&lt;div class="proof-content"&gt;
+&lt;div class="thm-inner-proof"&gt;
+&lt;p&gt;设 $(g^*,F_{\varepsilon,X}'),(\tilde{g},\tilde{F}_{\varepsilon,X})\in S$ 且 $\tilde{g}(\bar{x}) \neq g^*(\bar{x})$。我们有
+&lt;/p&gt;
+$$
+\begin{align*}
+\mathbb{E}[Y \mid X=\bar{x};\tilde{g},\tilde{F}_{\varepsilon,X}] &amp;= \tilde{g}(\bar{x}) + \mathbb{E}[\varepsilon \mid X=\bar{x};\tilde{F}_{\varepsilon,X}] = \tilde{g}(\bar{x}) \\
+\mathbb{E}[Y \mid X=\bar{x};g^*,F_{\varepsilon,X}'] &amp;= g^*(\bar{x}) + \mathbb{E}[\varepsilon \mid X=\bar{x};F_{\varepsilon,X}'] = g^*(\bar{x})
+\end{align*}
+$$&lt;p&gt;
+两个函数都在 $\bar{x}$ 处连续，于是
+&lt;/p&gt;
+$$
+F_{Y,X}(\cdot,\cdot;\tilde{g},\tilde{F}_{\varepsilon,X}) \neq F_{Y,X}(\cdot,\cdot;g^*,F_{\varepsilon,X}')
+$$&lt;p&gt;
+从而 $\psi^*$ 是识别的。简单来说就是条件均值不同，分布肯定就不同。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="thm-end-proof"&gt;
+&lt;i class="fas fa-square"&gt;&lt;/i&gt; &lt;a href="#thm-proof-1"&gt;&lt;i class="fas fa-arrow-circle-up"&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;当 $g^*$ 可被识别，我们也能识别 $F_{\varepsilon,X}^*$。假设边缘分布 $F_X$ 有处处正的密度。令 $S$ 为满足以下限制的函数和分布的集合：$\tilde{g}$ 是连续函数，$\tilde{F}_{\varepsilon,X}$ 满足 $\mathbb{E}[\varepsilon \mid X=x;\tilde{F}_{\varepsilon,X}]$ 关于 $x$ 处处连续且处处等于 0。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="prop:identify-F-epsilon-X" class="thm-title thm-proposition"&gt;Proposition 5.&lt;/p&gt;
+&lt;div class="thm-inner thm-proposition"&gt;
+$\psi^* = (g^*,F_{\varepsilon,X}^*)$ 在模型 $S$ 中是被识别的。
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="thm"&gt;
+&lt;button type="button" class="collapsible"&gt;&lt;div id="thm-proof-2" class="thm-title-proof"&gt;Proof.&lt;/div&gt;&lt;/button&gt;
+&lt;div class="proof-content"&gt;
+&lt;div class="thm-inner-proof"&gt;
+&lt;p&gt;首先用和之前相同的方法我们可以证明对任意 $x$，$g^*(x)$ 都是被识别的。注意到
+&lt;/p&gt;
+$$
+\begin{align*}
+F_{Y|X=x}(y) &amp;= \mathbb{P}(Y\leq y \mid X=x) \\
+&amp;= \mathbb{P}\bigl(g^*(X)+\varepsilon\leq y \mid X=x\bigr) \\
+&amp;= \mathbb{P}\bigl(\varepsilon\leq y-g^*(x) \mid X=x\bigr) \\
+&amp;= F_{\varepsilon|X=x}(y-g^*(x))
+\end{align*}
+$$&lt;p&gt;
+由于边缘密度 $f_X^*$ 处处正且是被识别的（因为来自数据），所以 $F_{\varepsilon,X}^*$ 也是被识别的。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="thm-end-proof"&gt;
+&lt;i class="fas fa-square"&gt;&lt;/i&gt; &lt;a href="#thm-proof-2"&gt;&lt;i class="fas fa-arrow-circle-up"&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3 id="非可加模型的识别"&gt;非可加模型的识别&lt;/h3&gt;
+&lt;p&gt;考虑非可加模型（nonadditive model）：
+&lt;/p&gt;
+$$
+Y = m^*(X,\varepsilon)
+$$&lt;p&gt;
+由于比可加模型更加一般化，不难想到欲识别函数 $m^*$ 和分布 $F_{\varepsilon,X}^*$ 我们需要施加更强的限制。事实上，Matzkin (2003, Lemma 1) 证明了，即便 $m^*$ 关于 $\varepsilon$ 严格递增且 $X$ 和 $\varepsilon$ 独立，$m^*$ 也不一定被识别。&lt;/p&gt;
+&lt;p&gt;令 $S$ 为满足以下限制的 $(m,F_{\varepsilon})$ 的集合：$\tilde{m}\colon \Xi\times R\to R$ 在 $\Xi\times R$ 上连续且关于 $\varepsilon$ 严格递增，$\tilde{F}_{\varepsilon}$ 在 $R$ 上连续且严格递增。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="prop:nonadditive-model" class="thm-title thm-proposition"&gt;Proposition 6.&lt;/p&gt;
+&lt;div class="thm-inner thm-proposition"&gt;
+$m,\tilde{m}\in\Omega$ 是观测等价的当且仅当对于某个连续且严格递增的函数 $s\colon R\to R$ 和任意 $x\in\Xi$ 及 $\varepsilon\in R$ 都有 $\tilde{m}(x,s(\varepsilon)) = m(x,\varepsilon)$。
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="thm"&gt;
+&lt;button type="button" class="collapsible"&gt;&lt;div id="thm-proof-3" class="thm-title-proof"&gt;Proof.&lt;/div&gt;&lt;/button&gt;
+&lt;div class="proof-content"&gt;
+&lt;div class="thm-inner-proof"&gt;
+&lt;p&gt;设 $m,\tilde{m}\in\Omega$ 是观测等价的，则存在连续且严格递增的 $F_\varepsilon,\tilde{F}_\varepsilon$ 使得对任意的 $x\in\Xi$ 及 $\varepsilon\in R$ 都有
+&lt;/p&gt;
+$$
+F_{Y|X=x}(y;m,F_\varepsilon) = F_{Y|X=x}(y;\tilde{m},\tilde{F}_\varepsilon)
+$$&lt;p&gt;
+用 $r(x,\cdot)$ 和 $\tilde{r}(x,\cdot)$ 表示 $m(x,\cdot)$ 和 $\tilde{m}(x,\cdot)$ 的反函数。由于对所有的 $y,x$
+&lt;/p&gt;
+$$
+\begin{align*}
+F_{Y|X=x}(y;m,F_\varepsilon) &amp;= \mathbb{P}(Y\leq y \mid X=x; m,F_\varepsilon) = F_{\varepsilon}(r(x,y)) \\
+F_{Y|X=x}(y;\tilde{m},\tilde{F}_\varepsilon) &amp;= \mathbb{P}(Y\leq y \mid X=x; \tilde{m},\tilde{F}_\varepsilon) = \tilde{F}_\varepsilon(\tilde{r}(x,y))
+\end{align*}
+$$&lt;p&gt;
+这意味着
+&lt;/p&gt;
+$$
+F_{\varepsilon}(r(x,y)) = \tilde{F}_\varepsilon(\tilde{r}(x,y))
+$$&lt;p&gt;
+因为 $F_\varepsilon$ 和 $\tilde{F}_\varepsilon$ 是严格递增的且连续的，所以 $s(t) = \tilde{F}^{-1}_\varepsilon(F_\varepsilon(t))$ 是严格递增的且连续的，且 $\tilde{r}(x,y) = s(r(x,y))$。记 $y = m(x,\varepsilon)$。利用 $\tilde{r}$ 是 $\tilde{m}$ 的反函数，有
+&lt;/p&gt;
+$$
+y = \tilde{m}(x,\tilde{r}(x,y)) = \tilde{m}(x,s(r(x,y))) = \tilde{m}(x,s(\varepsilon))
+$$&lt;p&gt;
+因此 $m(x,\varepsilon) = \tilde{m}(x,s(\varepsilon))$。&lt;/p&gt;
+&lt;p&gt;另一方面，假设存在一个连续且严格递增的函数 $s$，对所有 $x\in\Xi$ 及 $\varepsilon\in R$ 都有 $m(x,\varepsilon) = \tilde{m}(x,s(\varepsilon))$。令 $\tilde{\varepsilon} = s(\varepsilon)$ 并以 $\tilde{F}_{\varepsilon}$ 表示 $\tilde{\varepsilon}$ 的分布。那么，对所有 $y,x$
+&lt;/p&gt;
+$$
+\begin{align*}
+F_{Y|X=x}(y;m,F_\varepsilon) &amp;= \mathbb{P}(Y\leq y \mid X=x; m,F_\varepsilon) = F_{\varepsilon}(r(x,y)) \\
+F_{Y|X=x}(y;\tilde{m},\tilde{F}_\varepsilon) &amp;= \mathbb{P}(Y\leq y \mid X=x; \tilde{m},\tilde{F}_\varepsilon) = \tilde{F}_\varepsilon(\tilde{r}(x,y))
+\end{align*}
+$$&lt;p&gt;
+这意味着 $m$ 和 $\tilde{m}$ 是观测等价的。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="thm-end-proof"&gt;
+&lt;i class="fas fa-square"&gt;&lt;/i&gt; &lt;a href="#thm-proof-3"&gt;&lt;i class="fas fa-arrow-circle-up"&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;简单来说，这个命题表明，即便我们对 $m^*$ 和 $F_{\varepsilon,X}^*$ 施加了单调性限制，也无法识别出 $m^*$。只要有一个严格单调变化 $s$ 使得 $\tilde{m}(x,s(\varepsilon)) = m(x,\varepsilon)$，则 $Y|X$ 的分布在两个模型下完全相同。为了识别 $m^*$，我们需要额外的限制。一种简单的限制是进行归一化 (normalization)。选一个点 $\bar{x}$，要求 $f_X(\bar{x}) &gt; 0$ 且在该点处连续，也就是说该点在数据集中“真的存在”。然后要求 $m(\bar{x},\varepsilon) = \varepsilon$，这一要求是为了固定 $\varepsilon$ 的坐标系。在这个限制下，反函数 $r$ 满足
+&lt;/p&gt;
+$$
+r(x,m(x,\varepsilon)) = \varepsilon \Rightarrow r(\bar{x},\varepsilon) = \varepsilon
+$$&lt;p&gt;
+根据前面的证明，如果 $m$ 和 $\tilde{m}$ 是观测等价的，则存在一个严格单调的 $s$ 使得
+&lt;/p&gt;
+$$
+\tilde{r}(x,\varepsilon) = s(r(x,\varepsilon))
+$$&lt;p&gt;
+取 $x=\bar{x}$，则有
+&lt;/p&gt;
+$$
+\varepsilon = \tilde{r}(\bar{x},\varepsilon) = s(r(\bar{x},\varepsilon)) = s(\varepsilon)
+$$&lt;p&gt;
+这表明 $s$ 是一个恒等映射，因此 $m=\tilde{m}$，这就实现了识别。&lt;/p&gt;
+&lt;p&gt;显然，如果 $m^*$ 可识别，则 $F_{\varepsilon}^*$ 也可以被识别，因为对任意 $e,x$
+&lt;/p&gt;
+$$
+\begin{align*}
+F_\varepsilon^*(e) &amp;= \mathbb{P}(\varepsilon\leq e) = \mathbb{P}(\varepsilon\leq e \mid X=x) \\
+&amp;= \mathbb{P}(m^*(X,\varepsilon)\leq m^*(x,e) \mid X=x) \\
+&amp;= F_{Y|X=x}(m^*(x,e))
+\end{align*}
+$$&lt;p&gt;
+第二个等式利用了独立性，第三个是单调性。&lt;/p&gt;
+&lt;p&gt;从上面这个式子也可以看出，如果 $F_\varepsilon^*$ 被确定了，那么 $m^*$ 也就被识别了，因为
+&lt;/p&gt;
+$$
+m^*(x,e) = F_{Y|X=x}^{-1}(F_\varepsilon^*(e))
+$$&lt;p&gt;
+换言之，一种实现对 $m^*$ 进行识别的归一化方法是假设 $\varepsilon$ 的分布。&lt;/p&gt;
+&lt;h2 id="参考文献"&gt;参考文献&lt;/h2&gt;
+&lt;p&gt;Matzkin, V. (2007). &lt;em&gt;Chapter 73 Nonparametric Identification&lt;/em&gt;. In &lt;em&gt;Handbook of Econometrics&lt;/em&gt;, Volume 6B, Chapter 73, Pages 5307-5368. Elsevier.&lt;/p&gt;
+- https://gaxu.xyz/posts/nonparam-ident/ - 2023–2025 嘉树.</description></item><item><title>LASSO 的收敛</title><link>https://gaxu.xyz/posts/lasso/</link><pubDate>Wed, 04 Sep 2024 13:33:52 +0800</pubDate><guid>https://gaxu.xyz/posts/lasso/</guid><description>嘉树的世界 https://gaxu.xyz/posts/lasso/ -&lt;h2 id="线性模型"&gt;线性模型&lt;/h2&gt;
+&lt;p&gt;通篇考虑线性模型
+&lt;/p&gt;
 $$
 \bm{Y} = \bm{X}\bm{\beta}^* + \bm{\varepsilon}
-$$&lt;p>
-其中 $\bm{\varepsilon}\in\text{subG}_n(\sigma^2)$，这表示对任意 $\bm{v}\in\mathbb{R}^n$ 且 $\|\bm{v}\|_2\leq1$，$\bm{v}'\bm{\varepsilon}\in\text{subG}(\sigma^2)$。此外，假设 $\bm{X}$ 是固定的。&lt;/p>
-&lt;p>LASSO 估计量就是
-&lt;/p>
+$$&lt;p&gt;
+其中 $\bm{\varepsilon}\in\text{subG}_n(\sigma^2)$，这表示对任意 $\bm{v}\in\mathbb{R}^n$ 且 $\|\bm{v}\|_2\leq1$，$\bm{v}'\bm{\varepsilon}\in\text{subG}(\sigma^2)$。此外，假设 $\bm{X}$ 是固定的。&lt;/p&gt;
+&lt;p&gt;LASSO 估计量就是
+&lt;/p&gt;
 $$
 \hat{\bm{\beta}} := \arg\min_{\bm{\beta}\in\mathbb{R}^p} \frac{1}{2n}\|\bm{Y}-\bm{X}\bm{\beta}\|_2^2 + \lambda_n\|\bm{\beta}\|_1
-$$&lt;p>
-$\ell_1$ 范数作为惩罚项使得解具有稀疏性 (sparsity)。&lt;/p>
-&lt;h2 id="预测误差的界">预测误差的界&lt;/h2>
-&lt;p>我们考察均方预测误差 (mean squared prediction error, MSPE)：
-&lt;/p>
+$$&lt;p&gt;
+$\ell_1$ 范数作为惩罚项使得解具有稀疏性 (sparsity)。&lt;/p&gt;
+&lt;h2 id="预测误差的界"&gt;预测误差的界&lt;/h2&gt;
+&lt;p&gt;我们考察均方预测误差 (mean squared prediction error, MSPE)：
+&lt;/p&gt;
 $$
 \text{MSPE} = \frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2
-$$&lt;p>
-下面我们会给出它的界。&lt;/p>
-&lt;p>记事件 $A := \{\lambda_n \geq \frac1n\|\bm{X}'\bm{\varepsilon}\|_{\infty}\}$。&lt;/p>
-&lt;div class="thm">
-&lt;p id="thm:consistency" class="thm-title thm-theorem">Theorem 1.&lt;/p>
-&lt;div class="thm-inner thm-theorem">
-&lt;p>若事件 $A$ 成立，则
-&lt;/p>
+$$&lt;p&gt;
+下面我们会给出它的界。&lt;/p&gt;
+&lt;p&gt;记事件 $A := \{\lambda_n \geq \frac1n\|\bm{X}'\bm{\varepsilon}\|_{\infty}\}$。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="thm:consistency" class="thm-title thm-theorem"&gt;Theorem 1.&lt;/p&gt;
+&lt;div class="thm-inner thm-theorem"&gt;
+&lt;p&gt;若事件 $A$ 成立，则
+&lt;/p&gt;
 $$
 \frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \leq 4\|\bm{\beta}^*\|_1\lambda_n
 $$
-&lt;/div>
-&lt;/div>
-&lt;div class="thm">
-&lt;button type="button" class="collapsible">&lt;div id="thm-proof-1" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
-&lt;div class="proof-content">
-&lt;div class="thm-inner-proof">
-&lt;p>首先，我们证明如下基本不等式：
-&lt;/p>
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="thm"&gt;
+&lt;button type="button" class="collapsible"&gt;&lt;div id="thm-proof-1" class="thm-title-proof"&gt;Proof.&lt;/div&gt;&lt;/button&gt;
+&lt;div class="proof-content"&gt;
+&lt;div class="thm-inner-proof"&gt;
+&lt;p&gt;首先，我们证明如下基本不等式：
+&lt;/p&gt;
 $$
 \frac{1}{2n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \leq \frac{1}{n}\bm{\varepsilon}'\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*) + \lambda_n(\|\bm{\beta}^*\|_1-\|\hat{\bm{\beta}}\|_1)
-$$&lt;p>
+$$&lt;p&gt;
 此不等式事实上直接来自于
-&lt;/p>
+&lt;/p&gt;
 $$
 \frac{1}{2n}\|\bm{Y}-\bm{X}\hat{\bm{\beta}}\|_2^2 + \lambda_n\|\hat{\bm{\beta}}\|_1 \leq \frac{1}{2n}\|\bm{Y}-\bm{X}\bm{\beta}^*\|_2^2 + \lambda_n\|\bm{\beta}^*\|_1
-$$&lt;p>
-只需将 $\bm{Y} = \bm{X}\bm{\beta}^* + \bm{\varepsilon}$ 代入即可得到。&lt;/p>
-&lt;p>以下给出 $\frac{1}{2n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2$ 的界：
-&lt;/p>
+$$&lt;p&gt;
+只需将 $\bm{Y} = \bm{X}\bm{\beta}^* + \bm{\varepsilon}$ 代入即可得到。&lt;/p&gt;
+&lt;p&gt;以下给出 $\frac{1}{2n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2$ 的界：
+&lt;/p&gt;
 $$
 \begin{align*}
 \frac{1}{2n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 &amp;\leq \frac{1}{n}\bm{\varepsilon}'\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*) + \lambda_n(\|\bm{\beta}^*\|_1-\|\hat{\bm{\beta}}\|_1) \\
@@ -54,29 +282,29 @@ $$
 &amp;= \|\hat{\bm{\beta}}\|_1\biggl(\frac{1}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty-\lambda_n\biggr) + \|\bm{\beta}^*\|_1\biggl(\frac{1}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty+\lambda_n\biggr) \\
 &amp;\leq 2\lambda_n\|\bm{\beta}^*\|_1
 \end{align*}
-$$&lt;p>
-第二行使用了 Hölder 不等式，第三行使用了三角不等式，最后一行是因为事件 $A$ 成立。&lt;/p>
-&lt;/div>
-&lt;div class="thm-end-proof">
-&lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-1">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
-&lt;/div>
-&lt;/div>
-&lt;/div>
-&lt;p>关于此定理有几点需要注意：&lt;/p>
-&lt;ol>
-&lt;li>不等式所给出的界取决于调谐参数 $\lambda_n$，而它又取决于样本量 $n$。&lt;/li>
-&lt;li>此不等式在事件 $A$ 上成立，因此如果事件 $A$ 有很大概率发生，则此不等式也有很大概率发生（不低于事件 $A$ 发生的概率）。&lt;/li>
-&lt;/ol>
-&lt;h2 id="lambda_n-的选取和-lasso-的慢率">$\lambda_n$ 的选取和 LASSO 的慢率&lt;/h2>
-&lt;p>我们当然希望 $\lambda_n$ 越小越好，我们特别希望 $\lambda_n\|\bm{\beta}^*\|=o(1)$，因为这样预测误差就会收敛。但是我们又要保证事件 $A$ 发生的概率，所以 $\lambda_n$ 又不能过小，或者说我们要限制 $\frac1n\|\bm{X}'\bm{\varepsilon}\|_{\infty}$。为此，我们对 $\bm{X}$ 施加一个额外的假设。&lt;/p>
-&lt;div class="thm">
-&lt;p id="assump:max" class="thm-title thm-assumption">Assumption 2.&lt;/p>
-&lt;div class="thm-inner thm-assumption">
-设 $\max_j\|\bm{X}_j\|\leq\sqrt{Cn}$ 对某个 $C>0$ 成立，这里 $\bm{X}_j$ 是 $\bm{X}$ 的第 $j$ 列。
-&lt;/div>
-&lt;/div>
-&lt;p>在这个假设下，对任意 $t>0$ 我们有
-&lt;/p>
+$$&lt;p&gt;
+第二行使用了 Hölder 不等式，第三行使用了三角不等式，最后一行是因为事件 $A$ 成立。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="thm-end-proof"&gt;
+&lt;i class="fas fa-square"&gt;&lt;/i&gt; &lt;a href="#thm-proof-1"&gt;&lt;i class="fas fa-arrow-circle-up"&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;关于此定理有几点需要注意：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;不等式所给出的界取决于调谐参数 $\lambda_n$，而它又取决于样本量 $n$。&lt;/li&gt;
+&lt;li&gt;此不等式在事件 $A$ 上成立，因此如果事件 $A$ 有很大概率发生，则此不等式也有很大概率发生（不低于事件 $A$ 发生的概率）。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="的选取和-lasso-的慢率"&gt;$\lambda_n$ 的选取和 LASSO 的慢率&lt;/h2&gt;
+&lt;p&gt;我们当然希望 $\lambda_n$ 越小越好，我们特别希望 $\lambda_n\|\bm{\beta}^*\|=o(1)$，因为这样预测误差就会收敛。但是我们又要保证事件 $A$ 发生的概率，所以 $\lambda_n$ 又不能过小，或者说我们要限制 $\frac1n\|\bm{X}'\bm{\varepsilon}\|_{\infty}$。为此，我们对 $\bm{X}$ 施加一个额外的假设。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="assump:max" class="thm-title thm-assumption"&gt;Assumption 2.&lt;/p&gt;
+&lt;div class="thm-inner thm-assumption"&gt;
+设 $\max_j\|\bm{X}_j\|\leq\sqrt{Cn}$ 对某个 $C&gt;0$ 成立，这里 $\bm{X}_j$ 是 $\bm{X}$ 的第 $j$ 列。
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;在这个假设下，对任意 $t&gt;0$ 我们有
+&lt;/p&gt;
 $$
 \begin{align*}
 \mathbb{P}\biggl\{\frac{1}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty\geq t\biggr\} &amp;= \mathbb{P}\biggl\{\frac{1}{n}\max_j|\bm{X}_j'\bm{\varepsilon}|\geq t\biggr\} \\
@@ -84,121 +312,121 @@ $$
 &amp;\leq \sum_j \mathbb{P}\biggl\{\frac{|\bm{X}_j'\bm{\varepsilon}|}{n\|\bm{X}_j\|_2}\geq\frac{t}{\|\bm{X}_j\|_2}\biggr\} \\
 &amp;\leq 2p\exp\biggl(-\frac{t^2n}{2\sigma^2C}\biggr)
 \end{align*}
-$$&lt;p>
-最后一行利用了 sub-Gaussian 的性质：如果 $X\in\text{subG}(\sigma^2)$，则对任意 $t>0$ 有
-&lt;/p>
+$$&lt;p&gt;
+最后一行利用了 sub-Gaussian 的性质：如果 $X\in\text{subG}(\sigma^2)$，则对任意 $t&gt;0$ 有
+&lt;/p&gt;
 $$
 \mathbb{P}\{X\geq t\} \leq \exp\biggl(-\frac{t^2}{2\sigma^2}\biggr)
-$$&lt;p>给定一个 $\delta>0$，我们选择
-&lt;/p>
+$$&lt;p&gt;给定一个 $\delta&gt;0$，我们选择
+&lt;/p&gt;
 $$
 t = \sqrt{\frac{2\sigma^2C}{n}[\log(1/\delta)+\log(2p)]}
-$$&lt;p>
+$$&lt;p&gt;
 那么以上概率就会
-&lt;/p>
+&lt;/p&gt;
 $$
 \mathbb{P}\biggl\{\frac{1}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty\geq t\biggr\} \leq 2p\exp\biggl(-\frac{t^2n}{2\sigma^2C}\biggr) \leq \delta
-$$&lt;p>也就是说，我们取 $\lambda_n$ 为上述 $t$ 值，那么事件 $A$ 发生的概率就至少是 $1-\delta$。我们有以下推论。&lt;/p>
-&lt;div class="thm">
-&lt;p id="coro:slowrate" class="thm-title thm-corollary">Corollary 3 (Slow rate for the LASSO).&lt;/p>
-&lt;div class="thm-inner thm-corollary">
-&lt;p>至少以概率 $1-\delta$，我们有
-&lt;/p>
+$$&lt;p&gt;也就是说，我们取 $\lambda_n$ 为上述 $t$ 值，那么事件 $A$ 发生的概率就至少是 $1-\delta$。我们有以下推论。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="coro:slowrate" class="thm-title thm-corollary"&gt;Corollary 3 (Slow rate for the LASSO).&lt;/p&gt;
+&lt;div class="thm-inner thm-corollary"&gt;
+&lt;p&gt;至少以概率 $1-\delta$，我们有
+&lt;/p&gt;
 $$
 \frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \leq 4\|\bm{\beta}^*\|_1\sigma\sqrt{\frac{2C}{n}[\log(1/\delta)+\log(2p)]}
 $$
-&lt;/div>
-&lt;/div>
-&lt;p>可见，当我们取 $\delta=1/n$，并假设 $\|\bm{\beta}^*\|=o(\sqrt{n/\log(p\vee n)})$，我们就得到了随 $n\to\infty$ 时预测误差的收敛。&lt;/p>
-&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
-&lt;div>&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/>&lt;/symbol>&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>&lt;/symbol>&lt;/svg>&lt;/div>&lt;div class="notice note" >
-&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>为什么叫 slow rate？在最优子集选择 (best subset selection) 中，我们可以推出 (reference?)
-&lt;/p>
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;可见，当我们取 $\delta=1/n$，并假设 $\|\bm{\beta}^*\|=o(\sqrt{n/\log(p\vee n)})$，我们就得到了随 $n\to\infty$ 时预测误差的收敛。&lt;/p&gt;
+&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+&lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice note" &gt;
+&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#note-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Note&lt;/p&gt;&lt;p&gt;为什么叫 slow rate？在最优子集选择 (best subset selection) 中，我们可以推出 (reference?)
+&lt;/p&gt;
 $$
 \frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \lesssim \|\bm{\beta}\|_0\frac{\log n+\log p}{n}
-$$&lt;p>
+$$&lt;p&gt;
 而在上述推论中，如果我们选择 $\delta=1/n$，则会得到
-&lt;/p>
+&lt;/p&gt;
 $$
 \frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \lesssim \|\bm{\beta}^*\|_1\sqrt{\frac{\log n+\log p}{n}}
-$$&lt;p>
-这多了一个根号，因此比最优子集选择的收敛率要慢。&lt;/p>&lt;/div>
-&lt;h2 id="lasso-的快率">LASSO 的快率&lt;/h2>
-&lt;p>我们是否能改进前述收敛速率呢？另外，有没有可能得到 $\hat{\bm{\beta}}$ 本身的一致性呢？答案是可以的。&lt;/p>
-&lt;h3 id="restricted-eigenvalue">Restricted Eigenvalue&lt;/h3>
-&lt;p>注意到如果 $\mu_{\min}(\bm{X}'\bm{X})\geq\gamma_n>0$，则有
-&lt;/p>
+$$&lt;p&gt;
+这多了一个根号，因此比最优子集选择的收敛率要慢。&lt;/p&gt;&lt;/div&gt;
+&lt;h2 id="lasso-的快率"&gt;LASSO 的快率&lt;/h2&gt;
+&lt;p&gt;我们是否能改进前述收敛速率呢？另外，有没有可能得到 $\hat{\bm{\beta}}$ 本身的一致性呢？答案是可以的。&lt;/p&gt;
+&lt;h3 id="restricted-eigenvalue"&gt;Restricted Eigenvalue&lt;/h3&gt;
+&lt;p&gt;注意到如果 $\mu_{\min}(\bm{X}'\bm{X})\geq\gamma_n&gt;0$，则有
+&lt;/p&gt;
 $$
 \|\hat{\bm{\beta}}-\bm{\beta}^*\|_2 \leq \frac{1}{\gamma_n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2
-$$&lt;p>
-而当 $p>n$ 时，$\mu_{\min}(\bm{X}'\bm{X})=0$，此时我们无法得到 $\|\hat{\bm{\beta}}-\bm{\beta}^*\|_2$ 的收敛。我们需要对 $\bm{X}$ 施加额外的假设，有很多种方式，但基本思想就一个：让 $\gamma_n$ 和零保持距离。&lt;/p>
-&lt;p>以下介绍一种广泛使用的假设：受限特征值条件 (restricted eigenvalue condition, RE)。&lt;/p>
-&lt;div class="thm">
-&lt;p id="def:re" class="thm-title thm-definition">Definition 4 (Restricted Eigenvalue).&lt;/p>
-&lt;div class="thm-inner thm-definition">
-&lt;p>给定 $\alpha\geq1$ 和 $S\subseteq\{1,\dots,p\}$ 且 $S\neq\emptyset$，令
-&lt;/p>
+$$&lt;p&gt;
+而当 $p&gt;n$ 时，$\mu_{\min}(\bm{X}'\bm{X})=0$，此时我们无法得到 $\|\hat{\bm{\beta}}-\bm{\beta}^*\|_2$ 的收敛。我们需要对 $\bm{X}$ 施加额外的假设，有很多种方式，但基本思想就一个：让 $\gamma_n$ 和零保持距离。&lt;/p&gt;
+&lt;p&gt;以下介绍一种广泛使用的假设：受限特征值条件 (restricted eigenvalue condition, RE)。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="def:re" class="thm-title thm-definition"&gt;Definition 4 (Restricted Eigenvalue).&lt;/p&gt;
+&lt;div class="thm-inner thm-definition"&gt;
+&lt;p&gt;给定 $\alpha\geq1$ 和 $S\subseteq\{1,\dots,p\}$ 且 $S\neq\emptyset$，令
+&lt;/p&gt;
 $$
 \mathcal{C}_\alpha(S) = \{\bm{\Delta}\in\mathbb{R}^p\colon\|\bm{\Delta}_{S^\complement}\|_1\leq\alpha\|\bm{\Delta}_S\|_1\}
-$$&lt;p>
-其中 $S^\complement = \{1,\dots,p\}\backslash S$，$\bm{\Delta}_{S}=(\Delta_j)_{j\in S}$。&lt;/p>
-&lt;p>如果存在某个 $\alpha\geq1$ 和 $\kappa>0$，对任意的 $\bm{\Delta}\in\mathcal{C}_\alpha(S)$ 都有
-&lt;/p>
+$$&lt;p&gt;
+其中 $S^\complement = \{1,\dots,p\}\backslash S$，$\bm{\Delta}_{S}=(\Delta_j)_{j\in S}$。&lt;/p&gt;
+&lt;p&gt;如果存在某个 $\alpha\geq1$ 和 $\kappa&gt;0$，对任意的 $\bm{\Delta}\in\mathcal{C}_\alpha(S)$ 都有
+&lt;/p&gt;
 $$
 \frac{1}{n}\|\bm{X}\bm{\Delta}\|_2^2 \geq \kappa\|\bm{\Delta}\|_2^2
-$$&lt;p>
-则称 $n\times p$ 的矩阵 $\bm{X}$ 满足 $S$ 上的 $\text{RE}(\alpha,\kappa)$ 条件。&lt;/p>
-&lt;/div>
-&lt;/div>
-&lt;p>下面我们花一些篇幅来从直觉上理解这一条件。&lt;/p>
-&lt;p>取 $\bm{\Delta}=\hat{\bm{\beta}}-\bm{\beta}^*$。前面我们已经证明了 $\frac1n\|\bm{X}\bm{\Delta}\|_2^2$ 能够以大概率取很小的值，但这不意味着 $\|\bm{\Delta}\|_2^2$ 也可以很小，因为函数 $\bm{\Delta}\mapsto\frac1n\|\bm{X}\bm{\Delta}\|_2^2$ 在 $\hat{\bm{\beta}}-\bm{\beta}^*$ 附近可能很平坦，也就是说，在较宽的一个范围内我们都能得到较小的损失函数值。&lt;/p>
-&lt;p>如果 $\mu_{\min}(\bm{X}'\bm{X})/n$ 和零保持一定距离，譬如
-&lt;/p>
+$$&lt;p&gt;
+则称 $n\times p$ 的矩阵 $\bm{X}$ 满足 $S$ 上的 $\text{RE}(\alpha,\kappa)$ 条件。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;下面我们花一些篇幅来从直觉上理解这一条件。&lt;/p&gt;
+&lt;p&gt;取 $\bm{\Delta}=\hat{\bm{\beta}}-\bm{\beta}^*$。前面我们已经证明了 $\frac1n\|\bm{X}\bm{\Delta}\|_2^2$ 能够以大概率取很小的值，但这不意味着 $\|\bm{\Delta}\|_2^2$ 也可以很小，因为函数 $\bm{\Delta}\mapsto\frac1n\|\bm{X}\bm{\Delta}\|_2^2$ 在 $\hat{\bm{\beta}}-\bm{\beta}^*$ 附近可能很平坦，也就是说，在较宽的一个范围内我们都能得到较小的损失函数值。&lt;/p&gt;
+&lt;p&gt;如果 $\mu_{\min}(\bm{X}'\bm{X})/n$ 和零保持一定距离，譬如
+&lt;/p&gt;
 $$
 \kappa\|\bm{\Delta}\|_2^2 \leq \frac{1}{n}\|\bm{X}\bm{\Delta}\|_2^2
-$$&lt;p>
-这将意味着 $\bm{\Delta}\mapsto\frac1n\|\bm{X}\bm{\Delta}\|_2^2$ 有足够的曲率（不是平坦的曲线）。我们只需要这个条件对某些 $\bm{\Delta}$ 成立，即 RE 所表述的那样。这些 $\bm{\Delta}$ 被集合 $\mathcal{C}_\alpha(S)$ 所刻画，它是这样一个集合：指标集 $S$ 所对应的那些系数要充分大于非 $S$ 对应的系数。这直觉上规定了 $S$ 和 $S^\complement$ 对应的系数值能被区分开的一类系数向量。&lt;/p>
-&lt;p>令 $S = \{j^*\colon\beta_j^*\neq0\}$ 是非零系数的指标集，称之为 &lt;em>active set&lt;/em>，$s=|S|$ 是非零系数的个数，称之为&lt;em>稀疏性&lt;/em>。在 RE 条件下，有如下定理。&lt;/p>
-&lt;div class="thm">
-&lt;p id="thm:fast" class="thm-title thm-theorem">Theorem 5 (Fast rate of the LASSO).&lt;/p>
-&lt;div class="thm-inner thm-theorem">
-&lt;p>设存在某个 $\kappa>0$ 使得 $\bm{X}$ 满足 $S$ 上的 $\text{RE}(3,\kappa)$ 条件。若
-&lt;/p>
+$$&lt;p&gt;
+这将意味着 $\bm{\Delta}\mapsto\frac1n\|\bm{X}\bm{\Delta}\|_2^2$ 有足够的曲率（不是平坦的曲线）。我们只需要这个条件对某些 $\bm{\Delta}$ 成立，即 RE 所表述的那样。这些 $\bm{\Delta}$ 被集合 $\mathcal{C}_\alpha(S)$ 所刻画，它是这样一个集合：指标集 $S$ 所对应的那些系数要充分大于非 $S$ 对应的系数。这直觉上规定了 $S$ 和 $S^\complement$ 对应的系数值能被区分开的一类系数向量。&lt;/p&gt;
+&lt;p&gt;令 $S = \{j^*\colon\beta_j^*\neq0\}$ 是非零系数的指标集，称之为 &lt;em&gt;active set&lt;/em&gt;，$s=|S|$ 是非零系数的个数，称之为&lt;em&gt;稀疏性&lt;/em&gt;。在 RE 条件下，有如下定理。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="thm:fast" class="thm-title thm-theorem"&gt;Theorem 5 (Fast rate of the LASSO).&lt;/p&gt;
+&lt;div class="thm-inner thm-theorem"&gt;
+&lt;p&gt;设存在某个 $\kappa&gt;0$ 使得 $\bm{X}$ 满足 $S$ 上的 $\text{RE}(3,\kappa)$ 条件。若
+&lt;/p&gt;
 $$
 \lambda_n \geq \frac{2}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty
-$$&lt;p>
+$$&lt;p&gt;
 则 LASSO 估计量 $\hat{\beta}$ 满足
-&lt;/p>
+&lt;/p&gt;
 $$
 \begin{align*}
 \frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 &amp;\leq \frac{9s\lambda_n^2}{\kappa} \\
 \|\hat{\bm{\beta}}-\bm{\beta}^*\|_2 &amp;\leq \frac{3\sqrt{s}\lambda_n}{\kappa}
 \end{align*}
 $$
-&lt;/div>
-&lt;/div>
-&lt;div class="thm">
-&lt;button type="button" class="collapsible">&lt;div id="thm-proof-2" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
-&lt;div class="proof-content">
-&lt;div class="thm-inner-proof">
-&lt;p>首先证明，当 $\lambda_n$ 满足上述定理的条件时，有 $\hat{\bm{\Delta}}=\hat{\bm{\beta}}-\bm{\beta}^*\in\mathcal{C}_3(S)$。&lt;/p>
-&lt;p>因 $\hat{\bm{\beta}}$ 是最小化问题的解，有
-&lt;/p>
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="thm"&gt;
+&lt;button type="button" class="collapsible"&gt;&lt;div id="thm-proof-2" class="thm-title-proof"&gt;Proof.&lt;/div&gt;&lt;/button&gt;
+&lt;div class="proof-content"&gt;
+&lt;div class="thm-inner-proof"&gt;
+&lt;p&gt;首先证明，当 $\lambda_n$ 满足上述定理的条件时，有 $\hat{\bm{\Delta}}=\hat{\bm{\beta}}-\bm{\beta}^*\in\mathcal{C}_3(S)$。&lt;/p&gt;
+&lt;p&gt;因 $\hat{\bm{\beta}}$ 是最小化问题的解，有
+&lt;/p&gt;
 $$
 \frac{1}{2n}\|\bm{Y}-\bm{X}\hat{\bm{\beta}}\|_2^2 + \lambda_n\|\hat{\bm{\beta}}\|_1 \leq \frac{1}{2n}\|\bm{Y}-\bm{X}\bm{\beta}^*\|_2^2 + \lambda_n\|\bm{\beta}^*\|_1
-$$&lt;p>
+$$&lt;p&gt;
 代入 $\bm{Y} = \bm{X}\bm{\beta}^* + \bm{\varepsilon}$，整理得到
-&lt;/p>
+&lt;/p&gt;
 $$
 0 \leq \frac{1}{2n}\|\bm{X}\hat{\bm{\Delta}}\|_2^2 \leq \frac1n\bm{\varepsilon}'\bm{X}\hat{\bm{\Delta}} + \lambda_n(\|\bm{\beta}^*\|_1-\|\hat{\bm{\beta}}\|_1)
-$$&lt;p>
+$$&lt;p&gt;
 根据 $S$ 的定义，$\|\bm{\beta}^*\|_1 = \|\bm{\beta}_S^*\|_1$。另外，可将 $\|\hat{\bm{\beta}}\|_1$ 写为
-&lt;/p>
+&lt;/p&gt;
 $$
 \|\hat{\bm{\beta}}\|_1 = \|\hat{\bm{\beta}}_S\|_1 + \|\hat{\bm{\beta}}_{S^\complement}\|_1 = \|\bm{\beta}_S^*+\hat{\bm{\Delta}}_S\|_1 + \|\hat{\bm{\Delta}}_{S^\complement}\|_1
-$$&lt;p>
+$$&lt;p&gt;
 带入到前面的不等式得到
-&lt;/p>
+&lt;/p&gt;
 $$
 \begin{align*}
 0 \leq \frac{1}{2n}\|\bm{X}\hat{\bm{\Delta}}\|_2^2 &amp;\leq \frac1n\bm{\varepsilon}'\bm{X}\hat{\bm{\Delta}} + \lambda_n(\|\bm{\beta}_S^*\|_1-\|\bm{\beta}_S^*+\hat{\bm{\Delta}}_S\|_1 - \|\hat{\bm{\beta}}_{S^\complement}\|_1) \\
@@ -208,170 +436,170 @@ $$
 &amp;= \frac12\lambda_n\|\hat{\bm{\Delta}}_S\|_1 + \frac12\lambda_n\|\hat{\bm{\Delta}}_{S^\complement}\|_1 + \lambda_n(\|\hat{\bm{\Delta}}_S\|_1 - \|\hat{\bm{\Delta}}_{S^\complement}\|_1) \\
 &amp;= \frac{3}{2}\lambda_n\|\hat{\bm{\Delta}}_S\|_1 - \frac12\lambda_n\|\hat{\bm{\Delta}}_{S^\complement}\|_1
 \end{align*}
-$$&lt;p>
-第二行使用了 Hölder 不等式，第三行使用了三角不等式，第四行使用了条件 $\lambda_n \geq \frac{2}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty$。这就导致了 $\|\hat{\bm{\Delta}}_{S^\complement}\|_1 \leq 3\|\hat{\bm{\Delta}}_S\|_1$，也就证明了 $\hat{\bm{\Delta}}\in\mathcal{C}_3(S)$。&lt;/p>
-&lt;p>第二步，我们将使用 RE 条件。注意到
-&lt;/p>
+$$&lt;p&gt;
+第二行使用了 Hölder 不等式，第三行使用了三角不等式，第四行使用了条件 $\lambda_n \geq \frac{2}{n}\|\bm{X}'\bm{\varepsilon}\|_\infty$。这就导致了 $\|\hat{\bm{\Delta}}_{S^\complement}\|_1 \leq 3\|\hat{\bm{\Delta}}_S\|_1$，也就证明了 $\hat{\bm{\Delta}}\in\mathcal{C}_3(S)$。&lt;/p&gt;
+&lt;p&gt;第二步，我们将使用 RE 条件。注意到
+&lt;/p&gt;
 $$
 \lambda_n(3\|\hat{\bm{\Delta}}_S\|_1-\|\hat{\bm{\Delta}}_{S^\complement}\|_1) \leq 3\lambda_n\|\hat{\bm{\Delta}}_S\|_1 \leq 3\lambda_n\sqrt{s}\|\hat{\bm{\Delta}}_S\|_2 \leq 3\lambda_n\sqrt{s}\|\hat{\bm{\Delta}}\|_2
-$$&lt;p>
+$$&lt;p&gt;
 这里使用了 $\ell_1$ 和 $\ell_2$ 范数之间的关系：对 $\bm{x}\in\mathbb{R}^d$，有 $\|\bm{x}\|_2\leq\|\bm{x}\|_1\leq\sqrt{d}\|\bm{x}\|_2$，这可通过数形结合来理解。从而
-&lt;/p>
+&lt;/p&gt;
 $$
 \begin{align*}
 \frac{1}{n}\|\bm{X}\hat{\bm{\Delta}}\|_2^2 &amp;\leq \lambda_n(3\|\hat{\bm{\Delta}}_S\|_1-\|\hat{\bm{\Delta}}_{S^\complement}\|_1) \\
 &amp;\leq 3\lambda_n\sqrt{s}\|\hat{\bm{\Delta}}\|_2 \\
 &amp;\leq 3\lambda_n\sqrt{s}\frac{\|\bm{X}\hat{\bm{\Delta}}\|_2}{\sqrt{n\kappa}}
 \end{align*}
-$$&lt;p>
+$$&lt;p&gt;
 最后一行用了 RE 条件。整理后就得到
-&lt;/p>
+&lt;/p&gt;
 $$
 \frac{1}{n}\|\bm{X}\hat{\bm{\Delta}}\|_2^2 \leq \frac{9s\lambda_n^2}{\kappa}
-$$&lt;p>
+$$&lt;p&gt;
 使用此结论和 RE 就有第二个收敛
-&lt;/p>
+&lt;/p&gt;
 $$
 \begin{align*}
 \|\hat{\bm{\Delta}}\|_2 \leq \frac{\|\bm{X}\hat{\bm{\Delta}}\|_2}{\sqrt{n\kappa}} \leq \sqrt{\frac{9s\lambda_n^2}{\kappa^2}} = \frac{3\sqrt{s}\lambda_n}{\kappa}
 \end{align*}
 $$
-&lt;/div>
-&lt;div class="thm-end-proof">
-&lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-2">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
-&lt;/div>
-&lt;/div>
-&lt;/div>
-&lt;p>很显然，相比于 &lt;a href="https://gaxu.xyz/posts/lasso/#thm:consistency">定理 1&lt;/a>，我们把不等式右边的界的收敛速度提升了（$\lambda_n$ 提升到 $\lambda_n^2$），此外还得到了 $\|\hat{\bm{\beta}}-\bm{\beta}^*\|_2$ 的收敛，所以称之为 LASSO 的快率。&lt;/p>
-&lt;p>我们也可以像 &lt;a href="https://gaxu.xyz/posts/lasso/#coro:slowrate">推论 3&lt;/a> 那样用概率的形式表述，这里略去。&lt;/p>
-&lt;h3 id="oracle-inequalities">Oracle Inequalities&lt;/h3>
-&lt;div class="notice info" >
-&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#info-notice">&lt;/use>&lt;/svg>&lt;/span>Info&lt;/p>&lt;p>在英文里面，“oracle” 一词的含义是神的使者，向（愚昧）的人类传达神的旨意和预言，引申为提供智慧、知识或真理的源头。而在统计学中，这一词被借用来指代理论上所能达到的最佳表现，如同有一个神使向我们传达了真理。Oracle inequalities，「神谕不等式」，就描述了一个估计量的性能如何接近理论上最佳的性能。&lt;/p>&lt;/div>
-&lt;p>我们知道，当 $p\leq n$ 且误差项 $\bm{\varepsilon}\sim N(0,\sigma^2\bm{I}_n)$ 时，OLS 是最优线性无偏估计量，它可以作为一个最优的标杆。由于 $\|\bm{X}(\hat{\bm{\beta}}^{\text{OLS}}-\bm{\beta}^*)\|_2^2/$ 服从 $\chi^2(p)$ 分布，因此期望预测误差
-&lt;/p>
+&lt;/div&gt;
+&lt;div class="thm-end-proof"&gt;
+&lt;i class="fas fa-square"&gt;&lt;/i&gt; &lt;a href="#thm-proof-2"&gt;&lt;i class="fas fa-arrow-circle-up"&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;很显然，相比于 &lt;a href="https://gaxu.xyz/posts/lasso/#thm:consistency"&gt;定理 1&lt;/a&gt;，我们把不等式右边的界的收敛速度提升了（$\lambda_n$ 提升到 $\lambda_n^2$），此外还得到了 $\|\hat{\bm{\beta}}-\bm{\beta}^*\|_2$ 的收敛，所以称之为 LASSO 的快率。&lt;/p&gt;
+&lt;p&gt;我们也可以像 &lt;a href="https://gaxu.xyz/posts/lasso/#coro:slowrate"&gt;推论 3&lt;/a&gt; 那样用概率的形式表述，这里略去。&lt;/p&gt;
+&lt;h3 id="oracle-inequalities"&gt;Oracle Inequalities&lt;/h3&gt;
+&lt;div class="notice info" &gt;
+&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#info-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Info&lt;/p&gt;&lt;p&gt;在英文里面，“oracle” 一词的含义是神的使者，向（愚昧）的人类传达神的旨意和预言，引申为提供智慧、知识或真理的源头。而在统计学中，这一词被借用来指代理论上所能达到的最佳表现，如同有一个神使向我们传达了真理。Oracle inequalities，「神谕不等式」，就描述了一个估计量的性能如何接近理论上最佳的性能。&lt;/p&gt;&lt;/div&gt;
+&lt;p&gt;我们知道，当 $p\leq n$ 且误差项 $\bm{\varepsilon}\sim N(0,\sigma^2\bm{I}_n)$ 时，OLS 是最优线性无偏估计量，它可以作为一个最优的标杆。由于 $\|\bm{X}(\hat{\bm{\beta}}^{\text{OLS}}-\bm{\beta}^*)\|_2^2/$ 服从 $\chi^2(p)$ 分布，因此期望预测误差
+&lt;/p&gt;
 $$
 \mathbb{E}\biggl(\frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}^{\text{OLS}}-\bm{\beta}^*)\|_2^2\biggr) = \frac{\sigma^2p}{n}
-$$&lt;p>
-这表明，每个系数的估计精度是 $\sigma^2/n$，所以总体的估计精度就是 $(\sigma^2/n)\cdot p$。&lt;/p>
-&lt;p>当 $p>n$ 时，OLS 不再适用，但假设我们知道了 $\bm{\beta}^*$ 的稀疏度 $s$，按照上面的公式，能达到的最佳估计精度就应该是 $(\sigma^2/n)\cdot s$。那么，LASSO 是否达到了或接近了这一理想呢？在 &lt;a href="https://gaxu.xyz/posts/lasso/#thm:fast">前一节的定理&lt;/a> 中，LASSO 的预测误差的界是
-&lt;/p>
+$$&lt;p&gt;
+这表明，每个系数的估计精度是 $\sigma^2/n$，所以总体的估计精度就是 $(\sigma^2/n)\cdot p$。&lt;/p&gt;
+&lt;p&gt;当 $p&gt;n$ 时，OLS 不再适用，但假设我们知道了 $\bm{\beta}^*$ 的稀疏度 $s$，按照上面的公式，能达到的最佳估计精度就应该是 $(\sigma^2/n)\cdot s$。那么，LASSO 是否达到了或接近了这一理想呢？在 &lt;a href="https://gaxu.xyz/posts/lasso/#thm:fast"&gt;前一节的定理&lt;/a&gt; 中，LASSO 的预测误差的界是
+&lt;/p&gt;
 $$
 \frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \leq \frac{9s\lambda_n^2}{\kappa}
-$$&lt;p>
+$$&lt;p&gt;
 如果我们采取前文所选取的 $\lambda_n$，那么我们就有
-&lt;/p>
+&lt;/p&gt;
 $$
 \frac{1}{n}\|\bm{X}(\hat{\bm{\beta}}-\bm{\beta}^*)\|_2^2 \lesssim \sigma^2\frac{s\log p}{n}
-$$&lt;p>
-相比于理想中的最佳估计精度，我们多了一个因子 $\log p$，这可以被看作不知道哪些系数非零所付出的成本。这就是 LASSO 的神谕不等式。&lt;/p>
-&lt;h2 id="参考">参考&lt;/h2>
-&lt;p>Alessandro Rinaldo&amp;rsquo;s Lecture Notes (2018): &lt;a href="https://www.stat.cmu.edu/~arinaldo/Teaching/36710/F18/Scribed_Lectures/Oct17.pdf">Oct 17&lt;/a>, &lt;a href="https://www.stat.cmu.edu/~arinaldo/Teaching/36710/F18/Scribed_Lectures/Oct22.pdf">Oct 22&lt;/a>.&lt;/p>
-&lt;p>&lt;a href="https://www.stt.msu.edu/users/wangho16/lasso.pdf">Honglang Wang&amp;rsquo;s Tutorial on Lasso&lt;/a>.&lt;/p>
-&lt;p>Bühlmann, Peter, and Sara van de Geer (2011). &lt;em>Statistics for High-Dimensional Data: Methods, Theory and Applications.&lt;/em> Springer Science &amp;amp; Business Media.&lt;/p>
-&lt;p>Rigollet, Philippe, and Jan-Christian Hütter (2023). &amp;ldquo;High-Dimensional Statistics.&amp;rdquo; &lt;em>arXiv preprint&lt;/em>. &lt;a href="https://arxiv.org/pdf/2310.19244.pdf">arXiv:2310.19244&lt;/a>.&lt;/p>
-- https://gaxu.xyz/posts/lasso/ - 2023–2024 嘉树.</description></item><item><title>在 Mac 上管理多个 GitHub 账号</title><link>https://gaxu.xyz/posts/multiple-gh-accounts/</link><pubDate>Tue, 27 Aug 2024 19:29:37 +0800</pubDate><guid>https://gaxu.xyz/posts/multiple-gh-accounts/</guid><description>嘉树的世界 https://gaxu.xyz/posts/multiple-gh-accounts/ -&lt;h2 id="动机">动机&lt;/h2>
-&lt;p>我有两个 GitHub 账号，希望一个是面向工作，另一个则是私人的。那么，如何在一台 Mac 上无缝切换这个两个账号呢？本文列出了关键步骤。其他操作系统应当类似。&lt;/p>
-&lt;h2 id="生成-ssh-密钥">生成 SSH 密钥&lt;/h2>
-&lt;p>GitHub 提供了两种方式与远程仓库建立联系：SSH 和 HTTPS。简单来说，当我们向远程仓库 push 代码时，HTTPS 每次都需要提供所谓的 access token（当然这个活其实也只是第一次 push 的时候需要，因为 Mac 会把这个 token 存放在钥匙串里面，以后就不需要手动输入了），而 SSH 使用一对公钥和私钥取得认证（事先生成，然后本地和远程分别拿着私钥和公钥），不需要记住用户名和 token。就我们的目的而言，只能用 SSH 来实现。&lt;/p>
-&lt;p>假设我们有两个账号，personal 和 work，以下我们分别为它们生成 SSH 密钥。更多账号操作也是一样的。&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#81a1c1">cd&lt;/span> ~/.ssh
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ssh-keygen -t rsa -C &lt;span style="color:#a3be8c">&amp;#34;email@personal.com&amp;#34;&lt;/span> -f &lt;span style="color:#a3be8c">&amp;#34;gh-personal&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ssh-keygen -t rsa -C &lt;span style="color:#a3be8c">&amp;#34;email@work.com&amp;#34;&lt;/span> -f &lt;span style="color:#a3be8c">&amp;#34;gh-work&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>运行完了之后，在 &lt;code>.ssh&lt;/code> 文件夹下我们得到了四个文件：&lt;/p>
-&lt;ul>
-&lt;li>&lt;code>gh-personal&lt;/code>&lt;/li>
-&lt;li>&lt;code>gh-personal.pub&lt;/code>&lt;/li>
-&lt;li>&lt;code>gh-work&lt;/code>&lt;/li>
-&lt;li>&lt;code>gh-work.pub&lt;/code>&lt;/li>
-&lt;/ul>
-&lt;p>其中带 &lt;code>.pub&lt;/code> 扩展名的是存公钥的，不带的是存私钥的。&lt;/p>
-&lt;h2 id="分配私钥和公钥">分配私钥和公钥&lt;/h2>
-&lt;h3 id="将私钥加入-ssh-agent">将私钥加入 SSH Agent&lt;/h3>
-&lt;p>上一步只是生成了密钥，还需要把私钥加入 Mac 的钥匙串 (keychain)，也就是保存密码。&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>ssh-add --apple-use-keychain ~/.ssh/gh-personal
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ssh-add --apple-use-keychain ~/.ssh/gh-work
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>选项 &lt;code>--apple-use-keychain&lt;/code> 就明确声明使用 Mac 的钥匙串系统存放密钥。&lt;/p>
-&lt;p>我们可以用以下命令来查看私钥是否被添加到了 SSH Agent：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>ssh-add -l
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="将公钥加入-github">将公钥加入 GitHub&lt;/h3>
-&lt;p>然后，我们把公钥加入到对应的 GitHub 账户里去。&lt;/p>
-&lt;p>对账户 personal，进入 “Settings”➡️“SSH and GPG keys”，然后点击 “New SSH key”，进入一个界面，“Title” 可以随便填写，只要在 &amp;ldquo;Key&amp;rdquo; 的框里边粘贴 &lt;code>gh-personal.pub&lt;/code> 文件的内容就行了，以下是用命令复制文件内容的高级做法：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>pbcopy &amp;lt; ~/.ssh/gh-personal.pub
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>我们对另一个账户 work 进行同样的操作，只不过是要复制对应文件 &lt;code>gh-work.pub&lt;/code> 的内容。不再赘述。&lt;/p>
-&lt;h2 id="配置-ssh-主机">配置 SSH 主机&lt;/h2>
-&lt;p>这一步要做的是，告诉 Mac 远程仓库的主机和本地的私钥如何对应。这通过配置 SSH Config 文件实现。&lt;/p>
-&lt;p>首先，打开 &lt;code>config&lt;/code> 文件：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>open ~/.ssh/config
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>然后，填入如下设定&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span style="display:flex;">&lt;span># Your Personal GitHub Account
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Host github.com-personal
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> HostName github.com
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> User git
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> IdentityFile ~/.ssh/gh-personal
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span># Your Work GitHub Account
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Host github.com-work
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> HostName github.com
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> User git
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> IdentityFile ~/.ssh/gh-work
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>到此为止，我们的所有准备工作就完成了。下面我们看在不同的账号间具体是怎么切换的。&lt;/p>
-&lt;hr>
-&lt;h2 id="在不同的账号间切换">在不同的账号间切换&lt;/h2>
-&lt;p>假设我们实现已经全局设定了 work 账号是默认的 GitHub 账号：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git config --global user.name &lt;span style="color:#a3be8c">&amp;#34;work&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git config --global user.email &lt;span style="color:#a3be8c">&amp;#34;email@work.com&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>但如果要建立一个 personal 账号下的仓库，在 &lt;code>git init&lt;/code> 之后，就得不带 &lt;code>--global&lt;/code> 选项：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git config user.name &lt;span style="color:#a3be8c">&amp;#34;personal&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git config user.email &lt;span style="color:#a3be8c">&amp;#34;email@personal.com&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>要把这个仓库关联到远程仓库 myrepo，运行：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git remote add origin git@github.com-personal:personal/myrepo.git
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这里面需要注意，我们用的是 SSH 的链接，而不是 HTTPS 的链接，另外我们明确指定了主机名为 &lt;code>github.com-personal&lt;/code>，而不是 GitHub 仓库页面给出的 &lt;code>github.com&lt;/code>。&lt;/p>
-&lt;p>这样就可以对 myrepo 进行 push 等操作了。&lt;/p>
-&lt;p>如果有另外的仓库是注册在 work 账号下的，不需要再特别进行 &lt;code>git config&lt;/code>，因前面我们已经全局指定了，但在 &lt;code>git clone&lt;/code> work 账号下的私有仓库和关联远程仓库时，仍然要注意指定主机名为 &lt;code>github.com-work&lt;/code>。&lt;/p>
-&lt;p>以上（完）。&lt;/p>
-&lt;h2 id="参考">参考&lt;/h2>
-&lt;ul>
-&lt;li>&lt;a href="https://medium.com/@viralthaker27/managing-multiple-github-accounts-on-a-macbook-a-step-by-step-guide-a22ec738180f">Managing Multiple GitHub Accounts on a MacOS: A Step-by-Step Guide.&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://code.tutsplus.com/quick-tip-how-to-work-with-github-and-multiple-accounts--net-22574t">How to Work With GitHub and Multiple Accounts.&lt;/a>&lt;/li>
-&lt;/ul>
-- https://gaxu.xyz/posts/multiple-gh-accounts/ - 2023–2024 嘉树.</description></item><item><title>半日杂记</title><link>https://gaxu.xyz/posts/half-day-diary/</link><pubDate>Sun, 25 Aug 2024 23:08:09 +0800</pubDate><guid>https://gaxu.xyz/posts/half-day-diary/</guid><description>嘉树的世界 https://gaxu.xyz/posts/half-day-diary/ -&lt;p>师弟在我提出要去理发时向我强烈推荐了一家，我狐疑，追问之下原来是：他在此店被忽悠办了会员充了值，害怕店长哪天卷钱跑路了，希望尽快消费完。啊哈，那这个忙我当然要帮。&lt;/p>
-&lt;p>去了之后发现，这哪像会倒闭的样子！生意红火好嘛。当然也不排除有周日的加持。托尼老师很热情地向我推销卷烫染套餐，被我热情地回绝了。&lt;/p>
-&lt;p>剪完之后就在商场里闲逛，溜进一家「西西弗书店」，随意翻看能引起我兴趣的书，还真是颇有收获。试举几例：&lt;/p>
-&lt;ul>
-&lt;li>原来鲁迅真的写过「在我的后园，可以看见墙外有两株树，一株是枣树，还有一株也是枣树」，这出自《野草》中《秋夜》的第一句，我一直以为这是一个梗来着。&lt;/li>
-&lt;li>曾国藩也有写日记的习惯，他是真写，真反思，真改变。&lt;/li>
-&lt;li>《冬牧场》这本书似乎去年大热，看了几页，哇塞，这个作者怎么可以写出这么可爱幽默俏皮温暖的文字！&lt;/li>
-&lt;/ul>
-&lt;p>感悟就是，文字真的可以带来力量，内心的力量。愈加决定了！要多运动，多读书。&lt;/p>
-&lt;p>回去的时候顺便买了点水果，着实买贵了，以后还是去盒马买吧😥&lt;/p>
-- https://gaxu.xyz/posts/half-day-diary/ - 2023–2024 嘉树.</description></item><item><title>专注力的流失</title><link>https://gaxu.xyz/posts/losing-concentration/</link><pubDate>Wed, 21 Aug 2024 12:43:47 +0800</pubDate><guid>https://gaxu.xyz/posts/losing-concentration/</guid><description>嘉树的世界 https://gaxu.xyz/posts/losing-concentration/ -&lt;p>现在经常学着学着就很容易开小差，然后打开手机漫无目的地刷一刷，或者开始想些别的东西，这真的是一件很恐怖的事情。我的专注力在不断流失。&lt;/p>
-&lt;p>我幻想从清晨学到黄昏，心无旁骛地专注，因为时间在不知觉中的流动会给人一种高级的愉悦。我用了「幻想」，因为这种体验现在全无，但记忆中本科那会儿，是常能在图书馆坐上一天的。我的注意力为什么无法集中了呢？我在努力尝试思考的时候，大脑总会传出一个声音：这么复杂的问题，先歇会吧，反正时间有的是，也不差这一时半会儿。结果就是，我在每一个想要专注的节点都转移注意力去做了其他事，消磨的时间难以估量。我没法用劳逸结合来安慰自己，因为大部分时间我确实是处在「逸」的状态。这样做似乎很节省能量，但代价更严重──累积的畏难情绪和逐渐懒散的思维，学习节奏也全被打乱。&lt;/p>
-&lt;p>趁还有这样的意识的时候，是该刻意做点什么了吧。&lt;/p>
-- https://gaxu.xyz/posts/losing-concentration/ - 2023–2024 嘉树.</description></item><item><title>集中不等式 (I)：Hoeffding 不等式</title><link>https://gaxu.xyz/posts/conctr-ineq-hoeffding/</link><pubDate>Sun, 11 Aug 2024 15:30:25 +0800</pubDate><guid>https://gaxu.xyz/posts/conctr-ineq-hoeffding/</guid><description>嘉树的世界 https://gaxu.xyz/posts/conctr-ineq-hoeffding/ -&lt;h2 id="内容提要">内容提要&lt;/h2>
-&lt;p>介绍了集中不等式的概念，引入了 Chernoff 界方法，并以此证明了 Hoeffding 不等式。&lt;/p>
-&lt;h2 id="什么是集中不等式">什么是集中不等式？&lt;/h2>
-&lt;p>Concentration inequalities，中文译作「集中不等式」，是概率论中的一类不等式，描述了一个随机变量的取值是否集中在某个特定的值附近，换句话说，相对于这个特定值偏离了多少，从概率上讲这个偏离的可能性又如何量化。这个特定的值通常取的是总体均值。数学上，这类不等式的形式可写作&lt;/p>
+$$&lt;p&gt;
+相比于理想中的最佳估计精度，我们多了一个因子 $\log p$，这可以被看作不知道哪些系数非零所付出的成本。这就是 LASSO 的神谕不等式。&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;Alessandro Rinaldo&amp;rsquo;s Lecture Notes (2018): &lt;a href="https://www.stat.cmu.edu/~arinaldo/Teaching/36710/F18/Scribed_Lectures/Oct17.pdf"&gt;Oct 17&lt;/a&gt;, &lt;a href="https://www.stat.cmu.edu/~arinaldo/Teaching/36710/F18/Scribed_Lectures/Oct22.pdf"&gt;Oct 22&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.stt.msu.edu/users/wangho16/lasso.pdf"&gt;Honglang Wang&amp;rsquo;s Tutorial on Lasso&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Bühlmann, Peter, and Sara van de Geer (2011). &lt;em&gt;Statistics for High-Dimensional Data: Methods, Theory and Applications.&lt;/em&gt; Springer Science &amp;amp; Business Media.&lt;/p&gt;
+&lt;p&gt;Rigollet, Philippe, and Jan-Christian Hütter (2023). &amp;ldquo;High-Dimensional Statistics.&amp;rdquo; &lt;em&gt;arXiv preprint&lt;/em&gt;. &lt;a href="https://arxiv.org/pdf/2310.19244.pdf"&gt;arXiv:2310.19244&lt;/a&gt;.&lt;/p&gt;
+- https://gaxu.xyz/posts/lasso/ - 2023–2025 嘉树.</description></item><item><title>在 Mac 上管理多个 GitHub 账号</title><link>https://gaxu.xyz/posts/multiple-gh-accounts/</link><pubDate>Tue, 27 Aug 2024 19:29:37 +0800</pubDate><guid>https://gaxu.xyz/posts/multiple-gh-accounts/</guid><description>嘉树的世界 https://gaxu.xyz/posts/multiple-gh-accounts/ -&lt;h2 id="动机"&gt;动机&lt;/h2&gt;
+&lt;p&gt;我有两个 GitHub 账号，希望一个是面向工作，另一个则是私人的。那么，如何在一台 Mac 上无缝切换这个两个账号呢？本文列出了关键步骤。其他操作系统应当类似。&lt;/p&gt;
+&lt;h2 id="生成-ssh-密钥"&gt;生成 SSH 密钥&lt;/h2&gt;
+&lt;p&gt;GitHub 提供了两种方式与远程仓库建立联系：SSH 和 HTTPS。简单来说，当我们向远程仓库 push 代码时，HTTPS 每次都需要提供所谓的 access token（当然这个活其实也只是第一次 push 的时候需要，因为 Mac 会把这个 token 存放在钥匙串里面，以后就不需要手动输入了），而 SSH 使用一对公钥和私钥取得认证（事先生成，然后本地和远程分别拿着私钥和公钥），不需要记住用户名和 token。就我们的目的而言，只能用 SSH 来实现。&lt;/p&gt;
+&lt;p&gt;假设我们有两个账号，personal 和 work，以下我们分别为它们生成 SSH 密钥。更多账号操作也是一样的。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#81a1c1"&gt;cd&lt;/span&gt; ~/.ssh
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-keygen -t rsa -C &lt;span style="color:#a3be8c"&gt;&amp;#34;email@personal.com&amp;#34;&lt;/span&gt; -f &lt;span style="color:#a3be8c"&gt;&amp;#34;gh-personal&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-keygen -t rsa -C &lt;span style="color:#a3be8c"&gt;&amp;#34;email@work.com&amp;#34;&lt;/span&gt; -f &lt;span style="color:#a3be8c"&gt;&amp;#34;gh-work&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行完了之后，在 &lt;code&gt;.ssh&lt;/code&gt; 文件夹下我们得到了四个文件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gh-personal&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gh-personal.pub&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gh-work&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gh-work.pub&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中带 &lt;code&gt;.pub&lt;/code&gt; 扩展名的是存公钥的，不带的是存私钥的。&lt;/p&gt;
+&lt;h2 id="分配私钥和公钥"&gt;分配私钥和公钥&lt;/h2&gt;
+&lt;h3 id="将私钥加入-ssh-agent"&gt;将私钥加入 SSH Agent&lt;/h3&gt;
+&lt;p&gt;上一步只是生成了密钥，还需要把私钥加入 Mac 的钥匙串 (keychain)，也就是保存密码。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-add --apple-use-keychain ~/.ssh/gh-personal
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-add --apple-use-keychain ~/.ssh/gh-work
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;选项 &lt;code&gt;--apple-use-keychain&lt;/code&gt; 就明确声明使用 Mac 的钥匙串系统存放密钥。&lt;/p&gt;
+&lt;p&gt;我们可以用以下命令来查看私钥是否被添加到了 SSH Agent：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-add -l
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="将公钥加入-github"&gt;将公钥加入 GitHub&lt;/h3&gt;
+&lt;p&gt;然后，我们把公钥加入到对应的 GitHub 账户里去。&lt;/p&gt;
+&lt;p&gt;对账户 personal，进入 “Settings”➡️“SSH and GPG keys”，然后点击 “New SSH key”，进入一个界面，“Title” 可以随便填写，只要在 &amp;ldquo;Key&amp;rdquo; 的框里边粘贴 &lt;code&gt;gh-personal.pub&lt;/code&gt; 文件的内容就行了，以下是用命令复制文件内容的高级做法：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pbcopy &amp;lt; ~/.ssh/gh-personal.pub
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们对另一个账户 work 进行同样的操作，只不过是要复制对应文件 &lt;code&gt;gh-work.pub&lt;/code&gt; 的内容。不再赘述。&lt;/p&gt;
+&lt;h2 id="配置-ssh-主机"&gt;配置 SSH 主机&lt;/h2&gt;
+&lt;p&gt;这一步要做的是，告诉 Mac 远程仓库的主机和本地的私钥如何对应。这通过配置 SSH Config 文件实现。&lt;/p&gt;
+&lt;p&gt;首先，打开 &lt;code&gt;config&lt;/code&gt; 文件：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;open ~/.ssh/config
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后，填入如下设定&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# Your Personal GitHub Account
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Host github.com-personal
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; HostName github.com
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; User git
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; IdentityFile ~/.ssh/gh-personal
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# Your Work GitHub Account
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Host github.com-work
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; HostName github.com
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; User git
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; IdentityFile ~/.ssh/gh-work
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;到此为止，我们的所有准备工作就完成了。下面我们看在不同的账号间具体是怎么切换的。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="在不同的账号间切换"&gt;在不同的账号间切换&lt;/h2&gt;
+&lt;p&gt;假设我们实现已经全局设定了 work 账号是默认的 GitHub 账号：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git config --global user.name &lt;span style="color:#a3be8c"&gt;&amp;#34;work&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git config --global user.email &lt;span style="color:#a3be8c"&gt;&amp;#34;email@work.com&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;但如果要建立一个 personal 账号下的仓库，在 &lt;code&gt;git init&lt;/code&gt; 之后，就得不带 &lt;code&gt;--global&lt;/code&gt; 选项：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git config user.name &lt;span style="color:#a3be8c"&gt;&amp;#34;personal&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git config user.email &lt;span style="color:#a3be8c"&gt;&amp;#34;email@personal.com&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;要把这个仓库关联到远程仓库 myrepo，运行：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git remote add origin git@github.com-personal:personal/myrepo.git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里面需要注意，我们用的是 SSH 的链接，而不是 HTTPS 的链接，另外我们明确指定了主机名为 &lt;code&gt;github.com-personal&lt;/code&gt;，而不是 GitHub 仓库页面给出的 &lt;code&gt;github.com&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;这样就可以对 myrepo 进行 push 等操作了。&lt;/p&gt;
+&lt;p&gt;如果有另外的仓库是注册在 work 账号下的，不需要再特别进行 &lt;code&gt;git config&lt;/code&gt;，因前面我们已经全局指定了，但在 &lt;code&gt;git clone&lt;/code&gt; work 账号下的私有仓库和关联远程仓库时，仍然要注意指定主机名为 &lt;code&gt;github.com-work&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;以上（完）。&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://medium.com/@viralthaker27/managing-multiple-github-accounts-on-a-macbook-a-step-by-step-guide-a22ec738180f"&gt;Managing Multiple GitHub Accounts on a MacOS: A Step-by-Step Guide.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://code.tutsplus.com/quick-tip-how-to-work-with-github-and-multiple-accounts--net-22574t"&gt;How to Work With GitHub and Multiple Accounts.&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- https://gaxu.xyz/posts/multiple-gh-accounts/ - 2023–2025 嘉树.</description></item><item><title>半日杂记</title><link>https://gaxu.xyz/posts/half-day-diary/</link><pubDate>Sun, 25 Aug 2024 23:08:09 +0800</pubDate><guid>https://gaxu.xyz/posts/half-day-diary/</guid><description>嘉树的世界 https://gaxu.xyz/posts/half-day-diary/ -&lt;p&gt;师弟在我提出要去理发时向我强烈推荐了一家，我狐疑，追问之下原来是：他在此店被忽悠办了会员充了值，害怕店长哪天卷钱跑路了，希望尽快消费完。啊哈，那这个忙我当然要帮。&lt;/p&gt;
+&lt;p&gt;去了之后发现，这哪像会倒闭的样子！生意红火好嘛。当然也不排除有周日的加持。托尼老师很热情地向我推销卷烫染套餐，被我热情地回绝了。&lt;/p&gt;
+&lt;p&gt;剪完之后就在商场里闲逛，溜进一家「西西弗书店」，随意翻看能引起我兴趣的书，还真是颇有收获。试举几例：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;原来鲁迅真的写过「在我的后园，可以看见墙外有两株树，一株是枣树，还有一株也是枣树」，这出自《野草》中《秋夜》的第一句，我一直以为这是一个梗来着。&lt;/li&gt;
+&lt;li&gt;曾国藩也有写日记的习惯，他是真写，真反思，真改变。&lt;/li&gt;
+&lt;li&gt;《冬牧场》这本书似乎去年大热，看了几页，哇塞，这个作者怎么可以写出这么可爱幽默俏皮温暖的文字！&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;感悟就是，文字真的可以带来力量，内心的力量。愈加决定了！要多运动，多读书。&lt;/p&gt;
+&lt;p&gt;回去的时候顺便买了点水果，着实买贵了，以后还是去盒马买吧😥&lt;/p&gt;
+- https://gaxu.xyz/posts/half-day-diary/ - 2023–2025 嘉树.</description></item><item><title>专注力的流失</title><link>https://gaxu.xyz/posts/losing-concentration/</link><pubDate>Wed, 21 Aug 2024 12:43:47 +0800</pubDate><guid>https://gaxu.xyz/posts/losing-concentration/</guid><description>嘉树的世界 https://gaxu.xyz/posts/losing-concentration/ -&lt;p&gt;现在经常学着学着就很容易开小差，然后打开手机漫无目的地刷一刷，或者开始想些别的东西，这真的是一件很恐怖的事情。我的专注力在不断流失。&lt;/p&gt;
+&lt;p&gt;我幻想从清晨学到黄昏，心无旁骛地专注，因为时间在不知觉中的流动会给人一种高级的愉悦。我用了「幻想」，因为这种体验现在全无，但记忆中本科那会儿，是常能在图书馆坐上一天的。我的注意力为什么无法集中了呢？我在努力尝试思考的时候，大脑总会传出一个声音：这么复杂的问题，先歇会吧，反正时间有的是，也不差这一时半会儿。结果就是，我在每一个想要专注的节点都转移注意力去做了其他事，消磨的时间难以估量。我没法用劳逸结合来安慰自己，因为大部分时间我确实是处在「逸」的状态。这样做似乎很节省能量，但代价更严重──累积的畏难情绪和逐渐懒散的思维，学习节奏也全被打乱。&lt;/p&gt;
+&lt;p&gt;趁还有这样的意识的时候，是该刻意做点什么了吧。&lt;/p&gt;
+- https://gaxu.xyz/posts/losing-concentration/ - 2023–2025 嘉树.</description></item><item><title>集中不等式 (I)：Hoeffding 不等式</title><link>https://gaxu.xyz/posts/conctr-ineq-hoeffding/</link><pubDate>Sun, 11 Aug 2024 15:30:25 +0800</pubDate><guid>https://gaxu.xyz/posts/conctr-ineq-hoeffding/</guid><description>嘉树的世界 https://gaxu.xyz/posts/conctr-ineq-hoeffding/ -&lt;h2 id="内容提要"&gt;内容提要&lt;/h2&gt;
+&lt;p&gt;介绍了集中不等式的概念，引入了 Chernoff 界方法，并以此证明了 Hoeffding 不等式。&lt;/p&gt;
+&lt;h2 id="什么是集中不等式"&gt;什么是集中不等式？&lt;/h2&gt;
+&lt;p&gt;Concentration inequalities，中文译作「集中不等式」，是概率论中的一类不等式，描述了一个随机变量的取值是否集中在某个特定的值附近，换句话说，相对于这个特定值偏离了多少，从概率上讲这个偏离的可能性又如何量化。这个特定的值通常取的是总体均值。数学上，这类不等式的形式可写作&lt;/p&gt;
 $$
-\mathbb{P}\{|X-\mu|>t\} \leq \text{something small}
-$$&lt;p>这个不等式表明了，我们希望随机变量 $X$ 以很高的概率围绕在其均值附近波动。最简单、也最为我们熟悉的集中不等式当属 Chebyshev 不等式：如果 $X$ 的均值是 $\mu$，方差是 $\sigma^2$，那么&lt;/p>
+\mathbb{P}\{|X-\mu|&gt;t\} \leq \text{something small}
+$$&lt;p&gt;这个不等式表明了，我们希望随机变量 $X$ 以很高的概率围绕在其均值附近波动。最简单、也最为我们熟悉的集中不等式当属 Chebyshev 不等式：如果 $X$ 的均值是 $\mu$，方差是 $\sigma^2$，那么&lt;/p&gt;
 $$
-\mathbb{P}\{|X-\mu|>t\} \leq \frac{\sigma^2}{t^2}
-$$&lt;p>这个不等式当然是很一般的──我们只要求方差有限，除此之外并没有对 $X$ 的分布做更多要求。但是，在很多应用场景中，它还是太弱了，弱在不等式右边的东西不够小，或者更具体地说，当 $t\to\infty$ 时收敛到 0 的速度不够快。我们希望能有指数级别的收敛。&lt;/p>
-&lt;p>从渐进的观点看，当样本量足够大时，我们可以使用中心极限定理近似地得到样本均值偏离总体均值的概率，而正态分布的尾概率是指数衰减的。&lt;/p>
-&lt;div class="thm">
-&lt;p id="prop:normal" class="thm-title thm-proposition">Proposition 1.&lt;/p>
-&lt;div class="thm-inner thm-proposition">
-&lt;p>若 $Z\sim\mathcal{N}(0,1)$，则对任意 $t>0$，都有&lt;/p>
+\mathbb{P}\{|X-\mu|&gt;t\} \leq \frac{\sigma^2}{t^2}
+$$&lt;p&gt;这个不等式当然是很一般的──我们只要求方差有限，除此之外并没有对 $X$ 的分布做更多要求。但是，在很多应用场景中，它还是太弱了，弱在不等式右边的东西不够小，或者更具体地说，当 $t\to\infty$ 时收敛到 0 的速度不够快。我们希望能有指数级别的收敛。&lt;/p&gt;
+&lt;p&gt;从渐进的观点看，当样本量足够大时，我们可以使用中心极限定理近似地得到样本均值偏离总体均值的概率，而正态分布的尾概率是指数衰减的。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="prop:normal" class="thm-title thm-proposition"&gt;Proposition 1.&lt;/p&gt;
+&lt;div class="thm-inner thm-proposition"&gt;
+&lt;p&gt;若 $Z\sim\mathcal{N}(0,1)$，则对任意 $t&gt;0$，都有&lt;/p&gt;
 $$
 \biggl(\frac1t-\frac{1}{t^3}\biggr)\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2} \leq \mathbb{P}\{Z\geq t\} \leq \frac{1}{t}\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2}
 $$
-&lt;/div>
-&lt;/div>
-&lt;div class="thm">
-&lt;button type="button" class="collapsible">&lt;div id="thm-proof-1" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
-&lt;div class="proof-content">
-&lt;div class="thm-inner-proof">
-&lt;p>对于上界，有&lt;/p>
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="thm"&gt;
+&lt;button type="button" class="collapsible"&gt;&lt;div id="thm-proof-1" class="thm-title-proof"&gt;Proof.&lt;/div&gt;&lt;/button&gt;
+&lt;div class="proof-content"&gt;
+&lt;div class="thm-inner-proof"&gt;
+&lt;p&gt;对于上界，有&lt;/p&gt;
 $$
 \begin{align*}
 \mathbb{P}\{Z\geq t\} &amp;= \frac{1}{\sqrt{2\pi}}\int_t^\infty e^{-x^2/2}\,dx \\
@@ -379,54 +607,54 @@ $$
 &amp;= \frac{1}{t\sqrt{2\pi}} \int_t^\infty -\frac{\partial}{\partial x}e^{-x^2/2}\,dx \\
 &amp;= \frac{1}{t}\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2}
 \end{align*}
-$$&lt;p>对于下界，利用等式&lt;/p>
+$$&lt;p&gt;对于下界，利用等式&lt;/p&gt;
 $$
 \int_t^\infty (1-3x^{-4})e^{-x^2/2}\,dx = \biggl(\frac1t-\frac1{t^3}\biggr)e^{-t^2/2}
 $$
-&lt;/div>
-&lt;div class="thm-end-proof">
-&lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-1">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
-&lt;/div>
-&lt;/div>
-&lt;/div>
-&lt;p>不过，我们还需考虑到渐进误差的存在，也就是说，用正态分布的尾概率去近似样本均值的尾概率不是一种严格的做法。事实上，渐进误差并不必然是指数衰减的，因此我们必须从&lt;em>非渐进&lt;/em>的角度入手，而集中不等式正是这样的角色。&lt;/p>
-&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
-&lt;div>&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/>&lt;/symbol>&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>&lt;/symbol>&lt;/svg>&lt;/div>&lt;div class="notice note" >
-&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>&lt;a href="https://en.wikipedia.org/wiki/Berry%E2%80%93Esseen_theorem">Berry-Esseen 定理&lt;/a> 表明，中心极限定理中概率分布的收敛速率至少是 $O(1/\sqrt{n})$，不必然是指数级别的收敛。&lt;/p>&lt;/div>
-&lt;h2 id="chernoff-界方法">Chernoff 界方法&lt;/h2>
-&lt;p>在开始介绍一系列集中不等式之前，我们先讲一个很具有普适性的方法：Chernoff bound，它被广泛用于各种集中不等式的证明。&lt;/p>
-&lt;p>利用 Markov 不等式，对 $s>0$, 我们有&lt;/p>
+&lt;/div&gt;
+&lt;div class="thm-end-proof"&gt;
+&lt;i class="fas fa-square"&gt;&lt;/i&gt; &lt;a href="#thm-proof-1"&gt;&lt;i class="fas fa-arrow-circle-up"&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;不过，我们还需考虑到渐进误差的存在，也就是说，用正态分布的尾概率去近似样本均值的尾概率不是一种严格的做法。事实上，渐进误差并不必然是指数衰减的，因此我们必须从&lt;em&gt;非渐进&lt;/em&gt;的角度入手，而集中不等式正是这样的角色。&lt;/p&gt;
+&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+&lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice note" &gt;
+&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#note-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Note&lt;/p&gt;&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Berry%E2%80%93Esseen_theorem"&gt;Berry-Esseen 定理&lt;/a&gt; 表明，中心极限定理中概率分布的收敛速率至少是 $O(1/\sqrt{n})$，不必然是指数级别的收敛。&lt;/p&gt;&lt;/div&gt;
+&lt;h2 id="chernoff-界方法"&gt;Chernoff 界方法&lt;/h2&gt;
+&lt;p&gt;在开始介绍一系列集中不等式之前，我们先讲一个很具有普适性的方法：Chernoff bound，它被广泛用于各种集中不等式的证明。&lt;/p&gt;
+&lt;p&gt;利用 Markov 不等式，对 $s&gt;0$, 我们有&lt;/p&gt;
 $$
 \mathbb{P}\{X\geq t\} = \mathbb{P}\{e^{sX}\geq e^{st}\} \leq \frac{\mathbb{E}(e^{sX})}{e^{st}}
-$$&lt;p>不等式右边的 $m_X(s) := \mathbb{E}(e^{sX})$ 即随机变量的矩生成函数 (moment generating function, MGF)。更使我们喜闻乐见的是，分母是一个指数函数。这意味着，只要我们能控制 MGF 不要增长的太快，我们就能保证指数级收敛。&lt;/p>
-&lt;p>后文的各种集中不等式反复展示了这一技巧。&lt;/p>
-&lt;h2 id="hoeffding-不等式">Hoeffding 不等式&lt;/h2>
-&lt;p>首先介绍一个分布：对称 Bernoulli 分布，也叫 Rademacher 分布。如果随机变量 $X$ 均以 1/2 概率取值 &amp;ndash;1 和 1，则称它服从对称 Bernoulli 分布。显然，$Z$ 服从（普通的）Berinoulli 分布当且仅当 $2Z-1$ 服从对称 Bernoulli 分布。&lt;/p>
-&lt;p>Hoeffding 不等式即是关于对称 Bernoulli 随机变量的。&lt;/p>
-&lt;div class="thm">
-&lt;p id="thm:hoeffding" class="thm-title thm-theorem">Theorem 2 (Hoeffding’s Inequality).&lt;/p>
-&lt;div class="thm-inner thm-theorem">
-&lt;p>设 $X_1,\dots,X_n$ 是独立的对称 Bernoulli 随机变量序列，$\bm{a}=(a_1,\dots,a_n)\in\mathbb{R}^n$ 是实值常向量。对任意 $t\geq0$，都有&lt;/p>
+$$&lt;p&gt;不等式右边的 $m_X(s) := \mathbb{E}(e^{sX})$ 即随机变量的矩生成函数 (moment generating function, MGF)。更使我们喜闻乐见的是，分母是一个指数函数。这意味着，只要我们能控制 MGF 不要增长的太快，我们就能保证指数级收敛。&lt;/p&gt;
+&lt;p&gt;后文的各种集中不等式反复展示了这一技巧。&lt;/p&gt;
+&lt;h2 id="hoeffding-不等式"&gt;Hoeffding 不等式&lt;/h2&gt;
+&lt;p&gt;首先介绍一个分布：对称 Bernoulli 分布，也叫 Rademacher 分布。如果随机变量 $X$ 均以 1/2 概率取值 &amp;ndash;1 和 1，则称它服从对称 Bernoulli 分布。显然，$Z$ 服从（普通的）Berinoulli 分布当且仅当 $2Z-1$ 服从对称 Bernoulli 分布。&lt;/p&gt;
+&lt;p&gt;Hoeffding 不等式即是关于对称 Bernoulli 随机变量的。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="thm:hoeffding" class="thm-title thm-theorem"&gt;Theorem 2 (Hoeffding’s Inequality).&lt;/p&gt;
+&lt;div class="thm-inner thm-theorem"&gt;
+&lt;p&gt;设 $X_1,\dots,X_n$ 是独立的对称 Bernoulli 随机变量序列，$\bm{a}=(a_1,\dots,a_n)\in\mathbb{R}^n$ 是实值常向量。对任意 $t\geq0$，都有&lt;/p&gt;
 $$
 \mathbb{P}\Biggl\{\sum_{i=1}^n a_iX_i\geq t\Biggr\} \leq \exp\biggl(-\frac{t^2}{2\|\bm{a}\|_2^2}\biggr)
 $$
-&lt;/div>
-&lt;/div>
-&lt;div class="thm">
-&lt;button type="button" class="collapsible">&lt;div id="thm-proof-2" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
-&lt;div class="proof-content">
-&lt;div class="thm-inner-proof">
-&lt;p>不失一般性，设 $\|\bm{a}\|_2 = 1$。利用 Chernoff 界方法，对 $s>0$ 有&lt;/p>
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="thm"&gt;
+&lt;button type="button" class="collapsible"&gt;&lt;div id="thm-proof-2" class="thm-title-proof"&gt;Proof.&lt;/div&gt;&lt;/button&gt;
+&lt;div class="proof-content"&gt;
+&lt;div class="thm-inner-proof"&gt;
+&lt;p&gt;不失一般性，设 $\|\bm{a}\|_2 = 1$。利用 Chernoff 界方法，对 $s&gt;0$ 有&lt;/p&gt;
 $$
 \begin{align*}
 \mathbb{P}\Biggl\{\sum_{i=1}^n a_iX_i\geq t\Biggr\} &amp;= \mathbb{P}\Biggl\{\exp\Biggl(s\sum_{i=1}^n a_iX_i\Biggr)\geq \exp(st)\Biggr\} \\
 &amp;\leq e^{-st}\mathbb{E}\Biggl[\exp\Biggl(\sum_{i=1}^n a_iX_i\Biggr)\Biggr] \\
 &amp;= e^{-st}\prod_{i=1}^n\mathbb{E}[\exp(sa_iX_i)]
 \end{align*}
-$$&lt;p>最后一个等式使用了独立性。计算 $\mathbb{E}[\exp(sa_iX_i)]$：&lt;/p>
+$$&lt;p&gt;最后一个等式使用了独立性。计算 $\mathbb{E}[\exp(sa_iX_i)]$：&lt;/p&gt;
 $$
 \mathbb{E}[\exp(sa_iX_i)] = \frac12[\exp(sa_i)+\exp(-sa_i)] = \cosh(sa_i) \leq \exp(s^2a_i^2/2)
-$$&lt;p>其中的不等号来自：$\cosh(x)\leq\exp(x^2/2)$ 对 $x\in\mathbb{R}$ 成立，可通过 Taylor 展开证明。于是，我们得到&lt;/p>
+$$&lt;p&gt;其中的不等号来自：$\cosh(x)\leq\exp(x^2/2)$ 对 $x\in\mathbb{R}$ 成立，可通过 Taylor 展开证明。于是，我们得到&lt;/p&gt;
 $$
 \begin{align*}
 \mathbb{P}\Biggl\{\sum_{i=1}^n a_iX_i\geq t\Biggr\} &amp;\leq e^{-st}\prod_{i=1}^n\mathbb{E}[\exp(sa_iX_i)] \\
@@ -434,80 +662,80 @@ $$
 &amp;= \exp\Biggl(-st+\frac{s^2}{2}\sum_{i=1}^na_i\Biggr) \\
 &amp;= \exp\biggl(-st+\frac{s^2}{2}\biggr)
 \end{align*}
-$$&lt;p>最后一个等式利用了 $\sum_ia_i^2=1$。现在，选择最优的 $s$ 让右边的值最小，显然，这个最优的 $s=t$，这样就得到了想要的结果。&lt;/p>
-&lt;/div>
-&lt;div class="thm-end-proof">
-&lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-2">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
-&lt;/div>
-&lt;/div>
-&lt;/div>
-&lt;p>我们可以轻松加愉快地得到双边版本的 Hoeffding 不等式：&lt;/p>
-&lt;div class="thm">
-&lt;p id="cor:hoeffding" class="thm-title thm-corollary">Corollary 3 (Hoeffding’s Inequality, two-sided).&lt;/p>
-&lt;div class="thm-inner thm-corollary">
-&lt;p>设 $X_1,\dots,X_n$ 是独立的对称 Bernoulli 随机变量序列，$\bm{a}=(a_1,\dots,a_n)\in\mathbb{R}^n$ 是实值常向量。对任意 $t\geq0$，都有&lt;/p>
+$$&lt;p&gt;最后一个等式利用了 $\sum_ia_i^2=1$。现在，选择最优的 $s$ 让右边的值最小，显然，这个最优的 $s=t$，这样就得到了想要的结果。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="thm-end-proof"&gt;
+&lt;i class="fas fa-square"&gt;&lt;/i&gt; &lt;a href="#thm-proof-2"&gt;&lt;i class="fas fa-arrow-circle-up"&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;我们可以轻松加愉快地得到双边版本的 Hoeffding 不等式：&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="cor:hoeffding" class="thm-title thm-corollary"&gt;Corollary 3 (Hoeffding’s Inequality, two-sided).&lt;/p&gt;
+&lt;div class="thm-inner thm-corollary"&gt;
+&lt;p&gt;设 $X_1,\dots,X_n$ 是独立的对称 Bernoulli 随机变量序列，$\bm{a}=(a_1,\dots,a_n)\in\mathbb{R}^n$ 是实值常向量。对任意 $t\geq0$，都有&lt;/p&gt;
 $$
 \mathbb{P}\Biggl\{\left|\sum_{i=1}^n a_iX_i\right|\geq t\Biggr\} \leq 2\exp\biggl(-\frac{t^2}{2\|\bm{a}\|_2^2}\biggr)
 $$
-&lt;/div>
-&lt;/div>
-&lt;div class="thm">
-&lt;button type="button" class="collapsible">&lt;div id="thm-proof-3" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
-&lt;div class="proof-content">
-&lt;div class="thm-inner-proof">
-对 $\sum_ia_iX_i$ 和 $-\sum_ia_iX_i$ 各应用一遍 &lt;a href="https://gaxu.xyz/#thm:hoeffding">Hoeffding&lt;/a> 然后把概率相加。
-&lt;/div>
-&lt;div class="thm-end-proof">
-&lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-3">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
-&lt;/div>
-&lt;/div>
-&lt;/div>
-&lt;p>更一般地，对有界随机变量，我们也有 Hoeffding 不等式：&lt;/p>
-&lt;div class="thm">
-&lt;p id="thm:hoeffdingbounded" class="thm-title thm-theorem">Theorem 4 (Hoeffding’s Inequality for Bounded Random Variables).&lt;/p>
-&lt;div class="thm-inner thm-theorem">
-&lt;p>设 $X_1,\dots,X_n$ 是独立的随机变量序列，$\mathbb{E}(X_i) = \mu_i$ 且 $X_i\in[a_i,b_i]$。则对任意 $t\geq0$，都有&lt;/p>
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="thm"&gt;
+&lt;button type="button" class="collapsible"&gt;&lt;div id="thm-proof-3" class="thm-title-proof"&gt;Proof.&lt;/div&gt;&lt;/button&gt;
+&lt;div class="proof-content"&gt;
+&lt;div class="thm-inner-proof"&gt;
+对 $\sum_ia_iX_i$ 和 $-\sum_ia_iX_i$ 各应用一遍 &lt;a href="https://gaxu.xyz/#thm:hoeffding"&gt;Hoeffding&lt;/a&gt; 然后把概率相加。
+&lt;/div&gt;
+&lt;div class="thm-end-proof"&gt;
+&lt;i class="fas fa-square"&gt;&lt;/i&gt; &lt;a href="#thm-proof-3"&gt;&lt;i class="fas fa-arrow-circle-up"&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;更一般地，对有界随机变量，我们也有 Hoeffding 不等式：&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="thm:hoeffdingbounded" class="thm-title thm-theorem"&gt;Theorem 4 (Hoeffding’s Inequality for Bounded Random Variables).&lt;/p&gt;
+&lt;div class="thm-inner thm-theorem"&gt;
+&lt;p&gt;设 $X_1,\dots,X_n$ 是独立的随机变量序列，$\mathbb{E}(X_i) = \mu_i$ 且 $X_i\in[a_i,b_i]$。则对任意 $t\geq0$，都有&lt;/p&gt;
 $$
 \mathbb{P}\Biggl\{\sum_{i=1}^n (X_i-\mu_i)\geq t\Biggr\} \leq \exp\biggl(-\frac{2t^2}{\sum_{i=1}^n(b_i-a_i)^2}\biggr)
 $$
-&lt;/div>
-&lt;/div>
-&lt;div class="thm">
-&lt;button type="button" class="collapsible">&lt;div id="thm-proof-4" class="thm-title-proof">Proof.&lt;/div>&lt;/button>
-&lt;div class="proof-content">
-&lt;div class="thm-inner-proof">
-&lt;p>不失一般性，设 $\mu_i=0$，即所有 $X_i$ 均值为 0，这也同时意味着 $a_i\leq0\leq b_i$。&lt;/p>
-&lt;hr>
-&lt;p>我们首先证明 &lt;a href="https://en.wikipedia.org/wiki/Hoeffding%27s_lemma">Hoeffding 引理&lt;/a>，它是说，如果有界随机变量 $X\in[a,b]$ 且均值为 0，则对 $s\in\mathbb{R}$ 恒有&lt;/p>
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="thm"&gt;
+&lt;button type="button" class="collapsible"&gt;&lt;div id="thm-proof-4" class="thm-title-proof"&gt;Proof.&lt;/div&gt;&lt;/button&gt;
+&lt;div class="proof-content"&gt;
+&lt;div class="thm-inner-proof"&gt;
+&lt;p&gt;不失一般性，设 $\mu_i=0$，即所有 $X_i$ 均值为 0，这也同时意味着 $a_i\leq0\leq b_i$。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;我们首先证明 &lt;a href="https://en.wikipedia.org/wiki/Hoeffding%27s_lemma"&gt;Hoeffding 引理&lt;/a&gt;，它是说，如果有界随机变量 $X\in[a,b]$ 且均值为 0，则对 $s\in\mathbb{R}$ 恒有&lt;/p&gt;
 $$
 \mathbb{E}(e^{sX}) \leq \exp\biggl(\frac{s^2(b-a)^2}{8}\biggr)
-$$&lt;p>因 $e^{sx}$ 是关于 $x$ 的凸函数，故对任意 $x\in[a,b]$，我们有&lt;/p>
+$$&lt;p&gt;因 $e^{sx}$ 是关于 $x$ 的凸函数，故对任意 $x\in[a,b]$，我们有&lt;/p&gt;
 $$
 e^{sx} \leq \frac{b-x}{b-a}e^{sa} + \frac{x-a}{b-a}e^{sb}
-$$&lt;p>将 $x$ 替换为 $X$，并两边取期望，注意我们已经假设 $X$ 均值为 0，因此&lt;/p>
+$$&lt;p&gt;将 $x$ 替换为 $X$，并两边取期望，注意我们已经假设 $X$ 均值为 0，因此&lt;/p&gt;
 $$
 \begin{align*}
 \mathbb{E}(e^{sX}) &amp;\leq \frac{b-\mathbb{E}(X)}{b-a}e^{sa} + \frac{\mathbb{E}(X)-a}{b-a}e^{sb} \\
 &amp;= \frac{b}{b-a}e^{sa} + \frac{-a}{b-a}e^{sb}
 \end{align*}
-$$&lt;p>现在，我们需要证明&lt;/p>
+$$&lt;p&gt;现在，我们需要证明&lt;/p&gt;
 $$
 \frac{b}{b-a}e^{sa} + \frac{-a}{b-a}e^{sb} \leq \exp\biggl(\frac{s^2(b-a)^2}{8}\biggr)
-$$&lt;p>不妨进行换元 $h = s(b-a)$，上式便等价于&lt;/p>
+$$&lt;p&gt;不妨进行换元 $h = s(b-a)$，上式便等价于&lt;/p&gt;
 $$
 \exp\biggl(\frac{ha}{b-a}\biggr)\biggl(\frac{b}{b-a}+\frac{-a}{b-a}e^h\biggr) \leq \exp\biggl(\frac{h^2}{8}\biggr)
-$$&lt;p>取对数，我们需证明&lt;/p>
+$$&lt;p&gt;取对数，我们需证明&lt;/p&gt;
 $$
 f(h) := \frac{ha}{b-a} + \log\biggl(\frac{b-e^ha}{b-a}\biggr) \leq \frac{h^2}{8}
-$$&lt;p>将 $f(h)$ 在 $h=0$ 处 Taylor 展开：&lt;/p>
+$$&lt;p&gt;将 $f(h)$ 在 $h=0$ 处 Taylor 展开：&lt;/p&gt;
 $$
 f(h) = f(0) + f'(0)h + \frac12f''(\xi)h^2 \quad\text{for some $\xi$ between 0 and $h$}
-$$&lt;p>注意到 $f(0) = f^\prime(0) = 0$，而对 $\xi\in\mathbb{R}$ 我们恒有&lt;/p>
+$$&lt;p&gt;注意到 $f(0) = f^\prime(0) = 0$，而对 $\xi\in\mathbb{R}$ 我们恒有&lt;/p&gt;
 $$
 f''(\xi) = -\frac{e^\xi ab}{(b-e^\xi a)^2} \leq \frac14
-$$&lt;p>这里我们使用了均值不等式得到 $-e^\xi ab \leq \frac14(-e^\xi a+b)^2$。这就证明了 $f(h)\leq\frac18h^2$，进而证明了 Hoeffding 引理。&lt;/p>
-&lt;hr>
-&lt;p>回到定理的证明。仍然利用 Chernoff 界方法：&lt;/p>
+$$&lt;p&gt;这里我们使用了均值不等式得到 $-e^\xi ab \leq \frac14(-e^\xi a+b)^2$。这就证明了 $f(h)\leq\frac18h^2$，进而证明了 Hoeffding 引理。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;回到定理的证明。仍然利用 Chernoff 界方法：&lt;/p&gt;
 $$
 \begin{align*}
 \mathbb{P}\Biggl\{\sum_{i=1}^n X_i\geq t\Biggr\} &amp;= \mathbb{P}\Biggl\{\exp\Biggl(s\sum_{i=1}^n X_i\Biggr)\geq \exp(st)\Biggr\} \\
@@ -517,332 +745,174 @@ $$
 &amp;= \exp\biggl(-st+\frac{s^2\sum_{i=1}^n(b_i-a_i)^2}{8}\biggr) \\
 &amp;\leq \exp\biggl(-\frac{2t^2}{\sum_{i=1}^n(b_i-a_i)^2}\biggr)
 \end{align*}
-$$&lt;p>倒数第三行调用了 Hoeffding 引理，最后一行通过取 $s=4t/\sum_{i=1}^n(b_i-a_i)^2$ 得到。&lt;/p>
-&lt;/div>
-&lt;div class="thm-end-proof">
-&lt;i class="fas fa-square">&lt;/i> &lt;a href="#thm-proof-4">&lt;i class="fas fa-arrow-circle-up">&lt;/i>&lt;/a>
-&lt;/div>
-&lt;/div>
-&lt;/div>
-&lt;p>（未完待续～）&lt;/p>
-&lt;h2 id="参考">参考&lt;/h2>
-&lt;ol>
-&lt;li>&lt;em>Wikipedia&lt;/em>. &amp;ldquo;&lt;a href="https://en.wikipedia.org/wiki/Concentration_inequality">Concentration inequality&lt;/a>.&amp;rdquo;&lt;/li>
-&lt;li>Rigollet, Philippe, and Jan-Christian Hütter. 2023. &amp;ldquo;High-Dimensional Statistics.&amp;rdquo; &lt;em>arXiv preprint&lt;/em>. &lt;a href="https://arxiv.org/pdf/2310.19244.pdf">arXiv:2310.19244&lt;/a>.&lt;/li>
-&lt;li>Vershynin, Roman. 2018. &lt;em>High-Dimensional Probability: An Introduction with Applications in Data Science&lt;/em>. Cambridge University Press.&lt;/li>
-&lt;/ol>
-- https://gaxu.xyz/posts/conctr-ineq-hoeffding/ - 2023–2024 嘉树.</description></item><item><title>来个任意门吧</title><link>https://gaxu.xyz/posts/anywhere-door/</link><pubDate>Fri, 09 Aug 2024 10:31:47 +0800</pubDate><guid>https://gaxu.xyz/posts/anywhere-door/</guid><description>嘉树的世界 https://gaxu.xyz/posts/anywhere-door/ -&lt;p>这几天实在太热了🥵🥵，每次往返学校都流一身汗，不想去学校了，但是呆家里就容易躺。两难呐😑&lt;/p>
-&lt;p>要是有个任意门就好了，可以舒心往返，两难自解🥹&lt;/p>
-- https://gaxu.xyz/posts/anywhere-door/ - 2023–2024 嘉树.</description></item><item><title>拒绝完美主义</title><link>https://gaxu.xyz/posts/noperfect/</link><pubDate>Thu, 08 Aug 2024 22:20:20 +0800</pubDate><guid>https://gaxu.xyz/posts/noperfect/</guid><description>嘉树的世界 https://gaxu.xyz/posts/noperfect/ -&lt;p>很多时候我都很难开始做一件事，总是觉得没准备好就不能开始，一来二去就浪费了很多时间。作为J人就这点不好，虽然每次都要搞个计划，但着实难以实施──总是在完善计划。其实我也知道，这是完美主义在作祟，拖延只是其导致的现象。&lt;/p>
-&lt;p>这种心理偏执是一种相当的阻碍。以前我一直以为，要开始做研究，那必然是先要尽可能把「所有」相关的基础知识都吃透，然后才能游刃有余。且不说是不是真的吃透了就一定能融会贯通，但就说吃透这些知识的时间成本就很巨大，那么要开始一个项目，得准备多少光阴？现在我意识到，在具备必要的基础知识之后，就可以边学边做了，这是「干中学」。这个方法不仅杜绝了前期漫长准备带来的时间上的不确定性，而且效率其实是很高的。另外也不要追求一次成功，第一次尝试能有一个还不错的结果能证明可行性就足够了。&lt;/p>
-&lt;p>说到底完美主义背后可能还是缺了自信，因为如果足够自信，就不会怀疑对过程的把控能力，同时对于结果也有一个理性的认知，那么就不会停留于准备阶段。大胆地开始，小心地推进，追求一个可接受的初步结果，然后逐步完善，这种态度才是不伤身心的。&lt;/p>
-- https://gaxu.xyz/posts/noperfect/ - 2023–2024 嘉树.</description></item><item><title>Macro QE 备考 (II): 新古典增长和世代交叠模型</title><link>https://gaxu.xyz/posts/macro-qe-preparation-ngm-olg/</link><pubDate>Tue, 27 Jun 2023 15:08:53 +0800</pubDate><guid>https://gaxu.xyz/posts/macro-qe-preparation-ngm-olg/</guid><description>嘉树的世界 https://gaxu.xyz/posts/macro-qe-preparation-ngm-olg/ -&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
-&lt;div>&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/>&lt;/symbol>&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>&lt;/symbol>&lt;/svg>&lt;/div>&lt;div class="notice info" >
-&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#info-notice">&lt;/use>&lt;/svg>&lt;/span>Info&lt;/p>&lt;p>本系列未能完成，只出了两期，因为复习进度太慢，最终换成手写笔记了。且作留恋。&lt;/p>&lt;/div>
-&lt;h2 id="overlapping-generations">Overlapping Generations&lt;/h2>
-&lt;h3 id="资本过度积累和动态无效率">资本过度积累和动态无效率&lt;/h3>
-&lt;p>我们对 OLG 模型的竞争均衡同一个社会计划者的中心化决策进行对比，考察竞争均衡是否是 Pareto 最优的。社会计划者意图最大化所有代际的加权平均效用：&lt;/p>
+$$&lt;p&gt;倒数第三行调用了 Hoeffding 引理，最后一行通过取 $s=4t/\sum_{i=1}^n(b_i-a_i)^2$ 得到。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="thm-end-proof"&gt;
+&lt;i class="fas fa-square"&gt;&lt;/i&gt; &lt;a href="#thm-proof-4"&gt;&lt;i class="fas fa-arrow-circle-up"&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;（未完待续～）&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;em&gt;Wikipedia&lt;/em&gt;. &amp;ldquo;&lt;a href="https://en.wikipedia.org/wiki/Concentration_inequality"&gt;Concentration inequality&lt;/a&gt;.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Rigollet, Philippe, and Jan-Christian Hütter. 2023. &amp;ldquo;High-Dimensional Statistics.&amp;rdquo; &lt;em&gt;arXiv preprint&lt;/em&gt;. &lt;a href="https://arxiv.org/pdf/2310.19244.pdf"&gt;arXiv:2310.19244&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Vershynin, Roman. 2018. &lt;em&gt;High-Dimensional Probability: An Introduction with Applications in Data Science&lt;/em&gt;. Cambridge University Press.&lt;/li&gt;
+&lt;/ol&gt;
+- https://gaxu.xyz/posts/conctr-ineq-hoeffding/ - 2023–2025 嘉树.</description></item><item><title>来个任意门吧</title><link>https://gaxu.xyz/posts/anywhere-door/</link><pubDate>Fri, 09 Aug 2024 10:31:47 +0800</pubDate><guid>https://gaxu.xyz/posts/anywhere-door/</guid><description>嘉树的世界 https://gaxu.xyz/posts/anywhere-door/ -&lt;p&gt;这几天实在太热了🥵🥵，每次往返学校都流一身汗，不想去学校了，但是呆家里就容易躺。两难呐😑&lt;/p&gt;
+&lt;p&gt;要是有个任意门就好了，可以舒心往返，两难自解🥹&lt;/p&gt;
+- https://gaxu.xyz/posts/anywhere-door/ - 2023–2025 嘉树.</description></item><item><title>拒绝完美主义</title><link>https://gaxu.xyz/posts/noperfect/</link><pubDate>Thu, 08 Aug 2024 22:20:20 +0800</pubDate><guid>https://gaxu.xyz/posts/noperfect/</guid><description>嘉树的世界 https://gaxu.xyz/posts/noperfect/ -&lt;p&gt;很多时候我都很难开始做一件事，总是觉得没准备好就不能开始，一来二去就浪费了很多时间。作为J人就这点不好，虽然每次都要搞个计划，但着实难以实施──总是在完善计划。其实我也知道，这是完美主义在作祟，拖延只是其导致的现象。&lt;/p&gt;
+&lt;p&gt;这种心理偏执是一种相当的阻碍。以前我一直以为，要开始做研究，那必然是先要尽可能把「所有」相关的基础知识都吃透，然后才能游刃有余。且不说是不是真的吃透了就一定能融会贯通，但就说吃透这些知识的时间成本就很巨大，那么要开始一个项目，得准备多少光阴？现在我意识到，在具备必要的基础知识之后，就可以边学边做了，这是「干中学」。这个方法不仅杜绝了前期漫长准备带来的时间上的不确定性，而且效率其实是很高的。另外也不要追求一次成功，第一次尝试能有一个还不错的结果能证明可行性就足够了。&lt;/p&gt;
+&lt;p&gt;说到底完美主义背后可能还是缺了自信，因为如果足够自信，就不会怀疑对过程的把控能力，同时对于结果也有一个理性的认知，那么就不会停留于准备阶段。大胆地开始，小心地推进，追求一个可接受的初步结果，然后逐步完善，这种态度才是不伤身心的。&lt;/p&gt;
+- https://gaxu.xyz/posts/noperfect/ - 2023–2025 嘉树.</description></item><item><title>Macro QE 备考 (II): 新古典增长和世代交叠模型</title><link>https://gaxu.xyz/posts/macro-qe-preparation-ngm-olg/</link><pubDate>Tue, 27 Jun 2023 15:08:53 +0800</pubDate><guid>https://gaxu.xyz/posts/macro-qe-preparation-ngm-olg/</guid><description>嘉树的世界 https://gaxu.xyz/posts/macro-qe-preparation-ngm-olg/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+&lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice info" &gt;
+&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#info-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Info&lt;/p&gt;&lt;p&gt;本系列未能完成，只出了两期，因为复习进度太慢，最终换成手写笔记了。且作留恋。&lt;/p&gt;&lt;/div&gt;
+&lt;h2 id="overlapping-generations"&gt;Overlapping Generations&lt;/h2&gt;
+&lt;h3 id="资本过度积累和动态无效率"&gt;资本过度积累和动态无效率&lt;/h3&gt;
+&lt;p&gt;我们对 OLG 模型的竞争均衡同一个社会计划者的中心化决策进行对比，考察竞争均衡是否是 Pareto 最优的。社会计划者意图最大化所有代际的加权平均效用：&lt;/p&gt;
 $$
 \sum_{t=0}^\infty \xi_t[u(c_{1,t})+\beta u(c_{2,t+1})]
-$$&lt;p>其中 $\xi_t$ 是社会计划者赋予代际 $t$ 的权重。同时，还要服从总的资源约束：&lt;/p>
+$$&lt;p&gt;其中 $\xi_t$ 是社会计划者赋予代际 $t$ 的权重。同时，还要服从总的资源约束：&lt;/p&gt;
 $$
 F(K_t,L_t) = K_{t+1} + L_tc_{1,t} + L_{t-1}c_{2,t}
-$$&lt;p>两边同除以 $L_t$，得到&lt;/p>
+$$&lt;p&gt;两边同除以 $L_t$，得到&lt;/p&gt;
 $$
 f(k_t) = (1+n)k_{t+1} + c_{1,t} + \frac{c_{2,t}}{1+n}
-$$&lt;p>对于同一个体青年期和老年期的消费分配，一阶条件为&lt;/p>
+$$&lt;p&gt;对于同一个体青年期和老年期的消费分配，一阶条件为&lt;/p&gt;
 $$
 \frac{u'(c_{1,t})}{\beta u'(c_{2,t+1})} = \frac{1}{1+n}\frac{dc_{2,t+1}}{dk_{t+1}} = f'(k_{t+1})
-$$&lt;p>回忆在竞争均衡中，一阶条件是&lt;/p>
+$$&lt;p&gt;回忆在竞争均衡中，一阶条件是&lt;/p&gt;
 $$
 u'(c_{1,t}) = \beta R_{t+1} u'(c_{2,t+1})
-$$&lt;p>而 $R_{t+1} = f'(k_{t+1})$，因此社会计划者对一个个体青年期和老年期的消费配置同该个体自身的最大化决策是一致的，在这一点上市场配置是有效率的。&lt;/p>
-&lt;p>然而，由于社会计划者给每一代个体分配了不同的权重（$\xi_t$ 随 $t$ 变化），可以想见代际之间资源配置不会相同，这是区别于竞争均衡的。&lt;/p>
-&lt;p>考虑一个具体的权重设定：$\xi_t = \xi^t$。我们使用 Lagrange 函数：&lt;/p>
+$$&lt;p&gt;而 $R_{t+1} = f'(k_{t+1})$，因此社会计划者对一个个体青年期和老年期的消费配置同该个体自身的最大化决策是一致的，在这一点上市场配置是有效率的。&lt;/p&gt;
+&lt;p&gt;然而，由于社会计划者给每一代个体分配了不同的权重（$\xi_t$ 随 $t$ 变化），可以想见代际之间资源配置不会相同，这是区别于竞争均衡的。&lt;/p&gt;
+&lt;p&gt;考虑一个具体的权重设定：$\xi_t = \xi^t$。我们使用 Lagrange 函数：&lt;/p&gt;
 $$
 \mathcal{L} = \sum_{t=0}^\infty \left(\xi^t[u(c_{1,t})+\beta u(c_{2,t+1})]-\lambda_t\left[(1+n)k_{t+1}+c_{1,t}+\frac{c_{2,t}}{1+n}-f(k_t)\right]\right)
-$$&lt;p>一阶条件：&lt;/p>
+$$&lt;p&gt;一阶条件：&lt;/p&gt;
 $$
 \begin{align*}
 [c_{1,t}]&amp;\colon\quad \xi^tu'(c_{1,t}) - \lambda_t = 0 \\
 [c_{2,t+1}]&amp;\colon\quad \xi^t\beta u'(c_{2,t+1}) - \frac{\lambda_{t+1}}{1+n} = 0 \\
 [k_t]&amp;\colon\quad \lambda_t f'(k_t) - \lambda_{t-1}(1+n) = 0
 \end{align*}
-$$&lt;p>前两个条件可推出同期年轻人和老年人消费的欧拉方程&lt;/p>
+$$&lt;p&gt;前两个条件可推出同期年轻人和老年人消费的欧拉方程&lt;/p&gt;
 $$
 \frac{u'(c_{1,t})}{u'(c_{2,t})} = \frac{\beta(1+n)}{\xi}
-$$&lt;p>这表明 $c_{1,t}$ 和 $c_{2,t}$ 可以互相确定。因此我们只需考虑 $c_{1,t}$ 和 $c_{1,t+1}$ 的欧拉方程（由上述第一和第三个一阶条件得到）：&lt;/p>
+$$&lt;p&gt;这表明 $c_{1,t}$ 和 $c_{2,t}$ 可以互相确定。因此我们只需考虑 $c_{1,t}$ 和 $c_{1,t+1}$ 的欧拉方程（由上述第一和第三个一阶条件得到）：&lt;/p&gt;
 $$
 u'(c_{1,t}) = \frac{\xi}{1+n}f'(k_{t+1})u'(c_{1,t+1})
-$$&lt;p>由此可知在稳态中我们有&lt;/p>
+$$&lt;p&gt;由此可知在稳态中我们有&lt;/p&gt;
 $$
-\frac{\xi}{1+n}f'(k^s) = 1 \quad\Rightarrow\quad f'(k^s) = (1+n)(1+\rho) > 1+n
-$$&lt;p>其中 $1+\rho = 1/\xi$，$\rho$ 相当于贴现率。根据资源约束可确定稳态中的消费。&lt;/p>
-&lt;div class="notice note" >
-&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#note-notice">&lt;/use>&lt;/svg>&lt;/span>Note&lt;/p>&lt;p>可以证明社会计划者的配置会收敛到上述稳态，证明方式见 &lt;em>DA&lt;/em> 课本 6.8 节。&lt;/p>&lt;/div>
-&lt;p>在离散时间 Ramsey 模型中（课本 6.8 节，但设定折旧率 $\delta=1$ 以及人口增长率 $n$），稳态人均资本存量满足&lt;/p>
+\frac{\xi}{1+n}f'(k^s) = 1 \quad\Rightarrow\quad f'(k^s) = (1+n)(1+\rho) &gt; 1+n
+$$&lt;p&gt;其中 $1+\rho = 1/\xi$，$\rho$ 相当于贴现率。根据资源约束可确定稳态中的消费。&lt;/p&gt;
+&lt;div class="notice note" &gt;
+&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#note-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Note&lt;/p&gt;&lt;p&gt;可以证明社会计划者的配置会收敛到上述稳态，证明方式见 &lt;em&gt;DA&lt;/em&gt; 课本 6.8 节。&lt;/p&gt;&lt;/div&gt;
+&lt;p&gt;在离散时间 Ramsey 模型中（课本 6.8 节，但设定折旧率 $\delta=1$ 以及人口增长率 $n$），稳态人均资本存量满足&lt;/p&gt;
 $$
-\beta f'(k^*) = 1+n \quad\Rightarrow\quad f'(k^*) = (1+n)(1+\varrho) > 1+n
-$$&lt;p>可以看到，社会计划者在 OLG 中的稳态配置和 Ramsey 模型的稳态高度相似（我们知道，根据第一福利定理，Ramsey 模型中的竞争均衡是 Pareto 有效率的），它们都有一个共同点，那就是稳态的利率 $r = f'(k) - 1$ 大于人口增长率 $n$，这说明资本不是过度积累的，而它事实上是 Pareto 最优的一个必要条件。&lt;/p>
-&lt;p>下面我们说明 OLG 的竞争均衡有可能不是 Pareto 最优的。记 $k_{\textit{gold}}$ 为最大化稳态消费的人均资本存量。在 OLG 的稳态中，由总资源约束，有&lt;/p>
+\beta f'(k^*) = 1+n \quad\Rightarrow\quad f'(k^*) = (1+n)(1+\varrho) &gt; 1+n
+$$&lt;p&gt;可以看到，社会计划者在 OLG 中的稳态配置和 Ramsey 模型的稳态高度相似（我们知道，根据第一福利定理，Ramsey 模型中的竞争均衡是 Pareto 有效率的），它们都有一个共同点，那就是稳态的利率 $r = f'(k) - 1$ 大于人口增长率 $n$，这说明资本不是过度积累的，而它事实上是 Pareto 最优的一个必要条件。&lt;/p&gt;
+&lt;p&gt;下面我们说明 OLG 的竞争均衡有可能不是 Pareto 最优的。记 $k_{\textit{gold}}$ 为最大化稳态消费的人均资本存量。在 OLG 的稳态中，由总资源约束，有&lt;/p&gt;
 $$
 f(k^*) - (1+n)k^* = c_1^* + \frac{1}{1+n}c_2^* \equiv c^*
-$$&lt;p>于是，$k_{\textit{gold}}$ 满足&lt;/p>
+$$&lt;p&gt;于是，$k_{\textit{gold}}$ 满足&lt;/p&gt;
 $$
 f'(k_{\textit{gold}}) = 1+n
-$$&lt;p>若 $k^* > k_{\textit{gold}}$，则 $\partial c^*/\partial k^* &lt; 0$，表明减少储蓄可以增加总的消费。此时，我们说经济是动态无效率的：资本过度积累了。$k^* > k_{\textit{gold}}$ 也意味着稳态利率小于人口增长率：$r^* &lt; n$。&lt;/p>
-&lt;p>以上竞争均衡的稳态可获得 Pareto 改进。假设在某一时间 $T$ 处经济处于稳态且 $k^* > k_{\textit{gold}}$，在 $T+1$ 期，减少人均资本存量至 $k^*-\Delta k\geq k_{\textit{gold}}$，之后便一直维持此水平。那么，根据总资源约束，第 $T$ 期总消费的变化量&lt;/p>
+$$&lt;p&gt;若 $k^* &gt; k_{\textit{gold}}$，则 $\partial c^*/\partial k^* &lt; 0$，表明减少储蓄可以增加总的消费。此时，我们说经济是动态无效率的：资本过度积累了。$k^* &gt; k_{\textit{gold}}$ 也意味着稳态利率小于人口增长率：$r^* &lt; n$。&lt;/p&gt;
+&lt;p&gt;以上竞争均衡的稳态可获得 Pareto 改进。假设在某一时间 $T$ 处经济处于稳态且 $k^* &gt; k_{\textit{gold}}$，在 $T+1$ 期，减少人均资本存量至 $k^*-\Delta k\geq k_{\textit{gold}}$，之后便一直维持此水平。那么，根据总资源约束，第 $T$ 期总消费的变化量&lt;/p&gt;
 $$
-\Delta c_T = (1+n)\Delta k > 0
-$$&lt;p>此后每一期的消费变化量&lt;/p>
+\Delta c_T = (1+n)\Delta k &gt; 0
+$$&lt;p&gt;此后每一期的消费变化量&lt;/p&gt;
 $$
 \Delta c_t = f(k^*-\Delta k) - f(k^*) + (1+n)\Delta k = -[f'(\hat{k})-(1+n)]\Delta k
-$$&lt;p>其中 $\hat{k}\in(k^*-\Delta k,k^*)$，因此 $f'(\hat{k})-(1+n) &lt; 0$，$\Delta c_t > 0$。社会计划者可将每一期增加的总消费在年轻人和老年人之间分配，于是每一代人在其年轻和年老时期都都获得了增益。&lt;/p>
-&lt;p>那么，为什么在市场是完全的且没有外部性的情况下，竞争均衡却不是 Pareto 有效率的呢？原因在于，在 OLG 模型中我们不一定能应用第一福利定理，因为有无穷多个新生的个体不断地加入经济，这意味着总的收入流可能是无穷大的，这事实上就发生在经济动态无效率时（即 $r^* &lt; n$ 时，可参见课本习题 9.11 的证明）。于是，这给予我们进行 Pareto 改进的机会：通过减少过度的储蓄增加每一代人的消费；这种调整不像竞争市场中通过价格（工资、利率）配置资源，从而能合理利用无限的收入流实现改进。&lt;/p>
-&lt;h3 id="社会保障">社会保障&lt;/h3>
-&lt;p>资本过度积累导致动态无效率，除了前述直接对储蓄进行调整的方法，直觉上也可以通过向老年人提供消费来消除或缓解资本过度积累，这便向模型中引入了社会保障体系。有两种社保体系可供考虑：fully-funded 和 unfunded (or pay-as-you-go)。前者从年轻人手中筹资，然后在他们年老时返还；后者直接将年轻人的部分收入转移到同期的老年人手中。我们考察它们是否能缓解资本过度积累的问题。&lt;/p>
-&lt;h4 id="fully-funded-social-security">Fully funded social security&lt;/h4>
-&lt;p>在此社保体系下，个体的最大化问题是&lt;/p>
+$$&lt;p&gt;其中 $\hat{k}\in(k^*-\Delta k,k^*)$，因此 $f'(\hat{k})-(1+n) &lt; 0$，$\Delta c_t &gt; 0$。社会计划者可将每一期增加的总消费在年轻人和老年人之间分配，于是每一代人在其年轻和年老时期都都获得了增益。&lt;/p&gt;
+&lt;p&gt;那么，为什么在市场是完全的且没有外部性的情况下，竞争均衡却不是 Pareto 有效率的呢？原因在于，在 OLG 模型中我们不一定能应用第一福利定理，因为有无穷多个新生的个体不断地加入经济，这意味着总的收入流可能是无穷大的，这事实上就发生在经济动态无效率时（即 $r^* &lt; n$ 时，可参见课本习题 9.11 的证明）。于是，这给予我们进行 Pareto 改进的机会：通过减少过度的储蓄增加每一代人的消费；这种调整不像竞争市场中通过价格（工资、利率）配置资源，从而能合理利用无限的收入流实现改进。&lt;/p&gt;
+&lt;h3 id="社会保障"&gt;社会保障&lt;/h3&gt;
+&lt;p&gt;资本过度积累导致动态无效率，除了前述直接对储蓄进行调整的方法，直觉上也可以通过向老年人提供消费来消除或缓解资本过度积累，这便向模型中引入了社会保障体系。有两种社保体系可供考虑：fully-funded 和 unfunded (or pay-as-you-go)。前者从年轻人手中筹资，然后在他们年老时返还；后者直接将年轻人的部分收入转移到同期的老年人手中。我们考察它们是否能缓解资本过度积累的问题。&lt;/p&gt;
+&lt;h4 id="fully-funded-social-security"&gt;Fully funded social security&lt;/h4&gt;
+&lt;p&gt;在此社保体系下，个体的最大化问题是&lt;/p&gt;
 $$
 \begin{align*}
 \max_{c_{1,t},c_{2,t+1},s_t}&amp;\quad u(c_{1,t})+\beta u(c_{2,t+1}) \\
 \text{s.t.}&amp;\quad c_{1,t} + s_t + d_t \leq w_t \\
 &amp;\quad c_{2,t+1} \leq R_{t+1}(s_t+d_t)
 \end{align*}
-$$&lt;p>其中 $d_t$ 是由政府外生决定的筹资额度。&lt;/p>
-&lt;p>如果我们不对 $s_t$ 施加任何限制（可正可负），很显然，对任意给定的 $d_t$，原 OLG 的竞争均衡仍是上述问题的解，因为我们可将 $s_t+d_t$ 视作一体，那么任意 $d_t$ 的变动都会被 $s_t$ 的变动抵消而不会导致一个新的均衡。&lt;/p>
-&lt;p>即便我们要求 $s_t\geq 0$，且最优解中某些时期 $s_t = 0$，此新的均衡也不会比原竞争均衡更有效率，因为紧约束必然意味着 $d_t$ 不小于原均衡中的储蓄，也就是说，该社保体系下的资本积累不会低于原竞争均衡中的资本积累。&lt;/p>
-&lt;p>综上，完全融资的社保体系不会带来 Pareto 改进。&lt;/p>
-&lt;h4 id="unfunded-social-security">Unfunded social security&lt;/h4>
-&lt;p>个体的效用最大化问题&lt;/p>
+$$&lt;p&gt;其中 $d_t$ 是由政府外生决定的筹资额度。&lt;/p&gt;
+&lt;p&gt;如果我们不对 $s_t$ 施加任何限制（可正可负），很显然，对任意给定的 $d_t$，原 OLG 的竞争均衡仍是上述问题的解，因为我们可将 $s_t+d_t$ 视作一体，那么任意 $d_t$ 的变动都会被 $s_t$ 的变动抵消而不会导致一个新的均衡。&lt;/p&gt;
+&lt;p&gt;即便我们要求 $s_t\geq 0$，且最优解中某些时期 $s_t = 0$，此新的均衡也不会比原竞争均衡更有效率，因为紧约束必然意味着 $d_t$ 不小于原均衡中的储蓄，也就是说，该社保体系下的资本积累不会低于原竞争均衡中的资本积累。&lt;/p&gt;
+&lt;p&gt;综上，完全融资的社保体系不会带来 Pareto 改进。&lt;/p&gt;
+&lt;h4 id="unfunded-social-security"&gt;Unfunded social security&lt;/h4&gt;
+&lt;p&gt;个体的效用最大化问题&lt;/p&gt;
 $$
 \begin{align*}
 \max_{c_{1,t},c_{2,t+1},s_t}&amp;\quad u(c_{1,t})+\beta u(c_{2,t+1}) \\
 \text{s.t.}&amp;\quad c_{1,t} + s_t + d_t \leq w_t \\
 &amp;\quad c_{2,t+1} \leq R_{t+1}s_t + (1+n)d_{t+1}
 \end{align*}
-$$&lt;p>注意只有 $s_t$ 进入资本积累而 $d_t$ 是纯粹的转移支付。当无社保体系的竞争均衡存在动态无效率时，即 $r^* &lt; n$，此社保体系能够缓解资本过度积累。为说明这一点，假设个体也可以自由选择缴纳的社保额度 $d_t$，那么很显然，只要 $r_{t+1} &lt; n$，则 $R_{t+1} &lt; 1+n$，即投资的回报率小于社保的回报率，于是不会有任何投资，但这违背了均衡条件 $R_{t+1} = f'(k_{t+1})$，由此可知均衡时一定有 $r_{t+1} \geq n$。这个分析表明，在纯转移的社保体系下，政府可以选择合适的缴纳额度让经济的竞争均衡不再是动态无效率的。事实上，还可以证明，通过选择合适的 $\{d_t\}$，所得到的竞争均衡可以 Pareto 占优于无社保体系的竞争均衡（见课本命题 9.8）。&lt;/p>
-- https://gaxu.xyz/posts/macro-qe-preparation-ngm-olg/ - 2023–2024 嘉树.</description></item><item><title>Macro QE 备考 (I): 动态规划</title><link>https://gaxu.xyz/posts/macro-qe-preparation-dynamic-programming/</link><pubDate>Fri, 23 Jun 2023 22:35:19 +0800</pubDate><guid>https://gaxu.xyz/posts/macro-qe-preparation-dynamic-programming/</guid><description>嘉树的世界 https://gaxu.xyz/posts/macro-qe-preparation-dynamic-programming/ -&lt;style type="text/css">.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style>
-&lt;div>&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/>&lt;/symbol>&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>&lt;/symbol>&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>&lt;/symbol>&lt;/svg>&lt;/div>&lt;div class="notice info" >
-&lt;p class="first notice-title">&lt;span class="icon-notice baseline">&lt;svg>&lt;use href="#info-notice">&lt;/use>&lt;/svg>&lt;/span>Info&lt;/p>&lt;p>本系列未能完成，只出了两期，因为复习进度太慢，最终换成手写笔记了。且作留恋。&lt;/p>&lt;/div>
-&lt;h2 id="sequential-form-and-recursive-form">Sequential form and recursive form&lt;/h2>
-&lt;p>我们只考虑平稳的动态规划问题，「平稳」是说即时收益函数 $u$ 和状态变量的演化约束 $G$ 不显式地依赖于时间 $t$。&lt;/p>
-&lt;p>有两种表述形式：序列式和递归式，递归式也就是 Bellman 方程。序列式如下：&lt;/p>
+$$&lt;p&gt;注意只有 $s_t$ 进入资本积累而 $d_t$ 是纯粹的转移支付。当无社保体系的竞争均衡存在动态无效率时，即 $r^* &lt; n$，此社保体系能够缓解资本过度积累。为说明这一点，假设个体也可以自由选择缴纳的社保额度 $d_t$，那么很显然，只要 $r_{t+1} &lt; n$，则 $R_{t+1} &lt; 1+n$，即投资的回报率小于社保的回报率，于是不会有任何投资，但这违背了均衡条件 $R_{t+1} = f'(k_{t+1})$，由此可知均衡时一定有 $r_{t+1} \geq n$。这个分析表明，在纯转移的社保体系下，政府可以选择合适的缴纳额度让经济的竞争均衡不再是动态无效率的。事实上，还可以证明，通过选择合适的 $\{d_t\}$，所得到的竞争均衡可以 Pareto 占优于无社保体系的竞争均衡（见课本命题 9.8）。&lt;/p&gt;
+- https://gaxu.xyz/posts/macro-qe-preparation-ngm-olg/ - 2023–2025 嘉树.</description></item><item><title>Macro QE 备考 (I): 动态规划</title><link>https://gaxu.xyz/posts/macro-qe-preparation-dynamic-programming/</link><pubDate>Fri, 23 Jun 2023 22:35:19 +0800</pubDate><guid>https://gaxu.xyz/posts/macro-qe-preparation-dynamic-programming/</guid><description>嘉树的世界 https://gaxu.xyz/posts/macro-qe-preparation-dynamic-programming/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+&lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice info" &gt;
+&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#info-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Info&lt;/p&gt;&lt;p&gt;本系列未能完成，只出了两期，因为复习进度太慢，最终换成手写笔记了。且作留恋。&lt;/p&gt;&lt;/div&gt;
+&lt;h2 id="sequential-form-and-recursive-form"&gt;Sequential form and recursive form&lt;/h2&gt;
+&lt;p&gt;我们只考虑平稳的动态规划问题，「平稳」是说即时收益函数 $u$ 和状态变量的演化约束 $G$ 不显式地依赖于时间 $t$。&lt;/p&gt;
+&lt;p&gt;有两种表述形式：序列式和递归式，递归式也就是 Bellman 方程。序列式如下：&lt;/p&gt;
 $$
 \begin{align*}
 V^*(x_0) = \max_{\{x_t\}_{t=0}^\infty} &amp;\quad\sum_{t=0}^\infty\beta^tu(x_t,x_{t+1}), \\
 \text{s.t.}&amp;\quad x_{t+1}\in G(x_t), \\
 &amp;\quad x_0 \text{ is given.}
 \end{align*}
-$$&lt;p>递归式如下：&lt;/p>
+$$&lt;p&gt;递归式如下：&lt;/p&gt;
 $$
 V(x) = \max_{y\in G(x)} u(x,y) + \beta V(y).
-$$&lt;p>两种形式所确立的值函数是等价的。&lt;/p>
-&lt;h2 id="欧拉方程">欧拉方程&lt;/h2>
-&lt;p>在以上递归式中，一阶条件为&lt;/p>
+$$&lt;p&gt;两种形式所确立的值函数是等价的。&lt;/p&gt;
+&lt;h2 id="欧拉方程"&gt;欧拉方程&lt;/h2&gt;
+&lt;p&gt;在以上递归式中，一阶条件为&lt;/p&gt;
 $$
 u_2(x,y) + \beta V'(y) = 0.
-$$&lt;p>此外，由包络定理，有&lt;/p>
+$$&lt;p&gt;此外，由包络定理，有&lt;/p&gt;
 $$
 V'(x) = u_1(x,y).
-$$&lt;p>假设最优 policy 的函数（因为是平稳的，故不显式依赖于 $t$）：$y = \pi(x)$，便有欧拉方程&lt;/p>
+$$&lt;p&gt;假设最优 policy 的函数（因为是平稳的，故不显式依赖于 $t$）：$y = \pi(x)$，便有欧拉方程&lt;/p&gt;
 $$
 u_2(x,\pi(x)) + \beta u_1\bigl(\pi(x),\pi(\pi(x))\bigr) = 0.
-$$&lt;p>对欧拉方程的直觉解释：增加 $y$ 的边际成本（通常 $u_2 \leq 0$）等于边际收益（未来收益的贴现）。&lt;/p>
-&lt;h2 id="横截性条件">横截性条件&lt;/h2>
-&lt;p>&lt;em>横截性条件 (transversality condition)&lt;/em> 是动态优化的 &lt;em>必要&lt;/em> 条件，它是对满足欧拉方程的候选路径的进一步筛选。具体而言，欧拉方程要求最优路径必定满足：任意边际的偏离（偏离后又回到路径上）都无法获得改进。如果路径终末值是不受限制的，那么可能有很多满足欧拉方程的候选路径，此时，横截性条件的作用就是从这些候选路径中排除（部分）非最优的路径，它要求最优路径满足：任意永久的偏离（偏离后不再回到原路径上）都无法获得改进。&lt;/p>
-&lt;p>一个形象的例子：从一点到一条直线 $L$ 的最短路径是什么？显然是从该点到直线的垂线段。欧拉方程相当于是说最短的路径必定是直线段，而从一点到直线 $L$ 可作无数条直线。横截性条件则是说在所有这些直线段中，最短路径必定垂直于直线 $L$。&lt;/p>
-&lt;h3 id="the-finite-horizon-case">The finite horizon case&lt;/h3>
-&lt;p>为更好地理解横截性条件，我们首先考虑有限期的动态优化：&lt;/p>
+$$&lt;p&gt;对欧拉方程的直觉解释：增加 $y$ 的边际成本（通常 $u_2 \leq 0$）等于边际收益（未来收益的贴现）。&lt;/p&gt;
+&lt;h2 id="横截性条件"&gt;横截性条件&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;横截性条件 (transversality condition)&lt;/em&gt; 是动态优化的 &lt;em&gt;必要&lt;/em&gt; 条件，它是对满足欧拉方程的候选路径的进一步筛选。具体而言，欧拉方程要求最优路径必定满足：任意边际的偏离（偏离后又回到路径上）都无法获得改进。如果路径终末值是不受限制的，那么可能有很多满足欧拉方程的候选路径，此时，横截性条件的作用就是从这些候选路径中排除（部分）非最优的路径，它要求最优路径满足：任意永久的偏离（偏离后不再回到原路径上）都无法获得改进。&lt;/p&gt;
+&lt;p&gt;一个形象的例子：从一点到一条直线 $L$ 的最短路径是什么？显然是从该点到直线的垂线段。欧拉方程相当于是说最短的路径必定是直线段，而从一点到直线 $L$ 可作无数条直线。横截性条件则是说在所有这些直线段中，最短路径必定垂直于直线 $L$。&lt;/p&gt;
+&lt;h3 id="the-finite-horizon-case"&gt;The finite horizon case&lt;/h3&gt;
+&lt;p&gt;为更好地理解横截性条件，我们首先考虑有限期的动态优化：&lt;/p&gt;
 $$
 \begin{align*}
 \max_{\{x_t\}_{t=0}^{T+1}}&amp;\quad\sum_{t=0}^T\beta^tu(x_t,x_{t+1}), \\
 \text{s.t.}&amp;\quad x_{t+1}\geq0, \\
 &amp;\quad x_0 \text{ is given.}
 \end{align*}
-$$&lt;p>关于 $x_{t+1}$ 的一阶必要条件是&lt;/p>
+$$&lt;p&gt;关于 $x_{t+1}$ 的一阶必要条件是&lt;/p&gt;
 $$
 \begin{cases}
-\beta^Tu_2(x_T,x_{T+1}) = 0, &amp; \text{if } x_{T+1}>0, \\
+\beta^Tu_2(x_T,x_{T+1}) = 0, &amp; \text{if } x_{T+1}&gt;0, \\
 \beta^Tu_2(x_T,x_{T+1}) \leq 0, &amp; \text{if } x_{T+1}=0.
 \end{cases}
-$$&lt;p>两种情况可以合写为&lt;/p>
+$$&lt;p&gt;两种情况可以合写为&lt;/p&gt;
 $$
 \beta^Tu_2(x_T,x_{T+1})x_{T+1} = 0.
-$$&lt;p>这便是横截性条件。它是说，除非增加下一期存量的边际成本为0，否则终末期的存量必定是0。我们把 $x_t$ 对应为资本存量，就更好理解了，在终末期，最优的选择就是，不进行任何储蓄而是把现有的产出全部用作消费。考虑离散 Ramsey 模型：即时效用定义为消费的函数 $u(c_t)$，资本存量的演化服从&lt;/p>
+$$&lt;p&gt;这便是横截性条件。它是说，除非增加下一期存量的边际成本为0，否则终末期的存量必定是0。我们把 $x_t$ 对应为资本存量，就更好理解了，在终末期，最优的选择就是，不进行任何储蓄而是把现有的产出全部用作消费。考虑离散 Ramsey 模型：即时效用定义为消费的函数 $u(c_t)$，资本存量的演化服从&lt;/p&gt;
 $$
 k_{t+1} = f(k_t) + (1-\delta)k_t - c_t.
-$$&lt;p>将即时效用写作 $k_t$ 和 $k_{t+1}$ 的函数：&lt;/p>
+$$&lt;p&gt;将即时效用写作 $k_t$ 和 $k_{t+1}$ 的函数：&lt;/p&gt;
 $$
 u(k_t,k_{t+1}) = u(f(k_t) + (1-\delta)k_t - k_{t+1}).
-$$&lt;p>从而横截性条件&lt;/p>
+$$&lt;p&gt;从而横截性条件&lt;/p&gt;
 $$
 -\beta^Tu'(c_T)k_{T+1} = 0.
-$$&lt;p>这基本上意味着 $k_{T+1} = 0$，即 $T$ 期全部产出和资本都用于消费，没有储蓄。&lt;/p>
-&lt;h3 id="the-infinite-horizon-case">The infinite horizon case&lt;/h3>
-&lt;p>在无限期动态优化中，我们无法像上面那样直接推导出横截性条件，但我们可以基于此合理推广为极限形式：&lt;/p>
+$$&lt;p&gt;这基本上意味着 $k_{T+1} = 0$，即 $T$ 期全部产出和资本都用于消费，没有储蓄。&lt;/p&gt;
+&lt;h3 id="the-infinite-horizon-case"&gt;The infinite horizon case&lt;/h3&gt;
+&lt;p&gt;在无限期动态优化中，我们无法像上面那样直接推导出横截性条件，但我们可以基于此合理推广为极限形式：&lt;/p&gt;
 $$
 \lim_{t\to\infty}\beta^Tu_2(x_T,x_{T+1})x_{T+1} = 0.
-$$&lt;p>如果结合欧拉方程 $u_2(x_t,x_{t+1})+\beta u_1(x_{t+1},x_{t+2})=0$，我们还有另一种形式:&lt;/p>
+$$&lt;p&gt;如果结合欧拉方程 $u_2(x_t,x_{t+1})+\beta u_1(x_{t+1},x_{t+2})=0$，我们还有另一种形式:&lt;/p&gt;
 $$
 \lim_{t\to\infty}\beta^Tu_1(x_T,x_{T+1})x_T = 0.
-$$&lt;p>它们意味着无穷远期存量的贴现值为0，这表明最优路径上存量不能是过度积累的。&lt;/p>
-- https://gaxu.xyz/posts/macro-qe-preparation-dynamic-programming/ - 2023–2024 嘉树.</description></item><item><title>Micro QE 备考练习</title><link>https://gaxu.xyz/posts/micro-qe-preparation/</link><pubDate>Fri, 09 Jun 2023 16:22:12 +0800</pubDate><guid>https://gaxu.xyz/posts/micro-qe-preparation/</guid><description>嘉树的世界 https://gaxu.xyz/posts/micro-qe-preparation/ -&lt;p>本来计划做一份所有往年题的答案（已经全部做好了但希望打出一份电子版），但不幸考前🐑了，只完成此三题的誊抄，姑且留个纪念吧。&lt;/p>
-&lt;h2 id="problem-1-stochastic-dominance">Problem 1 (stochastic dominance)&lt;/h2>
-&lt;p>Consider lotteries $L_1\equiv(p_1\circ x_1,p_2\circ x_2)$ and $L_2\equiv(1\circ \bar{x})$, where $\bar{x} > p_1x_1+p_2x_2$, and $\bar{x} &lt; x_2$. Let $x$ denote the outcome of $L_1$ and $\widetilde{x}$ the outcome of $L_2$. ($L_2$ is a trivial lottery. So $\widetilde{x}$ is a random variable that equals $\bar{x}$ with probability one.) Let $z$ denote the outcome of lottery&lt;/p>
-$$
-L_3 \equiv (q_1\circ z_1, \dots, q_i\circ z_i, \dots, q_n\circ z_n),
-$$&lt;p>where $n$ is some finite number greater than 1. Let $F_1$ and $F_2$ denote the cumulative distributions of $x+z$ and $\widetilde{x}+z$, respectively.&lt;/p>
-&lt;ol class="alph" start="1">
-&lt;li>Suppose $n=2$. Use a diagram to illustrate $F_1$ and $F_2$.&lt;/li>
-&lt;li>Show that $\widetilde{x}+z$ cannot first-order stochastically dominates (f.o.s.d.) $x+z$. [Recall that for any two lotteries $L_1$ and $L_2$ with cdf $F_1$ and $F_2$, respectively, we say that $F_1$ first-order stochastically dominates $L_2$ if for any $x$, $F_1(x)\leq F_2(x)$.]&lt;/li>
-&lt;li>&lt;p>Let $z$ denote the outcome of a lottery&lt;/p>
-$$
-L_4 \equiv (q_1\circ z_1, \dots, q_i\circ z_i, \dots)
-$$&lt;p>that has a countably infinite number of outcomes. Show that in this case it is possible that $\widetilde{x}+z$ f.o.s.d. $x+z$. That is, come up with an example of $L_4$ such that $\widetilde{x}+z$ f.o.s.d. $x+z$.&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;h3 id="solution">Solution&lt;/h3>
-&lt;p>&lt;strong>&lt;code>(a)&lt;/code>&lt;/strong> Omitted.&lt;/p>
-&lt;p>&lt;strong>&lt;code>(b)&lt;/code>&lt;/strong> We need to prove that there is some $x$ such that $F_2(x) > F_1(x)$. WLOG, assume $z_n$ is the largest outcome of $L_3$, i.e., $x_n\geq x_i$ for every $i$. Since $p_1x_1+p_2x_2 &lt; \bar{x} &lt; x_2$, we must have $x_1 &lt; \bar{x} &lt; x_2$. Then $x_2+z_n$ is the rightmost point where $F_1$ puts a positive mass, which means $F_1(x_2+z_n) = 1 > F_1(\bar{x}+z_n)$. It is easy to see $F_2(\bar{x}+z_n) = 1$. So we have shown $F_2(\bar{x}+z_n) = 1 > F_1(\bar{x}+z_n)$.&lt;/p>
-&lt;p>&lt;strong>&lt;code>(c)&lt;/code>&lt;/strong> If there is some $x_m \geq x_i$ for every $i$, then we can use the same argument as in (b) to show that $F_2$ cannot f.o.s.d. $F_1$. Thus we may consider the case in which $\{z_n\}$ is an increasing sequence unbounded from above. We first show the following claim:&lt;/p>
-&lt;p>&lt;em>Claim.&lt;/em> If $\{z_n\}$ is increasing, then $F_2(x)\leq F_1(x)$ if and only if $F_2(\bar{x}+z_n)\leq F_1(\bar{x}+z_n)$ for each $n\in\mathbb{N}$.&lt;/p>
-&lt;p>&lt;em>Proof.&lt;/em> &amp;ldquo;Only if&amp;rdquo; is trivial. We show the &amp;ldquo;if&amp;rdquo; part. As both $F_1$ and $F_2$ are discrete distributions, it would suffice to show $F_2(x_j+z_n)\leq F(x_j+z_n)$ for $j=1,2$. For convenience, let $z_0=-\infty$. Then $x_1+z_n\in[\bar{x}+z_0,\bar{x}+z_n)$. There must exist some $m\leq n$ such that $x_1+z_n\in[\bar{x}+z_{m-1},\bar{x}+z_m)$. We have&lt;/p>
-$$
-F_2(x_1+z_n) = F_2(\bar{x}+z_{m-1}) \leq F_1(\bar{x}+z_{m-1}) \leq F_1(x_1+z_n).
-$$&lt;p>Likewise, there is some $k\geq n$ such that $x_2+z_n\in[\bar{x}+z_k,\bar{x}+z_{k+1})$ and it follows that $F_2(x_2+z_n)$ is no greater than $F_2(x_2+z_n)$. This completes the proof. &lt;em>&lt;code>Q.E.D.&lt;/code>&lt;/em>&lt;/p>
-&lt;p>By the claim, we only need to construct $\{z_n\}$ and the corresponding pmf $\{q_n\}$ so that $F_2(\bar{x}+z_n)\leq F_1(\bar{x}+z_n)$ for each $n$.&lt;/p>
-&lt;p>First, it is easy to see $F_2(\bar{x}+z_n) = \sum_{j=1}^nq_j$. In addition, it is for sure that for $j\leq n$, $x_1+z_j&lt;\bar{x}+z_n$ and so $F_1(\bar{x}+z_n)\geq p_1\sum_{j=1}^nq_j$. To make $F_1(\bar{x}+z_n)$ larger, we can let&lt;/p>
-$$
-x_1+z_{n+1}\leq\bar{x}+z_n \quad\text{and}\quad x_2+z_{n-1}\leq\bar{x}+z_n
-$$&lt;p>for each $n$. Note that this amounts to $x_2-\bar{x}\leq z_{n}-z_{n-1}\leq \bar{x}-x_1$, which requires&lt;/p>
-$$
-x_2-\bar{x}\leq\bar{x}-x_1 \quad\Rightarrow\quad \bar{x}\geq\frac{x_1+x_2}{2}.
-$$&lt;p>Now we have&lt;/p>
-$$
-F_1(\bar{x}+z_n) \geq \sum_{j=1}^{n-1}q_j + p_1q_n + p_1q_{n+1}.
-$$&lt;p>Thus, a sufficient condition for $F_2(\bar{x}+z_n)\leq F_1(\bar{x}+z_n)$ is&lt;/p>
-$$
-\sum_{j=1}^{n-1}q_j + p_1q_n + p_1q_{n+1} \geq \sum_{j=1}^nq_j \quad\Leftrightarrow\quad \frac{q_{n+1}}{q_n}\geq\frac{1-p_1}{p_1}.
-$$&lt;p>This would require $p_1>\frac12$ since otherwise $q_n$ would explode. We can then construct $\{q_n\}$ as a geometric sequence: $q_n = (1-q)q^{n-1}$ where $q=(1-p_1)/p_1$.&lt;/p>
-&lt;p>Therefore, if $\bar{x}\geq(x_1+x_2)/2$ and $p_1>\frac12$,&lt;/p>
-$$
-\begin{align*}
-z_n &amp;= n\delta \quad\text{where } \delta\in[x_2-\bar{x},\bar{x}-x_1],\\
-q_n &amp;= (1-q)q^{n-1} \quad\text{where } q = (1-p_1)/p_1,
-\end{align*}
-$$&lt;p>would lead $F_2$ to f.o.s.d. $F_1$.&lt;/p>
-&lt;hr>
-&lt;h2 id="problem-2-spne">Problem 2 (SPNE)&lt;/h2>
-&lt;p>Consider the following two-stage game between players 1 and 2. In stage 1, two players decide simultaneously whether to invest on a joint project. The cost of investment is $c>0$ for both players. No cost is incurred if a player chooses not to invest. The project generates a surplus of $(1+R)c$ if one player invests and of $(2+R)c$ if both players invest, where $0 &lt; R &lt; 1$. The game ends after stage 1 if no one invests and each player receives a payoff 0. If at least one player invests, the game enters stage 2, in which the players negotiate how to divide the realized surplus. Note that even a player did not invest, he is still entitled to participate in the surplus negotiation. The negotiation goes as follows: the players simultaneously announce their demands $d_1$ and $d_2$, where $d_i\in[0,1]$ refers to the share of the realized surplus. An agreement is reached if and only if the demands are compatible (i.e., $d_1+d_2\leq1$), in which case each player simply receives his own demand. If no agreement is reached (i.e., $d_1+d_2>1$), a player receives 0 if he did not invest in stage 1 and receives a compensation of $\delta c$ if he invested, where $0 &lt; \delta &lt; 1$. Each player&amp;rsquo;s payoff, denoted by $U_i$, is equal to the surplus or the compensation that he receives from the negotiation less his investment cost. For example, if player 1 is the only one who invested in stage 1 and an agreement of $(d_1,d_2)$ is reached in stage 2, then $U_1=d_1(1+R)c-c$ and $U_2=d_2(1+R)c$; if player 1 is the only one who invested in stage 1 and no agreement is reached in stage 2, then $U_1=\delta c-c$ and $U_2=0$.&lt;/p>
-&lt;ol class="alph" start="1">
-&lt;li>Specify a subgame perfect equilibrium in which no one invests in stage 1.&lt;/li>
-&lt;li>Specify a subgame perfect equilibrium in which both players invest in stage 1.&lt;/li>
-&lt;/ol>
-&lt;p>Suppose that in the negotiation in stage 2, one of the two players in randomly selected, with probability $1/2$, to make a take-it-or-leave-it proposal in the form of $(d_1,d_2)$, with $d_i\geq0$ and $d_1+d_2=1$. The other player then decides whether to accept or reject this proposal. An agreement is reached if and only if the proposal accepted. Players&amp;rsquo; payoffs are the same as specified in the previous parts. Assume that $R+\delta>1$.&lt;/p>
-&lt;ol class="alph" start="3">
-&lt;li>Specify a subgame perfect equilibrium. Which player(s) will invest in the equilibrium?&lt;/li>
-&lt;li>Briefly discuss the efficiency of the equilibrium outcomes in the previous parts.&lt;/li>
-&lt;/ol>
-&lt;h3 id="solution-1">Solution&lt;/h3>
-&lt;p>&lt;strong>&lt;code>(a)&lt;/code>&lt;/strong> There are four (proper) subgames, and we need to find the stage NEs for each of them. Use $Y$ to denote invest and $N$ not invest.&lt;/p>
-&lt;p>If both players invest in stage 1, denoted $(Y,Y)$, then in stage 2, given player $i$&amp;rsquo;s demand $d_i$, player $j$&amp;rsquo;s payoff function:&lt;/p>
-$$
-U_j(d_j|d_i,Y,Y) = \begin{cases}
-d_j(2+R)c-c, &amp; \text{if } d_j\leq1-d_i,\\
-\delta c-c, &amp; \text{if } d_j>1-d_i.
-\end{cases}
-$$&lt;p>Then player $j$&amp;rsquo;s best response:&lt;/p>
-$$
-\mathit{BR}_j(d_i,Y,Y) = \begin{cases}
-1-d_i, &amp; \text{if } (1-d_i)(2+R)\geq\delta,\\
-\in(1-d_i,1], &amp; \text{otherwise}.
-\end{cases}
-$$&lt;p>If $(Y_i,N_j)$, then in stage 2, given player $i$&amp;rsquo;s demand $d_i$, player $j$&amp;rsquo;s payoff function:&lt;/p>
-$$
-U_j(d_j|d_i,Y_i,N_j) = \begin{cases}
-d_j(1+R)c, &amp; \text{if } d_j\leq1-d_i,\\
-0, &amp; \text{if } d_j>1-d_i.
-\end{cases}
-$$&lt;p>Then player $j$&amp;rsquo;s best response:&lt;/p>
-$$
-\mathit{BR}_j(d_i,Y_i,N_j) = 1-d_i.
-$$&lt;p>If $(N_i,Y_j)$, then in stage 2, given player $i$&amp;rsquo;s demand $d_i$, player $j$&amp;rsquo;s payoff function:&lt;/p>
-$$
-U_j(d_j|d_i,N_i,Y_j) = \begin{cases}
-d_j(1+R)c-c, &amp; \text{if } d_j\leq1-d_i,\\
-\delta c-c, &amp; \text{if } d_j>1-d_i.
-\end{cases}
-$$&lt;p>Then player $j$&amp;rsquo;s best response:&lt;/p>
-$$
-\mathit{BR}_j(d_i,N_i,Y_j) = \begin{cases}
-1-d_i, &amp; \text{if } (1-d_i)(1+R)\geq\delta,\\
-\in(1-d_i,1), &amp; \text{otherwise}.
-\end{cases}
-$$&lt;p>If $(N,N)$, then in stage 2, given player $i$&amp;rsquo;s demand $d_i$, player $j$&amp;rsquo;s payoff function:&lt;/p>
-$$
-U_j(d_j|d_i,N,N) = 0.
-$$&lt;p>Then player $j$&amp;rsquo;s best response:&lt;/p>
-$$
-\mathit{BR}_j(d_i,N,N) \in [0,1].
-$$&lt;p>In an SPNE where $(N,N)$ is the stage-1 action profile, both players must have zero payoffs. Then, no incentive to deviate means that player $i$ should have non-positive payoff in the stage-2 subgame corresponding to $(Y_i,N_j)$. For the subgame corresponding to $(Y,Y)$, there is actually no such requirement: any subgame NE is fine; this is because a player&amp;rsquo;s deviation does not lead him to that subgame.&lt;/p>
-&lt;p>According to the above best response functions, we can easily find the stage-2 NEs. For example, $(d_1=d_2=1)$ in the subgame corresponding to $(Y,Y)$; $(d_i=\frac{1}{1+R},d_j=\frac{R}{1+R})$ corresponding to $(Y_i,N_j)$; $(d_1=d_2=1)$ corresponding to $(N,N)$. If player $i$ deviates from his current actions to $Y_i$ and other $d_i$&amp;rsquo;s, he would not be strictly better off. Thus, we indeed find an NE, and it is, as all stage-2 action profiles form NEs, an SPNE.&lt;/p>
-&lt;p>&lt;strong>&lt;code>(b)&lt;/code>&lt;/strong> First, let us find an NE in the subgame corresponding to $(Y,Y)$. A straightforward one is $(d_1=d_2=\frac12)$ in which both players have payoff $\frac12Rc$. Now, no incentive to deviate requires that player $i$ should have payoff no greater than $\frac12Rc$ in the stage-2 subgame corresponding to $(N_i,Y_j)$; easy to see $(d_i=0,d_j=1)$ is an NE that gives player $i$ zero payoff in this subgame. For the subgame corresponding to $(N,N)$, we can still use $(d_1=d_2=1)$.&lt;/p>
-&lt;p>&lt;strong>&lt;code>(c)&lt;/code>&lt;/strong> Analyze the four stage-2 subgames one by one. In the subgame following $(Y,Y)$: If player $i$ is selected as the proposer, then player $j$ would accept if $d_j(2+R)\geq\delta$, and so player $i$ would propose $d_i=1-\frac{\delta}{2+R}$. Player $i$ and $j$&amp;rsquo;s expected payoff are both&lt;/p>
-$$
-U_i = U_j = \frac12(\delta c-c)+\frac12(1+R-\delta)c = \frac12Rc.
-$$&lt;p>In the subgame following $(Y_i,N_j)$: If player $i$ is selected as the proposer, then player $j$ would always accept, so player $i$ proposes $d_i=1$; if player $j$ is selected as the proposer, then player $i$ would accept if $d_i(1+R)\geq\delta$, so player $j$ would propose $d_i = \frac{\delta}{1+R}$. Players $i$ and $j$&amp;rsquo;s expected payoffs are thus&lt;/p>
-$$
-\begin{align*}
-U_i &amp;= \frac12Rc+\frac12(\delta-1)c = \frac12(R+\delta-1)c > 0, \\
-U_j &amp;= \frac12\cdot0 + \frac12(1+R-\delta)c = \frac12(1+R-\delta)c > \frac12Rc.
-\end{align*}
-$$&lt;p>In the subgame following $(N,N)$: Any proposal would be accepted and $U_i=U_j=0$.&lt;/p>
-&lt;p>The above analysis indicates an SPNE where one player invests while the other does not. Suppose $(Y_i,N_j)$. Clearly, player $i$ has no incentive to deviate to $N_i$ and player $j$ has no incentive to deviate to $Y_j$.&lt;/p>
-&lt;p>&lt;strong>&lt;code>(d)&lt;/code>&lt;/strong> The SPNE in which neither invests is inefficient. The other SPNEs in which at least one invests are efficient since the total (expected) payoff is $Rc$ and there is no room for any further improvement.&lt;/p>
-&lt;hr>
-&lt;h2 id="problem-3-mechanism-design">Problem 3 (mechanism design)&lt;/h2>
-&lt;p>Consider a bilateral trade setting. A seller owns an object, which a buyer wants to buy. The object quality $v$ is drawn from $[0,1]$ according to the distribution $F(v) = v^a$, where $a > 0$ is a parameter. The seller knows $v$, while the buyer does not. When the object quality is $v$, its value is $v$ to the seller and $bv$ to the buyer with $b > 1$. If a trade happens at the price $p$, then the seller gets $p−v$ and the buyer gets $bv − p$. When there is no trade, both players get 0.&lt;/p>
-&lt;p>For each $(a,b)$, present an incentive–compatible individually–rational mechanism that maximizes the (ex-ante) probability of trade. Denote the maximal probability by $H(a,b)$. Derive the function $H$.&lt;/p>
-&lt;h3 id="solution-2">Solution&lt;/h3>
-&lt;p>A mechanism consists of $q\colon [0,1]\to[0,1]$ and $p\colon [0,1]\to\mathbb{R}$. More specifically, $q(v)$ is the probability of the seller accepting the trade (allocation rule) and $p(v)$ stipulates the payment (transfer rule).&lt;/p>
-&lt;p>The seller of type $v$, if he tells the truth (reporting his type as is), has payoff&lt;/p>
-$$
-u_s(v) = q(v)[p(v)-v] = q(v)p(v) - vq(v) = t(v) - vq(v),
-$$&lt;p>where we let $t(v):=q(v)p(v)$; it is the expected transfer. Now, instead of directly finding the optimal $q$ and $p$, we would determine $q$ and $t$.&lt;/p>
-&lt;p>Incentive compatibility implies&lt;/p>
-$$
-\begin{align*}
-t(v) - vq(v) &amp;\geq t(v') - vq(v'), \\
-t(v') - v'q(v') &amp;\geq t(v) - v'q(v).
-\end{align*}
-$$&lt;p>Thus, we have&lt;/p>
-$$
-(v'-v)[q(v)-q(v')] \geq 0.
-$$&lt;p>This means $q(v)\geq q(v')$ whenever $v &lt; v'$. In other words, $q(\cdot)$ is decreasing.&lt;/p>
-&lt;p>Further, IC must imply&lt;/p>
-$$
-u_s(v) = \max_{v'}\ t(v') - vq(v').
-$$&lt;p>By the envelope theorem (assuming $u_s$ is differentiable), $u_s'(v) = -q(v)\leq0$. Since $q(v)$ is decreasing, $u_s(v)$ is a convex, decreasing function. (In fact, the convexity can be proved directly from the formula above without imposing differentiability assumption.) Then, we have&lt;/p>
-$$
-\begin{align*}
-u_s(v) &amp;= \int_v^1 q(x)\,dx + u_s(1), \\
-t(v) &amp;= u_s(v) + vq(v) = \int_v^1 q(x)\,dx + u_s(1) + vq(v).
-\end{align*}
-$$&lt;p>Now, given IC, IR would imply&lt;/p>
-$$
-u_s(v)\geq 0 \text{ for each } v \quad\Leftrightarrow\quad u_s(1)\geq0.
-$$&lt;p>If an IC and IR mechanism maximizes the probability of trade, then it maximizes&lt;/p>
-$$
-\mathbb{E}[q(v)] = \int_0^1q(v)\,dF(v)
-$$&lt;p>subject to&lt;/p>
-$$
-\mathbb{E}(q(v)[bv-p(v)]) = \int_0^1bvq(v)-t(v)\,dF(v) \geq 0.
-$$&lt;p>Doing some algebra, the constraint reduces to&lt;/p>
-$$
-\begin{align*}
-&amp;\mathbin{\phantom{=}}\int_0^1\left[(b-1)v\frac{f(v)}{F(v)}-1\right]q(v)F(v)\,dv - u_s(1) \\
-&amp;= \int_0^1[a(b-1)-1]q(v)F(v)\,dv - u_s(1)\geq0.
-\end{align*}
-$$&lt;p>If $a(b-1)&lt;1$, then any $q(v)\geq 0$ would not make trade happen with a positive probability. If $a(b-1)\geq 1$, then $q(v) = 1$ with $u_s(1) = 0$ would make trade happen for sure and so is the optimal allocation rule. Hence, we derive $H(a,b) = \mathbb{1}\{a(b-1)\geq1\}$.&lt;/p>
-- https://gaxu.xyz/posts/micro-qe-preparation/ - 2023–2024 嘉树.</description></item></channel></rss>
+$$&lt;p&gt;它们意味着无穷远期存量的贴现值为0，这表明最优路径上存量不能是过度积累的。&lt;/p&gt;
+- https://gaxu.xyz/posts/macro-qe-preparation-dynamic-programming/ - 2023–2025 嘉树.</description></item></channel></rss>
