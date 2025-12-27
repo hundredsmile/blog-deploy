@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>面板模型 on 嘉树的世界</title><link>https://gaxu.xyz/tags/%E9%9D%A2%E6%9D%BF%E6%A8%A1%E5%9E%8B/</link><description>Recent content in 面板模型 on 嘉树的世界</description><generator>Hugo</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Sat, 27 Dec 2025 17:41:07 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/tags/%E9%9D%A2%E6%9D%BF%E6%A8%A1%E5%9E%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>次要参数问题</title><link>https://gaxu.xyz/posts/incidental-param/</link><pubDate>Thu, 25 Dec 2025 22:13:40 +0800</pubDate><guid>https://gaxu.xyz/posts/incidental-param/</guid><description>&lt;p&gt;本文是阅读 Lancaster (2000) 的笔记，介绍了次要参数问题 (incidental parameter problem) 的历史和统计学者提出的一个通用解决方案。&lt;/p&gt;
+&lt;p&gt;1948 年，Econometrica 发表了统计学家 Jerzy Neyman 和他的学生 Elizabeth Scott 的论文 &lt;em&gt;Consistent Estimates Based On Partially Consistent Observations&lt;/em&gt;，其中首次提出了次要参数问题。而这也是这位统计学巨擘唯一一篇发表在经济学杂志上的论文。这篇文章在很长一段时间里并未在计量经济学中引起太多关注，但进入新世纪后，次要参数问题逐渐成为计量经济学中的一个重要问题，并引发了广泛关注（Google Scholar 的引用次数逐年上升）。&lt;/p&gt;
+&lt;h2 id="他们的文章讲了什么"&gt;他们的文章讲了什么&lt;/h2&gt;
+&lt;p&gt;有一列独立的随机变量，它们的分布律取决于两类参数：第一类出现在每个随机变量的分布律中，而第二类只出现在有限个（可能是一个）随机变量的分布律中。按照 Neyman 和 Scott 的分类，前者被称为结构参数 (structural)，后者被称为次要参数 (incidental)。不过鉴于 structural 一词在计量经济学中被广泛使用且有特定的含义，本文不采用这一术语，而用共同参数 (common parameter) 来指代第一类参数。直觉上，每一个额外的观测都会提供关于共同参数的信息，但关于次要参数的信息在有限个观测之后就不再增加，这被 NS 称为 inconsistent observations。&lt;/p&gt;
+&lt;p&gt;NS 考察了共同参数极大似然估计的一致性和效率，关于一致性的命题定义了“次要参数问题”，这也是本文所关注的问题。这个命题是说：&lt;em&gt;利用非一致观测值的共同参数的极大似然估计量不必然是一致的&lt;/em&gt;。我们用一个例子来说明这一点。&lt;/p&gt;
+
+
+
+
+
+ 
+ 
+ 
+
+
+
+
+
+&lt;div class="thm"&gt;
+ &lt;p id="ex:incidental-param" class="thm-title thm-example"&gt;Example 1.&lt;/p&gt;
+ &lt;div class="thm-inner thm-example"&gt;
+ &lt;p&gt;$\{x_{i,j}\}$ 是一列独立的随机变量，概率密度为正态密度
+&lt;/p&gt;
+$$
+p(x_{i,j}) = \frac{1}{\sqrt{2\pi}\sigma} \exp\left(-\frac{(x_{i,j}-\alpha_i)^2}{2\sigma^2}\right)\quad i = 1,\dots,s \quad j = 1,\dots,n_i \quad s\to\infty
+$$&lt;p&gt;
+其中 $\alpha_i$ 就是次要参数，它们只出现在 $n_i$ 个观测值中，$\sigma$ 是共同参数，它出现在每个随机变量的分布律中。注意，这里我们考虑的是固定的 $n_i$ 而 $s$ 趋于无穷。&lt;/p&gt;</description></item></channel></rss>

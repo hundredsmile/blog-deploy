@@ -1,4 +1,135 @@
-<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Thu, 25 Dec 2025 13:21:12 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>Ridge Regression</title><link>https://gaxu.xyz/posts/ridge-regression/</link><pubDate>Fri, 17 Mar 2023 13:37:45 +0800</pubDate><guid>https://gaxu.xyz/posts/ridge-regression/</guid><description>嘉树的世界 https://gaxu.xyz/posts/ridge-regression/ -&lt;h2 id="内容提要"&gt;内容提要&lt;/h2&gt;
+<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Thu, 25 Dec 2025 22:13:40 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>矩阵的秩、核范数与矩阵补全</title><link>https://gaxu.xyz/posts/nuclear-norm-min/</link><pubDate>Sat, 08 Apr 2023 16:06:52 +0800</pubDate><guid>https://gaxu.xyz/posts/nuclear-norm-min/</guid><description>嘉树的世界 https://gaxu.xyz/posts/nuclear-norm-min/ -&lt;p&gt;大约三周以前，听了一个presentation，讲到了 network 研究中度量关系网络的矩阵的 &lt;em&gt;「低秩」(low rank)&lt;/em&gt; 性质。之后我在浏览一些高维计量文章时，又见到了这个概念，以及 &lt;em&gt;「核范数」(nuclear norm, aka trace norm)&lt;/em&gt;。我印象里应该见过它们很多次，有些模糊的记忆片段，突然想起和硕士期间导师的交流中他提到过，遂从聊天记录中找到一些珍贵文件，当时他让我学习一下关于 &lt;em&gt;「矩阵补全」(matrix recovery, or matrix completion)&lt;/em&gt; 的内容，我没来得及看。那么这几天就学习学习，说不定以后能派上用场。&lt;/p&gt;
+&lt;h2 id="内容提要"&gt;内容提要&lt;/h2&gt;
+&lt;p&gt;本文将从矩阵恢复问题出发，介绍秩的最小化问题如何转变为一个核范数的最小化问题，前者是一个非凸的优化问题，很难求解，后者是一个凸优化问题，尽管不可求微分，但凸问题总是更易于求解的。&lt;/p&gt;
+&lt;h2 id="motivation"&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;我们所感兴趣的问题是，如何基于非常有限的信息复原一个（低秩）矩阵。这一话题原本来自于工程实践的需要，例如计算机视觉领域的图像降噪，我们知道图像是由像素点构成的，因而整个图像可以视为一个大矩阵，当有一些像素被破坏，得到的就是一个不完整的矩阵，对图像降噪就是要补全那些污损或缺失的像素点；又如著名的 Netflix 问题（类似地，在国内语境下是豆瓣问题）：Netflix 用户评分矩阵只包含了某些用户对某些电影的评分，而不是每个用户对所有电影的评分（如下图所示），我们希望能推测出那些缺失的评分。这些问题都涉及到矩阵补全。&lt;/p&gt;
+&lt;figure id = "fig:ratings" align="" role="group" aria-describedby="caption-7a0da52ea67b6a781291fe53e8b9f6fe"&gt;
+&lt;a href="https://gaxu.xyz/posts/nuclear-norm-min/rating-mat.png" class="img-link"&gt;
+&lt;img src="https://gaxu.xyz/posts/nuclear-norm-min/rating-mat.png" style="width: 60%;"&gt;
+&lt;/a&gt;
+&lt;figcaption id="caption-7a0da52ea67b6a781291fe53e8b9f6fe"&gt;
+Rating Matrix (Source: Yuejie Chi, 2018, Lecture Notes)
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;那么，这和低秩又有什么关系呢？很显然，在没有任何限制条件下去补全那些未知的项，我们有无数种填充方式。想要唯一地重建一个矩阵，这个矩阵必须有些特殊的结构作为限制，而低秩就是一个合理的结构。低秩意味着，矩阵的列向量高度线性相关──它们扩展形成的线性空间是低维的。说得更加人话就是，数据中的大部分波动都由少数几个因子驱动。&lt;/p&gt;
+&lt;p&gt;现在可能又要问了，低秩在实践中是一个合理的假设吗？以 Netflix 评分矩阵为例，直觉上，同一类用户群体的行为、特征有很高的相似性，因此他们的潜在评分高度一致，这样评分矩阵的「主成分」实际上就是几个群体的评价，从而是低秩的。&lt;/p&gt;
+&lt;h2 id="核范数最小化"&gt;核范数最小化&lt;/h2&gt;
+&lt;p&gt;低秩矩阵的补全可分为两类方法 (Gu &lt;i&gt;et al.&lt;/i&gt;
+2014)：&lt;em&gt;矩阵分解法&lt;/em&gt; 和 &lt;em&gt;求解秩最小化问题法&lt;/em&gt;。前者用两个低秩矩阵之积作为构造方式，可留待以后学习；后者是本文要讨论的内容。&lt;/p&gt;
+&lt;h3 id="秩最小化问题的正式表述"&gt;秩最小化问题的正式表述&lt;/h3&gt;
+&lt;p&gt;假设真实矩阵是 $\bm{M}$，我们所观测到的元素集合是 $\{M_{i,j}\colon (i,j)\in\Omega\}$。秩最小化问题就表述为&lt;/p&gt;
+$$
+\min_{\bm{X}}\ \text{rank}(\bm{X}) \quad \text{s.t. } X_{i,j} = M_{i,j},\ \text{for every }(i,j)\in\Omega
+$$&lt;p&gt;为方便起见，定义算子 $\mathcal{P}_{\Omega}$ 如下：&lt;/p&gt;
+$$
+[\mathcal{P}_{\Omega}(\bm{X})]_{i,j} = \begin{cases}
+X_{i,j} &amp; \text{if }(i,j)\in\Omega \\
+0 &amp; \text{otherwise}
+\end{cases}
+$$&lt;p&gt;换言之，$\mathcal{P}_{\Omega}$ 将任意矩阵正交投影到以指标集 $\Omega$ 作为支撑集的所有矩阵构成的空间上。&lt;/p&gt;
+&lt;p&gt;于是，上述问题就可以方便地写为&lt;/p&gt;
+$$
+\min_{\bm{X}}\ \text{rank}(\bm{X}) \quad \text{s.t. } \mathcal{P}_{\Omega}(\bm{X}) = \mathcal{P}_{\Omega}(\bm{M})
+$$&lt;p&gt;问题的解就是我们对真实矩阵 $\bm{M}$ 的估计或者近似。&lt;/p&gt;
+&lt;h4 id="仿射秩最小化"&gt;仿射秩最小化&lt;/h4&gt;
+&lt;p&gt;更一般地，我们不满足于普通的矩阵补全，而是以线性变换作为约束条件：&lt;/p&gt;
+$$
+\min_{\bm{X}}\ \text{rank}(\bm{X}) \quad \text{s.t. } \mathcal{A}(\bm{X}) = \bm{b}
+$$&lt;p&gt;其中 $\mathcal{A}\colon\mathbb{R}^{m\times n}\to\mathbb{R}^p$ 是一个线性映射，向量 $\bm{b}\in\mathbb{R}^p$ 是给定的。这个问题被称为 &lt;em&gt;仿射秩最小化 (affine rank minimization)&lt;/em&gt;。&lt;/p&gt;
+&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+&lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice note" &gt;
+&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#note-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Note&lt;/p&gt;&lt;p&gt;矩阵空间上的线性变换本质上还是向量空间上的线性变换，$\mathcal{A}(\bm{X})$ 可以表述为
+&lt;/p&gt;
+$$
+\mathcal{A}(\bm{X}) := \begin{bmatrix}
+\langle\bm{A}_1,\bm{X}\rangle_{\mathrm{F}} \\ \vdots \\ \langle\bm{A}_p,\bm{X}\rangle_{\mathrm{F}}
+\end{bmatrix}
+$$&lt;p&gt;
+其中 $\langle\bm{A},\bm{B}\rangle_{\mathrm{F}} = \text{trace}(\bm{A}'\bm{B})$ 是矩阵的 Frobenius 内积。见 &lt;a href="https://math.stackexchange.com/questions/2592633/"&gt;Stack Exchange&lt;/a&gt;。&lt;/p&gt;&lt;/div&gt;
+&lt;p&gt;不难证明，$\mathcal{P}_{\Omega}$ 是一个线性变换，因而 $\mathcal{P}_{\Omega}(\bm{X}) = \mathcal{P}_{\Omega}(\bm{M})$ 构成仿射约束的一个特例。&lt;/p&gt;
+&lt;h3 id="convex-relaxation"&gt;Convex relaxation&lt;/h3&gt;
+&lt;p&gt;遗憾的是，秩最小化问题不是一个凸优化问题，这不是我们所乐见的。原因是，秩函数（关于矩阵所有元素的函数）是非凸的。这无疑使得直接求解上述问题非常困难。我们希望找到作为替代的一个凸优化问题，它正是核范数最小化。&lt;/p&gt;
+&lt;p&gt;那么，什么是核范数呢？我们首先得了解 &lt;em&gt;奇异值分解 (singular value decomposition, SVD)&lt;/em&gt;。任何一个矩阵 $\bm{X}\in\mathbb{R}^{m\times n}$，都可以作如下分解：&lt;/p&gt;
+$$
+\underset{(m\times n)}{\bm{X}} = \underset{(m\times r)}{\bm{U}}\,\underset{(r\times r)}{\bm{\Sigma}}\,\underset{(r\times n)}{\bm{V}'}
+$$&lt;p&gt;其中 $\bm{U}$ 和 $\bm{V}$ 各自的列是正交的：$\bm{U}'\bm{U}=\bm{I}_r=\bm{V}'\bm{V}$；$\bm{\Sigma}$ 是一个对角矩阵，对角线元素是从大到小排列的 &lt;em&gt;奇异值&lt;/em&gt;：$\sigma_1\geq\sigma_2\geq\dots\geq\sigma_r\geq 0$，它们都是非负的；$r = \min\{m,n\}$。&lt;/p&gt;
+&lt;p&gt;矩阵的奇异值和秩紧密相关，事实上，一个矩阵的秩等于它所有非零（因而严格正）奇异值的个数，即&lt;/p&gt;
+$$
+\text{rank}(\bm{X}) = \sum_{i=1}^r\mathbb{1}\{\sigma_i\ne 0\}
+$$&lt;p&gt;如果我们用 $\bm{\sigma}$ 来代表所有奇异值构成的向量，那么上式就是 $\bm{\sigma}$ 的 $\ell_0$ 范数。这里离题一下，向量 $\ell_0$ 范数并不是一个真正的范数，而是 pseudo norm，因为它没有齐次性，但实际应用中仍普遍称之为「范数」，见 &lt;a href="https://en.wikipedia.org/wiki/Norm_%28mathematics%29#Hamming_distance_of_a_vector_from_zero"&gt;Wiki&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;现在，我们可以正式定义矩阵核范数：&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="thm:nuclear" class="thm-title thm-definition"&gt;Definition 1.&lt;/p&gt;
+&lt;div class="thm-inner thm-definition"&gt;
+矩阵 $\bm{X}$ 的核范数 $\lVert\bm{X}\rVert_* := \sum_{i=1}^r \sigma_i(\bm{X})$，即所有奇异值之和。
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;可以看到，矩阵的核范数等于其奇异值向量的 $\ell_1$ 范数。核范数是一个真正的范数（要证明这一点，特别是要证明它满足三角不等式，见 &lt;a href="https://math.stackexchange.com/questions/1142540"&gt;Stack Exchange 上的回答&lt;/a&gt;）。&lt;/p&gt;
+&lt;p&gt;我们要做的替换就是将目标函数 $\text{rank}(\bm{X})$ 换为 $\lVert\bm{X}\rVert_*$，也就是我们考虑如下问题&lt;/p&gt;
+$$
+\min_{\bm{X}}\ \lVert\bm{X}\rVert_* \quad \text{s.t. } \mathcal{A}(\bm{X}) = \bm{b}
+$$&lt;p&gt;这是一个凸优化问题，因为范数总是一个凸函数。核范数是秩函数的一个 &lt;em&gt;convex relaxation&lt;/em&gt;。&lt;/p&gt;
+&lt;div class="notice note" &gt;
+&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#note-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Note&lt;/p&gt;&lt;p&gt;可以类比 Lasso 的思想，想得到一个稀疏的向量（稀疏性以 $\ell_0$ 度量），用的是 $\ell_1$ 范数。现在是矩阵，度量矩阵列向量线性独立程度的正是秩（奇异值向量的 $\ell_0$ 范数），因而用核范数作为优化目标（奇异值向量的 $\ell_1$ 范数）可以得到低秩矩阵。&lt;/p&gt;&lt;/div&gt;
+&lt;h3 id="两种问题的等价性"&gt;两种问题的等价性&lt;/h3&gt;
+&lt;p&gt;现在，我们如愿得到了一个凸优化问题，它比原问题更容易求解。但另一方面，这种替换是否有其正当性？换言之，最小化核范数的解是否就是最小化秩函数的解？如果不是，那显然背离了我们的初衷，我们当然希望两种问题给出的解是相同的。一般意义上，两种最小化当然不同，但在一些正则条件下可以证明它们的局部等价性，有诸多研究进行了论证。&lt;/p&gt;
+&lt;p&gt;Recht &lt;i&gt;et al.&lt;/i&gt;
+(2010) 证明了，在满足特定的 RIP (restricted isometry property) 条件时，仿射秩最小化问题等价于在相同约束下最小化核范数。Candès
+and Recht
+(2012) 则不依赖 RIP，证明了有很大的概率最小化核范数能唯一地复原矩阵，只要已知的元素个数不是太少。&lt;/p&gt;
+&lt;p&gt;在多数矩阵补全问题中，使用核范数最小化问题作为秩最小化问题的替代是恰当的。&lt;/p&gt;
+&lt;h3 id="求解核范数最小化问题的算法"&gt;求解核范数最小化问题的算法&lt;/h3&gt;
+&lt;p&gt;尽管核范数最小化问题是一个凸问题（但它仍是不可微分的），可以用一般性的凸优化工具求解，但求解速度可能并不十分理想。对此，有一些更迅速的方法，这里简单提及两种。&lt;/p&gt;
+&lt;p&gt;Recht &lt;i&gt;et al.&lt;/i&gt;
+(2010) 将核范数最小化问题转变为一个 &lt;em&gt;半定规划 (semidefinite programming)&lt;/em&gt;，已有成熟的软件包用于解决这类问题（通常使用 primal-dual interior-point methods）。不过，这类方法在维度很高时速度很慢。&lt;/p&gt;
+&lt;p&gt;Cai &lt;i&gt;et al.&lt;/i&gt;
+(2010) 使用 &lt;em&gt;近端次梯度下降法 (proximal subgradient descent)&lt;/em&gt; 求解，此法特别适用于不可微分的凸优化，而且对于高维情形收敛速度也可令人满意。以普通的矩阵补全为例，此文事实上是求解&lt;/p&gt;
+$$
+\min_{\bm{X}}\ \tau\lVert\bm{X}\rVert_* + \frac12\lVert\bm{X}\rVert_{\bm{F}}^2 \quad \text{s.t. } \mathcal{P}_{\Omega}(\bm{X}) = \mathcal{P}_{\Omega}(\bm{M})
+$$&lt;p&gt;当 $\tau$ 很大时，该问题的解可以作为最小化核范数问题解的近似。求解该问题是通过一个渐进程序实现的，本质上是梯度下降，这里不做介绍。&lt;/p&gt;
+&lt;h2 id="其他"&gt;其他&lt;/h2&gt;
+&lt;p&gt;Chandrasekaran &lt;i&gt;et al.&lt;/i&gt;
+(2012) 是一篇很好的文章，从几何角度揭示了范数的选择问题。具体到核范数，简单来说就是核范数是秩函数的凸包 （此概念在 &lt;em&gt;&lt;a href="../bayesian-persuasion"&gt;之前的文章&lt;/a&gt;&lt;/em&gt; 中出现过），因而以核范数替代秩函数是 &lt;em&gt;最紧的凸放松 (tightest convex relaxation)&lt;/em&gt;。&lt;/p&gt;
+&lt;p&gt;Gu &lt;i&gt;et al.&lt;/i&gt;
+(2014) 基于 Cai &lt;i&gt;et al.&lt;/i&gt;
+(2010) 的求解程序，研究了 &lt;em&gt;加权核范数最小化问题&lt;/em&gt;，并设计了类似的求解程序。&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://www.zhihu.com/question/26471536"&gt;知乎问答&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Yuejie Chi (2018). &lt;em&gt;&lt;a href="https://users.ece.cmu.edu/~yuejiec/ece18898G_notes/ece18898g_lowrank_matrix_recovery.pdf"&gt;Lecture Notes&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Yuxin Chen (2020). &lt;em&gt;&lt;a href="https://yuxinchen2020.github.io/ele520_math_data/lectures/matrix_recovery.pdf"&gt;Lecture Notes&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;div class ="box"&gt;
+&lt;p&gt;Cai, Jian-Feng &lt;em&gt;et al.&lt;/em&gt;
+(2010).
+“A Singular Value Thresholding Algorithm for Matrix Completion.”
+&lt;i&gt;SIAM Journal on Optimization&lt;/i&gt;, 20(4), 1956–1982.
+&lt;a href="https://doi.org/10.1137/080738970" title="A Singular Value Thresholding Algorithm for Matrix Completion" target="_blank" style="word-break: break-all;"&gt;doi: 10.1137/080738970&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Candès, Emmanuel and Recht, Benjamin
+(2012).
+“Exact matrix completion via convex optimization.”
+&lt;i&gt;Communications of the ACM&lt;/i&gt;, 55(6), 111–119.
+&lt;a href="https://doi.org/10.1145/2184319.2184343" title="Exact matrix completion via convex optimization" target="_blank" style="word-break: break-all;"&gt;doi: 10.1145/2184319.2184343&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Chandrasekaran, Venkat &lt;em&gt;et al.&lt;/em&gt;
+(2012).
+“The Convex Geometry of Linear Inverse Problems.”
+&lt;i&gt;Foundations of Computational Mathematics&lt;/i&gt;, 12(6), 805–849.
+&lt;a href="https://doi.org/10.1007/s10208-012-9135-7" title="The Convex Geometry of Linear Inverse Problems" target="_blank" style="word-break: break-all;"&gt;doi: 10.1007/s10208-012-9135-7&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Gu, Shuhang &lt;em&gt;et al.&lt;/em&gt;
+(2014).
+“Weighted Nuclear Norm Minimization with Application to Image Denoising.”
+In: &lt;em&gt;2014 IEEE Conference on Computer Vision and Pattern Recognition&lt;/em&gt;, Columbus, OH, USA.
+&lt;a href="https://doi.org/10.1109/CVPR.2014.366" title="Weighted Nuclear Norm Minimization with Application to Image Denoising" target="_blank" style="word-break: break-all;"&gt;doi: 10.1109/CVPR.2014.366&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Gu, Shuhang &lt;em&gt;et al.&lt;/em&gt;
+(2017).
+“Weighted Nuclear Norm Minimization and Its Applications to Low Level Vision.”
+&lt;i&gt;International Journal of Computer Vision&lt;/i&gt;, 121(2), 183–208.
+&lt;a href="https://doi.org/10.1007/s11263-016-0930-5" title="Weighted Nuclear Norm Minimization and Its Applications to Low Level Vision" target="_blank" style="word-break: break-all;"&gt;doi: 10.1007/s11263-016-0930-5&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Recht, Benjamin &lt;em&gt;et al.&lt;/em&gt;
+(2010).
+“Guaranteed Minimum-Rank Solutions of Linear Matrix Equations via Nuclear Norm Minimization.”
+&lt;i&gt;SIAM Review&lt;/i&gt;, 52(3), 471–501.
+&lt;a href="https://doi.org/10.1137/070697835" title="Guaranteed Minimum-Rank Solutions of Linear Matrix Equations via Nuclear Norm Minimization" target="_blank" style="word-break: break-all;"&gt;doi: 10.1137/070697835&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+- https://gaxu.xyz/posts/nuclear-norm-min/ - 2023–2025 嘉树.</description></item><item><title>Ridge Regression</title><link>https://gaxu.xyz/posts/ridge-regression/</link><pubDate>Fri, 17 Mar 2023 13:37:45 +0800</pubDate><guid>https://gaxu.xyz/posts/ridge-regression/</guid><description>嘉树的世界 https://gaxu.xyz/posts/ridge-regression/ -&lt;h2 id="内容提要"&gt;内容提要&lt;/h2&gt;
 &lt;p&gt;一周以前（3月7日）考计量期中，第一题是证明岭回归估计量的渐进分布的，我没有完整地写出来，这里面还是有些技巧，之前我并不熟悉，现在总结在这里。&lt;/p&gt;
 &lt;h2 id="岭回归简介"&gt;岭回归简介&lt;/h2&gt;
 &lt;p&gt;Ridge regression，中文译名「岭回归」，是一种利用 &lt;em&gt;&lt;a href="https://en.wikipedia.org/wiki/Regularization_%28mathematics%29"&gt;正则化方法&lt;/a&gt;&lt;/em&gt; 处理 &lt;em&gt;&lt;a href="https://en.wikipedia.org/wiki/Well-posed_problem"&gt;不适定问题&lt;/a&gt;&lt;/em&gt; 的技术。我们知道，使用 OLS 时是要求自变量之间不存在完全多重共线性的，即回归元矩阵必须是列满秩的，否则最小二乘问题没有唯一解；但如果某些变量间的相关性很高，甚至接近完全相关，OLS 估计量的方差将会相当大，估计精度大大下降。这个问题在待估参数很多时常常发生。岭回归通过对系数向量的 $L^2$ 范数（的平方）施加一个惩罚，控制系数的整体大小，达到以一定程度的偏误换取更低方差的目的（见 &lt;a href="https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff"&gt;bias-variance tradeoff&lt;/a&gt;）。&lt;/p&gt;
