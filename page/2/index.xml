@@ -1,4 +1,90 @@
-<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Thu, 25 Dec 2025 22:13:40 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>Macro QE 备考 (I): 动态规划</title><link>https://gaxu.xyz/posts/macro-qe-preparation-dynamic-programming/</link><pubDate>Fri, 23 Jun 2023 22:35:19 +0800</pubDate><guid>https://gaxu.xyz/posts/macro-qe-preparation-dynamic-programming/</guid><description>嘉树的世界 https://gaxu.xyz/posts/macro-qe-preparation-dynamic-programming/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Sat, 27 Dec 2025 17:57:54 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>Macro QE 备考 (II): 新古典增长和世代交叠模型</title><link>https://gaxu.xyz/posts/macro-qe-preparation-ngm-olg/</link><pubDate>Tue, 27 Jun 2023 15:08:53 +0800</pubDate><guid>https://gaxu.xyz/posts/macro-qe-preparation-ngm-olg/</guid><description>嘉树的世界 https://gaxu.xyz/posts/macro-qe-preparation-ngm-olg/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+&lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice info" &gt;
+&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#info-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Info&lt;/p&gt;&lt;p&gt;本系列未能完成，只出了两期，因为复习进度太慢，最终换成手写笔记了。且作留恋。&lt;/p&gt;&lt;/div&gt;
+&lt;h2 id="overlapping-generations"&gt;Overlapping Generations&lt;/h2&gt;
+&lt;h3 id="资本过度积累和动态无效率"&gt;资本过度积累和动态无效率&lt;/h3&gt;
+&lt;p&gt;我们对 OLG 模型的竞争均衡同一个社会计划者的中心化决策进行对比，考察竞争均衡是否是 Pareto 最优的。社会计划者意图最大化所有代际的加权平均效用：&lt;/p&gt;
+$$
+\sum_{t=0}^\infty \xi_t[u(c_{1,t})+\beta u(c_{2,t+1})]
+$$&lt;p&gt;其中 $\xi_t$ 是社会计划者赋予代际 $t$ 的权重。同时，还要服从总的资源约束：&lt;/p&gt;
+$$
+F(K_t,L_t) = K_{t+1} + L_tc_{1,t} + L_{t-1}c_{2,t}
+$$&lt;p&gt;两边同除以 $L_t$，得到&lt;/p&gt;
+$$
+f(k_t) = (1+n)k_{t+1} + c_{1,t} + \frac{c_{2,t}}{1+n}
+$$&lt;p&gt;对于同一个体青年期和老年期的消费分配，一阶条件为&lt;/p&gt;
+$$
+\frac{u'(c_{1,t})}{\beta u'(c_{2,t+1})} = \frac{1}{1+n}\frac{dc_{2,t+1}}{dk_{t+1}} = f'(k_{t+1})
+$$&lt;p&gt;回忆在竞争均衡中，一阶条件是&lt;/p&gt;
+$$
+u'(c_{1,t}) = \beta R_{t+1} u'(c_{2,t+1})
+$$&lt;p&gt;而 $R_{t+1} = f'(k_{t+1})$，因此社会计划者对一个个体青年期和老年期的消费配置同该个体自身的最大化决策是一致的，在这一点上市场配置是有效率的。&lt;/p&gt;
+&lt;p&gt;然而，由于社会计划者给每一代个体分配了不同的权重（$\xi_t$ 随 $t$ 变化），可以想见代际之间资源配置不会相同，这是区别于竞争均衡的。&lt;/p&gt;
+&lt;p&gt;考虑一个具体的权重设定：$\xi_t = \xi^t$。我们使用 Lagrange 函数：&lt;/p&gt;
+$$
+\mathcal{L} = \sum_{t=0}^\infty \left(\xi^t[u(c_{1,t})+\beta u(c_{2,t+1})]-\lambda_t\left[(1+n)k_{t+1}+c_{1,t}+\frac{c_{2,t}}{1+n}-f(k_t)\right]\right)
+$$&lt;p&gt;一阶条件：&lt;/p&gt;
+$$
+\begin{align*}
+[c_{1,t}]&amp;\colon\quad \xi^tu'(c_{1,t}) - \lambda_t = 0 \\
+[c_{2,t+1}]&amp;\colon\quad \xi^t\beta u'(c_{2,t+1}) - \frac{\lambda_{t+1}}{1+n} = 0 \\
+[k_t]&amp;\colon\quad \lambda_t f'(k_t) - \lambda_{t-1}(1+n) = 0
+\end{align*}
+$$&lt;p&gt;前两个条件可推出同期年轻人和老年人消费的欧拉方程&lt;/p&gt;
+$$
+\frac{u'(c_{1,t})}{u'(c_{2,t})} = \frac{\beta(1+n)}{\xi}
+$$&lt;p&gt;这表明 $c_{1,t}$ 和 $c_{2,t}$ 可以互相确定。因此我们只需考虑 $c_{1,t}$ 和 $c_{1,t+1}$ 的欧拉方程（由上述第一和第三个一阶条件得到）：&lt;/p&gt;
+$$
+u'(c_{1,t}) = \frac{\xi}{1+n}f'(k_{t+1})u'(c_{1,t+1})
+$$&lt;p&gt;由此可知在稳态中我们有&lt;/p&gt;
+$$
+\frac{\xi}{1+n}f'(k^s) = 1 \quad\Rightarrow\quad f'(k^s) = (1+n)(1+\rho) &gt; 1+n
+$$&lt;p&gt;其中 $1+\rho = 1/\xi$，$\rho$ 相当于贴现率。根据资源约束可确定稳态中的消费。&lt;/p&gt;
+&lt;div class="notice note" &gt;
+&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#note-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Note&lt;/p&gt;&lt;p&gt;可以证明社会计划者的配置会收敛到上述稳态，证明方式见 &lt;em&gt;DA&lt;/em&gt; 课本 6.8 节。&lt;/p&gt;&lt;/div&gt;
+&lt;p&gt;在离散时间 Ramsey 模型中（课本 6.8 节，但设定折旧率 $\delta=1$ 以及人口增长率 $n$），稳态人均资本存量满足&lt;/p&gt;
+$$
+\beta f'(k^*) = 1+n \quad\Rightarrow\quad f'(k^*) = (1+n)(1+\varrho) &gt; 1+n
+$$&lt;p&gt;可以看到，社会计划者在 OLG 中的稳态配置和 Ramsey 模型的稳态高度相似（我们知道，根据第一福利定理，Ramsey 模型中的竞争均衡是 Pareto 有效率的），它们都有一个共同点，那就是稳态的利率 $r = f'(k) - 1$ 大于人口增长率 $n$，这说明资本不是过度积累的，而它事实上是 Pareto 最优的一个必要条件。&lt;/p&gt;
+&lt;p&gt;下面我们说明 OLG 的竞争均衡有可能不是 Pareto 最优的。记 $k_{\textit{gold}}$ 为最大化稳态消费的人均资本存量。在 OLG 的稳态中，由总资源约束，有&lt;/p&gt;
+$$
+f(k^*) - (1+n)k^* = c_1^* + \frac{1}{1+n}c_2^* \equiv c^*
+$$&lt;p&gt;于是，$k_{\textit{gold}}$ 满足&lt;/p&gt;
+$$
+f'(k_{\textit{gold}}) = 1+n
+$$&lt;p&gt;若 $k^* &gt; k_{\textit{gold}}$，则 $\partial c^*/\partial k^* &lt; 0$，表明减少储蓄可以增加总的消费。此时，我们说经济是动态无效率的：资本过度积累了。$k^* &gt; k_{\textit{gold}}$ 也意味着稳态利率小于人口增长率：$r^* &lt; n$。&lt;/p&gt;
+&lt;p&gt;以上竞争均衡的稳态可获得 Pareto 改进。假设在某一时间 $T$ 处经济处于稳态且 $k^* &gt; k_{\textit{gold}}$，在 $T+1$ 期，减少人均资本存量至 $k^*-\Delta k\geq k_{\textit{gold}}$，之后便一直维持此水平。那么，根据总资源约束，第 $T$ 期总消费的变化量&lt;/p&gt;
+$$
+\Delta c_T = (1+n)\Delta k &gt; 0
+$$&lt;p&gt;此后每一期的消费变化量&lt;/p&gt;
+$$
+\Delta c_t = f(k^*-\Delta k) - f(k^*) + (1+n)\Delta k = -[f'(\hat{k})-(1+n)]\Delta k
+$$&lt;p&gt;其中 $\hat{k}\in(k^*-\Delta k,k^*)$，因此 $f'(\hat{k})-(1+n) &lt; 0$，$\Delta c_t &gt; 0$。社会计划者可将每一期增加的总消费在年轻人和老年人之间分配，于是每一代人在其年轻和年老时期都都获得了增益。&lt;/p&gt;
+&lt;p&gt;那么，为什么在市场是完全的且没有外部性的情况下，竞争均衡却不是 Pareto 有效率的呢？原因在于，在 OLG 模型中我们不一定能应用第一福利定理，因为有无穷多个新生的个体不断地加入经济，这意味着总的收入流可能是无穷大的，这事实上就发生在经济动态无效率时（即 $r^* &lt; n$ 时，可参见课本习题 9.11 的证明）。于是，这给予我们进行 Pareto 改进的机会：通过减少过度的储蓄增加每一代人的消费；这种调整不像竞争市场中通过价格（工资、利率）配置资源，从而能合理利用无限的收入流实现改进。&lt;/p&gt;
+&lt;h3 id="社会保障"&gt;社会保障&lt;/h3&gt;
+&lt;p&gt;资本过度积累导致动态无效率，除了前述直接对储蓄进行调整的方法，直觉上也可以通过向老年人提供消费来消除或缓解资本过度积累，这便向模型中引入了社会保障体系。有两种社保体系可供考虑：fully-funded 和 unfunded (or pay-as-you-go)。前者从年轻人手中筹资，然后在他们年老时返还；后者直接将年轻人的部分收入转移到同期的老年人手中。我们考察它们是否能缓解资本过度积累的问题。&lt;/p&gt;
+&lt;h4 id="fully-funded-social-security"&gt;Fully funded social security&lt;/h4&gt;
+&lt;p&gt;在此社保体系下，个体的最大化问题是&lt;/p&gt;
+$$
+\begin{align*}
+\max_{c_{1,t},c_{2,t+1},s_t}&amp;\quad u(c_{1,t})+\beta u(c_{2,t+1}) \\
+\text{s.t.}&amp;\quad c_{1,t} + s_t + d_t \leq w_t \\
+&amp;\quad c_{2,t+1} \leq R_{t+1}(s_t+d_t)
+\end{align*}
+$$&lt;p&gt;其中 $d_t$ 是由政府外生决定的筹资额度。&lt;/p&gt;
+&lt;p&gt;如果我们不对 $s_t$ 施加任何限制（可正可负），很显然，对任意给定的 $d_t$，原 OLG 的竞争均衡仍是上述问题的解，因为我们可将 $s_t+d_t$ 视作一体，那么任意 $d_t$ 的变动都会被 $s_t$ 的变动抵消而不会导致一个新的均衡。&lt;/p&gt;
+&lt;p&gt;即便我们要求 $s_t\geq 0$，且最优解中某些时期 $s_t = 0$，此新的均衡也不会比原竞争均衡更有效率，因为紧约束必然意味着 $d_t$ 不小于原均衡中的储蓄，也就是说，该社保体系下的资本积累不会低于原竞争均衡中的资本积累。&lt;/p&gt;
+&lt;p&gt;综上，完全融资的社保体系不会带来 Pareto 改进。&lt;/p&gt;
+&lt;h4 id="unfunded-social-security"&gt;Unfunded social security&lt;/h4&gt;
+&lt;p&gt;个体的效用最大化问题&lt;/p&gt;
+$$
+\begin{align*}
+\max_{c_{1,t},c_{2,t+1},s_t}&amp;\quad u(c_{1,t})+\beta u(c_{2,t+1}) \\
+\text{s.t.}&amp;\quad c_{1,t} + s_t + d_t \leq w_t \\
+&amp;\quad c_{2,t+1} \leq R_{t+1}s_t + (1+n)d_{t+1}
+\end{align*}
+$$&lt;p&gt;注意只有 $s_t$ 进入资本积累而 $d_t$ 是纯粹的转移支付。当无社保体系的竞争均衡存在动态无效率时，即 $r^* &lt; n$，此社保体系能够缓解资本过度积累。为说明这一点，假设个体也可以自由选择缴纳的社保额度 $d_t$，那么很显然，只要 $r_{t+1} &lt; n$，则 $R_{t+1} &lt; 1+n$，即投资的回报率小于社保的回报率，于是不会有任何投资，但这违背了均衡条件 $R_{t+1} = f'(k_{t+1})$，由此可知均衡时一定有 $r_{t+1} \geq n$。这个分析表明，在纯转移的社保体系下，政府可以选择合适的缴纳额度让经济的竞争均衡不再是动态无效率的。事实上，还可以证明，通过选择合适的 $\{d_t\}$，所得到的竞争均衡可以 Pareto 占优于无社保体系的竞争均衡（见课本命题 9.8）。&lt;/p&gt;
+- https://gaxu.xyz/posts/macro-qe-preparation-ngm-olg/ - 2023–2025 嘉树.</description></item><item><title>Macro QE 备考 (I): 动态规划</title><link>https://gaxu.xyz/posts/macro-qe-preparation-dynamic-programming/</link><pubDate>Fri, 23 Jun 2023 22:35:19 +0800</pubDate><guid>https://gaxu.xyz/posts/macro-qe-preparation-dynamic-programming/</guid><description>嘉树的世界 https://gaxu.xyz/posts/macro-qe-preparation-dynamic-programming/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
 &lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice info" &gt;
 &lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#info-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Info&lt;/p&gt;&lt;p&gt;本系列未能完成，只出了两期，因为复习进度太慢，最终换成手写笔记了。且作留恋。&lt;/p&gt;&lt;/div&gt;
 &lt;h2 id="sequential-form-and-recursive-form"&gt;Sequential form and recursive form&lt;/h2&gt;
@@ -903,107 +989,4 @@ $$&lt;p&gt;第一项显然收敛到0；由前述推论，第二项括号内趋�
 &lt;p&gt;Davidson, James (1994). &lt;em&gt;Stochastic Limit Theory: An Introduction for Econometricians&lt;/em&gt;. Oxford University Press.&lt;/p&gt;
 &lt;p&gt;Hansen, Bruce (2022). &lt;em&gt;Econometrics&lt;/em&gt;. Princeton University Press.&lt;/p&gt;
 &lt;p&gt;Petersen, Karl E. (1989). &lt;em&gt;Ergodic Theory.&lt;/em&gt; Cambridge University Press.&lt;/p&gt;
-- https://gaxu.xyz/posts/ecmt-notes-ergodicity/ - 2023–2025 嘉树.</description></item><item><title>计量复习笔记 (I)：严格平稳性</title><link>https://gaxu.xyz/posts/ecmt-notes-stationarity/</link><pubDate>Sat, 22 Apr 2023 00:58:32 +0800</pubDate><guid>https://gaxu.xyz/posts/ecmt-notes-stationarity/</guid><description>嘉树的世界 https://gaxu.xyz/posts/ecmt-notes-stationarity/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
-&lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice info" &gt;
-&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#info-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Info&lt;/p&gt;&lt;p&gt;本系列是2023年春季学期《应用计量经济学》期末复习笔记，仅涵盖时间序列部分，对应 Hansen (2022) &lt;em&gt;Econometrics&lt;/em&gt; 第14和16章的内容。&lt;/p&gt;&lt;/div&gt;
-&lt;h2 id="内容提要"&gt;内容提要&lt;/h2&gt;
-&lt;p&gt;介绍了时间序列中的一个重要概念：严格平稳性（如无特别说明，平稳性均指代严格平稳），并证明了对平稳序列的任意（可测）变换所得序列仍是平稳的（原书定理 14.2）。&lt;/p&gt;
-&lt;h2 id="平稳时间序列"&gt;平稳时间序列&lt;/h2&gt;
-&lt;p&gt;对于构建时间序列的严格且正式的理论而言，我们需要的是严格平稳性，弱平稳（宽平稳、协方差平稳）是不足够的。平稳性对于一列随机变量序列，即随机过程，施加了特别的结构，从而使我们在离开独立性世界后依然能发展出类似大数定律、中心极限定理的重要理论。&lt;/p&gt;
-&lt;p&gt;首先给出严格平稳时间序列的定义：&lt;/p&gt;
-&lt;div class="thm"&gt;
-&lt;p id="thm:stationary" class="thm-title thm-definition"&gt;Definition 1.&lt;/p&gt;
-&lt;div class="thm-inner thm-definition"&gt;
-随机过程 $\{Y_t\}_{t\in\mathbb{Z}}$ 若满足：给定任意的 $r\in\mathbb{Z}$，$(Y_t,\dots,Y_{t+r})$ 的联合分布与 $t$ 无关，则称之为平稳过程。
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;以随机过程的术语来说，平稳时间序列的分布具有 &lt;em&gt;位移不变 (shift-invariant)&lt;/em&gt; 的性质。如果我们采用测度论的严格表述，就是：对于 $\mathbb{R}$ 的任意 Borel 子集 $B_0,B_2,\dots,B_r$，以及任意的 $t$ 和 $\tau$，都有&lt;/p&gt;
-$$
-\mathbb{P}\{\omega\colon Y_t(\omega)\in B_0,\dots,Y_{t+r}(\omega)\in B_r\} = \mathbb{P}\{\omega\colon Y_\tau(\omega)\in B_0,\dots,Y_{\tau+r}(\omega)\in B_r\}
-$$&lt;p&gt;这就是在表述 $(Y_t,\dots,Y_{t+r})$ 和 $(Y_{\tau},\dots,Y_{\tau+r})$ 具有相同分布。&lt;/p&gt;
-&lt;p&gt;值得一提，有时我们会看到略有不同的定义：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;若对任意的 $t_1,t_2,\dots,t_r$，$(Y_{t_1},\dots,Y_{t_r})$ 的联合分布与 $(Y_{t_1+k},\dots,Y_{t_r+k})$ 相同，而与 $k$ 无关，则称 $\{Y_t\}$ 是平稳序列。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;乍一看，这个定义似乎更一般，但它和上面的定义是等价的。要从前述定义推出此定义，只需注意到联合分布相同，则边缘分布必定相同，而 $(Y_{t_1},\dots,Y_{t_r})$ 的分布实际上就是 $(Y_t)_{t=t_1}^{t_r}$ 的边缘分布（不失一般性，假设 $t_1,\dots,t_r$ 由小到大排列）。&lt;/p&gt;
-&lt;h3 id="平稳时间序列的变换"&gt;平稳时间序列的变换&lt;/h3&gt;
-&lt;p&gt;现在给出一个很强大的定理，它表明了平稳时间序列在任意可测变换下仍可保留平稳性。&lt;/p&gt;
-&lt;div class="thm"&gt;
-&lt;p id="thm:trans" class="thm-title thm-Theorem"&gt;Theorem 2.&lt;/p&gt;
-&lt;div class="thm-inner thm-Theorem"&gt;
-若 $\{Y_t\}$ 是平稳序列，则对任意可测变换 $\phi\colon\mathbb{R}^{\mathbb{Z}}\to \mathbb{R}$，$X_t := \phi(Y_t,Y_{t-1},\dots)$ 仍是平稳的。
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="thm"&gt;
-&lt;button type="button" class="collapsible"&gt;&lt;div id="thm-proof-1" class="thm-title-proof"&gt;Proof.&lt;/div&gt;&lt;/button&gt;
-&lt;div class="proof-content"&gt;
-&lt;div class="thm-inner-proof"&gt;
-&lt;p&gt;此证明是以测度论表述的严格证明，因为涉及到无穷维的情况。&lt;/p&gt;
-&lt;p&gt;我们先定义整个随机过程 $\{Y_t\}$ 的分布。设 $T\colon\Omega\to\mathbb{R}^{\mathbb{Z}}$ 以 $(T\omega)_t = Y_t(\omega)$ 作为定义，换言之，$T\omega$ 是一个无穷维向量。设 $\mu$ 是 $\mathbb{P}$ 在 $T$ 下的像测度，即有&lt;/p&gt;
-$$
-\mu(E) = \mathbb{P}(T^{-1}E) \quad\text{for each } E\in\mathcal{B}(\mathbb{R}^{\mathbb{Z}})
-$$&lt;p&gt;$\mu$ 描述了 $\{Y_t\}$ 的分布。&lt;/p&gt;
-&lt;p&gt;现在，我们在无穷维空间 $\mathbb{R}^{\mathbb{Z}}$ 上定义一个 &lt;em&gt;位移变换&lt;/em&gt; $\delta\colon\mathbb{R}^{\mathbb{Z}}\to\mathbb{R}^{\mathbb{Z}}$：&lt;/p&gt;
-$$
-(\delta x)_t = x_{t+r}
-$$&lt;p&gt;也就是说，$\delta$ 将给定的坐标移位 $r$ 个维度。这在时间序列中便是滞后算子。&lt;/p&gt;
-&lt;p&gt;我们要证明 $\delta$ 是一个 $\mu$-&lt;em&gt;&lt;a href="https://en.wikipedia.org/wiki/Measure-preserving_dynamical_system"&gt;保测变换&lt;/a&gt;&lt;/em&gt;（或称 $\mu$ 在 $\delta$ 下是 invariant）：&lt;/p&gt;
-$$
-\mu(\delta^{-1}E) = \mu(E) \quad\text{for each } E\in\mathcal{B}(\mathbb{R}^{\mathbb{Z}})
-$$&lt;p&gt;根据 &lt;em&gt;&lt;a href="https://en.wikipedia.org/wiki/Carath%C3%A9odory%27s_extension_theorem"&gt;Carathéodory 扩张定理&lt;/a&gt;&lt;/em&gt;，我们不需要证明上式对任意 Borel 子集成立，而只需证明对某个能生成 $\mathcal{B}(\mathbb{R}^{\mathbb{Z}})$ 的代数（对有限交、并、补封闭）的所有子集成立。我们选取的这个代数就是所有 $\mathbb{R}^{\mathbb{Z}}$ 的 &lt;em&gt;&lt;a href="https://en.wikipedia.org/wiki/Cylinder_set"&gt;圆柱&lt;/a&gt;&lt;/em&gt; 子集构成的集族，记作 $\mathcal{C}$。&lt;/p&gt;
-&lt;p&gt;$\mathbb{R}^{\mathbb{Z}}$ 的一个圆柱子集定义为如下形式：&lt;/p&gt;
-$$
-C = \{(\dots,x_{-1},x_0,x_1,\dots)\in\mathbb{R}^{\mathbb{Z}}\colon (x_{t_1},x_{t_2},\dots,x_{t_n})\in B\}
-$$&lt;p&gt;其中 $B\in\mathbb{R}^n$ 是一个 Borel 子集。&lt;/p&gt;
-&lt;p&gt;容易证明，$\mathcal{C}$ 是一个代数，并且其生成的 $\sigma$ 域 $\sigma(\mathcal{C})$ 正好是 $\mathcal{B}(\mathbb{R}^{\mathbb{Z}})$。这样，我们只需证明 $\delta$ 在 $\mathcal{C}$ 上保测，而根据 $Y_t$ 的平稳性，这显然成立。于是，$\delta$ 是一个保测变换。&lt;/p&gt;
-&lt;p&gt;上面的证明立即表明，无穷维向量 $\widetilde{Y}_t:=(Y_t, Y_{t-1},\dots)$ 和其任意移位变换 $(Y_{t+r},Y_{t+r-1},\dots)$ 具有相同分布，进而 $x_t = \phi(\widetilde{Y}_t)$ 是平稳的。&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="thm-end-proof"&gt;
-&lt;i class="fas fa-square"&gt;&lt;/i&gt; &lt;a href="#thm-proof-1"&gt;&lt;i class="fas fa-arrow-circle-up"&gt;&lt;/i&gt;&lt;/a&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;在时间序列中，我们经常用到的一个特殊变换就是移动平均，即 $Y_t,Y_{t-1},\dots$ 的线性组合：&lt;/p&gt;
-$$
-X_t = \sum_{j=0}^\infty a_jY_{t-j}
-$$&lt;p&gt;当然，我们要求这个级数是几乎确定收敛的，一般情况下，我们省略限定语「几乎确定」。毫无疑问，根据上面的定理，$X_t$ 是平稳的。现在给出 $X_t$ 收敛的充分条件：&lt;/p&gt;
-&lt;div class="thm"&gt;
-&lt;p id="thm:conv" class="thm-title thm-Theorem"&gt;Theorem 3.&lt;/p&gt;
-&lt;div class="thm-inner thm-Theorem"&gt;
-若 $\{Y_t\}$ 平稳，$\mathbb{E}|Y|&lt;\infty$，且 $\sum_{j=0}^\infty|a_j| &lt; \infty$，则 $X_t$ 收敛且平稳。
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="thm"&gt;
-&lt;button type="button" class="collapsible"&gt;&lt;div id="thm-proof-2" class="thm-title-proof"&gt;Proof.&lt;/div&gt;&lt;/button&gt;
-&lt;div class="proof-content"&gt;
-&lt;div class="thm-inner-proof"&gt;
-&lt;p&gt;记 $S_n = \sum_{j=0}^n a_jY_{t-j}$ 为部分和序列。&lt;/p&gt;
-&lt;p&gt;根据 Cauchy 收敛准则，$X_t$ 收敛的充要条件是：对于任意的 $\varepsilon&gt;0$，存在 $N$，当 $n&gt;N$ 时，我们有&lt;/p&gt;
-$$
-\sup_{p\geq1}\|S_{n+p}-S_n\| &lt; \varepsilon
-$$&lt;p&gt;我们要证明这个条件几乎处处成立。这等价于证明以下事件&lt;/p&gt;
-$$
-A_{\varepsilon} := \bigcap_{n=1}^\infty A_{\varepsilon,n} = \bigcap_{n=1}^\infty\left\{\omega\colon\sup_{p\geq1}\left|\sum_{j=n+1}^{n+p}a_jY_{t-j}\right|\geq\varepsilon\right\}
-$$&lt;p&gt;总是零测集（而不论 $\varepsilon&gt;0$ 的取值）。&lt;/p&gt;
-&lt;p&gt;有如下关系成立：&lt;/p&gt;
-$$
-\begin{align*}
-\mathbb{P}(A_\varepsilon) &amp;\leq \mathbb{P}(A_{\varepsilon,n}) \\
-&amp;\leq \frac{1}{\varepsilon}\mathbb{E}\left[\sup_{p\geq1}\left|\sum_{j=n+1}^{n+p}a_jY_{t-j}\right|\right] \\
-&amp;\leq \frac{1}{\varepsilon}\mathbb{E}\left[\sup_{p\geq1}\sum_{j=n+1}^{n+p}|a_j||Y_{t-j}|\right] \\
-&amp;= \frac{1}{\varepsilon}\mathbb{E}\left[\lim_{p\to\infty}\sum_{j=n+1}^{n+p}|a_j||Y_{t-j}|\right] \\
-&amp;= \frac{1}{\varepsilon}\lim_{p\to\infty}\mathbb{E}\left[\sum_{j=n+1}^{n+p}|a_j||Y_{t-j}|\right] \\
-&amp;= \frac{1}{\varepsilon}\lim_{p\to\infty}\sum_{j=n+1}^{n+p}|a_j|\mathbb{E}|Y|
-\end{align*}
-$$&lt;p&gt;第二行来自 Markov 不等式；第三行来自三角不等式；第五行是单调收敛定理；第六行是积分的线性性。现在，再令 $n\to\infty$，由 $\sum |a_j|&lt;\infty$，以及 $Y$ 绝对可积，进而得到 $\mathbb{P}(A_\varepsilon) = 0$。事实上，上述证明不仅表明 $X_t$ 是收敛的，还是绝对收敛的。&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="thm-end-proof"&gt;
-&lt;i class="fas fa-square"&gt;&lt;/i&gt; &lt;a href="#thm-proof-2"&gt;&lt;i class="fas fa-arrow-circle-up"&gt;&lt;/i&gt;&lt;/a&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
-&lt;p&gt;Ulcigrai, Corinna. &lt;em&gt;&lt;a href="https://indico.ictp.it/event/8325/session/1/contribution/9/material/0/0.pdf"&gt;Lecture Notes on &amp;ldquo;Measure preserving transformations.&amp;rdquo;&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Hansen, Bruce (2022). &lt;em&gt;Econometrics&lt;/em&gt;. Princeton University Press.&lt;/p&gt;
-&lt;p&gt;Petersen, Karl E. (1989). &lt;em&gt;Ergodic Theory.&lt;/em&gt; Cambridge University Press.&lt;/p&gt;
-- https://gaxu.xyz/posts/ecmt-notes-stationarity/ - 2023–2025 嘉树.</description></item></channel></rss>
+- https://gaxu.xyz/posts/ecmt-notes-ergodicity/ - 2023–2025 嘉树.</description></item></channel></rss>
