@@ -40,6 +40,32 @@ $$&lt;p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;两步法相比联合估计可能更容易计算。&lt;/p&gt;
+&lt;h3 id="sieve-m-estimation"&gt;Sieve M-estimation&lt;/h3&gt;
+&lt;p&gt;特别地，当 $\hat{Q}_n$ 可被表示为样本平均的形式时：
+&lt;/p&gt;
+$$
+\sup_{\theta\in\Theta_n}\hat{Q}_n(\theta) = \sup_{\theta\in\Theta_n}\frac{1}{n}\sum_{t=1}^n\ell(\theta,Z_t)
+$$&lt;p&gt;
+其中 $\ell\colon \Theta\times\mathbb{R}^{d_z}\to\mathbb{R}$ 为单个样本的 criterion 函数，我们称该问题的解 $\hat{\theta}_n$ 为近似筛 M 估计量 (approximate sieve M-estimator)。显然，筛极大似然估计量、筛最小二乘估计量、筛 GLS 和筛分位数回归都是近似筛 M 估计量的特例。&lt;/p&gt;
+&lt;h3 id="series-estimation"&gt;Series estimation&lt;/h3&gt;
+&lt;p&gt;在本系列中，如果筛 M 估计的目标函数是一个凹函数且筛空间 $\Theta_n$ 是有限维的线性空间（可以被表示为基函数的线性组合），则筛估计量就被称为系列估计量 (series estimator)。这个定义和一些计量文献中的定义是不同的（通常只要用了基函数线性展开就称为系列估计量），主要是为了简化后面对大样本性质的描述。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="ex:series-estimation" class="thm-title thm-Example"&gt;Example 1.&lt;/p&gt;
+&lt;div class="thm-inner thm-Example"&gt;
+&lt;p&gt;我们想估计一个未知的多元条件均值函数 $\theta_0(\cdot) = h_0(\cdot) = \mathbb{E}[Y|X=\cdot]$，其中 $X$ 是 $d$ 维的解释变量，支撑集 $\mathcal{X}\subseteq\mathbb{R}^d$ 是有界的，$Y$ 是因变量。设 $h_0\in\Theta$, $\Theta$ 是所有满足 $\mathbb{E}[h(X)^2] &lt; \infty$ 的函数 $h$ 构成的空间的一个子空间。令 $\ell(h,Z) = -(Y-h(X))^2$ 和 $Q(\theta) = - \mathbb{E}[(Y-h(X))^2]$，它们关于 $h$ 都是凹函数。&lt;/p&gt;
+&lt;p&gt;令 $\{p_j(X),j=1,2,\dots\}$ 表示一列能够逼近任意平方可积的实值函数的基函数，那么
+&lt;/p&gt;
+$$
+\Theta_n = \mathcal{H}_n = \biggl\{h\colon\mathcal{X}\to\mathbb{R} \bigg| h(X) = \sum_{j=1}^{k_n}a_jp_j(X), a_j\in\mathbb{R}\biggr\}
+$$&lt;p&gt;
+这里 $\mathrm{dim}(\Theta_n) = k_n$ 随着样本量 $n$ 增加而缓慢增加，这个空间列就是 $\Theta$ 的一个有限维的线性筛，对应的筛估计量就是系列估计量，并且有闭式表达
+&lt;/p&gt;
+$$
+\hat{h}(x) = p^{k_n}(x)'(P'P)^{\dagger}\sum_{i=1}^{n}p^{k_n}(X_i)Y_i
+$$&lt;p&gt;
+其中 $p^{k_n}(x) = (p_1(x),\dots,p_{k_n}(x))'$，$P = (p_1(X_1),\dots,p_{k_n}(X_n))'$，$P'P$ 是 $k_n\times k_n$ 的矩阵，$\dagger$ 表示伪逆。这个估计量也被称作系列最小二乘估计量或线性筛最小二乘估计量。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;p&gt;未完待续。&lt;/p&gt;
 &lt;h1 id="参考文献"&gt;参考文献&lt;/h1&gt;
 &lt;p&gt;Chen, X. (2007). &lt;em&gt;Large Sample Sieve Estimation of Semi-Nonparametric Models&lt;/em&gt;. In &lt;em&gt;Handbook of Econometrics&lt;/em&gt;, Volume 6B, Chapter 76, Pages 5549-5632. Elsevier.&lt;/p&gt;
