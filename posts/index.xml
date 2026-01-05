@@ -1,4 +1,68 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 嘉树的世界</title><link>https://gaxu.xyz/posts/</link><description>Recent content in Posts on 嘉树的世界</description><generator>Hugo</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Sat, 03 Jan 2026 00:54:40 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>半参数模型中筛法估计的大样本理论</title><link>https://gaxu.xyz/posts/sieve/</link><pubDate>Sat, 27 Dec 2025 17:57:54 +0800</pubDate><guid>https://gaxu.xyz/posts/sieve/</guid><description>&lt;p&gt;本文是阅读 Chen (2007) 的笔记，介绍了半参数模型中筛法估计的大样本理论。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 嘉树的世界</title><link>https://gaxu.xyz/posts/</link><description>Recent content in Posts on 嘉树的世界</description><generator>Hugo</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Tue, 06 Jan 2026 00:59:51 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>斜体字形文字中的数学间距调整</title><link>https://gaxu.xyz/posts/math-kerning-in-italic-text/</link><pubDate>Mon, 05 Jan 2026 11:09:10 +0800</pubDate><guid>https://gaxu.xyz/posts/math-kerning-in-italic-text/</guid><description>&lt;h2 id="问题背景"&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;在 LaTeX 中，有时为了强调某段话，我们会使用意大利字形 (italic shape) 或倾斜字形 (slanted shape) 用以区分其他文字，再如定理类环境默认使用意大利字形。意大利体当然是一种美妙的字形，但是和数学环境混用会带来一个问题，即正文部分和数学环境间的间距会变得糟糕，这无疑会破坏文档的排版美观性。&lt;/p&gt;
+&lt;p&gt;以下是一个示例。第一行中的 U 和 V 是包裹在数学环境中的，第二行中的 U 和 V 则没有。可以很明显看到，第一行中的 U 和前面的 If 之间的间距太小，而和后面的 of 之间间距过大，同理 V 也是如此。但第二行看起来就正常很多。&lt;/p&gt;
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+&lt;figure id = "fig:demo1" align="" role="group" aria-describedby="caption-d41d8cd98f00b204e9800998ecf8427e"&gt;
+ &lt;a href="https://gaxu.xyz/posts/math-kerning-in-italic-text/demo1.png" class="img-link"&gt;
+ &lt;img src="https://gaxu.xyz/posts/math-kerning-in-italic-text/demo1.png" style="width: 30%;"&gt;
+ &lt;/a&gt;
+ &lt;figcaption id="caption-d41d8cd98f00b204e9800998ecf8427e"&gt;
+ 
+ &lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;给文字加上框之后我们可以更清楚地看到 LaTeX 分配给每个字符的空白空间，如下图所示。在第一行，数学环境中的 U 和 V 安分守己地待在框里，此时 LaTeX 没有对间距做任何调整。而在第二行，文字环境中的 U 和 V 则被放在了框的最右边，几乎都要挤出去了，此时 LaTeX 实际上给它们前面加了一些空间，后面则压缩了一些空间，这个操作被称为「字距微调」，英文叫做 &lt;a href="https://en.wikipedia.org/wiki/Kerning"&gt;kerning&lt;/a&gt;，是排版中的一项重要技术。&lt;/p&gt;
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+&lt;figure id = "fig:demo2" align="" role="group" aria-describedby="caption-d41d8cd98f00b204e9800998ecf8427e"&gt;
+ &lt;a href="https://gaxu.xyz/posts/math-kerning-in-italic-text/demo2.png" class="img-link"&gt;
+ &lt;img src="https://gaxu.xyz/posts/math-kerning-in-italic-text/demo2.png" style="width: 30%;"&gt;
+ &lt;/a&gt;
+ &lt;figcaption id="caption-d41d8cd98f00b204e9800998ecf8427e"&gt;
+ 
+ &lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;那么，为什么 LaTeX 没有对数学环境的前后间距做调整呢？这其实是数学字体本身的问题。数学字体是独立于正文字体的，它的 kerning 规则与正文字体不同，而且也不会考虑到和正文字体互动的情况。当用在意大利字形的正文字体中，由于正文字体的 kerning 变了，所以数学环境在其中会显得很不协调。&lt;/p&gt;
+&lt;h2 id="解决方案"&gt;解决方案&lt;/h2&gt;
+&lt;p&gt;第一种也是最直接的方法，手动调整。这适用于需要调整的地方不多的时候。例如我们可以手动在数学环境前加上一些正间距，在其后加上一些负间距。我们用 &lt;code&gt;\/&lt;/code&gt; 取消正文中的倾斜校正 (italic correction) 所引入的间距，然后用 &lt;code&gt;\!&lt;/code&gt; 在数学符号后添加一些负间距（等于 &amp;ndash;0.16667em）：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-latex" data-lang="latex"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;If&lt;span style="color:#81a1c1;font-weight:bold"&gt;\/&lt;/span&gt; &lt;span style="color:#a3be8c"&gt;$&lt;/span&gt;&lt;span style="color:#81a1c1"&gt;U&lt;/span&gt;&lt;span style="color:#a3be8c"&gt;$&lt;/span&gt;&lt;span style="color:#81a1c1;font-weight:bold"&gt;\!&lt;/span&gt; of&lt;span style="color:#81a1c1;font-weight:bold"&gt;\/&lt;/span&gt; &lt;span style="color:#a3be8c"&gt;$&lt;/span&gt;&lt;span style="color:#81a1c1"&gt;V&lt;/span&gt;&lt;span style="color:#a3be8c"&gt;$&lt;/span&gt;&lt;span style="color:#81a1c1;font-weight:bold"&gt;\!&lt;/span&gt; and &lt;span style="color:#81a1c1;font-weight:bold"&gt;\dots&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到的效果如下。这个看着就舒服多了。&lt;/p&gt;</description></item><item><title>半参数模型中筛法估计的大样本理论</title><link>https://gaxu.xyz/posts/sieve/</link><pubDate>Sat, 27 Dec 2025 17:57:54 +0800</pubDate><guid>https://gaxu.xyz/posts/sieve/</guid><description>&lt;p&gt;本文是阅读 Chen (2007) 的笔记，介绍了半参数模型中筛法估计的大样本理论。&lt;/p&gt;
 &lt;p&gt;如果一个计量模型的所有参数都在有限维空间中，则被称为参数模型 (parametric)，如果所有参数都在无穷维空间中，则被称为非参数模型 (nonparametric)，如果感兴趣的参数在有限维空间而冗余参数在无穷维空间中，则被称为半参数模型 (semiparametric)，如果感兴趣的参数部分在有限维空间而部分在无穷维空间中，则被称为半非参模型 (semi-nonparametric)。&lt;/p&gt;
 &lt;p&gt;半非参模型包含了落在无穷维空间的参数，想要用有限样本去估计这类参数无疑是困难的。此外，即便能求解无穷维空间上的优化问题，得到的估计量通常不会具有良好的性质，譬如可能是不一致的或者收敛速度极慢，这是因为在一个不紧致的无穷维空间上的优化通常并不是适定的 (well-posed)。筛法就很好地克服了这种问题。它是在一列简单的、通常是有限维的空间上进行优化，这列空间就被称为筛 (sieve)。为确保一致性，我们要求筛的复杂度随着样本量的增加而增加，从而极限空间是原始空间的一个致密子集。&lt;/p&gt;
 &lt;p&gt;许多经济模型都会导出半非参的条件矩约束 (conditional moment restriction)：
