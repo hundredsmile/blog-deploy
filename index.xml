@@ -1,4 +1,50 @@
-<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Mon, 05 Jan 2026 11:09:10 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>斜体字形文字中的数学间距调整</title><link>https://gaxu.xyz/posts/math-kerning-in-italic-text/</link><pubDate>Mon, 05 Jan 2026 11:09:10 +0800</pubDate><guid>https://gaxu.xyz/posts/math-kerning-in-italic-text/</guid><description>嘉树的世界 https://gaxu.xyz/posts/math-kerning-in-italic-text/ -&lt;h2 id="问题背景"&gt;问题背景&lt;/h2&gt;
+<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Thu, 08 Jan 2026 20:52:13 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>经验过程笔记 (I): 观其大略</title><link>https://gaxu.xyz/posts/empirical-processes-1/</link><pubDate>Thu, 08 Jan 2026 20:52:13 +0800</pubDate><guid>https://gaxu.xyz/posts/empirical-processes-1/</guid><description>嘉树的世界 https://gaxu.xyz/posts/empirical-processes-1/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+&lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice info" &gt;
+&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#info-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Info&lt;/p&gt;&lt;p&gt;本系列是阅读 van der Vaart and Wellner (1996) Part 2 的笔记，介绍了经验过程 (empirical process) 的理论。&lt;/p&gt;&lt;/div&gt;
+&lt;h2 id="基本概念"&gt;基本概念&lt;/h2&gt;
+&lt;p&gt;对于可测空间 $(\mathcal{X},\mathcal{A})$ 上的随机样本 $X_1,\dots,X_n$，&lt;em&gt;经验测度 (empirical measure)&lt;/em&gt; $\mathbb{P}_n$ 定义为
+&lt;/p&gt;
+$$
+\mathbb{P}_n(C) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i\in C)
+$$&lt;p&gt;
+对于一个可测函数族 $\mathcal{F}$，其元素是 $\mathcal{X}$ 上的可测函数，$f\colon\mathcal{X}\to\mathbb{R}$。经验测度引致了从 $\mathcal{F}$ 到 $\mathbb{R}$ 的映射，即
+&lt;/p&gt;
+$$
+f \mapsto \mathbb{P}_n f = \int_\mathcal{X} f\, d\mathbb{P}_n
+$$&lt;p&gt;
+记 $X_i$ 的分布为 $P$，所谓以 $\mathcal{F}$ 标记的 &lt;em&gt;经验过程 (empirical process)&lt;/em&gt; 就定义为
+&lt;/p&gt;
+$$
+f \mapsto \mathbb{G}_n f = \sqrt{n}(\mathbb{P}_n f - P f) = \frac{1}{\sqrt{n}}\sum_{i=1}^n (f(X_i) - P f)
+$$&lt;p&gt;
+对于一个给定的 $f$，我们有大数定律和中心极限定理
+&lt;/p&gt;
+$$
+\begin{align*}
+\mathbb{P}_n f &amp;\to_{\mathrm{a.s.}} P f \\
+\mathbb{G}_n f &amp;\rightsquigarrow N(0, P(f-P f)^2)
+\end{align*}
+$$&lt;p&gt;
+我们想知道的是这两个结论是否对整个函数族 $\mathcal{F}$ 的所有函数一致成立，这就是经验过程需要解决的理论问题。&lt;/p&gt;
+&lt;p&gt;古典的经验过程理论中，样本空间 $\mathcal{X}$ 一般是单位区间 $[0,1]$、实数轴 $\mathbb{R}$ 或者高维实数空间 $\mathbb{R}^d$，而函数族 $\mathcal{F}$ 一般是左半实数轴上的示性函数族，或者 $\mathbb{R}^d$ 左下象限上的示性函数族。在这里我们将会考察更丰富的函数族，例如光滑函数族、单调函数族等。&lt;/p&gt;
+&lt;p&gt;引入记号 $\|Q\|_\mathcal{F} = \sup\{|Qf|\colon f\in\mathcal{F}\}$，一致版本的大数定律可以表述为
+&lt;/p&gt;
+$$
+\|\mathbb{P}_n-P\|_{\mathcal{F}} \to 0
+$$&lt;p&gt;
+这里的收敛可以是依概率收敛或几乎确定收敛。如果函数族 $\mathcal{F}$ 满足了这个结论，我们就称其为 &lt;em&gt;Glivenko-Cantelli class&lt;/em&gt;。&lt;/p&gt;
+&lt;p&gt;为讨论一致版本的中心极限定理，总是假设对每个 $x\in\mathcal{X}$，都有
+&lt;/p&gt;
+$$
+\sup_{f\in\mathcal{F}} |f(x)-Pf| &lt; \infty
+$$&lt;p&gt;
+在这个条件下，经验过程 $\{\mathbb{G}_n f\colon f\in\mathcal{F}\}$ 可看作到 $\ell^\infty(\mathcal{F})$ 上的映射。因此，我们想知道在怎样的条件下有
+&lt;/p&gt;
+$$
+\mathbb{G}_n = \sqrt{n}(\mathbb{P}_n - P) \rightsquigarrow \mathcal{G} \quad\text{in } \ell^\infty(\mathcal{F})
+$$&lt;p&gt;
+其中极限 $\mathcal{G}$ 是 $\ell^\infty(\mathcal{F})$ 上的一个 tight Borel 随机元素。如果函数族 $\mathcal{F}$ 满足了这个结论，我们就称其为 &lt;em&gt;Donsker class&lt;/em&gt;。&lt;/p&gt;
+- https://gaxu.xyz/posts/empirical-processes-1/ - 2023–2025 嘉树.</description></item><item><title>斜体字形文字中的数学间距调整</title><link>https://gaxu.xyz/posts/math-kerning-in-italic-text/</link><pubDate>Mon, 05 Jan 2026 11:09:10 +0800</pubDate><guid>https://gaxu.xyz/posts/math-kerning-in-italic-text/</guid><description>嘉树的世界 https://gaxu.xyz/posts/math-kerning-in-italic-text/ -&lt;h2 id="问题背景"&gt;问题背景&lt;/h2&gt;
 &lt;p&gt;在 LaTeX 中，有时为了强调某段话，我们会使用意大利字形 (italic shape) 或倾斜字形 (slanted shape) 用以区分其他文字，再如定理类环境默认使用意大利字形。意大利体当然是一种美妙的字形，但是和数学环境混用会带来一个问题，即正文部分和数学环境间的间距会变得糟糕，这无疑会破坏文档的排版美观性。&lt;/p&gt;
 &lt;p&gt;以下是一个示例。第一行中的 U 和 V 是包裹在数学环境中的，第二行中的 U 和 V 则没有。可以很明显看到，第一行中的 U 和前面的 If 之间的间距太小，而和后面的 of 之间间距过大，同理 V 也是如此。但第二行看起来就正常很多。&lt;/p&gt;
 &lt;figure id = "fig:demo1" align="" role="group" aria-describedby="caption-d41d8cd98f00b204e9800998ecf8427e"&gt;
@@ -1129,6 +1175,4 @@ $$&lt;p&gt;倒数第三行调用了 Hoeffding 引理，最后一行通过取 $s=
 &lt;li&gt;Rigollet, Philippe, and Jan-Christian Hütter. 2023. &amp;ldquo;High-Dimensional Statistics.&amp;rdquo; &lt;em&gt;arXiv preprint&lt;/em&gt;. &lt;a href="https://arxiv.org/pdf/2310.19244.pdf"&gt;arXiv:2310.19244&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;Vershynin, Roman. 2018. &lt;em&gt;High-Dimensional Probability: An Introduction with Applications in Data Science&lt;/em&gt;. Cambridge University Press.&lt;/li&gt;
 &lt;/ol&gt;
-- https://gaxu.xyz/posts/conctr-ineq-hoeffding/ - 2023–2025 嘉树.</description></item><item><title>来个任意门吧</title><link>https://gaxu.xyz/posts/anywhere-door/</link><pubDate>Fri, 09 Aug 2024 10:31:47 +0800</pubDate><guid>https://gaxu.xyz/posts/anywhere-door/</guid><description>嘉树的世界 https://gaxu.xyz/posts/anywhere-door/ -&lt;p&gt;这几天实在太热了🥵🥵，每次往返学校都流一身汗，不想去学校了，但是呆家里就容易躺。两难呐😑&lt;/p&gt;
-&lt;p&gt;要是有个任意门就好了，可以舒心往返，两难自解🥹&lt;/p&gt;
-- https://gaxu.xyz/posts/anywhere-door/ - 2023–2025 嘉树.</description></item></channel></rss>
+- https://gaxu.xyz/posts/conctr-ineq-hoeffding/ - 2023–2025 嘉树.</description></item></channel></rss>
