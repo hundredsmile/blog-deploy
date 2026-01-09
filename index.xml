@@ -1,11 +1,16 @@
-<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Thu, 08 Jan 2026 20:52:13 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>经验过程笔记 (I): 观其大略</title><link>https://gaxu.xyz/posts/empirical-processes-1/</link><pubDate>Thu, 08 Jan 2026 20:52:13 +0800</pubDate><guid>https://gaxu.xyz/posts/empirical-processes-1/</guid><description>嘉树的世界 https://gaxu.xyz/posts/empirical-processes-1/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Thu, 08 Jan 2026 20:52:13 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>经验过程笔记 (I): 基本概念</title><link>https://gaxu.xyz/posts/empirical-processes-1/</link><pubDate>Thu, 08 Jan 2026 20:52:13 +0800</pubDate><guid>https://gaxu.xyz/posts/empirical-processes-1/</guid><description>嘉树的世界 https://gaxu.xyz/posts/empirical-processes-1/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
 &lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice info" &gt;
 &lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#info-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Info&lt;/p&gt;&lt;p&gt;本系列是阅读 van der Vaart and Wellner (1996) Part 2 的笔记，介绍了经验过程 (empirical process) 的理论。&lt;/p&gt;&lt;/div&gt;
 &lt;p&gt;我把 tightness 翻译为紧密性，把 compactness 翻译为紧致性，把 denseness 翻译为稠密性。&lt;/p&gt;
-&lt;h2 id="基本概念"&gt;基本概念&lt;/h2&gt;
-&lt;h3 id="紧密性"&gt;紧密性&lt;/h3&gt;
+&lt;h2 id="紧密性"&gt;紧密性&lt;/h2&gt;
 &lt;p&gt;在开始之前，我们先介绍一个弱收敛理论中很重要的一个概念：&lt;em&gt;紧密性 (tightness)&lt;/em&gt;。&lt;/p&gt;
-&lt;p&gt;设 $P$ 是定义在可测空间 $(\mathcal{X},\mathcal{A})$ 上的概率测度，如果对任意 $\varepsilon &gt; 0$，存在一个可测紧致集 $K\in\mathcal{A}$ 使得 $P(K) &gt; 1-\varepsilon$，则称 $P$ 是紧密的。显然，$P$ 是紧密的，当且仅当它有一个 $\sigma$ 紧致（即能表示为可数个紧致集的并）的支撑集。&lt;/p&gt;
+&lt;p&gt;设 $P$ 是定义在可测空间 $(\mathcal{X},\mathcal{A})$ 上的概率测度，如果对任意 $\varepsilon &gt; 0$，存在一个可测紧致集 $K\in\mathcal{A}$ 使得 $P(K) &gt; 1-\varepsilon$，则称 $P$ 是紧密的。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="thm:tightness" class="thm-title thm-Theorem"&gt;Theorem 1.&lt;/p&gt;
+&lt;div class="thm-inner thm-Theorem"&gt;
+$P$ 是紧密的，当且仅当它有一个 $\sigma$ 紧致的支撑集。
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;div class="thm"&gt;
 &lt;button type="button" class="collapsible"&gt;&lt;div id="thm-proof-1" class="thm-title-proof"&gt;Proof.&lt;/div&gt;&lt;/button&gt;
 &lt;div class="proof-content"&gt;
@@ -27,7 +32,7 @@ $$&lt;p&gt;
 &lt;div class="notice note" &gt;
 &lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#note-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Note&lt;/p&gt;&lt;p&gt;可分 (separable) 空间是指存在一个可数稠密子集（还有两种等价的定义方式：有一个可数基，或者任意开覆盖都有可数子覆盖），而完备 (complete) 空间是对度量空间而言的，指其上任意 Cauchy 列都收敛且极限都在该空间中，换言之，此空间对极限保持封闭，故称完备。很显然，$\mathbb{R}^d$ 是一个可分完备空间。需要注意的是，这两个概念是互不蕴含的，可分空间可以是不完备的（它甚至都不必是度量空间），例如所有有理数的集合是一个可分空间，但它不是完备的。而完备空间可以是不可分的，例如所有有界实数列的集合 $\ell^\infty(\mathbb{R})$。不过，$\sigma$ 紧致的度量空间（不需要完备性）一定是可分的。&lt;/p&gt;&lt;/div&gt;
 &lt;div class="thm"&gt;
-&lt;p id="thm:tightness" class="thm-title thm-Theorem"&gt;Theorem 1.&lt;/p&gt;
+&lt;p id="thm:tightness" class="thm-title thm-Theorem"&gt;Theorem 2.&lt;/p&gt;
 &lt;div class="thm-inner thm-Theorem"&gt;
 如果 $\mathcal{X}$ 是可分完备（度量）空间（也称为 Polish 空间），那么在 $(\mathcal{X},\mathcal{A})$ 上的任何概率测度都是紧密的。
 &lt;/div&gt;
@@ -68,7 +73,7 @@ $$&lt;p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;对一个可测映射 $X\colon\mathcal{X}\to\mathbb{D}$（$\mathbb{D}$ 是某个度量空间），如果它的分布 $P\circ X^{-1}$ 是紧密的，则称 $X$ 是紧密的。&lt;/p&gt;
-&lt;h3 id="经验过程介绍我们的目标是什么"&gt;经验过程介绍：我们的目标是什么&lt;/h3&gt;
+&lt;h2 id="经验过程介绍我们的目标是什么"&gt;经验过程介绍：我们的目标是什么&lt;/h2&gt;
 &lt;p&gt;对于可测空间 $(\mathcal{X},\mathcal{A})$ 上的随机样本 $X_1,\dots,X_n$，&lt;em&gt;经验测度 (empirical measure)&lt;/em&gt; $\mathbb{P}_n$ 定义为
 &lt;/p&gt;
 $$
@@ -83,8 +88,9 @@ $$&lt;p&gt;
 &lt;/p&gt;
 $$
 f \mapsto \mathbb{G}_n f = \sqrt{n}(\mathbb{P}_n f - P f) = \frac{1}{\sqrt{n}}\sum_{i=1}^n (f(X_i) - P f)
-$$&lt;p&gt;
-对于一个给定的 $f$，我们有大数定律和中心极限定理
+$$&lt;div class="notice note" &gt;
+&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#note-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Note&lt;/p&gt;&lt;p&gt;经验过程无非也就是一组随机变量，只不过这些随机变量的样本空间是 $\mathcal{F}$，而不再是 $\mathcal{X}$。&lt;/p&gt;&lt;/div&gt;
+&lt;p&gt;对于一个给定的 $f$，我们有大数定律和中心极限定理
 &lt;/p&gt;
 $$
 \begin{align*}
@@ -129,9 +135,10 @@ $$&lt;p&gt;
 $$
 E[\mathbb{G} f_1 \mathbb{G} f_2] = P(f_1-Pf_1)(f_2-Pf_2) = P(f_1f_2) - Pf_1Pf_2
 $$&lt;p&gt;
-那么，在什么情况下，通过边际分布的收敛就能决定极限过程 $\mathbb{G}$ 的分布？这个关键的充分条件正是紧密性。&lt;/p&gt;
+$\mathbb{G}$ 被称作 &lt;em&gt;布朗桥 (Brownian bridge)&lt;/em&gt;。&lt;/p&gt;
+&lt;p&gt;那么，在什么情况下，通过边际分布的收敛就能决定极限过程 $\mathbb{G}$ 的分布？这个关键的充分条件正是紧密性。&lt;/p&gt;
 &lt;div class="thm"&gt;
-&lt;p id="thm:donsker" class="thm-title thm-Theorem"&gt;Theorem 2.&lt;/p&gt;
+&lt;p id="thm:donsker" class="thm-title thm-Theorem"&gt;Theorem 3.&lt;/p&gt;
 &lt;div class="thm-inner thm-Theorem"&gt;
 令 $X$ 和 $Y$ 是映射到 $\ell^\infty(T)$ 上的紧密随机元素。它们的分布完全相等，当且仅当它们所有的边际分布相等。
 &lt;/div&gt;
@@ -150,6 +157,29 @@ $$&lt;p&gt;
 &lt;div class="thm-end-proof"&gt;
 &lt;i class="fas fa-square"&gt;&lt;/i&gt; &lt;a href="#thm-proof-3"&gt;&lt;i class="fas fa-arrow-circle-up"&gt;&lt;/i&gt;&lt;/a&gt;
 &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;根据 Slutsky 定理，一个 Donsker 类一定是依概率收敛的 Glivenko-Cantelli 类。事实上，这个陈述把「依概率收敛」替换为「几乎确定收敛」仍然成立。不过反过来，并不是所有的 Glivenko-Cantelli 类都是 Donsker 类。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="ex:edf" class="thm-title thm-Example"&gt;Example 4.&lt;/p&gt;
+&lt;div class="thm-inner thm-Example"&gt;
+&lt;p&gt;令 $X_1,\dots,X_n$ 是 $\mathbb{R}^d$ 上的独立同分布的随机变量，设 $\mathcal{F}$ 是所有下矩形示性函数 $\{\mathbf{1}(-\infty,t]\colon t\in\bar{\mathbb{R}}^d\}$ 的集合。以 $\mathcal{F}$ 标记的经验测度就是经验分布函数
+&lt;/p&gt;
+$$
+t \mapsto \mathbb{P}_n \mathbf{1}(-\infty,t] = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i\leq t)
+$$&lt;p&gt;
+因为 $\mathcal{F}$ 中的每个函数可以用 $t$ 来标记，因此 $\ell^\infty(\mathcal{F})$ 中的每个元素都可一一对应于 $\ell^\infty(\bar{\mathbb{R}}^d)$ 中的一个元素。所以很自然地，我们可以把经验过程看作是 $\ell^\infty(\bar{\mathbb{R}}^d)$ 上的一个随机元素。当然，经验分布函数的样本路径一般是在更小的函数空间中（如 Skorokhod 空间），但只要我们选择了 supremum 度量，在大空间还是小空间上讨论收敛性都一样。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="thm"&gt;
+&lt;p id="ex:indexed-by-sets" class="thm-title thm-Example"&gt;Example 5.&lt;/p&gt;
+&lt;div class="thm-inner thm-Example"&gt;
+&lt;p&gt;令 $\mathcal{C}$ 表示可测空间 $(\mathcal{X},\mathcal{A})$ 上某个可测子集的集合，$\mathcal{F}$ 是所有 $\mathcal{C}$ 上的示性函数 的集合，即 $\{\mathbf{1}(C)\colon C\in\mathcal{C}\}$。于是由集合标记的经验分布就是
+&lt;/p&gt;
+$$
+C \mapsto \mathbb{P}_n(C) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i\in C)
+$$&lt;p&gt;
+因为集合和它的示性函数是一一对应的，$C\leftrightarrow \mathbf{1}(C)$，因此 $\ell^\infty(\mathcal{F})$ 中的每个元素都可一一对应于 $\ell^\infty(\mathcal{C})$ 中的一个元素。所以很自然地，我们可以把经验过程看作是 $\ell^\infty(\mathcal{C})$ 上的一个随机元素。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 - https://gaxu.xyz/posts/empirical-processes-1/ - 2023–2025 嘉树.</description></item><item><title>斜体字形文字中的数学间距调整</title><link>https://gaxu.xyz/posts/math-kerning-in-italic-text/</link><pubDate>Mon, 05 Jan 2026 11:09:10 +0800</pubDate><guid>https://gaxu.xyz/posts/math-kerning-in-italic-text/</guid><description>嘉树的世界 https://gaxu.xyz/posts/math-kerning-in-italic-text/ -&lt;h2 id="问题背景"&gt;问题背景&lt;/h2&gt;
