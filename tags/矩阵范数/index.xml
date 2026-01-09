@@ -23,14 +23,20 @@
  
 
 
-&lt;figure id = "fig:ratings" align="" role="group" aria-describedby="caption-7a0da52ea67b6a781291fe53e8b9f6fe"&gt;
+
+
+
+&lt;figure id="fig:ratings" class="insert-figure" align="" role="group" aria-describedby="caption-7a0da52ea67b6a781291fe53e8b9f6fe"&gt;
  &lt;a href="https://gaxu.xyz/posts/nuclear-norm-min/rating-mat.png" class="img-link"&gt;
- &lt;img src="https://gaxu.xyz/posts/nuclear-norm-min/rating-mat.png" style="width: 60%;"&gt;
+ &lt;img class="insert-figure-img" src="https://gaxu.xyz/posts/nuclear-norm-min/rating-mat.png" style="--insert-figure-width: 50%;"&gt;
  &lt;/a&gt;
  &lt;figcaption id="caption-7a0da52ea67b6a781291fe53e8b9f6fe"&gt;
  Rating Matrix (Source: Yuejie Chi, 2018, Lecture Notes)
  &lt;/figcaption&gt;
 &lt;/figure&gt;
+
+
+
 &lt;p&gt;那么，这和低秩又有什么关系呢？很显然，在没有任何限制条件下去补全那些未知的项，我们有无数种填充方式。想要唯一地重建一个矩阵，这个矩阵必须有些特殊的结构作为限制，而低秩就是一个合理的结构。低秩意味着，矩阵的列向量高度线性相关──它们扩展形成的线性空间是低维的。说得更加人话就是，数据中的大部分波动都由少数几个因子驱动。&lt;/p&gt;
 &lt;p&gt;现在可能又要问了，低秩在实践中是一个合理的假设吗？以 Netflix 评分矩阵为例，直觉上，同一类用户群体的行为、特征有很高的相似性，因此他们的潜在评分高度一致，这样评分矩阵的「主成分」实际上就是几个群体的评价，从而是低秩的。&lt;/p&gt;
 &lt;h2 id="核范数最小化"&gt;核范数最小化&lt;/h2&gt;

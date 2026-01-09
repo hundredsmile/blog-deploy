@@ -21,14 +21,22 @@
  
 
 
-&lt;figure id = "fig:demo1" align="" role="group" aria-describedby="caption-d41d8cd98f00b204e9800998ecf8427e"&gt;
+
+
+ 
+
+
+&lt;figure id="fig:demo1" class="insert-figure" align="" role="group" aria-describedby="caption-d41d8cd98f00b204e9800998ecf8427e"&gt;
  &lt;a href="https://gaxu.xyz/posts/math-kerning-in-italic-text/demo1.png" class="img-link"&gt;
- &lt;img src="https://gaxu.xyz/posts/math-kerning-in-italic-text/demo1.png" style="width: 30%;"&gt;
+ &lt;img class="insert-figure-img" src="https://gaxu.xyz/posts/math-kerning-in-italic-text/demo1.png" style="--insert-figure-width: 30%;"&gt;
  &lt;/a&gt;
  &lt;figcaption id="caption-d41d8cd98f00b204e9800998ecf8427e"&gt;
  
  &lt;/figcaption&gt;
 &lt;/figure&gt;
+
+
+
 &lt;p&gt;给文字加上框之后我们可以更清楚地看到 LaTeX 分配给每个字符的空白空间，如下图所示。在第一行，数学环境中的 U 和 V 安分守己地待在框里，此时 LaTeX 没有对间距做任何调整。而在第二行，文字环境中的 U 和 V 则被放在了框的最右边，几乎都要挤出去了，此时 LaTeX 实际上给它们前面加了一些空间，后面则压缩了一些空间，这个操作被称为「字距微调」，英文叫做 &lt;a href="https://en.wikipedia.org/wiki/Kerning"&gt;kerning&lt;/a&gt;，是排版中的一项重要技术。&lt;/p&gt;
 
 
@@ -50,16 +58,61 @@
  
 
 
-&lt;figure id = "fig:demo2" align="" role="group" aria-describedby="caption-d41d8cd98f00b204e9800998ecf8427e"&gt;
+
+
+ 
+
+
+&lt;figure id="fig:demo2" class="insert-figure" align="" role="group" aria-describedby="caption-d41d8cd98f00b204e9800998ecf8427e"&gt;
  &lt;a href="https://gaxu.xyz/posts/math-kerning-in-italic-text/demo2.png" class="img-link"&gt;
- &lt;img src="https://gaxu.xyz/posts/math-kerning-in-italic-text/demo2.png" style="width: 30%;"&gt;
+ &lt;img class="insert-figure-img" src="https://gaxu.xyz/posts/math-kerning-in-italic-text/demo2.png" style="--insert-figure-width: 30%;"&gt;
  &lt;/a&gt;
  &lt;figcaption id="caption-d41d8cd98f00b204e9800998ecf8427e"&gt;
  
  &lt;/figcaption&gt;
 &lt;/figure&gt;
+
+
+
 &lt;p&gt;那么，为什么 LaTeX 没有对数学环境的前后间距做调整呢？这其实是数学字体本身的问题。数学字体是独立于正文字体的，它的 kerning 规则与正文字体不同，而且也不会考虑到和正文字体互动的情况。当用在意大利字形的正文字体中，由于正文字体的 kerning 变了，所以数学环境在其中会显得很不协调。&lt;/p&gt;
 &lt;h2 id="解决方案"&gt;解决方案&lt;/h2&gt;
 &lt;p&gt;第一种也是最直接的方法，手动调整。这适用于需要调整的地方不多的时候。例如我们可以手动在数学环境前加上一些正间距，在其后加上一些负间距。我们用 &lt;code&gt;\/&lt;/code&gt; 取消正文中的倾斜校正 (italic correction) 所引入的间距，然后用 &lt;code&gt;\!&lt;/code&gt; 在数学符号后添加一些负间距（等于 &amp;ndash;0.16667em）：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-latex" data-lang="latex"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;If&lt;span style="color:#81a1c1;font-weight:bold"&gt;\/&lt;/span&gt; &lt;span style="color:#a3be8c"&gt;$&lt;/span&gt;&lt;span style="color:#81a1c1"&gt;U&lt;/span&gt;&lt;span style="color:#a3be8c"&gt;$&lt;/span&gt;&lt;span style="color:#81a1c1;font-weight:bold"&gt;\!&lt;/span&gt; of&lt;span style="color:#81a1c1;font-weight:bold"&gt;\/&lt;/span&gt; &lt;span style="color:#a3be8c"&gt;$&lt;/span&gt;&lt;span style="color:#81a1c1"&gt;V&lt;/span&gt;&lt;span style="color:#a3be8c"&gt;$&lt;/span&gt;&lt;span style="color:#81a1c1;font-weight:bold"&gt;\!&lt;/span&gt; and &lt;span style="color:#81a1c1;font-weight:bold"&gt;\dots&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到的效果如下。这个看着就舒服多了。&lt;/p&gt;</description></item></channel></rss>
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到的效果如下。这个看着就舒服多了。&lt;/p&gt;
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+&lt;figure id="fig:demo3" class="insert-figure" align="" role="group" aria-describedby="caption-d41d8cd98f00b204e9800998ecf8427e"&gt;
+ &lt;a href="https://gaxu.xyz/posts/math-kerning-in-italic-text/demo3.png" class="img-link"&gt;
+ &lt;img class="insert-figure-img" src="https://gaxu.xyz/posts/math-kerning-in-italic-text/demo3.png" style="--insert-figure-width: 30%;"&gt;
+ &lt;/a&gt;
+ &lt;figcaption id="caption-d41d8cd98f00b204e9800998ecf8427e"&gt;
+ 
+ &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+
+
+&lt;p&gt;但是，当需要调整的地方很多时，这种方法就显得过于繁琐。有没有什么自动化的调整办法呢？&lt;/p&gt;</description></item></channel></rss>
