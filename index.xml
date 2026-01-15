@@ -1,4 +1,139 @@
-<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Thu, 08 Jan 2026 20:52:13 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>经验过程笔记 (I): 基本概念</title><link>https://gaxu.xyz/posts/empirical-processes-1/</link><pubDate>Thu, 08 Jan 2026 20:52:13 +0800</pubDate><guid>https://gaxu.xyz/posts/empirical-processes-1/</guid><description>嘉树的世界 https://gaxu.xyz/posts/empirical-processes-1/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Wed, 14 Jan 2026 09:27:57 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>泊松伪极大似然估计</title><link>https://gaxu.xyz/posts/ppml/</link><pubDate>Wed, 14 Jan 2026 09:27:57 +0800</pubDate><guid>https://gaxu.xyz/posts/ppml/</guid><description>嘉树的世界 https://gaxu.xyz/posts/ppml/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+&lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice info" &gt;
+&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#info-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Info&lt;/p&gt;&lt;p&gt;本文主要是对 Silva and Tenreyro (2006) 的介绍，讲述了为什么在估计一个非线性模型时，「对数线性化」+「OLS」是不可取的，以及泊松伪极大似然估计的原理。此文并非百分百还原原文，而是根据自己的理解进行了一些改动。&lt;/p&gt;&lt;/div&gt;
+&lt;p class="pdf-download"&gt;
+&lt;i class="fa-solid fa-file-pdf" aria-hidden="true"&gt;&lt;/i&gt;
+&lt;em&gt;&lt;a href="https://gaxu.xyz/posts/ppml/ppml.pdf"&gt;
+下载本文 PDF
+&lt;/a&gt;&lt;/em&gt;
+&lt;/p&gt;
+&lt;h2 id="对数线性化的问题以引力模型为例"&gt;对数线性化的问题：以引力模型为例&lt;/h2&gt;
+&lt;p&gt;Silva and Tenreyro (2006) 注意到一个重要问题，传统的引力模型通过估计一个对数线性化的方程得到弹性，然而这样做很有可能会引来偏误，特别是在有异方差的情况下。&lt;/p&gt;
+&lt;p&gt;在贸易理论中，引力模型是一个非常经典的模型，它被用来研究双边国际贸易流量的决定。具体而言，从国家 $i$ 到国家 $j$ 的贸易流量 $T_{ij}$ 被建模为：
+&lt;/p&gt;
+$$
+\begin{equation}
+\label{eq:gravity-model}
+T_{ij} = \alpha_0Y_i^{\alpha_1}Y_j^{\alpha_2}D_{ij}^{\alpha_3}\eta_{ij}
+\end{equation}
+$$&lt;p&gt;
+其中 $Y_i$ 和 $Y_j$ 分别表示国家 $i$ 和 $j$ 的 GDP，$D_{ij}$ 表示国家 $i$ 和 $j$ 之间的距离，$\eta_{ij}$ 是一个非负的随机扰动项，$\alpha_0, \alpha_1, \alpha_2, \alpha_3$ 是待估参数。通常，我们会假设 $\mathbb{E}[\eta_{ij}|Y_i,Y_j,D_{ij}]=1$，因此有
+&lt;/p&gt;
+$$
+\mathbb{E}[T_{ij}|Y_i,Y_j,D_{ij}] = \alpha_0Y_i^{\alpha_1}Y_j^{\alpha_2}D_{ij}^{\alpha_3}
+$$&lt;p&gt;
+在实际估计中，为了得到一个线性形式，人们将 \eqref{eq:gravity-model} 两边取对数&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;，得到：
+&lt;/p&gt;
+$$
+\log(T_{ij}) = \log(\alpha_0) + \alpha_1\log(Y_i) + \alpha_2\log(Y_j) + \alpha_3\log(D_{ij}) + \log(\eta_{ij})
+$$&lt;p&gt;
+然后用 OLS 估计这个对数线性化的方程。可是──我们不禁要问──这样得到的估计量是一致的吗？&lt;/p&gt;
+&lt;p&gt;我们知道，OLS 估计量的一致性依赖于外生性条件，即误差项和解释变量不相关。在上述对数线性化的方程中，是否有
+&lt;/p&gt;
+$$
+\mathbb{E}[\log(\eta_{ij})|Y_i,Y_j,D_{ij}] = 0
+$$&lt;p&gt;
+成立？或者至少是一个常数（从而可以被截距项吸收）？很遗憾，在现实的很多应用中，这个条件通常不成立。我们可以考虑一种简单情况，设 $\eta_{i,j}$ 条件于 $Y_i,Y_j,D_{ij}$，服从均值为 1，方差为 $\sigma_{i,j}^2 = f(Y_i,Y_j,D_{ij})$ 的对数正态分布（即取完对数后服从正态分布），那么根据对数正态分布的性质，有
+&lt;/p&gt;
+$$
+\mathbb{E}[\log(\eta_{i,j})|Y_i,Y_j,D_{ij}] = -\frac{1}{2}\log(1+\sigma_{i,j}^2)
+$$&lt;p&gt;
+可以看到，对数线性化方程中的误差项的条件期望是一个关于 $Y_i,Y_j,D_{ij}$ 的函数，这几乎意味着误差项和解释变量相关，因此 OLS 估计量是不一致的。这个例子表明，如果原模型中的误差项有异方差，那么对数线性化方程的外生性条件不成立，会给 OLS 带来偏误。在现实的很多例子中，$\eta_{i,j}$ 的异方差问题确实普遍存在！所以「对数线性化」+「OLS」这种传统上被普遍采用的范式是不可取的。&lt;/p&gt;
+&lt;p&gt;取对数还会带来一个显而易见的问题，那就是如何处理零值。在实际数据特别是计数数据中，零值是一个非常普遍的现象。在某段时期，两个国家可能根本就没有贸易；或者，在数据统计过程中，如果两个国家的贸易额太小，也可能会被统计机构忽略而取零；又或者，当贸易数据缺失时，也可能会被错记为零。早期的实证研究者们大多采取的解决办法是，完全扔掉这些零值，或者以 $\log(T_{ij}+1)$ 代替 $\log(T_{ij})$ 作为被解释变量。前者是一个较为粗暴的做法，且不论这造成的信息损失，更严重的后果是，这还可能引入偏误，因为正如前面所说，被扔掉的这些零值可能正是那些经济规模相对较小的国家之间的贸易流量，即样本的选择本身和解释变量相关，带来了 &lt;em&gt;样本选择偏误&lt;/em&gt;。而取 $\log(T_{ij}+1)$ 的做法看似规避了零值带来的数学上的麻烦而又保留了原始数据的信息，但这样做同样存在问题，最近一篇发表在 QJE 的文章 Chen and Roth (2024) 对这一点进行了系统阐述。&lt;/p&gt;
+&lt;h2 id="非线性最小二乘法"&gt;非线性最小二乘法&lt;/h2&gt;
+&lt;p&gt;既然对数化会带来这样或那样的问题，为什么我们不能直接估计原始的乘法形式的方程呢？其实这也是可以的，就是通过 「非线性最小二乘法」 (NLS) 估计。&lt;/p&gt;
+&lt;p&gt;假设真实模型为&lt;sup id="fnref:2"&gt;&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;
+&lt;/p&gt;
+$$
+y_i = \exp(x_i\beta) + \varepsilon_i
+$$&lt;p&gt;
+其中 $y_i\geq 0$，且 $\mathbb{E}[\varepsilon_i|x_i]=0$。那么，$\beta$ 的 NLS 估计量就是
+&lt;/p&gt;
+$$
+\hat{\beta} = \arg\min_b \sum_{i=1}^n [y_i - \exp(x_ib)]^2
+$$&lt;p&gt;
+其一阶条件是
+&lt;/p&gt;
+$$
+\begin{equation}
+\label{eq:nls-moment}
+\sum_{i=1}^n [y_i - \exp(x_i\hat{\beta})]\exp(x_i\hat{\beta})x_i = 0
+\end{equation}
+$$&lt;p&gt;
+从矩估计的角度来看，$\beta$ 的 NLS 估计量对应如下总体矩条件&lt;sup id="fnref:3"&gt;&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref"&gt;3&lt;/a&gt;&lt;/sup&gt;：
+&lt;/p&gt;
+$$
+\mathbb{E}[\varepsilon_i\exp(x_i\beta)x_i] = 0
+$$&lt;p&gt;
+直观来看，如果我们把 $\exp(x_i\beta)$ 视作赋予个体 $i$ 的权重，那么显然 $x_i\beta$ 越大的个体的权重就越大。但这些个体往往也有着更多的噪声，于是 NLS 估计量的效率通常不那么高。当然，提升效率是可能的。譬如，如果我们知道了条件方差 $\mathrm{var}(y_i|x_i)$ 的具体函数形式，那么可以估计它，然后再用加权最小二乘法来改进效率。这种做法由于多数情况下条件方差的具体函数形式未知（从而可能需要使用非参数的方法），且操作上更为复杂，因而未被广泛采用。实证研究人员想要的是一种既简单易用，又对一般异方差稳健的有效率的估计方法，把它作为日常使用的标准工具。「泊松伪极大似然估计」 (Poisson pseudo maximum likelihood, PPML) 完美契合了这一需求，它并不要求真实数据必须服从泊松分布，甚至不要求是离散数据，而基本上只要求条件均值模型是正确的，因此零值问题甚至不再是一个问题。在这个例子中，它等价于添加了异方差设定的 NLS 估计量。&lt;/p&gt;
+&lt;h2 id="提升效率异方差设定"&gt;提升效率：异方差设定&lt;/h2&gt;
+&lt;p&gt;为了提升效率，我们必须知道关于异方差形式的一些信息，这一般通过假设来实现。我们可以不必假设具体的函数形式，而只需假设
+&lt;/p&gt;
+$$
+\mathbb{E}[y_i|x_i] = \exp(x_i\beta) \propto \mathrm{var}(y_i|x_i)
+$$&lt;p&gt;
+即异方差和条件均值成正比（这个假设使我们联想到泊松分布的一个重要性质，即均值和方差是相等的）。这个假设的直觉是，对那些条件均值较大的个体，其观测值噪声更大，从而方差更大。这符合实际贸易数据的表现，对于那些贸易量很小的国家，贸易量的波动一般也是较小的。当把这个假设加入到 NLS 的估计框架中（通过加权最小二乘法），我们会得到如下一阶条件：
+&lt;/p&gt;
+$$
+\begin{equation}
+\label{eq:nls-moment-weighted}
+\sum_{i=1}^n [y_i - \exp(x_i\hat{\beta})]x_i = 0
+\end{equation}
+$$&lt;p&gt;
+相比于 \eqref{eq:nls-moment}，\eqref{eq:nls-moment-weighted} 对每个观测是等权重的，这使得估计量更有效率。即便「异方差正比于条件均值」这一假设并不严格成立，只要异方差随着条件均值的增大而增大，那么 \eqref{eq:nls-moment-weighted} 也比普通 NLS 估计量更有效率。&lt;/p&gt;
+&lt;p&gt;事实上，\eqref{eq:nls-moment-weighted} 得到的估计量正好等价于 PPML 估计量，见&lt;a href="https://gaxu.xyz/posts/ppml/#%e4%bc%aa%e6%9e%81%e5%a4%a7%e4%bc%bc%e7%84%b6%e4%bc%b0%e8%ae%a1"&gt;伪极大似然估计&lt;/a&gt;一节。&lt;/p&gt;
+&lt;h2 id="伪极大似然估计"&gt;伪极大似然估计&lt;/h2&gt;
+&lt;p&gt;所谓「伪极大似然」 (pseudo maximum likelihood, PML)&lt;sup id="fnref:4"&gt;&lt;a href="#fn:4" class="footnote-ref" role="doc-noteref"&gt;4&lt;/a&gt;&lt;/sup&gt;，（在计量里）指的是所采用的似然函数并不一定来自于真实的密度函数（真实的密度函数是未知的），而是属于「线性指数分布族」 (linear exponential family)。这一方法早在上世纪就由 Gouriéroux, Monfort and Trognon (1984) 提出，他们证明了在一些正则条件下，PML 估计量是一致的、渐进正态的。&lt;/p&gt;
+&lt;p&gt;这里我们特别讨论泊松伪极大似然估计。如果我们有条件均值模型
+&lt;/p&gt;
+$$
+\lambda_i = \mathbb{E}[y_i|x_i] = \exp(x_i\beta)
+$$&lt;p&gt;
+那么以此为均值的泊松分布的密度函数为
+&lt;/p&gt;
+$$
+f(y_i|x_i) = \frac{\lambda_i^{y_i}}{y_i!} \exp(-\lambda_i)
+$$&lt;p&gt;
+于是对数似然函数为
+&lt;/p&gt;
+$$
+\begin{align*}
+L(\beta) = &amp;-\sum_{i=1}^n \lambda_i + \sum_{i=1}^n y_i\log(\lambda_i) - \sum_{i=1}^n \log(y_i!) \\
+&amp; = -\sum_{i=1}^n \exp(x_i\beta) + \sum_{i=1}^n y_i x_i\beta - \sum_{i=1}^n \log(y_i!)
+\end{align*}
+$$&lt;p&gt;
+一阶条件为
+&lt;/p&gt;
+$$
+\frac{dL}{d\beta} = -\sum_{i=1}^n x_i[\exp(x_i\beta) - y_i] = 0
+$$&lt;p&gt;
+这正是 \eqref{eq:nls-moment-weighted} 所示的一阶条件。&lt;/p&gt;
+&lt;h2 id="小结"&gt;小结&lt;/h2&gt;
+&lt;p&gt;我们探讨了异方差和零值问题给对数线性化方法带来的麻烦，并介绍了 PPML 是如何对它们保持稳健的。现在它成了国际贸易研究中一个标准的工具。原文还探讨了对异方差假设的检验方法，以及用模拟说明了 PPML 的优越性，并给出了一个实证例子，感兴趣的读者可以阅读原文。&lt;/p&gt;
+&lt;h2 id="参考文献"&gt;参考文献&lt;/h2&gt;
+&lt;p&gt;Chen, J. and J. Roth (2024): &amp;ldquo;Logs with Zeros? Some Problems and Solutions,&amp;rdquo; &lt;em&gt;Quarterly Journal of Economics&lt;/em&gt;, 139(2), 891–936.&lt;/p&gt;
+&lt;p&gt;Gong, G. and F. J. Samaniego (1981): &amp;ldquo;Pseudo Maximum Likelihood Estimation: Theory and Applications,&amp;rdquo; &lt;em&gt;Annals of Statistics&lt;/em&gt;, 9(4), 861–869.&lt;/p&gt;
+&lt;p&gt;Gourieroux, C., A. Monfort, and A. Trognon (1984): &amp;ldquo;Pseudo Maximum Likelihood Methods: Theory,&amp;rdquo; &lt;em&gt;Econometrica&lt;/em&gt;, 52(3), 681–700.&lt;/p&gt;
+&lt;p&gt;Hayashi, F. (2000): &lt;em&gt;Econometrics&lt;/em&gt;. Princeton: Princeton University Press.&lt;/p&gt;
+&lt;p&gt;Santos Silva, J. M. C. and S. Tenreyro (2006): &amp;ldquo;The Log of Gravity,&amp;rdquo; &lt;em&gt;Review of Economics and Statistics&lt;/em&gt;, 88(4), 641–658.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;为什么人们这么喜欢取对数？因为对数变换可以将乘法模型转化为加法模型，从而变成线性的，而待估参数直接就是具有经济含义的弹性。简单的、易于解释的形式就是容易被研究者们青睐。&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;设定乘法形式的误差项是等价的。如 $y_i = \exp(x_i\beta)\eta_i$，其中 $\mathbb{E}[\eta_i|x_i]=1$。令 $\varepsilon_i = \exp(x_i\beta)[\eta_i - 1]$，则 $\mathbb{E}[\varepsilon_i|x_i]=0$。&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:3"&gt;
+&lt;p&gt;我们知道由零条件均值 $\mathbb{E}[\varepsilon_i|x_i]=0$ 可以推出 $\mathbb{E}[\varepsilon_if(x_i)]=0$，这里 $f(x_i)$ 可以是 $x_i$ 的任意（可测）函数。NLS 相当于选定了特定的函数 $f(x_i) = \exp(x_i\beta)x_i$。&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:4"&gt;
+&lt;p&gt;尽管在有些课本中（例如，Haiyashi Econometrics）拟极大似然和「准极大似然」 (quasi maximum likelihood, QML) 指的是同一个概念，但这里我还是想做一下区分。QML 的似然函数也不来自于真实的密度函数，但它强调的是分布误设带来的后果，这个思想是由统计学家率先发展起来的，从这个角度讲，PML 属于 QML 的一个子类，即在特定的模型误设下极大似然估计量仍然具有良好的性质。在统计学中，其实也有 PML 的概念 (Gong and Samaniego, 1981)，但和计量里面 GMT1984 所发展的方法并不是一回事。&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+- https://gaxu.xyz/posts/ppml/ - 2023–2025 嘉树.</description></item><item><title>经验过程笔记 (I): 基本概念</title><link>https://gaxu.xyz/posts/empirical-processes-1/</link><pubDate>Thu, 08 Jan 2026 20:52:13 +0800</pubDate><guid>https://gaxu.xyz/posts/empirical-processes-1/</guid><description>嘉树的世界 https://gaxu.xyz/posts/empirical-processes-1/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
 &lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice info" &gt;
 &lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#info-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Info&lt;/p&gt;&lt;p&gt;本系列是阅读 van der Vaart and Wellner (1996) Part 2 的笔记，介绍了经验过程 (empirical process) 的理论。&lt;/p&gt;&lt;/div&gt;
 &lt;p&gt;我把 tightness 翻译为紧密性，把 compactness 翻译为紧致性，把 denseness 翻译为稠密性。&lt;/p&gt;
@@ -1129,188 +1264,4 @@ $$&lt;p&gt;
 - https://gaxu.xyz/posts/half-day-diary/ - 2023–2025 嘉树.</description></item><item><title>专注力的流失</title><link>https://gaxu.xyz/posts/losing-concentration/</link><pubDate>Wed, 21 Aug 2024 12:43:47 +0800</pubDate><guid>https://gaxu.xyz/posts/losing-concentration/</guid><description>嘉树的世界 https://gaxu.xyz/posts/losing-concentration/ -&lt;p&gt;现在经常学着学着就很容易开小差，然后打开手机漫无目的地刷一刷，或者开始想些别的东西，这真的是一件很恐怖的事情。我的专注力在不断流失。&lt;/p&gt;
 &lt;p&gt;我幻想从清晨学到黄昏，心无旁骛地专注，因为时间在不知觉中的流动会给人一种高级的愉悦。我用了「幻想」，因为这种体验现在全无，但记忆中本科那会儿，是常能在图书馆坐上一天的。我的注意力为什么无法集中了呢？我在努力尝试思考的时候，大脑总会传出一个声音：这么复杂的问题，先歇会吧，反正时间有的是，也不差这一时半会儿。结果就是，我在每一个想要专注的节点都转移注意力去做了其他事，消磨的时间难以估量。我没法用劳逸结合来安慰自己，因为大部分时间我确实是处在「逸」的状态。这样做似乎很节省能量，但代价更严重──累积的畏难情绪和逐渐懒散的思维，学习节奏也全被打乱。&lt;/p&gt;
 &lt;p&gt;趁还有这样的意识的时候，是该刻意做点什么了吧。&lt;/p&gt;
-- https://gaxu.xyz/posts/losing-concentration/ - 2023–2025 嘉树.</description></item><item><title>集中不等式 (I)：Hoeffding 不等式</title><link>https://gaxu.xyz/posts/conctr-ineq-hoeffding/</link><pubDate>Sun, 11 Aug 2024 15:30:25 +0800</pubDate><guid>https://gaxu.xyz/posts/conctr-ineq-hoeffding/</guid><description>嘉树的世界 https://gaxu.xyz/posts/conctr-ineq-hoeffding/ -&lt;h2 id="内容提要"&gt;内容提要&lt;/h2&gt;
-&lt;p&gt;介绍了集中不等式的概念，引入了 Chernoff 界方法，并以此证明了 Hoeffding 不等式。&lt;/p&gt;
-&lt;h2 id="什么是集中不等式"&gt;什么是集中不等式？&lt;/h2&gt;
-&lt;p&gt;Concentration inequalities，中文译作「集中不等式」，是概率论中的一类不等式，描述了一个随机变量的取值是否集中在某个特定的值附近，换句话说，相对于这个特定值偏离了多少，从概率上讲这个偏离的可能性又如何量化。这个特定的值通常取的是总体均值。数学上，这类不等式的形式可写作&lt;/p&gt;
-$$
-\mathbb{P}\{|X-\mu|&gt;t\} \leq \text{something small}
-$$&lt;p&gt;这个不等式表明了，我们希望随机变量 $X$ 以很高的概率围绕在其均值附近波动。最简单、也最为我们熟悉的集中不等式当属 Chebyshev 不等式：如果 $X$ 的均值是 $\mu$，方差是 $\sigma^2$，那么&lt;/p&gt;
-$$
-\mathbb{P}\{|X-\mu|&gt;t\} \leq \frac{\sigma^2}{t^2}
-$$&lt;p&gt;这个不等式当然是很一般的──我们只要求方差有限，除此之外并没有对 $X$ 的分布做更多要求。但是，在很多应用场景中，它还是太弱了，弱在不等式右边的东西不够小，或者更具体地说，当 $t\to\infty$ 时收敛到 0 的速度不够快。我们希望能有指数级别的收敛。&lt;/p&gt;
-&lt;p&gt;从渐进的观点看，当样本量足够大时，我们可以使用中心极限定理近似地得到样本均值偏离总体均值的概率，而正态分布的尾概率是指数衰减的。&lt;/p&gt;
-&lt;div class="thm"&gt;
-&lt;p id="prop:normal" class="thm-title thm-proposition"&gt;Proposition 1.&lt;/p&gt;
-&lt;div class="thm-inner thm-proposition"&gt;
-&lt;p&gt;若 $Z\sim\mathcal{N}(0,1)$，则对任意 $t&gt;0$，都有&lt;/p&gt;
-$$
-\biggl(\frac1t-\frac{1}{t^3}\biggr)\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2} \leq \mathbb{P}\{Z\geq t\} \leq \frac{1}{t}\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2}
-$$
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="thm"&gt;
-&lt;button type="button" class="collapsible"&gt;&lt;div id="thm-proof-1" class="thm-title-proof"&gt;Proof.&lt;/div&gt;&lt;/button&gt;
-&lt;div class="proof-content"&gt;
-&lt;div class="thm-inner-proof"&gt;
-&lt;p&gt;对于上界，有&lt;/p&gt;
-$$
-\begin{align*}
-\mathbb{P}\{Z\geq t\} &amp;= \frac{1}{\sqrt{2\pi}}\int_t^\infty e^{-x^2/2}\,dx \\
-&amp;\leq \frac{1}{\sqrt{2\pi}}\int_t^\infty \frac{x}{t}e^{-x^2/2}\,dx \\
-&amp;= \frac{1}{t\sqrt{2\pi}} \int_t^\infty -\frac{\partial}{\partial x}e^{-x^2/2}\,dx \\
-&amp;= \frac{1}{t}\cdot\frac{1}{\sqrt{2\pi}}e^{-t^2/2}
-\end{align*}
-$$&lt;p&gt;对于下界，利用等式&lt;/p&gt;
-$$
-\int_t^\infty (1-3x^{-4})e^{-x^2/2}\,dx = \biggl(\frac1t-\frac1{t^3}\biggr)e^{-t^2/2}
-$$
-&lt;/div&gt;
-&lt;div class="thm-end-proof"&gt;
-&lt;i class="fas fa-square"&gt;&lt;/i&gt; &lt;a href="#thm-proof-1"&gt;&lt;i class="fas fa-arrow-circle-up"&gt;&lt;/i&gt;&lt;/a&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;不过，我们还需考虑到渐进误差的存在，也就是说，用正态分布的尾概率去近似样本均值的尾概率不是一种严格的做法。事实上，渐进误差并不必然是指数衰减的，因此我们必须从&lt;em&gt;非渐进&lt;/em&gt;的角度入手，而集中不等式正是这样的角色。&lt;/p&gt;
-&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
-&lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice note" &gt;
-&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#note-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Note&lt;/p&gt;&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Berry%E2%80%93Esseen_theorem"&gt;Berry-Esseen 定理&lt;/a&gt; 表明，中心极限定理中概率分布的收敛速率至少是 $O(1/\sqrt{n})$，不必然是指数级别的收敛。&lt;/p&gt;&lt;/div&gt;
-&lt;h2 id="chernoff-界方法"&gt;Chernoff 界方法&lt;/h2&gt;
-&lt;p&gt;在开始介绍一系列集中不等式之前，我们先讲一个很具有普适性的方法：Chernoff bound，它被广泛用于各种集中不等式的证明。&lt;/p&gt;
-&lt;p&gt;利用 Markov 不等式，对 $s&gt;0$, 我们有&lt;/p&gt;
-$$
-\mathbb{P}\{X\geq t\} = \mathbb{P}\{e^{sX}\geq e^{st}\} \leq \frac{\mathbb{E}(e^{sX})}{e^{st}}
-$$&lt;p&gt;不等式右边的 $m_X(s) := \mathbb{E}(e^{sX})$ 即随机变量的矩生成函数 (moment generating function, MGF)。更使我们喜闻乐见的是，分母是一个指数函数。这意味着，只要我们能控制 MGF 不要增长的太快，我们就能保证指数级收敛。&lt;/p&gt;
-&lt;p&gt;后文的各种集中不等式反复展示了这一技巧。&lt;/p&gt;
-&lt;h2 id="hoeffding-不等式"&gt;Hoeffding 不等式&lt;/h2&gt;
-&lt;p&gt;首先介绍一个分布：对称 Bernoulli 分布，也叫 Rademacher 分布。如果随机变量 $X$ 均以 1/2 概率取值 &amp;ndash;1 和 1，则称它服从对称 Bernoulli 分布。显然，$Z$ 服从（普通的）Berinoulli 分布当且仅当 $2Z-1$ 服从对称 Bernoulli 分布。&lt;/p&gt;
-&lt;p&gt;Hoeffding 不等式即是关于对称 Bernoulli 随机变量的。&lt;/p&gt;
-&lt;div class="thm"&gt;
-&lt;p id="thm:hoeffding" class="thm-title thm-theorem"&gt;Theorem 2 (Hoeffding’s Inequality).&lt;/p&gt;
-&lt;div class="thm-inner thm-theorem"&gt;
-&lt;p&gt;设 $X_1,\dots,X_n$ 是独立的对称 Bernoulli 随机变量序列，$\bm{a}=(a_1,\dots,a_n)\in\mathbb{R}^n$ 是实值常向量。对任意 $t\geq0$，都有&lt;/p&gt;
-$$
-\mathbb{P}\Biggl\{\sum_{i=1}^n a_iX_i\geq t\Biggr\} \leq \exp\biggl(-\frac{t^2}{2\|\bm{a}\|_2^2}\biggr)
-$$
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="thm"&gt;
-&lt;button type="button" class="collapsible"&gt;&lt;div id="thm-proof-2" class="thm-title-proof"&gt;Proof.&lt;/div&gt;&lt;/button&gt;
-&lt;div class="proof-content"&gt;
-&lt;div class="thm-inner-proof"&gt;
-&lt;p&gt;不失一般性，设 $\|\bm{a}\|_2 = 1$。利用 Chernoff 界方法，对 $s&gt;0$ 有&lt;/p&gt;
-$$
-\begin{align*}
-\mathbb{P}\Biggl\{\sum_{i=1}^n a_iX_i\geq t\Biggr\} &amp;= \mathbb{P}\Biggl\{\exp\Biggl(s\sum_{i=1}^n a_iX_i\Biggr)\geq \exp(st)\Biggr\} \\
-&amp;\leq e^{-st}\mathbb{E}\Biggl[\exp\Biggl(\sum_{i=1}^n a_iX_i\Biggr)\Biggr] \\
-&amp;= e^{-st}\prod_{i=1}^n\mathbb{E}[\exp(sa_iX_i)]
-\end{align*}
-$$&lt;p&gt;最后一个等式使用了独立性。计算 $\mathbb{E}[\exp(sa_iX_i)]$：&lt;/p&gt;
-$$
-\mathbb{E}[\exp(sa_iX_i)] = \frac12[\exp(sa_i)+\exp(-sa_i)] = \cosh(sa_i) \leq \exp(s^2a_i^2/2)
-$$&lt;p&gt;其中的不等号来自：$\cosh(x)\leq\exp(x^2/2)$ 对 $x\in\mathbb{R}$ 成立，可通过 Taylor 展开证明。于是，我们得到&lt;/p&gt;
-$$
-\begin{align*}
-\mathbb{P}\Biggl\{\sum_{i=1}^n a_iX_i\geq t\Biggr\} &amp;\leq e^{-st}\prod_{i=1}^n\mathbb{E}[\exp(sa_iX_i)] \\
-&amp;\leq e^{-st}\prod_{i=1}^n \exp(s^2a_i^2/2) \\
-&amp;= \exp\Biggl(-st+\frac{s^2}{2}\sum_{i=1}^na_i\Biggr) \\
-&amp;= \exp\biggl(-st+\frac{s^2}{2}\biggr)
-\end{align*}
-$$&lt;p&gt;最后一个等式利用了 $\sum_ia_i^2=1$。现在，选择最优的 $s$ 让右边的值最小，显然，这个最优的 $s=t$，这样就得到了想要的结果。&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="thm-end-proof"&gt;
-&lt;i class="fas fa-square"&gt;&lt;/i&gt; &lt;a href="#thm-proof-2"&gt;&lt;i class="fas fa-arrow-circle-up"&gt;&lt;/i&gt;&lt;/a&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;我们可以轻松加愉快地得到双边版本的 Hoeffding 不等式：&lt;/p&gt;
-&lt;div class="thm"&gt;
-&lt;p id="cor:hoeffding" class="thm-title thm-corollary"&gt;Corollary 3 (Hoeffding’s Inequality, two-sided).&lt;/p&gt;
-&lt;div class="thm-inner thm-corollary"&gt;
-&lt;p&gt;设 $X_1,\dots,X_n$ 是独立的对称 Bernoulli 随机变量序列，$\bm{a}=(a_1,\dots,a_n)\in\mathbb{R}^n$ 是实值常向量。对任意 $t\geq0$，都有&lt;/p&gt;
-$$
-\mathbb{P}\Biggl\{\left|\sum_{i=1}^n a_iX_i\right|\geq t\Biggr\} \leq 2\exp\biggl(-\frac{t^2}{2\|\bm{a}\|_2^2}\biggr)
-$$
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="thm"&gt;
-&lt;button type="button" class="collapsible"&gt;&lt;div id="thm-proof-3" class="thm-title-proof"&gt;Proof.&lt;/div&gt;&lt;/button&gt;
-&lt;div class="proof-content"&gt;
-&lt;div class="thm-inner-proof"&gt;
-对 $\sum_ia_iX_i$ 和 $-\sum_ia_iX_i$ 各应用一遍 &lt;a href="https://gaxu.xyz/#thm:hoeffding"&gt;Hoeffding&lt;/a&gt; 然后把概率相加。
-&lt;/div&gt;
-&lt;div class="thm-end-proof"&gt;
-&lt;i class="fas fa-square"&gt;&lt;/i&gt; &lt;a href="#thm-proof-3"&gt;&lt;i class="fas fa-arrow-circle-up"&gt;&lt;/i&gt;&lt;/a&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;更一般地，对有界随机变量，我们也有 Hoeffding 不等式：&lt;/p&gt;
-&lt;div class="thm"&gt;
-&lt;p id="thm:hoeffdingbounded" class="thm-title thm-theorem"&gt;Theorem 4 (Hoeffding’s Inequality for Bounded Random Variables).&lt;/p&gt;
-&lt;div class="thm-inner thm-theorem"&gt;
-&lt;p&gt;设 $X_1,\dots,X_n$ 是独立的随机变量序列，$\mathbb{E}(X_i) = \mu_i$ 且 $X_i\in[a_i,b_i]$。则对任意 $t\geq0$，都有&lt;/p&gt;
-$$
-\mathbb{P}\Biggl\{\sum_{i=1}^n (X_i-\mu_i)\geq t\Biggr\} \leq \exp\biggl(-\frac{2t^2}{\sum_{i=1}^n(b_i-a_i)^2}\biggr)
-$$
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="thm"&gt;
-&lt;button type="button" class="collapsible"&gt;&lt;div id="thm-proof-4" class="thm-title-proof"&gt;Proof.&lt;/div&gt;&lt;/button&gt;
-&lt;div class="proof-content"&gt;
-&lt;div class="thm-inner-proof"&gt;
-&lt;p&gt;不失一般性，设 $\mu_i=0$，即所有 $X_i$ 均值为 0，这也同时意味着 $a_i\leq0\leq b_i$。&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;我们首先证明 &lt;a href="https://en.wikipedia.org/wiki/Hoeffding%27s_lemma"&gt;Hoeffding 引理&lt;/a&gt;，它是说，如果有界随机变量 $X\in[a,b]$ 且均值为 0，则对 $s\in\mathbb{R}$ 恒有&lt;/p&gt;
-$$
-\mathbb{E}(e^{sX}) \leq \exp\biggl(\frac{s^2(b-a)^2}{8}\biggr)
-$$&lt;p&gt;因 $e^{sx}$ 是关于 $x$ 的凸函数，故对任意 $x\in[a,b]$，我们有&lt;/p&gt;
-$$
-e^{sx} \leq \frac{b-x}{b-a}e^{sa} + \frac{x-a}{b-a}e^{sb}
-$$&lt;p&gt;将 $x$ 替换为 $X$，并两边取期望，注意我们已经假设 $X$ 均值为 0，因此&lt;/p&gt;
-$$
-\begin{align*}
-\mathbb{E}(e^{sX}) &amp;\leq \frac{b-\mathbb{E}(X)}{b-a}e^{sa} + \frac{\mathbb{E}(X)-a}{b-a}e^{sb} \\
-&amp;= \frac{b}{b-a}e^{sa} + \frac{-a}{b-a}e^{sb}
-\end{align*}
-$$&lt;p&gt;现在，我们需要证明&lt;/p&gt;
-$$
-\frac{b}{b-a}e^{sa} + \frac{-a}{b-a}e^{sb} \leq \exp\biggl(\frac{s^2(b-a)^2}{8}\biggr)
-$$&lt;p&gt;不妨进行换元 $h = s(b-a)$，上式便等价于&lt;/p&gt;
-$$
-\exp\biggl(\frac{ha}{b-a}\biggr)\biggl(\frac{b}{b-a}+\frac{-a}{b-a}e^h\biggr) \leq \exp\biggl(\frac{h^2}{8}\biggr)
-$$&lt;p&gt;取对数，我们需证明&lt;/p&gt;
-$$
-f(h) := \frac{ha}{b-a} + \log\biggl(\frac{b-e^ha}{b-a}\biggr) \leq \frac{h^2}{8}
-$$&lt;p&gt;将 $f(h)$ 在 $h=0$ 处 Taylor 展开：&lt;/p&gt;
-$$
-f(h) = f(0) + f'(0)h + \frac12f''(\xi)h^2 \quad\text{for some $\xi$ between 0 and $h$}
-$$&lt;p&gt;注意到 $f(0) = f^\prime(0) = 0$，而对 $\xi\in\mathbb{R}$ 我们恒有&lt;/p&gt;
-$$
-f''(\xi) = -\frac{e^\xi ab}{(b-e^\xi a)^2} \leq \frac14
-$$&lt;p&gt;这里我们使用了均值不等式得到 $-e^\xi ab \leq \frac14(-e^\xi a+b)^2$。这就证明了 $f(h)\leq\frac18h^2$，进而证明了 Hoeffding 引理。&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;回到定理的证明。仍然利用 Chernoff 界方法：&lt;/p&gt;
-$$
-\begin{align*}
-\mathbb{P}\Biggl\{\sum_{i=1}^n X_i\geq t\Biggr\} &amp;= \mathbb{P}\Biggl\{\exp\Biggl(s\sum_{i=1}^n X_i\Biggr)\geq \exp(st)\Biggr\} \\
-&amp;\leq e^{-st}\mathbb{E}\Biggl[\exp\Biggl(\sum_{i=1}^n X_i\Biggr)\Biggr] \\
-&amp;= e^{-st}\prod_{i=1}^n\mathbb{E}[\exp(sX_i)] \\
-&amp;\leq e^{-st}\prod_{i=1}^n\exp\biggl(\frac{s^2(b_i-a_i)^2}{8}\biggr) \\
-&amp;= \exp\biggl(-st+\frac{s^2\sum_{i=1}^n(b_i-a_i)^2}{8}\biggr) \\
-&amp;\leq \exp\biggl(-\frac{2t^2}{\sum_{i=1}^n(b_i-a_i)^2}\biggr)
-\end{align*}
-$$&lt;p&gt;倒数第三行调用了 Hoeffding 引理，最后一行通过取 $s=4t/\sum_{i=1}^n(b_i-a_i)^2$ 得到。&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="thm-end-proof"&gt;
-&lt;i class="fas fa-square"&gt;&lt;/i&gt; &lt;a href="#thm-proof-4"&gt;&lt;i class="fas fa-arrow-circle-up"&gt;&lt;/i&gt;&lt;/a&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;（未完待续～）&lt;/p&gt;
-&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;em&gt;Wikipedia&lt;/em&gt;. &amp;ldquo;&lt;a href="https://en.wikipedia.org/wiki/Concentration_inequality"&gt;Concentration inequality&lt;/a&gt;.&amp;rdquo;&lt;/li&gt;
-&lt;li&gt;Rigollet, Philippe, and Jan-Christian Hütter. 2023. &amp;ldquo;High-Dimensional Statistics.&amp;rdquo; &lt;em&gt;arXiv preprint&lt;/em&gt;. &lt;a href="https://arxiv.org/pdf/2310.19244.pdf"&gt;arXiv:2310.19244&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Vershynin, Roman. 2018. &lt;em&gt;High-Dimensional Probability: An Introduction with Applications in Data Science&lt;/em&gt;. Cambridge University Press.&lt;/li&gt;
-&lt;/ol&gt;
-- https://gaxu.xyz/posts/conctr-ineq-hoeffding/ - 2023–2025 嘉树.</description></item></channel></rss>
+- https://gaxu.xyz/posts/losing-concentration/ - 2023–2025 嘉树.</description></item></channel></rss>
