@@ -1,4 +1,225 @@
-<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Wed, 14 Jan 2026 09:27:57 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>泊松伪极大似然估计</title><link>https://gaxu.xyz/posts/ppml/</link><pubDate>Wed, 14 Jan 2026 09:27:57 +0800</pubDate><guid>https://gaxu.xyz/posts/ppml/</guid><description>嘉树的世界 https://gaxu.xyz/posts/ppml/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Sat, 17 Jan 2026 12:00:00 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>泛函差分</title><link>https://gaxu.xyz/posts/functional-diff/</link><pubDate>Sat, 17 Jan 2026 12:00:00 +0800</pubDate><guid>https://gaxu.xyz/posts/functional-diff/</guid><description>嘉树的世界 https://gaxu.xyz/posts/functional-diff/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+&lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice info" &gt;
+&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#info-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Info&lt;/p&gt;&lt;p&gt;本文是对 Bonhomme (2012) 的介绍，讲述了怎么在非线性面板模型中构造不含有固定效应的矩条件，类比于线性面板中的「组内变换」。本质上这个构造过程是希尔伯特投影定理的一个应用。本文并不是对原文的忠实还原，如有疑问请参考原文。&lt;/p&gt;&lt;/div&gt;
+&lt;p class="pdf-download"&gt;
+&lt;i class="fa-solid fa-file-pdf" aria-hidden="true"&gt;&lt;/i&gt;
+&lt;em&gt;&lt;a href="https://gaxu.xyz/posts/functional-diff/functional-diff.pdf"&gt;
+下载本文 PDF
+&lt;/a&gt;&lt;/em&gt;
+&lt;/p&gt;
+&lt;h2 id="背景短面板下的次要参数问题"&gt;背景：短面板下的次要参数问题&lt;/h2&gt;
+&lt;p&gt;在非线性模型中，「次要参数问题」(incidental parameter problem, IPP) 是一个由来已久的问题，它指的是，当次要参数的数量会随着样本量增加而增加时，使用极大似然估计「共同参数」得到的估计量一般不是一致的，产生的偏误被称为 「次要参数偏误」。在非线性面板模型中，人们常常会加入固定效应，而这些固定效应就是次要参数，当个体数 $N$ 比较大而时期数 $T$ 比较小时（短面板），如用极大似然去估计共同参数，很有可能是不一致的。这个问题必须被认真对待。&lt;/p&gt;
+&lt;p&gt;人们希望能绕开对次要参数的估计，这在某些特殊的模型中是可能的，譬如静态 logit 模型，通过条件于次要参数的充分统计量，可以得到不含有次要参数的条件似然函数，从而得到共同参数的一致估计量。然而，对于一般的非线性模型，我们很难找到次要参数的充分统计量。统计学家们的处理方式是，将似然函数分解为两个部分，一部分只包含共同参数，另一部分只包含次要参数，于是对两部分参数的估计是独立的。但这种分解很多时候也难以得到&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;p&gt;另一种路径是，对次要参数（固定效应）的分布做出一些假设，然后就可以对条件于固定效应和解释变量的似然函数做积分（关于固定效应的积分），得到仅仅条件于解释变量的似然函数，也就避开了对次要参数的估计&lt;sup id="fnref:2"&gt;&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;。这种方法因为其复杂性并未被人们广泛采用。&lt;/p&gt;
+&lt;p&gt;我们希望能找到一种完全剔除了次要参数的估计方法，就像在线性面板模型中使用的「组内变换」(within transformation) 一样。这种方法要足够普适，能适用于任何非线性模型，且无需对固定效应的分布做出任何假设。&lt;/p&gt;
+&lt;h2 id="模型设定"&gt;模型设定&lt;/h2&gt;
+&lt;p&gt;设可观测的数据是内生变量 $y_{it}$ 和严格外生变量的向量 $x_{it}$，$i=1,\dots,N$，$t=1,\dots,T$。令 $\alpha_i$ 表示个体 $i$ 特定的不可观测的固定效应的向量。记 $y_i = (y_{i1},\dots,y_{iT})'$，$x_i = (x_{i1}',\dots,x_{iT}')$。假设 $y_i,x_i,\alpha_i$ 这些变量在不同的个体之间是联合独立且同分布的 (i.i.d.)。我们考虑「大 $N$ 小 $T$」的情况，即 $N\to\infty$ 而 $T$ 固定。&lt;/p&gt;
+&lt;p&gt;假设我们已知 $y_i$ 条件于 $x_i,\alpha_i$ 的分布，记作 $f_{y|x,\alpha}(\cdot|x_i,\alpha_i;\theta_0)$。$f_{y|x,\alpha}$ 的函数形式已知，但参数 $\theta_0\in\Theta$ 未知。记 $\alpha_i$ 条件于 $x_i$ 的分布为 $f_{\alpha|x}(\cdot|x_i)$。令 $\mathcal{A}$ 表示所有可能的 $\alpha_i$ 的集合。那么，排除了 $\alpha_i$ 的影响后，$y_i$ 条件于 $x_i$ 的分布可以写成&lt;sup id="fnref:3"&gt;&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref"&gt;3&lt;/a&gt;&lt;/sup&gt;
+&lt;/p&gt;
+$$
+\begin{equation}
+\label{eq:y-x-dist}
+f_{y|x}(\cdot|x;\theta_0,f_{\alpha|x}) = \int_{\mathcal{A}} f_{y|x,\alpha}(\cdot|x,\alpha;\theta_0) f_{\alpha|x}(\alpha|x)\, d\alpha
+\end{equation}
+$$&lt;p&gt;
+我们的目标是，对 \eqref{eq:y-x-dist} 给出的一般模型，得到排除了 $\alpha_i$ 而含有共同参数 $\theta_0$ 的矩条件，然后能使用 GMM 得到共同参数的一致估计量。其一致性来源于我们免于估计次要参数而带来的偏误且有正确的矩条件。&lt;/p&gt;
+&lt;h2 id="矩条件的构造"&gt;矩条件的构造&lt;/h2&gt;
+&lt;p&gt;为描述方法，我们引入一个记号。考虑一个线性泛函 $L_{\theta,x}(\cdot)$，对于给定的 $\theta$ 和 $x$，它将关于 $\alpha$ 的（任意）函数 $g(\alpha)$ 映射为关于 $y$ 的函数 $[L_{\theta,x}g](y)$：
+&lt;/p&gt;
+$$
+[L_{\theta,x}g](y) = \int_{\mathcal{A}} f_{y|x,\alpha}(y|x,\alpha;\theta)g(\alpha)\, d\alpha
+$$&lt;p&gt;
+于是 \eqref{eq:y-x-dist} 可以写成
+&lt;/p&gt;
+$$
+\begin{equation}\label{eq:mapping}
+f_{y|x}(\cdot|x;\theta_0,f_{\alpha|x}) = L_{\theta_0,x}f_{\alpha|x}(\cdot|x)
+\end{equation}
+$$&lt;p&gt;
+线性算子 $L_{\theta_0,x}$ 将固定效应的分布映射为响应变量的分布。&lt;/p&gt;
+&lt;p&gt;假设我们找到了一个函数 $\varphi(\cdot,x,\theta)$，它满足对任意 $g(\alpha)$ 都有
+&lt;/p&gt;
+$$
+\begin{equation}
+\label{eq:pre-moment-condition}
+\int_{\mathcal{Y}} \varphi(y,x,\theta) [L_{\theta,x}g](y)\, dy = 0
+\end{equation}
+$$&lt;p&gt;
+积分区域 $\mathcal{Y}$ 是响应变量 $y$ 的取值范围。这个式子表明，$\varphi$ 和 $L_{\theta,x}$ 的整个值域是正交的（在希尔伯特空间的内积意义下）。因为 \eqref{eq:pre-moment-condition} 对任意 $g(\alpha)$ 都成立，所以当取 $g(\alpha) = f_{\alpha|x}(\cdot|x)$ 时，就有
+&lt;/p&gt;
+$$
+\begin{align}
+\mathbb{E}[\varphi(y_i,x_i,\theta_0)|x_i=x] &amp;= \int_{\mathcal{Y}} \varphi(y,x,\theta_0) f_{y|x}(y|x;\theta_0,f_{\alpha|x})\, dy \nonumber \\
+&amp;= \int_{\mathcal{Y}} \varphi(y,x,\theta_0) [L_{\theta_0,x}f_{\alpha|x}](y)\, dy = 0 \label{eq:moment-condition}
+\end{align}
+$$&lt;p&gt;
+于是我们就得到了一个不含有固定效应的（条件）矩约束，我们可以认为 $\varphi$ 的作用就类似于线性模型中「差分掉」固定效应的影响。现在的问题是，我们如何找到这样的 $\varphi$？&lt;/p&gt;
+&lt;h3 id="离散情形"&gt;离散情形&lt;/h3&gt;
+&lt;p&gt;作为示范，我们先考虑离散的情况。假设 $y_i$ 和 $\alpha_i$ 都服从离散分布，且支撑集是有限集。设 $N_y$ 和 $N_\alpha$ 分别是 $y_i$ 和 $\alpha_i$ 的支撑集中元素的个数。那么 \eqref{eq:mapping} 就变成了一个线性方程组，其中$f_{y|x}$, $f_{\alpha|x}$ 和 $L_{\theta_0,x}$ 都会变成条件概率：
+&lt;/p&gt;
+$$
+\begin{gather*}
+f_{y|x} =
+\begin{bmatrix}
+\Pr(y_i=\underline{y}_1|x_i=x) \\
+\vdots \\
+\Pr(y_i=\underline{y}_{N_y}|x_i=x)
+\end{bmatrix}_{N_y\times 1}
+\quad
+f_{\alpha|x} =
+\begin{bmatrix}
+\Pr(\alpha_i=\underline{\alpha}_1|x_i=x) \\
+\vdots \\
+\Pr(\alpha_i=\underline{\alpha}_{N_\alpha}|x_i=x)
+\end{bmatrix}_{N_\alpha\times 1}
+\\
+L_{\theta_0,x} =
+\begin{bmatrix}
+\Pr(y_i=\underline{y}_1|x_i=x,\alpha_i=\underline{\alpha}_1;\theta) &amp; \cdots &amp; \Pr(y_i=\underline{y}_1|x_i=x,\alpha_i=\underline{\alpha}_{N_\alpha};\theta) \\
+\vdots &amp; \ddots &amp; \vdots \\
+\Pr(y_i=\underline{y}_{N_y}|x_i=x,\alpha_i=\underline{\alpha}_1;\theta) &amp; \cdots &amp; \Pr(y_i=\underline{y}_{N_y}|x_i=x,\alpha_i=\underline{\alpha}_{N_\alpha};\theta)
+\end{bmatrix}_{N_y\times N_\alpha}
+\end{gather*}
+$$&lt;p&gt;
+线性算子 $L_{\theta_0,x}$ 此时是一个矩阵，它的值域是它的列向量所张成的 $N_y$ 维向量空间。为了构造和这个向量空间正交的向量 $\varphi\in\mathbb{R}^{N_y}$，使用「组内」投影矩阵
+&lt;/p&gt;
+$$
+W_{\theta,x} = I_{N_y} - L_{\theta,x}L_{\theta,x}^\dagger
+$$&lt;p&gt;
+其中 $I_{N_y}$ 是 $N_y$ 维单位矩阵，$L_{\theta,x}^\dagger$ 是 $L_{\theta,x}$ 的伪逆。&lt;/p&gt;
+&lt;p&gt;$W_{\theta,x}$ 的列向量张成的向量空间是 $L_{\theta,x}$ 的值域在 $\mathbb{R}^{N_y}$ 中的正交补空间&lt;sup id="fnref:4"&gt;&lt;a href="#fn:4" class="footnote-ref" role="doc-noteref"&gt;4&lt;/a&gt;&lt;/sup&gt;，即对任意 $h\in\mathbb{R}^{N_y}$，都有 $W_{\theta,x}h\in\mathbb{R}^{N_y}$ 正交于 $L_{\theta,x}$ 的值域。$[W_{\theta,x}h](y)$ 可视作定义在支撑集 $\{\underline{y}_1,\dots,\underline{y}_{N_y}\}$ 上的函数，当 $y=\underline{y}_j$ 时，$[W_{\theta,x}h](y)$ 取 $W_{\theta,x}h$ 的第 $j$ 个分量。于是 \eqref{eq:moment-condition} 就变成了
+&lt;/p&gt;
+$$
+\label{eq:moment-condition-discrete}
+\mathbb{E}([W_{\theta,x}h](y_i)|x_i=x) = (W_{\theta,x}h)'(L_{\theta,x}f_{\alpha|x}) = 0
+$$&lt;p&gt;
+这个式子对任意 $h\in\mathbb{R}^{N_y}$ 都成立，我们可以选择 $\mathbb{R}^{N_y}$ 的一组标准正交基来构造出 $N_y$ 个矩条件&lt;sup id="fnref:5"&gt;&lt;a href="#fn:5" class="footnote-ref" role="doc-noteref"&gt;5&lt;/a&gt;&lt;/sup&gt;，然后用 GMM 估计 $\theta_0$。&lt;/p&gt;
+&lt;p&gt;本质上，这个方法就是找到一个线性算子 $W_{\theta,x}$，当对 $f_{y|x} = L_{\theta_0,x}f_{\alpha|x}$ 两边左乘 $W_{\theta,x}$ 时，便得到
+&lt;/p&gt;
+$$
+W_{\theta,x}f_{y|x} = W_{\theta,x}L_{\theta_0,x}f_{\alpha|x} = 0
+$$&lt;p&gt;
+从而消除掉任何关于 $\alpha_i$ 的影响。因为我们不知道任何关于函数 $f_{\alpha|x}$ 的信息，所以 $W_{\theta,x}$ 必须完全正交于 $L_{\theta,x}$ 的值域。&lt;/p&gt;
+&lt;h3 id="一般情形希尔伯特空间里的投影"&gt;一般情形：希尔伯特空间里的投影&lt;/h3&gt;
+&lt;p&gt;当 $y_i$ 或 $\alpha_i$ 是连续分布或支撑集是无限集时，上一小节的方法不再适用。此时，$L_{\theta,x}$ 是一个积分算子，它的值域是定义在 $\mathcal{Y}$ 上的所有平方可积函数所张成的希尔伯特空间 $L^2(\mathcal{Y})$。&lt;/p&gt;
+&lt;p&gt;我们引入一些记号。给定两个权重函数 $\pi_\alpha&gt;0$ 和 $\pi_y&gt;0$，分别定义在 $\mathcal{A}$ 和 $\mathcal{Y}$ 上，定义两个 $\mathcal{A}$ 和 $\mathcal{Y}$ 上的平方可积函数所构成的空间：
+&lt;/p&gt;
+$$
+\begin{align*}
+\mathcal{G}_\alpha &amp;= \biggl\{g\colon \mathcal{A}\to\mathbb{R},\int_{\mathcal{A}} g(\alpha)^2 \pi_\alpha(\alpha)\, d\alpha &lt; \infty\biggr\} \\
+\mathcal{G}_y &amp;= \biggl\{g\colon \mathcal{Y}\to\mathbb{R},\int_{\mathcal{Y}} g(y)^2 \pi_y(y)\, dy &lt; \infty\biggr\}
+\end{align*}
+$$&lt;p&gt;
+它们都是「希尔伯特空间」(Hilbert space)，即完备的内积空间，内积定义为
+&lt;/p&gt;
+$$
+\begin{align*}
+\langle g_1,g_2\rangle_\alpha &amp;= \int_{\mathcal{A}} g_1(\alpha) g_2(\alpha) \pi_\alpha(\alpha)\, d\alpha \\
+\langle g_1,g_2\rangle_y &amp;= \int_{\mathcal{Y}} g_1(y) g_2(y) \pi_y(y)\, dy
+\end{align*}
+$$&lt;p&gt;
+由此可以定义范数 $\|g\|_\alpha = \sqrt{\langle g,g\rangle_\alpha}$ 和 $\|g\|_y = \sqrt{\langle g,g\rangle_y}$。&lt;/p&gt;
+&lt;p&gt;于是线性积分算子 $L_{\theta,x}\colon \mathcal{G}_\alpha\to\mathcal{G}_y$ 的作用是将 $\mathcal{G}_\alpha$ 中的函数映射为 $\mathcal{G}_y$ 中的函数。记 $L_{\theta,x}$ 的值域为 $\mathcal{R}(L_{\theta,x})\subseteq\mathcal{G}_y$：
+&lt;/p&gt;
+$$
+\mathcal{R}(L_{\theta,x}) = \{L_{\theta,x}g\colon g\in\mathcal{G}_\alpha\}
+$$&lt;p&gt;
+令 $\bar{\mathcal{R}}(L_{\theta,x})$ 是 $\mathcal{R}(L_{\theta,x})$ 在 $\mathcal{G}_y$ 中的闭包。由此可以定义投影算子 $W_{\theta,x}$：对任意 $h\in\mathcal{G}_y$ 有
+&lt;/p&gt;
+$$
+W_{\theta,x}h = h - \mathrm{Proj}_{\pi_y}[h|\bar{\mathcal{R}}(L_{\theta,x})]
+$$&lt;p&gt;
+其中 $\mathrm{Proj}_{\pi_y}[h|\bar{\mathcal{R}}(L_{\theta,x})]$ 是 $h$ 在 $\bar{\mathcal{R}}(L_{\theta,x})$ 上的正交投影：
+&lt;/p&gt;
+$$
+\mathrm{Proj}_{\pi_y}[h|\bar{\mathcal{R}}(L_{\theta,x})] = \operatorname*{argmin}_{g\in\bar{\mathcal{R}}(L_{\theta,x})} \|h-g\|_y
+$$&lt;p&gt;
+希尔伯特投影定理将保证正交投影的存在性和唯一性。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="thm:mom-general" class="thm-title thm-Theorem"&gt;Theorem 1.&lt;/p&gt;
+&lt;div class="thm-inner thm-Theorem"&gt;
+&lt;p&gt;设 $f_{y|x} \in \mathcal{G}_y$。以下两个结论成立且等价：
+&lt;/p&gt;
+$$
+\begin{gather}
+W_{\theta_0,x}f_{y|x} = 0 \nonumber \\
+\mathbb{E}\bigl(\pi_y(y_i)[W_{\theta_0,x}h](y_i)\big|x=x_i\bigr) = 0\quad\forall h\in\mathcal{G}_y \label{eq:mom-general}
+\end{gather}
+$$
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这个定理从理论上给出了关于 $\theta_0$ 的条件矩约束。我们可以据 \eqref{eq:mom-general} 构造出无条件矩，然后使用 GMM 对 $\theta_0$ 进行估计。&lt;/p&gt;
+&lt;p&gt;至此，我们完成了对「泛函差分」基本思想的介绍，它的内核本质上就是找正交投影算子，而这通过希尔伯特投影定理得到保证。不过其实有一件很重要的点我们略过了，就是定义了 $\mathcal{G}_\alpha$ 和 $\mathcal{G}_y$ 的权重函数 $\pi_\alpha$ 和 $\pi_y$（以及 $h$） 该如何选择的问题。尽管从理论上，任意的 $\pi_\alpha$ 和 $\pi_y$ 都能构造出投影算子 $W_{\theta,x}$，但不同的选择会对矩条件的估计效率产生影响。要达到最好的估计效率是一件很困难的事，原文第4节做了一些讨论，这里不展开介绍。&lt;/p&gt;
+&lt;h3 id="投影算子的离散近似"&gt;投影算子的离散近似&lt;/h3&gt;
+&lt;p&gt;如果 $f_{y|x}$ 和 $f_{\alpha|x}$ 是离散分布（且支撑集是有限集），那么我们可以直接使用 &lt;a href="https://gaxu.xyz/posts/functional-diff/#%e7%a6%bb%e6%95%a3%e6%83%85%e5%bd%a2"&gt;离散情形&lt;/a&gt; 所讲的方法来构造投影矩阵 $W_{\theta,x}$。但当 $f_{y|x}$ 和 $f_{\alpha|x}$ 是连续分布时，投影算子一般没有显式表达式，此时，我们可以进行离散近似处理。这里进行简单介绍。&lt;/p&gt;
+&lt;p&gt;把「无限维投影」近似成「有限维投影」，近似来自两个方面：其一，希尔伯特空间中内积是连续积分；其二，$\bar{\mathcal{R}}(L_{\theta,x})$ 是无限维子空间。离散化近似同时把这两个「无限」替换为有限维对象。&lt;/p&gt;
+&lt;h4 id="用抽样近似--内积把积分变求和"&gt;用抽样近似 $\mathcal{G}_y$ 内积（把积分变求和）&lt;/h4&gt;
+&lt;p&gt;在 $\mathcal{G}_y=L^2(\pi_y)$ 中，
+&lt;/p&gt;
+$$
+\langle g_1,g_2\rangle_y=\int_{\mathcal{Y}} g_1(y)g_2(y)\,\pi_y(y)\,dy\qquad
+\|u\|_y^2=\int_{\mathcal{Y}} u(y)^2\pi_y(y)\,dy
+$$&lt;p&gt;
+抽取 $N_y$ 个样本点 $y_s\sim\pi_y$ ($s=1,\dots,N_y$)&lt;sup id="fnref:6"&gt;&lt;a href="#fn:6" class="footnote-ref" role="doc-noteref"&gt;6&lt;/a&gt;&lt;/sup&gt;，取近似
+&lt;/p&gt;
+$$
+\|h-g\|_y^2
+=\int_{\mathcal{Y}}(h(y)-g(y))^2\pi_y(y)\,dy
+\approx \frac{1}{N_y}\sum_{s=1}^{N_y}(h(y_s)-g(y_s))^2
+$$&lt;p&gt;
+即「$\mathcal{G}_y$ 意义下的投影」可用「在采样点 $\{y_s\}$ 上的平方损失最小化」来近似。&lt;/p&gt;
+&lt;h4 id="用有限维空间近似值域"&gt;用有限维空间近似值域 $\bar{\mathcal{R}}(L_{\theta,x})$&lt;/h4&gt;
+&lt;p&gt;第二步是用有限个可计算的函数去近似 $\bar{\mathcal{R}}(L_{\theta,x})$。使用由模型 $f_{y|x,\alpha}$ 诱导的「自然基」(natural bases)：
+&lt;/p&gt;
+$$
+\begin{equation}
+\label{eq:mu_s_def}
+\mu_s(y)
+=\int_{\mathcal{A}}\frac{1}{\pi_\alpha(\alpha)}\, f_{y|x,\alpha}(y|x,\alpha;\theta)\,f_{y|x,\alpha}(y_s|x,\alpha;\theta)\,d\alpha
+\qquad s=1,\dots,N_y
+\end{equation}
+$$&lt;p&gt;
+我们用 $\mu_1,\dots,\mu_{N_y}$ 张成的有限维空间 $\mathrm{span}\{\mu_1,\dots,\mu_{N_y}\}$ 去近似 $\bar{\mathcal{R}}(L_{\theta,x})$。若直接积分困难，可以用数值积分方法（如重要性采样）近似 \eqref{eq:mu_s_def}&lt;sup id="fnref:7"&gt;&lt;a href="#fn:7" class="footnote-ref" role="doc-noteref"&gt;7&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;p&gt;当离散采样点数越来越大时，近似误差会趋于 0，由此得到的 GMM 估计量的一致性和渐进正态性不会受到影响。&lt;/p&gt;
+&lt;h2 id="总结"&gt;总结&lt;/h2&gt;
+&lt;p&gt;本文介绍了「泛函差分」方法的基本思想。它的内核本质上就是找正交投影算子，而这通过希尔伯特投影定理得到保证。不过其实有一件很重要的点我们略过了，就是定义了 $\mathcal{G}_\alpha$ 和 $\mathcal{G}_y$ 的权重函数 $\pi_\alpha$ 和 $\pi_y$（以及 $h$） 该如何选择的问题。尽管从理论上，任意的 $\pi_\alpha$ 和 $\pi_y$ 都能构造出投影算子 $W_{\theta,x}$，但不同的选择会对矩条件的估计效率产生影响。要达到最好的估计效率是一件很困难的事，原文第4节做了一些讨论，这里不展开介绍。&lt;/p&gt;
+&lt;p&gt;原文还对该方法的识别条件进行了详细讨论&lt;sup id="fnref:8"&gt;&lt;a href="#fn:8" class="footnote-ref" role="doc-noteref"&gt;8&lt;/a&gt;&lt;/sup&gt;，并通过数值模拟验证了方法的有效性，感兴趣的读者可以阅读原文。&lt;/p&gt;
+&lt;h2 id="参考文献"&gt;参考文献&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Bonhomme, S. (2012): “Functional Differencing,” &lt;em&gt;Econometrica&lt;/em&gt;, 80(4), 1337–1385.&lt;/li&gt;
+&lt;li&gt;Cox, D. R. and N. Reid (1987): “Parameter Orthogonality and Approximate Conditional Inference,” &lt;em&gt;Journal of the Royal Statistical Society (Series B)&lt;/em&gt;, 49(1), 1–18.&lt;/li&gt;
+&lt;li&gt;Dhaene, G. and K. Jochmans (2015): “Split-Panel Jackknife Estimation of Fixed-Effect Models,” &lt;em&gt;Review of Economic Studies&lt;/em&gt;, 82(3), 991–1030.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;当精确分离不可得时，Cox and Reid (1987) 提出了近似条件似然方法。不过，这样得到的估计量还是有渐进误差的，阶数为 $O(1/T^2)$，对比之下，直接用极大似然估计得到的估计量收敛率为 $O(1/T)$；尽管偏误更小，对于固定的 $T$，这个改进可能并不会让人满意。计量中，Dhaene and Jochmans (2015) 开发的「面板拆分版刀切法」(split panel jackknife) 也是广受好评的处理 IPP 的方法，但严格来讲它也只能降低偏误的阶数，不能得到固定 $T$ 下的一致估计量。&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;所谓的「相关随机效应」(correlated random effects) 就是这种思路，将固定效应建模为解释变量的一个参数形式，它介于固定效应假设和随机效应假设之间。如果我们不愿意对固定效应做出太强的假设，那么还有一些半参数的方法可以考虑，譬如使用筛法去逼近固定效应的分布。&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:3"&gt;
+&lt;p&gt;因为我们并未对 $\alpha_i$ 的分布 $f_{\alpha|x}$ 做出任何假设，这个模型是半参数化的。特别地，$\alpha_i$ 可以和 $x_i$ 有任意相关性，它们自己也可以有任意分布，这和经典的线性面板模型所青睐的固定效应假设一致。&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:4"&gt;
+&lt;p&gt;要保证这个正交补空间非空，需要 $L_{\theta,x}$ 的值域是 $\mathbb{R}^{N_y}$ 的严格子空间。这是这个方法的一个必要识别条件，否则无法给出有意义的矩条件。&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:5"&gt;
+&lt;p&gt;这 $N_y$ 个矩条件或许有些是冗余的，但只要有效矩条件的数量不小于 $\theta$ 的维度，这个模型就是可识别的。&amp;#160;&lt;a href="#fnref:5" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:6"&gt;
+&lt;p&gt;这里假设 $\pi_y$ 是一个密度函数，但也可以推广到一般函数。&amp;#160;&lt;a href="#fnref:6" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:7"&gt;
+&lt;p&gt;这实际上又对 $\alpha$ 做了一次离散化。如此，线性算子 $L_{\theta,x}$ 的离散近似就成了一个矩阵，回到了 &lt;a href="https://gaxu.xyz/posts/functional-diff/#%e7%a6%bb%e6%95%a3%e6%83%85%e5%bd%a2"&gt;离散情形&lt;/a&gt;。&amp;#160;&lt;a href="#fnref:7" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:8"&gt;
+&lt;p&gt;主要论点是让线性算子 $L_{\theta,x}$ 的值域是 $\mathcal{G}_y$ 的严格子空间，从而保证正交补空间非空，即通过投影算子能得到有意义的矩条件。&amp;#160;&lt;a href="#fnref:8" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+- https://gaxu.xyz/posts/functional-diff/ - 2023–2025 嘉树.</description></item><item><title>泊松伪极大似然估计</title><link>https://gaxu.xyz/posts/ppml/</link><pubDate>Wed, 14 Jan 2026 09:27:57 +0800</pubDate><guid>https://gaxu.xyz/posts/ppml/</guid><description>嘉树的世界 https://gaxu.xyz/posts/ppml/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
 &lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice info" &gt;
 &lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#info-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Info&lt;/p&gt;&lt;p&gt;本文主要是对 Santos Silva and Tenreyro (2006) 的介绍，讲述了为什么在估计一个非线性模型时，「对数线性化」+「OLS」是不可取的，以及泊松伪极大似然估计的原理。此文并非百分百还原原文，而是根据自己的理解进行了一些改动。&lt;/p&gt;&lt;/div&gt;
 &lt;p class="pdf-download"&gt;
@@ -1261,7 +1482,4 @@ $$&lt;p&gt;
 &lt;/ul&gt;
 &lt;p&gt;感悟就是，文字真的可以带来力量，内心的力量。愈加决定了！要多运动，多读书。&lt;/p&gt;
 &lt;p&gt;回去的时候顺便买了点水果，着实买贵了，以后还是去盒马买吧😥&lt;/p&gt;
-- https://gaxu.xyz/posts/half-day-diary/ - 2023–2025 嘉树.</description></item><item><title>专注力的流失</title><link>https://gaxu.xyz/posts/losing-concentration/</link><pubDate>Wed, 21 Aug 2024 12:43:47 +0800</pubDate><guid>https://gaxu.xyz/posts/losing-concentration/</guid><description>嘉树的世界 https://gaxu.xyz/posts/losing-concentration/ -&lt;p&gt;现在经常学着学着就很容易开小差，然后打开手机漫无目的地刷一刷，或者开始想些别的东西，这真的是一件很恐怖的事情。我的专注力在不断流失。&lt;/p&gt;
-&lt;p&gt;我幻想从清晨学到黄昏，心无旁骛地专注，因为时间在不知觉中的流动会给人一种高级的愉悦。我用了「幻想」，因为这种体验现在全无，但记忆中本科那会儿，是常能在图书馆坐上一天的。我的注意力为什么无法集中了呢？我在努力尝试思考的时候，大脑总会传出一个声音：这么复杂的问题，先歇会吧，反正时间有的是，也不差这一时半会儿。结果就是，我在每一个想要专注的节点都转移注意力去做了其他事，消磨的时间难以估量。我没法用劳逸结合来安慰自己，因为大部分时间我确实是处在「逸」的状态。这样做似乎很节省能量，但代价更严重──累积的畏难情绪和逐渐懒散的思维，学习节奏也全被打乱。&lt;/p&gt;
-&lt;p&gt;趁还有这样的意识的时候，是该刻意做点什么了吧。&lt;/p&gt;
-- https://gaxu.xyz/posts/losing-concentration/ - 2023–2025 嘉树.</description></item></channel></rss>
+- https://gaxu.xyz/posts/half-day-diary/ - 2023–2025 嘉树.</description></item></channel></rss>
