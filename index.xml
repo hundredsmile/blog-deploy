@@ -1,4 +1,168 @@
-<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>zh</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Sat, 17 Jan 2026 12:00:00 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>泛函差分</title><link>https://gaxu.xyz/posts/functional-diff/</link><pubDate>Sat, 17 Jan 2026 12:00:00 +0800</pubDate><guid>https://gaxu.xyz/posts/functional-diff/</guid><description>嘉树的世界 https://gaxu.xyz/posts/functional-diff/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Thu, 19 Mar 2026 12:00:00 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>半参数模型的影响函数</title><link>https://gaxu.xyz/posts/influence-function/</link><pubDate>Thu, 19 Mar 2026 12:00:00 +0800</pubDate><guid>https://gaxu.xyz/posts/influence-function/</guid><description>嘉树的世界 https://gaxu.xyz/posts/influence-function/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+&lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice info" &gt;
+&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#info-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Info&lt;/p&gt;&lt;p&gt;本文是对「影响函数」(influence function) 的介绍，讲述了它在半参数模型中扮演的角色，并以构造正交矩条件为例展示了其威力。影响函数本质上是对「梯度」概念在泛函空间中的推广，刻画了分布扰动对估计量的一阶影响。由此，它是分析估计量效率、对模型误设的稳健性等性质的利器。&lt;/p&gt;&lt;/div&gt;
+&lt;p class="pdf-download"&gt;
+&lt;i class="fa-solid fa-file-pdf" aria-hidden="true"&gt;&lt;/i&gt;
+&lt;em&gt;&lt;a href="https://gaxu.xyz/posts/influence-function/influence-function.pdf"&gt;
+下载本文 PDF
+&lt;/a&gt;&lt;/em&gt;
+&lt;/p&gt;
+&lt;h2 id="影响函数的定义"&gt;影响函数的定义&lt;/h2&gt;
+&lt;p&gt;我们考虑半参数意义上的估计量，即那些依赖于对非参数部分估计的对参数的估计量。记 $\hat{\theta}$ 就是一个半参数意义的估计量，它是数据 $W_1,\dots,W_n$ 的函数。我们始终假设数据是独立同分布的，且有一个累积分布函数 $F_0$。当 $F_0$ 是数据 $W_i$ 的累积分布函数时，记 $\theta_0$ 是 $\hat{\theta}$ 的概率极限。&lt;/p&gt;
+&lt;p&gt;我们关注的是这样一类线性估计量，满足如下的渐进展开&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;
+&lt;/p&gt;
+$$
+\sqrt{n}(\hat{\theta}-\theta_0) = \frac{1}{\sqrt{n}} \sum_{i=1}^n \psi(W_i) + o_p(1)
+$$&lt;p&gt;
+其中 $\psi(\cdot)$ 满足 $\mathbb{E}[\psi(W)] = 0$ 和 $\mathbb{E}[\psi(W)'\psi(W)] &lt; \infty$，于是 $\hat{\theta}$ 的渐进方差就是 $\mathbb{E}[\psi(W)\psi(W)']$。&lt;/p&gt;
+&lt;p&gt;函数 $\psi(\cdot)$ 就被称为「影响函数」(influence function)&lt;sup id="fnref:2"&gt;&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;，它描述了每个数据点对估计量的影响，同时我们还将看到，它也刻画了数据分布的一个微小扰动对 $\hat{\theta}$ 的概率极限的影响。有许多 $\sqrt{n}$ 一致的估计量都有这样的渐进线性展开，如 M 估计量、Z 估计量等。&lt;/p&gt;
+&lt;p&gt;其实影响函数不一定需要通过渐进展开来构造。设 $F$ 是任意分布（只需满足一些正则条件），令 $\theta(F)$ 表示估计量 $\hat{\theta}$ 在数据的累积分布函数为 $F$ 时的概率极限。由此 $\theta(F)$ 就刻画了当模型误设时，估计量会收敛到什么伪真值。为了研究分布的微小扰动，我们考虑一个参数化的分布族 $\{F_\beta\}$，当 $\beta=0$ 时，$F_\beta = F_0$。得分函数（对数似然函数关于参数 $\beta$ 在 $\beta=0$ 处的导数）表示为 $S_\beta(w)$。可以证明，影响函数 $\psi(W)$ 满足如下微分方程&lt;sup id="fnref:3"&gt;&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref"&gt;3&lt;/a&gt;&lt;/sup&gt;
+&lt;/p&gt;
+$$
+\frac{\partial \theta(F_\beta)}{\partial \beta}\bigg|_{\beta=0^+} = \mathbb{E}_{F_0}[\psi(W)S_\beta(W)]
+$$&lt;p&gt;
+其中期望是关于分布 $F_0$ 的。可以通过求解这个微分方程得到影响函数。&lt;/p&gt;
+&lt;p&gt;Ichimura and Newey (2022) 展示了一种更方便的求解影响函数的方法，他们使用 Gâteaux 导数来定义泛函微分。设 $H$ 是一个累积分布函数，考虑分布扰动 $F_\tau = (1-\tau)F_0 + \tau H$，其中 $\tau\in[0,C)$，$C\in(0,1)$ 是某个常数。$F_\tau$ 的意思是说，数据大部分来自于 $F_0$，但有很小的概率 $\tau$ 来自于 $H$&lt;sup id="fnref:4"&gt;&lt;a href="#fn:4" class="footnote-ref" role="doc-noteref"&gt;4&lt;/a&gt;&lt;/sup&gt;。设对选定的 $H$，$\theta(F_\tau)$ 存在且关于 $\tau$ 可导（导数就是 Gâteaux 导数），则影响函数 $\psi(W)$ 满足
+&lt;/p&gt;
+$$
+\frac{d\theta(F_\tau)}{d\tau}\bigg|_{\tau=0^+} = \int \psi(w)H(dw) = \mathbb{E}_H[\psi(W)]
+$$&lt;p&gt;
+其中 $\mathbb{E}[\psi(W)] = 0$ 且 $\mathbb{E}[\psi(W)^2] &lt; \infty$。上式左边就衡量了一个轻微污染的分布对于估计量的极限值的影响，等式右边定义了一个线性泛函。&lt;/p&gt;
+&lt;h2 id="影响函数的威力以构造正交矩条件为例"&gt;影响函数的威力：以构造正交矩条件为例&lt;/h2&gt;
+&lt;p&gt;泛函导数 $d\theta(F_\tau)/d\tau$ 及影响函数是一个大有可为的概念级工具。首先其基本含义是，它衡量了分布 $F_\tau$ 的局部扰动对 $\theta(F_\tau)$ 的影响。我们可以赋予它经济学上的意义，譬如，它可以表示数据分布的局部变化带来的政策效应；又如，当 $\theta(F_\tau)$ 是一个估计量的概率极限时，这个导数就可以看作模型误设对估计量的影响，从而可以应用在估计量的局部敏感性和稳健性分析中；再如，当 $\theta(F_\tau)$ 是矩条件的期望时（在代入非参数估计量的概率极限后），影响函数可以被用来构造正交矩条件，正交的含义是矩条件的成立不受对非参数部分的估计好坏影响&lt;sup id="fnref:5"&gt;&lt;a href="#fn:5" class="footnote-ref" role="doc-noteref"&gt;5&lt;/a&gt;&lt;/sup&gt;。我们以构造正交矩条件为例来展示其威力，前两个用途的示例见 Ichimura and Newey (2022)。构造正交矩条件是最近几年大热的双重机器学习的两个基石之一（另一个是样本拆分），而这一切都离不开影响函数。关于影响函数在双重机器学习中所扮演角色的精彩介绍，见 Kennedy (2023)。&lt;/p&gt;
+&lt;p&gt;假设我们有总体矩条件
+&lt;/p&gt;
+$$
+\mathbb{E}_{F_0}[g(W,\gamma_0,\theta_0)] = 0
+$$&lt;p&gt;
+其中 $g(\cdot,\cdot,\cdot)$ 是形式未知的矩函数，$\gamma_0$ 是未知的非参数部分，$\theta_0$ 是未知的参数部分。我们感兴趣的是对 $\theta_0$ 的估计。&lt;/p&gt;
+&lt;p&gt;如果我们用机器学习的算法获得了对 $\gamma_0$ 的第一步估计 $\hat{\gamma}$，那么获得样本矩函数的一个最直接的方式就是直接代入 $\hat{\gamma}$，得到 $\sum_{i=1}^n g(W_i,\hat{\gamma},\theta)/n$，然后对其使用 GMM 得到 $\theta_0$ 的估计量。然而，这种 plug-in 的方法会给 $\theta_0$ 的估计带来严重的偏误，因为我们的第一步估计 $\hat{\gamma}$ 本就不够精确，毕竟机器学习算法总是会用一些正则化手段来避免过拟合，从而带来较大的偏误。我们是否能重新构造一个矩条件，使得它不受第一步估计 $\hat{\gamma}$ 好坏的影响呢？答案是我们需要利用矩条件的影响函数。&lt;/p&gt;
+&lt;p&gt;记 $\hat{\gamma}$ 在数据分布为 $F$ 时的概率极限为泛函 $\gamma(F)$，从而 $\gamma_0 = \gamma(F_0)$。使用前文所介绍的 $F_\tau$ 形式的分布扰动，假设存在一个函数 $\phi(w,\gamma,\alpha,\theta)$，使得对任意的 $\theta$ 和 $H$ 都有
+&lt;/p&gt;
+$$
+\frac{\partial}{\partial\tau}\mathbb{E}_{F_0}[g(W,\gamma(F_\tau),\theta)]\bigg|_{\tau=0^+} = \int \phi(w,\gamma_0,\alpha_0,\theta)H(dw) = \mathbb{E}_H[\phi(W,\gamma_0,\alpha_0,\theta)]
+$$&lt;p&gt;
+其中 $\mathbb{E}_{F_0}[\phi(W,\gamma_0,\alpha_0,\theta)] = 0$ 且 $\mathbb{E}_{F_0}[\phi(W,\gamma_0,\alpha_0,\theta)^2] &lt; \infty$。这里的 $\phi$ 就是泛函 $\mu(F) := \mathbb{E}_{F}[g(W,\gamma(F),\theta)]$ 的影响函数，或者按照文献中的说法，称为「第一步影响函数」(first step influence function, FSIF)。&lt;/p&gt;
+&lt;p&gt;正交矩函数就可以构造为
+&lt;/p&gt;
+$$
+\psi(W,\gamma,\alpha,\theta) = g(W,\gamma,\theta) + \phi(W,\gamma,\alpha,\theta)
+$$&lt;p&gt;
+即原矩条件加上其影响函数。这个做法事实上是利用了影响函数的梯度性质，将分布扰动的一阶影响加回去。显然有 $\mathbb{E}_{F_0}[\psi(W,\gamma_0,\alpha_0,\theta)] = 0$。&lt;/p&gt;
+&lt;p&gt;通常我们要求影响函数满足规范化条件，即任意扰动分布下都有零均值，$\mathbb{E}_{F_\tau}[\phi(W,\gamma(F_\tau),\alpha(F_\tau),\theta)] \equiv 0$，两边关于 $\tau$ 在 $\tau=0^+$ 处求导：
+&lt;/p&gt;
+$$
+\begin{align*}
+0 &amp;\equiv \frac{\partial}{\partial\tau}\int\phi(W,\gamma(F_\tau),\alpha(F_\tau),\theta)[F_0+\tau(H-F_0)](dw) \bigg|_{\tau=0^+} \\
+&amp;= \frac{\partial}{\partial\tau}\int \phi(w,\gamma(F_\tau),\alpha(F_\tau),\theta)F_0(dw)\bigg|_{\tau=0^+} + \int \phi(w,\gamma_0,\alpha_0,\theta)(H-F_0)(dw) \\
+&amp;= \frac{\partial}{\partial\tau}\mathbb{E}_{F_0}[\phi(W,\gamma(F_\tau),\alpha(F_\tau),\theta)]\bigg|_{\tau=0^+} + \mathbb{E}_H[\phi(W,\gamma_0,\alpha_0,\theta)] \\
+&amp;= \frac{\partial}{\partial\tau}\mathbb{E}_{F_0}[\phi(W,\gamma(F_\tau),\alpha(F_\tau),\theta)]\bigg|_{\tau=0^+} + \frac{\partial}{\partial\tau}\mathbb{E}_{F_0}[g(W,\gamma(F_\tau),\theta)]\bigg|_{\tau=0^+} \\
+&amp;= \frac{\partial}{\partial\tau}\mathbb{E}_{F_0}[\psi(W,\gamma(F_\tau),\alpha(F_\tau),\theta)]\bigg|_{\tau=0^+}
+\end{align*}
+$$&lt;p&gt;
+第二步利用了链式法则，第三步利用了 $\mathbb{E}_{F_0}[\phi(W,\gamma_0,\alpha_0,\theta)] = 0$。这个结论意味着 $\gamma$ 的局部扰动不会影响矩条件的成立，也就达到了正交化的目的。&lt;/p&gt;
+&lt;h2 id="技术附录泛函的可微性"&gt;技术附录：泛函的可微性&lt;/h2&gt;
+&lt;p&gt;本附录来自 van der Vaart (1991)，为泛函的可微性做出定义。泛函的导数是方向导数的一般化。&lt;/p&gt;
+&lt;p&gt;设 $P$ 是一个概率测度，它对应真实的模型，$\mathscr{P}$ 是一个概率测度族，它包含了对 $P$ 的某些偏离的概率测度，一个偏离以 $P_t$ 表示，$t\in(0,\varepsilon)\subseteq\mathbb{R}$。令 $\mathscr{P}(P)$ 表示这种偏离路径的集合，即映射 $t\mapsto P_t$ 的集合，每个映射从一个区间 $(0,\varepsilon)\subseteq\mathbb{R}$ 映射到 $\mathscr{P}$，因此每个映射都代表了 $P$ 的一个偏离路径，而且每一个偏离路径都需要满足：存在某个 $g\in L^2(P)$ 使得
+&lt;/p&gt;
+$$
+\lim_{t\to 0^+} \int \biggl[\frac{1}{t}(dP_t^{1/2}-dP^{1/2}) - \frac12gdP^{1/2}\biggr]^2 = 0
+$$&lt;p&gt;
+其中 $dP_t$ 和 $dP$ 分别是 $P_t$ 和 $P$ 的（关于某个支配测度的）密度函数。这个条件事实上对偏离路径 $t\mapsto P_t$ 做出了一些限制，它要求偏离路径具有某种意义上的光滑性。满足这个条件的路径也被称为「二次均值可微」(quadratic mean differentiability)。函数 $g$ 相当于我们熟悉的得分函数&lt;sup id="fnref:6"&gt;&lt;a href="#fn:6" class="footnote-ref" role="doc-noteref"&gt;6&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;p&gt;从几何意义上说，得分函数 $g$ 可以理解为在 $t=0$ 处切于偏离路径 $t\mapsto P_t$ 的一个切向量。这使得 $\mathscr{P}(P)$ 可以引致一个所谓的「切空间」(tangent space) $T(P)$，它是由所有满足上述条件的函数 $g$ 张成的线性空间。&lt;/p&gt;
+&lt;p&gt;设 $(\bm{B},\|\cdot\|)$ 是一个巴拿赫空间&lt;sup id="fnref:7"&gt;&lt;a href="#fn:7" class="footnote-ref" role="doc-noteref"&gt;7&lt;/a&gt;&lt;/sup&gt;。称泛函 $\kappa\colon\mathscr{P}\to(\bm{B},\|\cdot\|)$ 在 $P$ 处相对于 $\mathscr{P}(P)$ 可微，如果它满足：存在一个连续的线性映射 $\kappa'_P\colon(T(P),\|\cdot\|_P)\to(\bm{B},\|\cdot\|)$ 使得对 $\mathscr{P}(P)$ 中的每一条路径 $t\mapsto P_t$ 及其相应的 $g\in T(P)$ 使得
+&lt;/p&gt;
+$$
+\lim_{t\to 0^+} \frac1t[\kappa(P_t)-\kappa(P)] = \kappa'_P(g)
+$$&lt;p&gt;
+$\kappa'_P$ 被称为 $\kappa$ 在 $P$ 处相对于 $\mathscr{P}(P)$ 的导数&lt;sup id="fnref:8"&gt;&lt;a href="#fn:8" class="footnote-ref" role="doc-noteref"&gt;8&lt;/a&gt;&lt;/sup&gt;。这个导数是一个泛函，而且是连续的线性泛函，它将切空间 $T(P)$ 中的元素 $g$ 映射为 $(\bm{B},\|\cdot\|)$ 中的元素 $\kappa'_P(g)$。连续线性是一个很关键的要求，只有这样才会有后面的 Riesz 表示。需要强调，这个定义不仅仅是定义左边极限的存在性，还说明了它能被表示成切空间上的泛函。&lt;/p&gt;
+&lt;p&gt;对于巴拿赫空间 $\bm{B}$，有其对偶空间 $\bm{B}^*$，它是由所有连续线性实值泛函 $b^*\colon\bm{B}\to\mathbb{R}$ 构成的空间。对每个 $b^*\in\bm{B}^*$，映射 $b^*\circ\kappa'_P$ 是从 $(T(P),\|\cdot\|_P)$ 到 $\mathbb{R}$ 的连续线性泛函。根据 Riesz 表示定理，存在一个唯一的 $\tilde{\kappa}_{P,b^*}\in \bar{T}(P)$ 使得，对每个 $g\in T(P)$ 都有&lt;sup id="fnref:9"&gt;&lt;a href="#fn:9" class="footnote-ref" role="doc-noteref"&gt;9&lt;/a&gt;&lt;/sup&gt;
+&lt;/p&gt;
+$$
+b^*\circ\kappa'_P(g) = \langle g,\tilde{\kappa}_{P,b^*} \rangle_P
+$$&lt;p&gt;
+特别地，对于正文中的泛函 $\theta(F_\beta)$，当 $\theta$ 是标量时，$\bm{B}$ 就是实数集 $\mathbb{R}$，因此我们就可以取 $b^*$ 为恒等映射，于是存在一个唯一的 $\psi\in \bar{T}(F_0)$ 使得，对每个 $S_\beta\in T(F_0)$ 都有
+&lt;/p&gt;
+$$
+\theta'(F_\beta) = \langle \psi,S_\beta \rangle_{F_0} = \mathbb{E}_{F_0}[\psi(W)S_\beta(W)]
+$$&lt;p&gt;
+这里的 Riesz 表示元 $\psi$ 正是 EIF。&lt;/p&gt;
+&lt;p&gt;以下定理是对 Hájek-Le Cam 卷积定理的推广，见 van der Vaart (1991) 的定理 2.1。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="Theorem-1" class="thm-title thm-Theorem"&gt;Theorem 1.&lt;/p&gt;
+&lt;div class="thm-inner thm-Theorem"&gt;
+&lt;p&gt;设对任意路径 $\{P_t\}\in\mathscr{P}(P)$ 和实数列 $h_n\to h\in\mathbb{R}$，有
+&lt;/p&gt;
+$$
+\begin{equation}\label{eq:regular}
+\sqrt{n}\bigl[T_n-\kappa(P_{h_n/\sqrt{n}})\bigr] \rightsquigarrow_{P_{h_n/\sqrt{n}}} L
+\end{equation}
+$$&lt;p&gt;
+其中 $L$ 是 $\bm{B}$ 上的一个固定的紧密分布。此外，设对任意 $g\in T(P)$ 都有
+&lt;/p&gt;
+$$
+\biggl(\sqrt{n}(T_n-\kappa(P)),n^{-1/2}\sum_{j=1}^n g(X_j)\biggr)
+$$&lt;p&gt;
+依 $P$ 在 $\bm{B}\times\mathbb{R}$ 上联合弱收敛。那么 (i) $\kappa\colon\mathscr{P}\to(\bm{B},\|\cdot\|)$ 在 $P$ 处相对于 $\mathscr{P}(P)$ 可微，且 (ii) 存在一个 $\bm{B}$ 上的紧密的概率测度 $N$ 满足：对任意 $b^*\in\bm{B}^*$
+&lt;/p&gt;
+$$
+N \circ b^{*-1} = \mathcal{N}(0,\|\tilde{\kappa}_{P,b^*}\|_P^2)
+$$&lt;p&gt;
+即 $N$ 是巴拿赫空间上的一个高斯分布，其由 $b^*$ 投影到实数轴上的一维边缘分布都是均值为 $0$，方差为 $\|\tilde{\kappa}_{P,b^*}\|_P^2$ 的高斯分布。此外，极限分布 $L$ 可以表示为 $N$ 和另一个 $\bm{B}$ 上的一个概率测度的卷积。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这里，满足条件 \eqref{eq:regular} 的估计量 $T_n$ 称为「正则」(regular) 估计量。这个条件和联合弱收敛条件一起保证了 $\kappa$ 的可微性，且导数能表述成影响函数和得分函数的内积，见 van der Vaart (1991) 的引理 A.1。结论 (ii) 即卷积定理，描述了估计量的渐进效率下界，$N$ 就代表了最优极限分布。&lt;/p&gt;
+&lt;h2 id="参考文献"&gt;参考文献&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Hampel, F. R. (1974): “The Influence Curve and its Role in Robust Estimation,” &lt;em&gt;Journal of the American Statistical Association&lt;/em&gt;, 69(346), 383–393.&lt;/li&gt;
+&lt;li&gt;Ichimura, H. and W. K. Newey (2022): “The Influence Function of Semiparametric Estimators,” &lt;em&gt;Quantitative Economics&lt;/em&gt;, 13(1), 29–61.&lt;/li&gt;
+&lt;li&gt;Kennedy, E. H. (2023): “Semiparametric Doubly Robust Targeted Double Machine Learning: A Review,” &lt;em&gt;arXiv preprint&lt;/em&gt;, arXiv:2203.06469.&lt;/li&gt;
+&lt;li&gt;Newey, W. K. (1994): “The Asymptotic Variance of Semiparametric Estimators,” &lt;em&gt;Econometrica&lt;/em&gt;, 62(6), 1349–1382.&lt;/li&gt;
+&lt;li&gt;van der Vaart, A. (1991): “On Differentiable Functionals,” &lt;em&gt;Annals of Statistics&lt;/em&gt;, 19(1), 178–204.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;严格来说，除了渐进线性展开，我们还要求估计量 $\hat{\theta}$ 是正则的，粗略的含义是，让真实分布 $F_0$ 产生微小扰动后，估计量的极限分布保持不变，见 \eqref{eq:regular} 的定义。满足正则性和渐进线性展开的估计量被称为 &lt;em&gt;正则渐进线性估计量&lt;/em&gt; (regular asymptotically linear estimator, RAL)。&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;这其实是一个稳健统计学中的经典概念，最早来自 Hampel (1974)。核心思想就是看数据分布的一阶扰动对估计量的影响，和半参数效率理论有紧密而深刻的联系。&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:3"&gt;
+&lt;p&gt;$\theta(F_\beta)$ 是关于分布 $F_\beta$ 的泛函，其导数定义为 $\lim_{\beta\to 0^+} \beta^{-1}[\theta(F_\beta)-\theta(F_0)]$，它的存在性依赖于前面所说的正则渐进线性条件（还潜在地依赖于二次均值可微条件，见技术附录），当这个条件满足时，导数就存在，且一定可以表示成影响函数和得分函数的内积，见 van der Vaart (1991) 的引理 A.1 或 Newey (1994) 的定理 2.1。我们还可以更进一步，我们可以将这个泛函的导数看作是切空间（因为得分函数属于切空间）上的泛函，那么根据 Riesz 表示定理，存在该切空间上的一个唯一的元素 $\psi^*$，使得此泛函可以表示成 $\psi^*$ 和得分函数的内积。这个 $\psi^*$ 就是「有效率的影响函数」(efficient influence function, EIF)。其他的影响函数在切空间上的投影就是 $\psi^*$。&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:4"&gt;
+&lt;p&gt;这种形式的分布扰动来自 Hampel (1974)。可以证明这种偏离路径是二次均值可微的。&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:5"&gt;
+&lt;p&gt;这就是 Neyman 正交化。&amp;#160;&lt;a href="#fnref:5" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:6"&gt;
+&lt;p&gt;怎么理解？它可以看成 $dP_t^{1/2}-dP^{1/2} \approx \frac{t}{2}gdP^{1/2}$。为什么要用平方根密度呢？而且还带有一个 $1/2$？我们考虑普通的得分函数 $s(w) = \partial\log p_t(w)|_{t=0}$，对 $p_t(w)$ 在 $p_0(w)$ 处做一阶展开：
+&lt;/p&gt;
+$$
+p_t(w) = p_0(w)[1 + t\cdot s(w) + o(t)]
+$$&lt;p&gt;
+两边开根号
+&lt;/p&gt;
+$$
+\sqrt{p_t(w)} \approx \sqrt{p_0(w)}\biggl[1 + \frac{t}{2}s(w)\biggr]
+$$&lt;p&gt;
+所以（当似然函数可导时）$g$ 就是得分函数。不过这里其实我们并不要求似然函数可导，因此 $g$ 是更一般的得分函数。&amp;#160;&lt;a href="#fnref:6" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:7"&gt;
+&lt;p&gt;即完备的线性赋范空间。就我们考察的半参数问题而言，当参数 $\theta$ 是标量时，$\bm{B}$ 就是实数集 $\mathbb{R}$；当参数 $\theta$ 是向量时，$\bm{B}$ 就是欧几里得空间 $\mathbb{R}^k$。&amp;#160;&lt;a href="#fnref:7" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:8"&gt;
+&lt;p&gt;如果 $\mathscr{P}(P)$ 是 &lt;em&gt;所有&lt;/em&gt; 满足前面光滑性条件的路径的集合，那么这个导数就是 Hadamard 导数。但一般情况下，比如在半参数模型中，由于模型限制，我们并不会考虑这么多的路径。&amp;#160;&lt;a href="#fnref:8" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:9"&gt;
+&lt;p&gt;通常我们还要加上规范化条件 $\mathbb{E}_P[\tilde{\kappa}_{P,b^*}] = 0$ 来保证唯一性，因为 $\mathbb{E}_P[g] = 0$。&amp;#160;&lt;a href="#fnref:9" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+- https://gaxu.xyz/posts/influence-function/ - 2023–2025 嘉树.</description></item><item><title>泛函差分</title><link>https://gaxu.xyz/posts/functional-diff/</link><pubDate>Sat, 17 Jan 2026 12:00:00 +0800</pubDate><guid>https://gaxu.xyz/posts/functional-diff/</guid><description>嘉树的世界 https://gaxu.xyz/posts/functional-diff/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
 &lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice info" &gt;
 &lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#info-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Info&lt;/p&gt;&lt;p&gt;本文是对 Bonhomme (2012) 的介绍，讲述了怎么在非线性面板模型中构造不含有固定效应的矩条件，类比于线性面板中的「组内变换」。本质上这个构造过程是希尔伯特投影定理的一个应用。本文并不是对原文的忠实还原，如有疑问请参考原文。&lt;/p&gt;&lt;/div&gt;
 &lt;p class="pdf-download"&gt;
@@ -559,7 +723,7 @@ $$&lt;p&gt;
 &lt;p&gt;那么，为什么 LaTeX 没有对数学环境的前后间距做调整呢？这其实是数学字体本身的问题。数学字体是独立于正文字体的，它的 kerning 规则与正文字体不同，而且也不会考虑到和正文字体互动的情况。当用在意大利字形的正文字体中，由于正文字体的 kerning 变了，所以数学环境在其中会显得很不协调。&lt;/p&gt;
 &lt;h2 id="解决方案"&gt;解决方案&lt;/h2&gt;
 &lt;p&gt;第一种也是最直接的方法，手动调整。这适用于需要调整的地方不多的时候。例如我们可以手动在数学环境前加上一些正间距，在其后加上一些负间距。我们用 &lt;code&gt;\/&lt;/code&gt; 取消正文中的倾斜校正 (italic correction) 所引入的间距，然后用 &lt;code&gt;\!&lt;/code&gt; 在数学符号后添加一些负间距（等于 &amp;ndash;0.16667em）：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-latex" data-lang="latex"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;If&lt;span style="color:#81a1c1;font-weight:bold"&gt;\/&lt;/span&gt; &lt;span style="color:#a3be8c"&gt;$&lt;/span&gt;&lt;span style="color:#81a1c1"&gt;U&lt;/span&gt;&lt;span style="color:#a3be8c"&gt;$&lt;/span&gt;&lt;span style="color:#81a1c1;font-weight:bold"&gt;\!&lt;/span&gt; of&lt;span style="color:#81a1c1;font-weight:bold"&gt;\/&lt;/span&gt; &lt;span style="color:#a3be8c"&gt;$&lt;/span&gt;&lt;span style="color:#81a1c1"&gt;V&lt;/span&gt;&lt;span style="color:#a3be8c"&gt;$&lt;/span&gt;&lt;span style="color:#81a1c1;font-weight:bold"&gt;\!&lt;/span&gt; and &lt;span style="color:#81a1c1;font-weight:bold"&gt;\dots&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-latex" data-lang="latex"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;If&lt;span style="color:#81a1c1;font-weight:bold"&gt;\/&lt;/span&gt; &lt;span style="color:#a3be8c"&gt;$&lt;/span&gt;&lt;span style="color:#81a1c1"&gt;U&lt;/span&gt;&lt;span style="color:#a3be8c"&gt;$&lt;/span&gt;&lt;span style="color:#81a1c1;font-weight:bold"&gt;\!&lt;/span&gt; of&lt;span style="color:#81a1c1;font-weight:bold"&gt;\/&lt;/span&gt; &lt;span style="color:#a3be8c"&gt;$&lt;/span&gt;&lt;span style="color:#81a1c1"&gt;V&lt;/span&gt;&lt;span style="color:#a3be8c"&gt;$&lt;/span&gt;&lt;span style="color:#81a1c1;font-weight:bold"&gt;\!&lt;/span&gt; and &lt;span style="color:#81a1c1;font-weight:bold"&gt;\dots&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到的效果如下。这个看着就舒服多了。&lt;/p&gt;
 &lt;figure id="fig:demo3" class="insert-figure" align="" role="group" aria-describedby="caption-d41d8cd98f00b204e9800998ecf8427e"&gt;
 &lt;a href="https://gaxu.xyz/posts/math-kerning-in-italic-text/demo3.png" class="img-link"&gt;
@@ -571,7 +735,7 @@ $$&lt;p&gt;
 &lt;p&gt;但是，当需要调整的地方很多时，这种方法就显得过于繁琐。有没有什么自动化的调整办法呢？&lt;/p&gt;
 &lt;p&gt;有，是由 &lt;a href="https://tex.stackexchange.com/questions/3490/bad-spacing-of-math-letters-within-italic-text"&gt;stackexchange 上的回答&lt;/a&gt; 给出的。这个解决方案相当技术化，它对每一个数学字体的英文字母都设计了 kerning。不过，这个解决方案也有局限性。首先，它只适用于 Computer Modern 字体，其次，它只适用于单个的英文字母，当数学环境中出现多个英文字母或其他的数学符号时，它就无能为力了。&lt;/p&gt;
 &lt;p&gt;第三种方案是我在咨询了 AI 之后得到的，也是目前我个人最满意的解决方案。这个方案的思路也很简单，将意大利体中出现的数学环境同意在前面加入一些正间距，在后面加入一些负间距。代码如下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;\let\math@org=$
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;\let\math@org=$
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;\def\itinlinemath#1{%
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; \math@org%
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; \mkern+2mu\relax% 左间距调整
@@ -1412,7 +1576,7 @@ $$&lt;p&gt;
 &lt;h2 id="生成-ssh-密钥"&gt;生成 SSH 密钥&lt;/h2&gt;
 &lt;p&gt;GitHub 提供了两种方式与远程仓库建立联系：SSH 和 HTTPS。简单来说，当我们向远程仓库 push 代码时，HTTPS 每次都需要提供所谓的 access token（当然这个活其实也只是第一次 push 的时候需要，因为 Mac 会把这个 token 存放在钥匙串里面，以后就不需要手动输入了），而 SSH 使用一对公钥和私钥取得认证（事先生成，然后本地和远程分别拿着私钥和公钥），不需要记住用户名和 token。就我们的目的而言，只能用 SSH 来实现。&lt;/p&gt;
 &lt;p&gt;假设我们有两个账号，personal 和 work，以下我们分别为它们生成 SSH 密钥。更多账号操作也是一样的。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#81a1c1"&gt;cd&lt;/span&gt; ~/.ssh
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#81a1c1"&gt;cd&lt;/span&gt; ~/.ssh
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-keygen -t rsa -C &lt;span style="color:#a3be8c"&gt;&amp;#34;email@personal.com&amp;#34;&lt;/span&gt; -f &lt;span style="color:#a3be8c"&gt;&amp;#34;gh-personal&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-keygen -t rsa -C &lt;span style="color:#a3be8c"&gt;&amp;#34;email@work.com&amp;#34;&lt;/span&gt; -f &lt;span style="color:#a3be8c"&gt;&amp;#34;gh-work&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行完了之后，在 &lt;code&gt;.ssh&lt;/code&gt; 文件夹下我们得到了四个文件：&lt;/p&gt;
@@ -1426,22 +1590,22 @@ $$&lt;p&gt;
 &lt;h2 id="分配私钥和公钥"&gt;分配私钥和公钥&lt;/h2&gt;
 &lt;h3 id="将私钥加入-ssh-agent"&gt;将私钥加入 SSH Agent&lt;/h3&gt;
 &lt;p&gt;上一步只是生成了密钥，还需要把私钥加入 Mac 的钥匙串 (keychain)，也就是保存密码。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-add --apple-use-keychain ~/.ssh/gh-personal
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-add --apple-use-keychain ~/.ssh/gh-personal
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-add --apple-use-keychain ~/.ssh/gh-work
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;选项 &lt;code&gt;--apple-use-keychain&lt;/code&gt; 就明确声明使用 Mac 的钥匙串系统存放密钥。&lt;/p&gt;
 &lt;p&gt;我们可以用以下命令来查看私钥是否被添加到了 SSH Agent：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-add -l
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-add -l
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="将公钥加入-github"&gt;将公钥加入 GitHub&lt;/h3&gt;
 &lt;p&gt;然后，我们把公钥加入到对应的 GitHub 账户里去。&lt;/p&gt;
 &lt;p&gt;对账户 personal，进入 “Settings”➡️“SSH and GPG keys”，然后点击 “New SSH key”，进入一个界面，“Title” 可以随便填写，只要在 &amp;ldquo;Key&amp;rdquo; 的框里边粘贴 &lt;code&gt;gh-personal.pub&lt;/code&gt; 文件的内容就行了，以下是用命令复制文件内容的高级做法：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pbcopy &amp;lt; ~/.ssh/gh-personal.pub
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pbcopy &amp;lt; ~/.ssh/gh-personal.pub
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们对另一个账户 work 进行同样的操作，只不过是要复制对应文件 &lt;code&gt;gh-work.pub&lt;/code&gt; 的内容。不再赘述。&lt;/p&gt;
 &lt;h2 id="配置-ssh-主机"&gt;配置 SSH 主机&lt;/h2&gt;
 &lt;p&gt;这一步要做的是，告诉 Mac 远程仓库的主机和本地的私钥如何对应。这通过配置 SSH Config 文件实现。&lt;/p&gt;
 &lt;p&gt;首先，打开 &lt;code&gt;config&lt;/code&gt; 文件：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;open ~/.ssh/config
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;open ~/.ssh/config
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后，填入如下设定&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# Your Personal GitHub Account
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# Your Personal GitHub Account
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Host github.com-personal
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; HostName github.com
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; User git
@@ -1456,13 +1620,13 @@ $$&lt;p&gt;
 &lt;hr&gt;
 &lt;h2 id="在不同的账号间切换"&gt;在不同的账号间切换&lt;/h2&gt;
 &lt;p&gt;假设我们实现已经全局设定了 work 账号是默认的 GitHub 账号：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git config --global user.name &lt;span style="color:#a3be8c"&gt;&amp;#34;work&amp;#34;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git config --global user.name &lt;span style="color:#a3be8c"&gt;&amp;#34;work&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git config --global user.email &lt;span style="color:#a3be8c"&gt;&amp;#34;email@work.com&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;但如果要建立一个 personal 账号下的仓库，在 &lt;code&gt;git init&lt;/code&gt; 之后，就得不带 &lt;code&gt;--global&lt;/code&gt; 选项：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git config user.name &lt;span style="color:#a3be8c"&gt;&amp;#34;personal&amp;#34;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git config user.name &lt;span style="color:#a3be8c"&gt;&amp;#34;personal&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git config user.email &lt;span style="color:#a3be8c"&gt;&amp;#34;email@personal.com&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;要把这个仓库关联到远程仓库 myrepo，运行：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git remote add origin git@github.com-personal:personal/myrepo.git
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git remote add origin git@github.com-personal:personal/myrepo.git
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里面需要注意，我们用的是 SSH 的链接，而不是 HTTPS 的链接，另外我们明确指定了主机名为 &lt;code&gt;github.com-personal&lt;/code&gt;，而不是 GitHub 仓库页面给出的 &lt;code&gt;github.com&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;这样就可以对 myrepo 进行 push 等操作了。&lt;/p&gt;
 &lt;p&gt;如果有另外的仓库是注册在 work 账号下的，不需要再特别进行 &lt;code&gt;git config&lt;/code&gt;，因前面我们已经全局指定了，但在 &lt;code&gt;git clone&lt;/code&gt; work 账号下的私有仓库和关联远程仓库时，仍然要注意指定主机名为 &lt;code&gt;github.com-work&lt;/code&gt;。&lt;/p&gt;
@@ -1472,14 +1636,4 @@ $$&lt;p&gt;
 &lt;li&gt;&lt;a href="https://medium.com/@viralthaker27/managing-multiple-github-accounts-on-a-macbook-a-step-by-step-guide-a22ec738180f"&gt;Managing Multiple GitHub Accounts on a MacOS: A Step-by-Step Guide.&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://code.tutsplus.com/quick-tip-how-to-work-with-github-and-multiple-accounts--net-22574t"&gt;How to Work With GitHub and Multiple Accounts.&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-- https://gaxu.xyz/posts/multiple-gh-accounts/ - 2023–2025 嘉树.</description></item><item><title>半日杂记</title><link>https://gaxu.xyz/posts/half-day-diary/</link><pubDate>Sun, 25 Aug 2024 23:08:09 +0800</pubDate><guid>https://gaxu.xyz/posts/half-day-diary/</guid><description>嘉树的世界 https://gaxu.xyz/posts/half-day-diary/ -&lt;p&gt;师弟在我提出要去理发时向我强烈推荐了一家，我狐疑，追问之下原来是：他在此店被忽悠办了会员充了值，害怕店长哪天卷钱跑路了，希望尽快消费完。啊哈，那这个忙我当然要帮。&lt;/p&gt;
-&lt;p&gt;去了之后发现，这哪像会倒闭的样子！生意红火好嘛。当然也不排除有周日的加持。托尼老师很热情地向我推销卷烫染套餐，被我热情地回绝了。&lt;/p&gt;
-&lt;p&gt;剪完之后就在商场里闲逛，溜进一家「西西弗书店」，随意翻看能引起我兴趣的书，还真是颇有收获。试举几例：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;原来鲁迅真的写过「在我的后园，可以看见墙外有两株树，一株是枣树，还有一株也是枣树」，这出自《野草》中《秋夜》的第一句，我一直以为这是一个梗来着。&lt;/li&gt;
-&lt;li&gt;曾国藩也有写日记的习惯，他是真写，真反思，真改变。&lt;/li&gt;
-&lt;li&gt;《冬牧场》这本书似乎去年大热，看了几页，哇塞，这个作者怎么可以写出这么可爱幽默俏皮温暖的文字！&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;感悟就是，文字真的可以带来力量，内心的力量。愈加决定了！要多运动，多读书。&lt;/p&gt;
-&lt;p&gt;回去的时候顺便买了点水果，着实买贵了，以后还是去盒马买吧😥&lt;/p&gt;
-- https://gaxu.xyz/posts/half-day-diary/ - 2023–2025 嘉树.</description></item></channel></rss>
+- https://gaxu.xyz/posts/multiple-gh-accounts/ - 2023–2025 嘉树.</description></item></channel></rss>
