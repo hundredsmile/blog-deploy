@@ -29,15 +29,15 @@ $$
 $$&lt;p&gt;
 其中 $\mathbb{E}[\psi(W)] = 0$ 且 $\mathbb{E}[\psi(W)^2] &lt; \infty$。上式左边就衡量了一个轻微污染的分布对于估计量的极限值的影响，等式右边定义了一个线性泛函。&lt;/p&gt;
 &lt;h2 id="影响函数的威力以构造正交矩条件为例"&gt;影响函数的威力：以构造正交矩条件为例&lt;/h2&gt;
-&lt;p&gt;泛函导数 $d\theta(F_\tau)/d\tau$ 及影响函数是一个大有可为的概念级工具。首先其基本含义是，它衡量了分布 $F_\tau$ 的局部扰动对 $\theta(F_\tau)$ 的影响。我们可以赋予它经济学上的意义，譬如，它可以表示数据分布的局部变化带来的政策效应；又如，当 $\theta(F_\tau)$ 是一个估计量的概率极限时，这个导数就可以看作模型误设对估计量的影响，从而可以应用在估计量的局部敏感性和稳健性分析中；再如，当 $\theta(F_\tau)$ 是矩条件的期望时（在代入非参数估计量的概率极限后），影响函数可以被用来构造正交矩条件，正交的含义是矩条件的成立不受对非参数部分的估计好坏影响&lt;sup id="fnref:5"&gt;&lt;a href="#fn:5" class="footnote-ref" role="doc-noteref"&gt;5&lt;/a&gt;&lt;/sup&gt;。我们以构造正交矩条件为例来展示其威力，前两个用途的示例见 Ichimura and Newey (2022)。构造正交矩条件是最近几年大热的双重机器学习的两个基石之一（另一个是样本拆分），而这一切都离不开影响函数。关于影响函数在双重机器学习中所扮演角色的精彩介绍，见 Kennedy (2023)。&lt;/p&gt;
+&lt;p&gt;泛函导数 $d\theta(F_\tau)/d\tau$ 及影响函数是一个大有可为的概念级工具。首先其基本含义是，它衡量了分布 $F_\tau$ 的局部扰动对 $\theta(F_\tau)$ 的影响。我们可以赋予它经济学上的意义，譬如，它可以表示数据分布的局部变化带来的政策效应；又如，当 $\theta(F_\tau)$ 是一个估计量的概率极限时，这个导数就可以看作模型误设对估计量的影响，从而可以应用在估计量的局部敏感性和稳健性分析中；再如，当 $\theta(F_\tau)$ 是矩条件的期望时（在代入非参数估计量的概率极限后），影响函数可以被用来构造正交矩条件&lt;sup id="fnref:5"&gt;&lt;a href="#fn:5" class="footnote-ref" role="doc-noteref"&gt;5&lt;/a&gt;&lt;/sup&gt;，正交的含义是矩条件的成立不受对非参数部分的估计好坏影响（称为 Neyman 正交化）。我们以构造正交矩条件为例来展示其威力，前两个用途的示例见 Ichimura and Newey (2022)。&lt;/p&gt;
 &lt;p&gt;假设我们有总体矩条件
 &lt;/p&gt;
 $$
 \mathbb{E}_{F_0}[g(W,\gamma_0,\theta_0)] = 0
 $$&lt;p&gt;
-其中 $g(\cdot,\cdot,\cdot)$ 是形式未知的矩函数，$\gamma_0$ 是未知的非参数部分，$\theta_0$ 是未知的参数部分。我们感兴趣的是对 $\theta_0$ 的估计。&lt;/p&gt;
+其中 $g(\cdot,\cdot,\cdot)$ 是形式已知的矩函数，$\gamma_0$ 是未知的非参数部分，$\theta_0$ 是未知的参数部分。我们感兴趣的是对 $\theta_0$ 的估计。&lt;/p&gt;
 &lt;p&gt;如果我们用机器学习的算法获得了对 $\gamma_0$ 的第一步估计 $\hat{\gamma}$，那么获得样本矩函数的一个最直接的方式就是直接代入 $\hat{\gamma}$，得到 $\sum_{i=1}^n g(W_i,\hat{\gamma},\theta)/n$，然后对其使用 GMM 得到 $\theta_0$ 的估计量。然而，这种 plug-in 的方法会给 $\theta_0$ 的估计带来严重的偏误，因为我们的第一步估计 $\hat{\gamma}$ 本就不够精确，毕竟机器学习算法总是会用一些正则化手段来避免过拟合，从而带来较大的偏误。我们是否能重新构造一个矩条件，使得它不受第一步估计 $\hat{\gamma}$ 好坏的影响呢？答案是我们需要利用矩条件的影响函数。&lt;/p&gt;
-&lt;p&gt;记 $\hat{\gamma}$ 在数据分布为 $F$ 时的概率极限为泛函 $\gamma(F)$，从而 $\gamma_0 = \gamma(F_0)$。使用前文所介绍的 $F_\tau$ 形式的分布扰动，假设存在一个函数 $\phi(w,\gamma,\alpha,\theta)$，使得对任意的 $\theta$ 和 $H$ 都有
+&lt;p&gt;记 $\hat{\gamma}$ 在数据分布为 $F$ 时的概率极限为泛函 $\gamma(F)$，从而 $\gamma_0 = \gamma(F_0)$。使用前文所介绍的 $F_\tau$ 形式的分布扰动，假设存在一个函数 $\phi(w,\gamma,\alpha,\theta)$&lt;sup id="fnref:6"&gt;&lt;a href="#fn:6" class="footnote-ref" role="doc-noteref"&gt;6&lt;/a&gt;&lt;/sup&gt;，使得对任意的 $\theta$ 和 $H$ 都有
 &lt;/p&gt;
 $$
 \frac{\partial}{\partial\tau}\mathbb{E}_{F_0}[g(W,\gamma(F_\tau),\theta)]\bigg|_{\tau=0^+} = \int \phi(w,\gamma_0,\alpha_0,\theta)H(dw) = \mathbb{E}_H[\phi(W,\gamma_0,\alpha_0,\theta)]
@@ -60,7 +60,18 @@ $$
 &amp;= \frac{\partial}{\partial\tau}\mathbb{E}_{F_0}[\psi(W,\gamma(F_\tau),\alpha(F_\tau),\theta)]\bigg|_{\tau=0^+}
 \end{align*}
 $$&lt;p&gt;
-第二步利用了链式法则，第三步利用了 $\mathbb{E}_{F_0}[\phi(W,\gamma_0,\alpha_0,\theta)] = 0$。这个结论意味着 $\gamma$ 的局部扰动不会影响矩条件的成立，也就达到了正交化的目的。&lt;/p&gt;
+第二步利用了链式法则，第三步利用了 $\mathbb{E}_{F_0}[\phi(W,\gamma_0,\alpha_0,\theta)] = 0$，第四步利用了 $\phi$ 的定义。这个结论是指 $(\gamma,\alpha)$ 沿着 $(\gamma(F_\tau),\alpha(F_\tau))$ 在 $\tau=0^+$ 处的全导数为零。我们希望 $\alpha$ 能保持固定，以分离出 $\gamma$ 对矩条件的影响。如果存在一个分布扰动 $F_\tau$ 使得 $\alpha(F_\tau) = \alpha_0$，那么在这个路径上就得到了
+&lt;/p&gt;
+$$
+\frac{\partial}{\partial\tau}\mathbb{E}_{F_0}[\psi(W,\gamma(F_\tau),\alpha_0,\theta)]\bigg|_{\tau=0^+} = 0
+$$&lt;p&gt;
+即 $\gamma$ 的局部扰动不会影响矩条件的成立，这便是 Neyman 正交化。关于这个正交性质的正式描述，见 Chernozhukov et al. (2022) 的定理 3。&lt;/p&gt;
+&lt;p&gt;以上正交性是对 $\gamma$ 的局部扰动而言的。对于 $\alpha$，它是构造偏误调整项 $\phi$ 的一部分，其解析形式通常未知，需要通过优化方法来估计。因此，我们需要保证，对 $\alpha$ 的估计误差不会影响到矩条件的成立&lt;sup id="fnref:7"&gt;&lt;a href="#fn:7" class="footnote-ref" role="doc-noteref"&gt;7&lt;/a&gt;&lt;/sup&gt;，即对任意（满足规范化条件）的 $\alpha$ 都有
+&lt;/p&gt;
+$$
+\mathbb{E}_{F_0}[\phi(W,\gamma_0,\alpha,\theta)] = 0
+$$&lt;p&gt;
+这就是对 $\alpha$ 的全局正交性，正式表述见 Chernozhukov et al. (2022) 的定理 2。&lt;/p&gt;
 &lt;h2 id="技术附录泛函的可微性"&gt;技术附录：泛函的可微性&lt;/h2&gt;
 &lt;p&gt;本附录来自 van der Vaart (1991)，为泛函的可微性做出定义。泛函的导数是方向导数的一般化。&lt;/p&gt;
 &lt;p&gt;设 $P$ 是一个概率测度，它对应真实的模型，$\mathscr{P}$ 是一个概率测度族，它包含了对 $P$ 的某些偏离的概率测度，一个偏离以 $P_t$ 表示，$t\in(0,\varepsilon)\subseteq\mathbb{R}$。令 $\mathscr{P}(P)$ 表示这种偏离路径的集合，即映射 $t\mapsto P_t$ 的集合，每个映射从一个区间 $(0,\varepsilon)\subseteq\mathbb{R}$ 映射到 $\mathscr{P}$，因此每个映射都代表了 $P$ 的一个偏离路径，而且每一个偏离路径都需要满足：存在某个 $g\in L^2(P)$ 使得
@@ -68,15 +79,15 @@ $$&lt;p&gt;
 $$
 \lim_{t\to 0^+} \int \biggl[\frac{1}{t}(dP_t^{1/2}-dP^{1/2}) - \frac12gdP^{1/2}\biggr]^2 = 0
 $$&lt;p&gt;
-其中 $dP_t$ 和 $dP$ 分别是 $P_t$ 和 $P$ 的（关于某个支配测度的）密度函数。这个条件事实上对偏离路径 $t\mapsto P_t$ 做出了一些限制，它要求偏离路径具有某种意义上的光滑性。满足这个条件的路径也被称为「二次均值可微」(quadratic mean differentiability)。函数 $g$ 相当于我们熟悉的得分函数&lt;sup id="fnref:6"&gt;&lt;a href="#fn:6" class="footnote-ref" role="doc-noteref"&gt;6&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+其中 $dP_t$ 和 $dP$ 分别是 $P_t$ 和 $P$ 的（关于某个支配测度的）密度函数。这个条件事实上对偏离路径 $t\mapsto P_t$ 做出了一些限制，它要求偏离路径具有某种意义上的光滑性。满足这个条件的路径也被称为「二次均值可微」(quadratic mean differentiability)。函数 $g$ 相当于我们熟悉的得分函数&lt;sup id="fnref:8"&gt;&lt;a href="#fn:8" class="footnote-ref" role="doc-noteref"&gt;8&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
 &lt;p&gt;从几何意义上说，得分函数 $g$ 可以理解为在 $t=0$ 处切于偏离路径 $t\mapsto P_t$ 的一个切向量。这使得 $\mathscr{P}(P)$ 可以引致一个所谓的「切空间」(tangent space) $T(P)$，它是由所有满足上述条件的函数 $g$ 张成的线性空间。&lt;/p&gt;
-&lt;p&gt;设 $(\bm{B},\|\cdot\|)$ 是一个巴拿赫空间&lt;sup id="fnref:7"&gt;&lt;a href="#fn:7" class="footnote-ref" role="doc-noteref"&gt;7&lt;/a&gt;&lt;/sup&gt;。称泛函 $\kappa\colon\mathscr{P}\to(\bm{B},\|\cdot\|)$ 在 $P$ 处相对于 $\mathscr{P}(P)$ 可微，如果它满足：存在一个连续的线性映射 $\kappa'_P\colon(T(P),\|\cdot\|_P)\to(\bm{B},\|\cdot\|)$ 使得对 $\mathscr{P}(P)$ 中的每一条路径 $t\mapsto P_t$ 及其相应的 $g\in T(P)$ 使得
+&lt;p&gt;设 $(\bm{B},\|\cdot\|)$ 是一个巴拿赫空间&lt;sup id="fnref:9"&gt;&lt;a href="#fn:9" class="footnote-ref" role="doc-noteref"&gt;9&lt;/a&gt;&lt;/sup&gt;。称泛函 $\kappa\colon\mathscr{P}\to(\bm{B},\|\cdot\|)$ 在 $P$ 处相对于 $\mathscr{P}(P)$ 可微，如果它满足：存在一个连续的线性映射 $\kappa'_P\colon(T(P),\|\cdot\|_P)\to(\bm{B},\|\cdot\|)$ 使得对 $\mathscr{P}(P)$ 中的每一条路径 $t\mapsto P_t$ 及其相应的 $g\in T(P)$ 使得
 &lt;/p&gt;
 $$
 \lim_{t\to 0^+} \frac1t[\kappa(P_t)-\kappa(P)] = \kappa'_P(g)
 $$&lt;p&gt;
-$\kappa'_P$ 被称为 $\kappa$ 在 $P$ 处相对于 $\mathscr{P}(P)$ 的导数&lt;sup id="fnref:8"&gt;&lt;a href="#fn:8" class="footnote-ref" role="doc-noteref"&gt;8&lt;/a&gt;&lt;/sup&gt;。这个导数是一个泛函，而且是连续的线性泛函，它将切空间 $T(P)$ 中的元素 $g$ 映射为 $(\bm{B},\|\cdot\|)$ 中的元素 $\kappa'_P(g)$。连续线性是一个很关键的要求，只有这样才会有后面的 Riesz 表示。需要强调，这个定义不仅仅是定义左边极限的存在性，还说明了它能被表示成切空间上的泛函。&lt;/p&gt;
-&lt;p&gt;对于巴拿赫空间 $\bm{B}$，有其对偶空间 $\bm{B}^*$，它是由所有连续线性实值泛函 $b^*\colon\bm{B}\to\mathbb{R}$ 构成的空间。对每个 $b^*\in\bm{B}^*$，映射 $b^*\circ\kappa'_P$ 是从 $(T(P),\|\cdot\|_P)$ 到 $\mathbb{R}$ 的连续线性泛函。根据 Riesz 表示定理，存在一个唯一的 $\tilde{\kappa}_{P,b^*}\in \bar{T}(P)$ 使得，对每个 $g\in T(P)$ 都有&lt;sup id="fnref:9"&gt;&lt;a href="#fn:9" class="footnote-ref" role="doc-noteref"&gt;9&lt;/a&gt;&lt;/sup&gt;
+$\kappa'_P$ 被称为 $\kappa$ 在 $P$ 处相对于 $\mathscr{P}(P)$ 的导数&lt;sup id="fnref:10"&gt;&lt;a href="#fn:10" class="footnote-ref" role="doc-noteref"&gt;10&lt;/a&gt;&lt;/sup&gt;。这个导数是一个泛函，而且是连续的线性泛函，它将切空间 $T(P)$ 中的元素 $g$ 映射为 $(\bm{B},\|\cdot\|)$ 中的元素 $\kappa'_P(g)$。连续线性是一个很关键的要求，只有这样才会有后面的 Riesz 表示。需要强调，这个定义不仅仅是定义左边极限的存在性，还说明了它能被表示成切空间上的泛函。&lt;/p&gt;
+&lt;p&gt;对于巴拿赫空间 $\bm{B}$，有其对偶空间 $\bm{B}^*$，它是由所有连续线性实值泛函 $b^*\colon\bm{B}\to\mathbb{R}$ 构成的空间。对每个 $b^*\in\bm{B}^*$，映射 $b^*\circ\kappa'_P$ 是从 $(T(P),\|\cdot\|_P)$ 到 $\mathbb{R}$ 的连续线性泛函。根据 Riesz 表示定理，存在一个唯一的 $\tilde{\kappa}_{P,b^*}\in \bar{T}(P)$ 使得，对每个 $g\in T(P)$ 都有&lt;sup id="fnref:11"&gt;&lt;a href="#fn:11" class="footnote-ref" role="doc-noteref"&gt;11&lt;/a&gt;&lt;/sup&gt;
 &lt;/p&gt;
 $$
 b^*\circ\kappa'_P(g) = \langle g,\tilde{\kappa}_{P,b^*} \rangle_P
@@ -114,6 +125,7 @@ $$&lt;p&gt;
 &lt;p&gt;这里，满足条件 \eqref{eq:regular} 的估计量 $T_n$ 称为「正则」(regular) 估计量。这个条件和联合弱收敛条件一起保证了 $\kappa$ 的可微性，且导数能表述成影响函数和得分函数的内积，见 van der Vaart (1991) 的引理 A.1。结论 (ii) 即卷积定理，描述了估计量的渐进效率下界，$N$ 就代表了最优极限分布。&lt;/p&gt;
 &lt;h2 id="参考文献"&gt;参考文献&lt;/h2&gt;
 &lt;ul&gt;
+&lt;li&gt;Chernozhukov, V., J. C. Escanciano, H. Ichimura, W. K. Newey, and J. M. Robins (2022): “Locally Robust Semiparametric Estimation,” &lt;em&gt;Econometrica&lt;/em&gt;, 90(4), 1501–1535.&lt;/li&gt;
 &lt;li&gt;Hampel, F. R. (1974): “The Influence Curve and its Role in Robust Estimation,” &lt;em&gt;Journal of the American Statistical Association&lt;/em&gt;, 69(346), 383–393.&lt;/li&gt;
 &lt;li&gt;Ichimura, H. and W. K. Newey (2022): “The Influence Function of Semiparametric Estimators,” &lt;em&gt;Quantitative Economics&lt;/em&gt;, 13(1), 29–61.&lt;/li&gt;
 &lt;li&gt;Kennedy, E. H. (2023): “Semiparametric Doubly Robust Targeted Double Machine Learning: A Review,” &lt;em&gt;arXiv preprint&lt;/em&gt;, arXiv:2203.06469.&lt;/li&gt;
@@ -139,6 +151,12 @@ $$&lt;p&gt;
 &lt;p&gt;这就是 Neyman 正交化。&amp;#160;&lt;a href="#fnref:5" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li id="fn:6"&gt;
+&lt;p&gt;这里凭空出现的 $\alpha$ 其实是 $\theta(F)$ 的 EIF，是一个 Riesz 表示元。直觉上的理解就是，对原始矩函数的一阶校正项必定包含了模型扰动对参数估计本身的一阶影响，可以类比求导的链式法则。一般而言，$\alpha$ 的形式是未知的，需要通过优化方法来估计，这一部分留待后续笔记讨论。&amp;#160;&lt;a href="#fnref:6" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:7"&gt;
+&lt;p&gt;这是大样本理论的前置条件，见 Chernozhukov et al. (2022) 的假设 3(i)。&amp;#160;&lt;a href="#fnref:7" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:8"&gt;
 &lt;p&gt;怎么理解？它可以看成 $dP_t^{1/2}-dP^{1/2} \approx \frac{t}{2}gdP^{1/2}$。为什么要用平方根密度呢？而且还带有一个 $1/2$？我们考虑普通的得分函数 $s(w) = \partial\log p_t(w)|_{t=0}$，对 $p_t(w)$ 在 $p_0(w)$ 处做一阶展开：
 &lt;/p&gt;
 $$
@@ -149,16 +167,16 @@ $$&lt;p&gt;
 $$
 \sqrt{p_t(w)} \approx \sqrt{p_0(w)}\biggl[1 + \frac{t}{2}s(w)\biggr]
 $$&lt;p&gt;
-所以（当似然函数可导时）$g$ 就是得分函数。不过这里其实我们并不要求似然函数可导，因此 $g$ 是更一般的得分函数。&amp;#160;&lt;a href="#fnref:6" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li id="fn:7"&gt;
-&lt;p&gt;即完备的线性赋范空间。就我们考察的半参数问题而言，当参数 $\theta$ 是标量时，$\bm{B}$ 就是实数集 $\mathbb{R}$；当参数 $\theta$ 是向量时，$\bm{B}$ 就是欧几里得空间 $\mathbb{R}^k$。&amp;#160;&lt;a href="#fnref:7" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li id="fn:8"&gt;
-&lt;p&gt;如果 $\mathscr{P}(P)$ 是 &lt;em&gt;所有&lt;/em&gt; 满足前面光滑性条件的路径的集合，那么这个导数就是 Hadamard 导数。但一般情况下，比如在半参数模型中，由于模型限制，我们并不会考虑这么多的路径。&amp;#160;&lt;a href="#fnref:8" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+所以（当似然函数可导时）$g$ 就是得分函数。不过这里其实我们并不要求似然函数可导，因此 $g$ 是更一般的得分函数。&amp;#160;&lt;a href="#fnref:8" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li id="fn:9"&gt;
-&lt;p&gt;通常我们还要加上规范化条件 $\mathbb{E}_P[\tilde{\kappa}_{P,b^*}] = 0$ 来保证唯一性，因为 $\mathbb{E}_P[g] = 0$。&amp;#160;&lt;a href="#fnref:9" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;即完备的线性赋范空间。就我们考察的半参数问题而言，当参数 $\theta$ 是标量时，$\bm{B}$ 就是实数集 $\mathbb{R}$；当参数 $\theta$ 是向量时，$\bm{B}$ 就是欧几里得空间 $\mathbb{R}^k$。&amp;#160;&lt;a href="#fnref:9" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:10"&gt;
+&lt;p&gt;如果 $\mathscr{P}(P)$ 是 &lt;em&gt;所有&lt;/em&gt; 满足前面光滑性条件的路径的集合，那么这个导数就是 Hadamard 导数。但一般情况下，比如在半参数模型中，由于模型限制，我们并不会考虑这么多的路径。&amp;#160;&lt;a href="#fnref:10" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:11"&gt;
+&lt;p&gt;通常我们还要加上规范化条件 $\mathbb{E}_P[\tilde{\kappa}_{P,b^*}] = 0$ 来保证唯一性，因为 $\mathbb{E}_P[g] = 0$。&amp;#160;&lt;a href="#fnref:11" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
