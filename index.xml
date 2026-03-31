@@ -1,4 +1,211 @@
-<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Thu, 19 Mar 2026 12:00:00 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>半参数模型的影响函数</title><link>https://gaxu.xyz/posts/influence-function/</link><pubDate>Thu, 19 Mar 2026 12:00:00 +0800</pubDate><guid>https://gaxu.xyz/posts/influence-function/</guid><description>嘉树的世界 https://gaxu.xyz/posts/influence-function/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>嘉树的世界</title><link>https://gaxu.xyz/</link><description>Recent content on 嘉树的世界</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>2023–2025 嘉树.</copyright><lastBuildDate>Tue, 31 Mar 2026 12:00:00 +0800</lastBuildDate><atom:link href="https://gaxu.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>局部投影估计</title><link>https://gaxu.xyz/posts/local-projection/</link><pubDate>Tue, 31 Mar 2026 12:00:00 +0800</pubDate><guid>https://gaxu.xyz/posts/local-projection/</guid><description>嘉树的世界 https://gaxu.xyz/posts/local-projection/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
+&lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice info" &gt;
+&lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#info-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Info&lt;/p&gt;&lt;p&gt;本文是对局部投影估计的简要介绍，着重强调了和 VAR 的联系以及稳健性。这个方法本质上就是 OLS，但正是因为简单，才有了相比 VAR 更佳的稳健性。&lt;/p&gt;&lt;/div&gt;
+&lt;p class="pdf-download"&gt;
+&lt;i class="fa-solid fa-file-pdf" aria-hidden="true"&gt;&lt;/i&gt;
+&lt;em&gt;&lt;a href="https://gaxu.xyz/posts/local-projection/local-projection.pdf"&gt;
+下载本文 PDF
+&lt;/a&gt;&lt;/em&gt;
+&lt;/p&gt;
+&lt;p&gt;局部投影法 (local projection, LP) 是一种估计脉冲响应的方法，由 Jordà (2005) 提出，在近十年受到越来越多的关注和应用。在介绍这个方法之前，我们先回顾一下什么是脉冲响应。&lt;/p&gt;
+&lt;h2 id="脉冲响应"&gt;脉冲响应&lt;/h2&gt;
+&lt;p&gt;所谓脉冲响应 (impulse response, IR)，就是指一个变量 $y$ 受到另一个变量 $x$ 的变化而产生的变化，$x$ 的变化是未预期到的，因此是一个冲击或脉冲&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;，而 $y$ 的变化是动态的，即自冲击发生开始，$y$ 会持续地发生变化，因而这种响应量是时间位移的函数，也就是&lt;em&gt;脉冲响应函数&lt;/em&gt; (impulse response function, IRF)。从因果效应的角度看，脉冲响应函数描述了 $x$ 的冲击对 $y$ 的&lt;em&gt;动态&lt;/em&gt;因果效应。在应用宏观经济学中，脉冲响应无疑是最核心的研究对象之一，被用来研究各种经济冲击对经济变量的影响，如货币政策冲击对产出、通货膨胀、利率等的影响。&lt;/p&gt;
+&lt;p&gt;考虑一个简单模型，假设冲击序列 $\{x_t\}$ 独立同分布，响应变量 $y_t$ 是由冲击序列合成的 MA($\infty$) 过程：
+&lt;/p&gt;
+$$
+y_t = \sum_{j=0}^\infty \beta_j x_{t-j}
+$$&lt;p&gt;
+那么 $y_{t+h}$ 对 $x_t$ 的脉冲响应正是 $\beta_h$。&lt;/p&gt;
+&lt;p&gt;更一般地，当不知道 $y_t$ 的具体生成过程时，定义其对 $\delta$ 单位冲击的脉冲响应为
+&lt;/p&gt;
+$$
+\operatorname{IR}(h,\delta) := \mathbb{E}(y_{t+h}|x_t=\delta) - \mathbb{E}(y_{t+h}|x_t=0), \qquad h = 0,1,2,\dots
+$$&lt;p&gt;
+通常将冲击强度标准化为 $\delta = 1$，即 $\operatorname{IR}(h,1) = \operatorname{IR}(h)$。大多数情况下，还有其他变量 $\bm{w}_t$ 影响 $y_t$，此时需要控制这些变量以隔离出冲击的偏效应，因而脉冲响应就是
+&lt;/p&gt;
+$$
+\operatorname{IR}(h) = \mathbb{E}(y_{t+h}|x_t=1,\bm{w}_t) - \mathbb{E}(y_{t+h}|x_t=0,\bm{w}_t), \qquad h = 0,1,2,\dots
+$$&lt;p&gt;
+这个表达式很自然地引导我们用线性回归的方式来刻画变量关系：
+&lt;/p&gt;
+$$
+y_{t+h} = \alpha + \beta_h x_t + \bm{\gamma}' \bm{w}_{t} + v_{t+h}.
+$$&lt;p&gt;
+这便是&lt;em&gt;局部投影&lt;/em&gt;方程。当 $x_t$ 满足外生条件 $\mathbb{E}(x_tv_{t+h})=0$ 时，就可以使用 OLS 得到 $\beta_h$ 的一致估计量，也就是该 horizon 上的 LP 脉冲响应估计量。&lt;/p&gt;
+&lt;h2 id="lp-和-var-的联系"&gt;LP 和 VAR 的联系&lt;/h2&gt;
+&lt;p&gt;自 Sims (1980) 以来，向量自回归 (vector autoregression, VAR) 模型成为估计脉冲响应的标准范式，它将宏观经济变量归纳为一个动力系统，所有变量都是内生的。这个范式如今依旧是宏观经济研究的主流方法，但就估计脉冲响应而言，它并非唯一选择，也不是在任何情况下都最好的选择，LP 就有一些独特的优势。我们先介绍 LP 和 VAR 的联系。&lt;/p&gt;
+&lt;p&gt;在结构上，VAR 和 LP 的关系，好比一般均衡和局部均衡的关系：前者描述了所有变量在所有 horizon 上的动态演进，而后者只是归纳了某一个变量在每个特定 horizon 上同其他变量（和其历史）的动态关系&lt;sup id="fnref:2"&gt;&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;。所谓“局部”就是特定的意思，局部投影即将特定 horizon 的结果变量投影到冲击变量上。&lt;/p&gt;
+&lt;h3 id="由-var-导出-lp"&gt;由 VAR 导出 LP&lt;/h3&gt;
+&lt;p&gt;当数据生成过程确为 VAR 模型时，我们事实上可以从 VAR 模型推导出 LP 方程。假设有 $n$ 个内生变量，写成一个向量 $\bm{y}_t = (y_{1t},\dots,y_{nt})'$，它们服从一个 VAR($p$) 过程：
+&lt;/p&gt;
+$$
+\bm{y}_{t}=\sum_{\ell=1}^{p}\bm{A}_{\ell}\bm{y}_{t-\ell}+\bm{u}_{t}\quad t=1,\dots,T
+$$&lt;p&gt;
+为简化讨论，我们暂不考虑结构型 VAR (SVAR)，假设 $\bm{u}_t$ 就是结构冲击，并设 $\bm{\Sigma}_u := \mathbb{E}[\bm{u}_t\bm{u}_t'] = \bm{I}_n$。&lt;/p&gt;
+&lt;p&gt;事实上，任意 VAR($p$) 模型都可以重写为 VAR(1) 的形式。定义
+&lt;/p&gt;
+$$
+\bm{Y}_{t}=\begin{bmatrix}\bm{y}_{t}\\
+\vdots\\
+\bm{y}_{t-p+1}
+\end{bmatrix}, \qquad
+\underset{(np\times np)}{\bm{\Phi}}=\begin{bmatrix}\bm{A}_{1} &amp; \bm{A}_{2} &amp; \cdots &amp; \bm{A}_{p-1} &amp; \bm{A}_{p}\\
+\bm{I}_{n} &amp; \bm{0} &amp; \cdots &amp; \bm{0} &amp; \bm{0}\\
+\bm{0} &amp; \bm{I}_{n} &amp; \cdots &amp; \bm{0} &amp; \bm{0}\\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots\\
+\bm{0} &amp; \bm{0} &amp; \cdots &amp; \bm{I}_{n} &amp; \bm{0}
+\end{bmatrix}, \qquad
+\bm{U}_{t}=\begin{bmatrix}\bm{u}_{t}\\
+\bm{0}\\
+\vdots\\
+\bm{0}
+\end{bmatrix}
+$$&lt;p&gt;
+不难验证
+&lt;/p&gt;
+$$
+\bm{Y}_{t}=\bm{\Phi}\bm{Y}_{t-1}+\bm{U}_{t}
+$$&lt;p&gt;
+这被称为 VAR$(p)$ 模型的伴随形式 (companion form)。因此，通常我们只需关注 VAR(1)。迭代此式可得
+&lt;/p&gt;
+$$
+\bm{Y}_{t+h}=\bm{\Phi}^{h}\bm{Y}_{t}+\sum_{\ell=0}^{h-1}\bm{\Phi}^{\ell}\bm{U}_{t+h-\ell}
+$$&lt;p&gt;
+定义 $\bm{J}_k := \bm{e}_k'\otimes\bm{I}_n$&lt;sup id="fnref:3"&gt;&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref"&gt;3&lt;/a&gt;&lt;/sup&gt;，其中 $\bm{e}_k$ 是第 $k$ 个 $p$ 维单位向量，$\otimes$ 表示 Kronecker 积，$\bm{I}_n$ 是 $n$ 维单位矩阵。对上式左乘 $\bm{J}_1$，得到
+&lt;/p&gt;
+$$
+\begin{split}
+\bm{y}_{t+h} &amp; =\bm{J}_{1}\bm{\Phi}^{h}\bm{Y}_{t}+\sum_{\ell=0}^{h-1}\bm{J}_{1}\bm{\Phi}^{\ell}\bm{U}_{t+h-\ell}\\
+&amp; =\bm{J}_{1}\bm{\Phi}^{h}(\bm{J}_{1}^{\prime}\bm{y}_{t}+\bm{J}_{2}^{\prime}\bm{y}_{t-1}+\cdots+\bm{J}_{p}^{\prime}\bm{y}_{t-p+1})+\sum_{\ell=0}^{h-1}\bm{J}_{1}\bm{\Phi}^{\ell}\bm{J}_{1}^{\prime}\bm{u}_{t+h-\ell}\\
+&amp; =\bm{J}_{1}\bm{\Phi}^{h}\bm{J}_{1}^{\prime}\bm{y}_{t}+\sum_{k=1}^{p-1}\bm{J}_{1}\bm{\Phi}^{h}\bm{J}_{k+1}^{\prime}\bm{y}_{t-k}+\sum_{\ell=0}^{h-1}\bm{J}_{1}\bm{\Phi}^{\ell}\bm{J}_{1}^{\prime}\bm{u}_{t+h-\ell}
+\end{split}
+$$&lt;p&gt;
+从这个式子可以看出，对于来自 $u_{jt}$ 的一单位冲击，在 $\ell$ 期后对 $y_{i,t+\ell}$ 的响应，等于 $\bm{J}_{1}\bm{\Phi}^{\ell}\bm{J}_{1}^{\prime}$ 的第 $i$ 行第 $j$ 列元素。注意到 $\bm{y}_t$ 的系数矩阵恰为 $\bm{J}_{1}\bm{\Phi}\bm{J}_{1}^{\prime}$，因此，欲得到 $y_{i,t+h}$ 对 $\bm{u}_t$ 的脉冲响应，只需以 $y_{i,t+h}$ 对 $\bm{y}_t,\bm{y}_{t-1},\dots,\bm{y}_{t-p+1}$ 做线性回归，所得 $\bm{y}_t$ 的回归系数即 $h$ 期脉冲响应。这便是局部投影。&lt;/p&gt;
+&lt;h3 id="lp-和-var-在总体上的等价性"&gt;LP 和 VAR 在总体上的等价性&lt;/h3&gt;
+&lt;p&gt;事实上，LP 和 VAR 具有更广泛意义上的等价性，这种等价并不依赖于数据的生成过程必须为 VAR 模型。Plagborg-Møller and Wolf (2021) 对这一性质做了正式讨论，这里给出其主要结论。&lt;/p&gt;
+&lt;p&gt;假设数据 $\bm{w}_t = (\bm{r}_t',x_t,y_t,\bm{q}_t')'$，其中 $\bm{r}_t$ 是 $n_r$ 维向量，$\bm{q}_t$ 是 $n_q$ 维向量，$x_t$ 和 $y_t$ 都是标量。我们想要估计 $y_t$ 对 $x_t$ 的脉冲响应，$\bm{r}_t$ 和 $\bm{q}_t$ 将作为控制变量（可以为空）&lt;sup id="fnref:4"&gt;&lt;a href="#fn:4" class="footnote-ref" role="doc-noteref"&gt;4&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="Assumption-1" class="thm-title thm-Assumption"&gt;Assumption 1.&lt;/p&gt;
+&lt;div class="thm-inner thm-Assumption"&gt;
+数据 $\{\bm{w}_t\}$ 协方差平稳且不能被其历史完全预测（存在一个创新成分使之具有不可预测的随机性），此外有一个处处非奇异的谱密度矩阵和绝对可加的 Wold 分解。
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="thm"&gt;
+&lt;p id="Assumption-2" class="thm-title thm-Assumption"&gt;Assumption 2.&lt;/p&gt;
+&lt;div class="thm-inner thm-Assumption"&gt;
+$\{\bm{w}_t\}$ 是一个联合高斯过程。
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这里的高斯假设只为了简化记号&lt;sup id="fnref:5"&gt;&lt;a href="#fn:5" class="footnote-ref" role="doc-noteref"&gt;5&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;p&gt;LP 的脉冲响应来自如下投影方程：
+&lt;/p&gt;
+$$
+y_{t+h} = \mu_h + \beta_hx_t + \bm{\gamma}_h'\bm{r}_t + \sum_{\ell=1}^\infty \bm{\delta}_{h,\ell}'\bm{w}_{t-\ell} + \xi_{h,t}
+$$&lt;p&gt;
+脉冲响应就是 $\{\beta_h\}_{h\geq0}$&lt;sup id="fnref:6"&gt;&lt;a href="#fn:6" class="footnote-ref" role="doc-noteref"&gt;6&lt;/a&gt;&lt;/sup&gt;。换言之，
+&lt;/p&gt;
+$$
+\beta_h = \mathbb{E}(y_{t+h}|x_t=1,\bm{r}_t,\{w_\tau\}_{\tau &lt; t}) - \mathbb{E}(y_{t+h}|x_t=0,\bm{r}_t,\{w_\tau\}_{\tau &lt; t})
+$$&lt;p&gt;另一方面，我们有（简约型） VAR($\infty$) 投影方程：
+&lt;/p&gt;
+$$
+\bm{w}_t = \bm{c} + \sum_{\ell=1}^\infty \bm{A}_\ell\bm{w}_{t-\ell} + \bm{u}_t
+$$&lt;p&gt;
+其中 $\bm{u}_t := \bm{w}_t - \mathbb{E}[\bm{w}_t|\{w_\tau\}_{\tau &lt; t}]$ 是投影残差。我们可以考虑 SVAR 的递归识别，令 $\bm{\Sigma}_u := \mathbb{E}[\bm{u}_t\bm{u}_t']$ 并对其做 Cholesky 分解 $\bm{\Sigma}_u = \bm{B}\bm{B}'$，于是 SVAR 可以写成
+&lt;/p&gt;
+$$
+\bm{A}(L)\bm{w}_t = \bm{c} + \bm{B}\bm{\eta}_t
+$$&lt;p&gt;
+其中 $\bm{A}(L) := \bm{I} - \sum_{\ell=1}^\infty \bm{A}_\ell L^\ell$，$\bm{\eta}_t := \bm{B}^{-1}\bm{u}_t$。定义滞后多项式 $\sum_{\ell=0}^\infty\bm{C}_\ell L^\ell = \bm{C}(L) := \bm{A}(L)^{-1}$。于是，$y_t$ 对 $x_t$ 的脉冲响应为
+&lt;/p&gt;
+$$
+\theta_h := \bm{C}_{n_r+2,\cdot,h}\bm{B}_{\cdot,n_r+1}
+$$&lt;p&gt;
+这里 $\bm{C}_{i,\cdot,h}$ 是 $\bm{C}_h$ 的第 $i$ 行，$\bm{B}_{\cdot,j}$ 是 $\bm{B}$ 的第 $j$ 列。&lt;/p&gt;
+&lt;div class="thm"&gt;
+&lt;p id="Proposition-3" class="thm-title thm-Proposition"&gt;Proposition 3.&lt;/p&gt;
+&lt;div class="thm-inner thm-Proposition"&gt;
+若前述两个假设成立，则 LP 和 VAR 导致的脉冲响应是等价的：对每个 $h = 0,1,2,\dots$，有 $\theta_h = \sqrt{\mathbb{E}(\tilde{x}_t^2)}\beta_h$，其中 $\tilde{x}_t := x_t - \mathbb{E}(x_t|\bm{r}_t,\{w_\tau\}_{\tau &lt; t})$。
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;需要注意，前述两个假设并未对实际的数据生成过程做出任何参数化或线性的要求，LP 和 VAR 在这里只是两种线性投影方式，并不必然是数据的真实生成过程。此外，LP 方程和 VAR 方程都包含了数据的全部历史信息，因而有别于实际应用中通常使用的&lt;em&gt;有限&lt;/em&gt;滞后的估计方程。这个命题是在说，只要控制了全部历史信息，LP 投影和 VAR 投影得到的脉冲响应是等价的，只存在一个常数倍数的差别&lt;sup id="fnref:7"&gt;&lt;a href="#fn:7" class="footnote-ref" role="doc-noteref"&gt;7&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;p&gt;还需要注意，这个结论只是表明了两种投影所得脉冲响应在&lt;em&gt;总体&lt;/em&gt;上的等价性，并不意味着样本估计结果会相同。关于样本估计结果的差异，我们将在下一节讨论。&lt;/p&gt;
+&lt;p&gt;Plagborg-Møller and Wolf (2021, Proposition 2) 还论证了有限维滞后 LP 和 VAR 的等价性：对于 $h \leq p$，LP 和 VAR 投影所得脉冲响应是等价的，但对于 $h &gt; p$，两者可能相异。&lt;/p&gt;
+&lt;p&gt;一般认为，除了直截了当的估计形式，局部投影的优势在于对模型误设的稳健性。换言之，其得到的脉冲响应估计量相比 VAR 模型有更小的偏误，但代价是更大的方差。当 VAR 模型是真实的数据生成过程时，LP 估计量的方差会显著高于 VAR 模型（尽管仍然是一致的），在推断中，这表现为更宽的置信区间。这是一种 bias-variance trade-off，LP 通过牺牲效率换取稳健性，而后者的重要性常常高于效率，所以 LP 越来越受到实证研究者的青睐。&lt;/p&gt;
+&lt;h2 id="lp-的稳健性"&gt;LP 的稳健性&lt;/h2&gt;
+&lt;p&gt;在数值模拟中，可以更清楚地观察到 LP 和 VAR 之间的 bias-variance trade-off。我们用一个简单的实验来展示。设数据服从一个 ARMA(1,1)：
+&lt;/p&gt;
+$$
+y_t = \rho y_{t-1} + \varepsilon_t + \alpha \varepsilon_{t-1}
+$$&lt;p&gt;
+其中 $\varepsilon_t\sim\text{i.i.d. }\mathcal{N}(0,1)$，$\rho = 0.85$，$\alpha = 0.1$。这里 $\alpha$ 表示对 AR(1) 模型的轻度偏离。换言之，我们想考察当真实模型并非 AR(1) 时，LP 和 AR(1) 模型估计的脉冲响应的差异。&lt;/p&gt;
+&lt;p&gt;取数据长度 $T = 250$，分别用 LP 和 AR(1) 模型估计 $h = 2$ 的脉冲响应&lt;sup id="fnref:8"&gt;&lt;a href="#fn:8" class="footnote-ref" role="doc-noteref"&gt;8&lt;/a&gt;&lt;/sup&gt;。下图展示了两种估计量的分布。可以看到，LP 估计量的分布更宽，但更加围绕真实值对称，而 AR(1) 估计量的分布更窄，但更偏离真实值。这表明，在这种模型误设下，LP 比误设的 AR(1) 模型偏误更小，但方差更大。&lt;/p&gt;
+&lt;figure id="fig:arma11-lp-var-histogram" class="insert-figure" align="" role="group" aria-describedby="caption-6f4abab1bdee160df140b886e696f69f"&gt;
+&lt;a href="https://gaxu.xyz/posts/local-projection/arma11_lp_var_histogram.svg" class="img-link"&gt;
+&lt;img class="insert-figure-img" src="https://gaxu.xyz/posts/local-projection/arma11_lp_var_histogram.svg" style="--insert-figure-width: 50%;"&gt;
+&lt;/a&gt;
+&lt;figcaption id="caption-6f4abab1bdee160df140b886e696f69f"&gt;
+LP 和 AR(1) 模型估计的脉冲响应估计量的分布
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Li, Plagborg-Møller, and Wolf (2024) 做了大量更细致的数值模拟，结果表明，在 LP 和 VAR 控制相同滞后项数时，对于短期脉冲响应，两者差异较小；但对中远期脉冲响应，LP 有更小的偏误和更大的方差，而 VAR 则相反。Montiel Olea, Plagborg-Møller, Qian, and Wolf (2024) 则从理论上建立了 LP 对局部模型误设的稳健性：当真实模型是一个带有 MA 项的 VARMA 模型时，LP 估计量的置信区间仍具有良好的覆盖概率，而使用误设的 VAR 所得置信区间则存在显著的覆盖概率不足。换言之，LP 仍然可以被用于对脉冲响应的有效推断，而 VAR 则不能。&lt;/p&gt;
+&lt;p&gt;在实际应用的&lt;em&gt;有限&lt;/em&gt;样本中，两者的估计量更是可能出现显著差异。利用 Ramey (2016) 中的多个实证例子，Montiel Olea, Plagborg-Møller, Qian, and Wolf (2025, Section 3.1) 计算了 LP 和 VAR 的脉冲响应估计量及其标准误，发现两者的估计量差异很大，特别是在远期脉冲响应上，而 VAR 脉冲响应的标准误常常比 LP 更小。这意味着两种方法可能导致截然不同的实证结论。一般而言，不推荐使用短滞后的 VAR 模型。若模型必须精简，通常更推荐 LP；若滞后期数不受限制，则 VAR 往往可以给出更精确的估计。&lt;/p&gt;
+&lt;h2 id="lp-的推断"&gt;LP 的推断&lt;/h2&gt;
+&lt;p&gt;在实证研究中，除了获得脉冲响应的点估计，更重要的还是对估计量进行推断，即构造置信区间。这里的推断指的是逐点推断 (pointwise inference)，即对每个 horizon 的脉冲响应估计量构造置信区间&lt;sup id="fnref:9"&gt;&lt;a href="#fn:9" class="footnote-ref" role="doc-noteref"&gt;9&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;p&gt;逐个 horizon 的 LP 回归通常可以通过 OLS 估计，因而其推断自然建立在 OLS 的推断理论之上。只需要计算 LP 估计量的标准误，然后给估计量加减 1.96 倍的标准误，就可以得到 95% 的置信区间。这再简单不过了。但问题是，我们应该采用什么标准误？Jordà (2005) 的推荐是使用 HAC (heteroskedasticity and autocorrelation consistent) 稳健标准误，如 Newey-West 标准误，原因是 LP 的误差项一般是自相关的。&lt;/p&gt;
+&lt;p&gt;多数情况下这已经足够了，但在某些情况下，事情并没有这么简单。首先是数据中可能存在的非平稳性，此时寻常的推断方法会失效。对此，Montiel Olea and Plagborg-Møller (2021) 建议使用“滞后扩充” (lag-augmented) 回归，然后使用 White 异方差稳健标准误就够了。另外，在有限样本中，Herbst and Johannsen (2024) 发现，LP 的估计量在小样本（如 $T &lt; 200$ 或更小）中存在偏误，足以使采用 HAC 稳健标准误的推断失效。&lt;/p&gt;
+&lt;h2 id="小结"&gt;小结&lt;/h2&gt;
+&lt;p&gt;本文简要介绍了局部投影估计的原理、和 VAR 的联系，以及推断的一些问题。自然，这只是关于 LP 的一小部分，其他主题如和工具变量的结合、正则化估计、面板数据、与因果推断的联系等都未有涉及。欲更深入了解 LP 的方方面面，Jordà and Taylor (2025) 以及 Montiel Olea, Plagborg-Møller, Qian, and Wolf (2025) 是不得不读的两篇综述。&lt;/p&gt;
+&lt;p&gt;最后，我们梳理一下实证研究中关于如何选择 LP 和 VAR 的建议&lt;sup id="fnref:10"&gt;&lt;a href="#fn:10" class="footnote-ref" role="doc-noteref"&gt;10&lt;/a&gt;&lt;/sup&gt;。如果样本量较小，推荐使用 VAR 和 Herbst and Johannsen (2024) 的误差纠正 LP；如果样本量不是担心的问题，推荐使用 LP 或者滞后项足够多的 VAR；如果存在非平稳性，则需要使用滞后扩充的 LP。&lt;/p&gt;
+&lt;h2 id="参考文献"&gt;参考文献&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Herbst, E. P. and B. K. Johannsen (2024): “Bias in Local Projections,” &lt;em&gt;Journal of Econometrics&lt;/em&gt;, 240(1), 105655.&lt;/li&gt;
+&lt;li&gt;Jordà, Ò. (2005): “Estimation and Inference of Impulse Responses by Local Projections,” &lt;em&gt;American Economic Review&lt;/em&gt;, 95(1), 161–182.&lt;/li&gt;
+&lt;li&gt;Jordà, Ò. and A. M. Taylor (2025): “Local Projections,” &lt;em&gt;Journal of Economic Literature&lt;/em&gt;, 63(1), 59–110.&lt;/li&gt;
+&lt;li&gt;Li, D., M. Plagborg-Møller, and C. K. Wolf (2024): “Local Projections vs. VARs: Lessons from Thousands of DGPs,” &lt;em&gt;Journal of Econometrics&lt;/em&gt;, 244(2), 105722.&lt;/li&gt;
+&lt;li&gt;Montiel Olea, J. L. and M. Plagborg-Møller (2021): “Local Projection Inference is Simpler and More Robust Than You Think,” &lt;em&gt;Econometrica&lt;/em&gt;, 89(4), 1789–1823.&lt;/li&gt;
+&lt;li&gt;Montiel Olea, J. L., M. Plagborg-Møller, E. Qian, and C. K. Wolf (2024): “Double Robustness of Local Projections and Some Unpleasant VARithmetic,” &lt;em&gt;arXiv preprint&lt;/em&gt;, arXiv:2405.09509.&lt;/li&gt;
+&lt;li&gt;Montiel Olea, J. L., M. Plagborg-Møller, E. Qian, and C. K. Wolf (2025): “Local Projections or VARs? A Primer for Macroeconomists,” &lt;em&gt;arXiv preprint&lt;/em&gt;, arXiv:2503.17144.&lt;/li&gt;
+&lt;li&gt;Plagborg-Møller, M. and C. K. Wolf (2021): “Local Projections and VARs Estimate the Same Impulse Responses,” &lt;em&gt;Econometrica&lt;/em&gt;, 89(2), 955–980.&lt;/li&gt;
+&lt;li&gt;Ramey, V. A. (2016): “Macroeconomic Shocks and Their Propagation,” in &lt;em&gt;Handbook of Macroeconomics&lt;/em&gt;, Vol. 2, ed. by John B. Taylor and Harald Uhlig. Elsevier, Chapter 2, 71–162.&lt;/li&gt;
+&lt;li&gt;Sims, C. A. (1980): “Macroeconomics and Reality,” &lt;em&gt;Econometrica&lt;/em&gt;, 48(1), 1–48.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;“脉冲”一词原本来自信号处理领域，表示一个瞬间的、突然的信号变化。因宏观经济学有研究各种经济冲击效应的需要，“脉冲响应”被顺势引入，其含义用来对应“冲击”也恰如其分。&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;在这个意义上，局部投影又相当于 reduced form，而 VAR 是 structural form。&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:3"&gt;
+&lt;p&gt;例如，$\bm{J}_{1}:=[\bm{I}_{n},\bm{0}_{n\times n(p-1)}]$，表示选择 $\bm{Y}_{t+h}$ 的前 $n$ 个分量。&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:4"&gt;
+&lt;p&gt;这种排序规定了 VAR 的递归识别，$x_t$ 排在 $y_t$ 之前，这在 Cholesky 分解时意味着 $x_t$ 的冲击可以当期影响 $y_t$，反之则不能。如果 $x_t$ 排在 $y_t$ 之后，则意味着 $x_t$ 的冲击不能当期影响 $y_t$，那么在 LP 方程中就还必须控制当期 $y_t$。$\bm{r}_t$ 是那些可以当期影响 $x_t$ 的变量，因此其当期值必须被纳入控制变量。$\bm{q}_t$ 和 $y_t$ 的排序并不重要。&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:5"&gt;
+&lt;p&gt;这个假设只为了简化记号，将线性投影表示为条件期望，因为高斯变量之间的线性投影就是条件期望。没有这个假设也能证明等价性。&amp;#160;&lt;a href="#fnref:5" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:6"&gt;
+&lt;p&gt;根据 FWL 定理，$\beta_h$ 可由 $y_{t+h}$ 对残差 $\tilde{x}_t := x_t - \operatorname{proj}(x_t|\bm{r}_t,\{w_\tau\}_{\tau &lt; t})$ 做线性回归得到，而残差 $\tilde{x}_t$ 是 $x_t$ 的新息成分，代表了冲击。&amp;#160;&lt;a href="#fnref:6" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:7"&gt;
+&lt;p&gt;这个常数倍数存在的原因是，VAR 中 $x_t$ 的新息成分 $\eta_{x,t}$（一单位冲击）被标准化为单位方差，而 LP 中的一单位冲击 $\tilde{x}_t$ 并不一定有单位方差。&amp;#160;&lt;a href="#fnref:7" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:8"&gt;
+&lt;p&gt;真实值为 $\theta_h = \rho^h + \alpha \rho^{h-1}$。&amp;#160;&lt;a href="#fnref:8" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:9"&gt;
+&lt;p&gt;相对应的是联合推断 (joint inference)，即对整个脉冲响应函数构造置信区间。&amp;#160;&lt;a href="#fnref:9" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:10"&gt;
+&lt;p&gt;不过通常的做法是两者均报告在研究中。&amp;#160;&lt;a href="#fnref:10" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+- https://gaxu.xyz/posts/local-projection/ - 2023–2025 嘉树.</description></item><item><title>半参数模型的影响函数</title><link>https://gaxu.xyz/posts/influence-function/</link><pubDate>Thu, 19 Mar 2026 12:00:00 +0800</pubDate><guid>https://gaxu.xyz/posts/influence-function/</guid><description>嘉树的世界 https://gaxu.xyz/posts/influence-function/ -&lt;style type="text/css"&gt;.notice{--root-color:#444;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#c33;--warning-content:#fee;--info-title:#fb7;--info-content:#fec;--note-title:#6be;--note-content:#e7f2fa;--tip-title:#5a5;--tip-content:#efe}@media (prefers-color-scheme:dark){.notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}}body.night .notice{--root-color:#ddd;--root-background:#eff;--title-color:#fff;--title-background:#7bd;--warning-title:#800;--warning-content:#400;--info-title:#a50;--info-content:#420;--note-title:#069;--note-content:#023;--tip-title:#363;--tip-content:#121}.notice{padding:0 18px 18px;line-height:24px;margin-bottom:20px;border-radius:4px;color:var(--root-color);background:var(--root-background)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background)}.notice.warning .notice-title{background:var(--warning-title)}.notice.warning{background:var(--warning-content)}.notice.info .notice-title{background:var(--info-title)}.notice.info{background:var(--info-content)}.notice.note .notice-title{background:var(--note-title)}.notice.note{background:var(--note-content)}.notice.tip .notice-title{background:var(--tip-title)}.notice.tip{background:var(--tip-content)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:var(--title-color)}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}&lt;/style&gt;
 &lt;div&gt;&lt;svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/&gt;&lt;/symbol&gt;&lt;symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/&gt;&lt;/symbol&gt;&lt;symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/symbol&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="notice info" &gt;
 &lt;p class="first notice-title"&gt;&lt;span class="icon-notice baseline"&gt;&lt;svg&gt;&lt;use href="#info-notice"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;Info&lt;/p&gt;&lt;p&gt;本文是对「影响函数」(influence function) 的介绍，讲述了它在半参数模型中扮演的角色，并以构造正交矩条件为例展示了其威力。影响函数本质上是对「梯度」概念在泛函空间中的推广，刻画了分布扰动对估计量的一阶影响。由此，它是分析估计量效率、对模型误设的稳健性等性质的利器。&lt;/p&gt;&lt;/div&gt;
 &lt;p class="pdf-download"&gt;
@@ -1589,69 +1796,4 @@ $$&lt;p&gt;
 &lt;p&gt;&lt;a href="https://www.stt.msu.edu/users/wangho16/lasso.pdf"&gt;Honglang Wang&amp;rsquo;s Tutorial on Lasso&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Bühlmann, Peter, and Sara van de Geer (2011). &lt;em&gt;Statistics for High-Dimensional Data: Methods, Theory and Applications.&lt;/em&gt; Springer Science &amp;amp; Business Media.&lt;/p&gt;
 &lt;p&gt;Rigollet, Philippe, and Jan-Christian Hütter (2023). &amp;ldquo;High-Dimensional Statistics.&amp;rdquo; &lt;em&gt;arXiv preprint&lt;/em&gt;. &lt;a href="https://arxiv.org/pdf/2310.19244.pdf"&gt;arXiv:2310.19244&lt;/a&gt;.&lt;/p&gt;
-- https://gaxu.xyz/posts/lasso/ - 2023–2025 嘉树.</description></item><item><title>在 Mac 上管理多个 GitHub 账号</title><link>https://gaxu.xyz/posts/multiple-gh-accounts/</link><pubDate>Tue, 27 Aug 2024 19:29:37 +0800</pubDate><guid>https://gaxu.xyz/posts/multiple-gh-accounts/</guid><description>嘉树的世界 https://gaxu.xyz/posts/multiple-gh-accounts/ -&lt;h2 id="动机"&gt;动机&lt;/h2&gt;
-&lt;p&gt;我有两个 GitHub 账号，希望一个是面向工作，另一个则是私人的。那么，如何在一台 Mac 上无缝切换这个两个账号呢？本文列出了关键步骤。其他操作系统应当类似。&lt;/p&gt;
-&lt;h2 id="生成-ssh-密钥"&gt;生成 SSH 密钥&lt;/h2&gt;
-&lt;p&gt;GitHub 提供了两种方式与远程仓库建立联系：SSH 和 HTTPS。简单来说，当我们向远程仓库 push 代码时，HTTPS 每次都需要提供所谓的 access token（当然这个活其实也只是第一次 push 的时候需要，因为 Mac 会把这个 token 存放在钥匙串里面，以后就不需要手动输入了），而 SSH 使用一对公钥和私钥取得认证（事先生成，然后本地和远程分别拿着私钥和公钥），不需要记住用户名和 token。就我们的目的而言，只能用 SSH 来实现。&lt;/p&gt;
-&lt;p&gt;假设我们有两个账号，personal 和 work，以下我们分别为它们生成 SSH 密钥。更多账号操作也是一样的。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#81a1c1"&gt;cd&lt;/span&gt; ~/.ssh
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-keygen -t rsa -C &lt;span style="color:#a3be8c"&gt;&amp;#34;email@personal.com&amp;#34;&lt;/span&gt; -f &lt;span style="color:#a3be8c"&gt;&amp;#34;gh-personal&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-keygen -t rsa -C &lt;span style="color:#a3be8c"&gt;&amp;#34;email@work.com&amp;#34;&lt;/span&gt; -f &lt;span style="color:#a3be8c"&gt;&amp;#34;gh-work&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行完了之后，在 &lt;code&gt;.ssh&lt;/code&gt; 文件夹下我们得到了四个文件：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;gh-personal&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;gh-personal.pub&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;gh-work&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;gh-work.pub&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;其中带 &lt;code&gt;.pub&lt;/code&gt; 扩展名的是存公钥的，不带的是存私钥的。&lt;/p&gt;
-&lt;h2 id="分配私钥和公钥"&gt;分配私钥和公钥&lt;/h2&gt;
-&lt;h3 id="将私钥加入-ssh-agent"&gt;将私钥加入 SSH Agent&lt;/h3&gt;
-&lt;p&gt;上一步只是生成了密钥，还需要把私钥加入 Mac 的钥匙串 (keychain)，也就是保存密码。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-add --apple-use-keychain ~/.ssh/gh-personal
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-add --apple-use-keychain ~/.ssh/gh-work
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;选项 &lt;code&gt;--apple-use-keychain&lt;/code&gt; 就明确声明使用 Mac 的钥匙串系统存放密钥。&lt;/p&gt;
-&lt;p&gt;我们可以用以下命令来查看私钥是否被添加到了 SSH Agent：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-add -l
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="将公钥加入-github"&gt;将公钥加入 GitHub&lt;/h3&gt;
-&lt;p&gt;然后，我们把公钥加入到对应的 GitHub 账户里去。&lt;/p&gt;
-&lt;p&gt;对账户 personal，进入 “Settings”➡️“SSH and GPG keys”，然后点击 “New SSH key”，进入一个界面，“Title” 可以随便填写，只要在 &amp;ldquo;Key&amp;rdquo; 的框里边粘贴 &lt;code&gt;gh-personal.pub&lt;/code&gt; 文件的内容就行了，以下是用命令复制文件内容的高级做法：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pbcopy &amp;lt; ~/.ssh/gh-personal.pub
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们对另一个账户 work 进行同样的操作，只不过是要复制对应文件 &lt;code&gt;gh-work.pub&lt;/code&gt; 的内容。不再赘述。&lt;/p&gt;
-&lt;h2 id="配置-ssh-主机"&gt;配置 SSH 主机&lt;/h2&gt;
-&lt;p&gt;这一步要做的是，告诉 Mac 远程仓库的主机和本地的私钥如何对应。这通过配置 SSH Config 文件实现。&lt;/p&gt;
-&lt;p&gt;首先，打开 &lt;code&gt;config&lt;/code&gt; 文件：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;open ~/.ssh/config
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后，填入如下设定&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# Your Personal GitHub Account
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Host github.com-personal
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; HostName github.com
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; User git
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; IdentityFile ~/.ssh/gh-personal
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# Your Work GitHub Account
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Host github.com-work
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; HostName github.com
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; User git
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; IdentityFile ~/.ssh/gh-work
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;到此为止，我们的所有准备工作就完成了。下面我们看在不同的账号间具体是怎么切换的。&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="在不同的账号间切换"&gt;在不同的账号间切换&lt;/h2&gt;
-&lt;p&gt;假设我们实现已经全局设定了 work 账号是默认的 GitHub 账号：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git config --global user.name &lt;span style="color:#a3be8c"&gt;&amp;#34;work&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git config --global user.email &lt;span style="color:#a3be8c"&gt;&amp;#34;email@work.com&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;但如果要建立一个 personal 账号下的仓库，在 &lt;code&gt;git init&lt;/code&gt; 之后，就得不带 &lt;code&gt;--global&lt;/code&gt; 选项：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git config user.name &lt;span style="color:#a3be8c"&gt;&amp;#34;personal&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git config user.email &lt;span style="color:#a3be8c"&gt;&amp;#34;email@personal.com&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;要把这个仓库关联到远程仓库 myrepo，运行：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git remote add origin git@github.com-personal:personal/myrepo.git
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里面需要注意，我们用的是 SSH 的链接，而不是 HTTPS 的链接，另外我们明确指定了主机名为 &lt;code&gt;github.com-personal&lt;/code&gt;，而不是 GitHub 仓库页面给出的 &lt;code&gt;github.com&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;这样就可以对 myrepo 进行 push 等操作了。&lt;/p&gt;
-&lt;p&gt;如果有另外的仓库是注册在 work 账号下的，不需要再特别进行 &lt;code&gt;git config&lt;/code&gt;，因前面我们已经全局指定了，但在 &lt;code&gt;git clone&lt;/code&gt; work 账号下的私有仓库和关联远程仓库时，仍然要注意指定主机名为 &lt;code&gt;github.com-work&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;以上（完）。&lt;/p&gt;
-&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://medium.com/@viralthaker27/managing-multiple-github-accounts-on-a-macbook-a-step-by-step-guide-a22ec738180f"&gt;Managing Multiple GitHub Accounts on a MacOS: A Step-by-Step Guide.&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://code.tutsplus.com/quick-tip-how-to-work-with-github-and-multiple-accounts--net-22574t"&gt;How to Work With GitHub and Multiple Accounts.&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-- https://gaxu.xyz/posts/multiple-gh-accounts/ - 2023–2025 嘉树.</description></item></channel></rss>
+- https://gaxu.xyz/posts/lasso/ - 2023–2025 嘉树.</description></item></channel></rss>
